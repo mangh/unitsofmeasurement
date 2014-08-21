@@ -65,37 +65,37 @@ namespace Man.UnitsOfMeasurement
 
 #if DIMENSION_UINT64 
         // Constants for exponent fields within UInt64 dimension structure:
-		private static readonly int COMPLEMENT = 256;	// 2's complement base
-		private static readonly int MAXEXP = 127;	// exponent max value
-		private static readonly int MINEXP = -128;	// exponent min value
-		private static readonly int LOGWIDTH = 3;	// exponent bit-width = 2^LOGWIDTH
-		private static readonly byte EXPMASK = 0xFF;	// exponent bit mask
+        private static readonly int COMPLEMENT = 256;   // 2's complement base
+        private static readonly int MAXEXP = 127;   // exponent max value
+        private static readonly int MINEXP = -128;  // exponent min value
+        private static readonly int LOGWIDTH = 3;   // exponent bit-width = 2^LOGWIDTH
+        private static readonly byte EXPMASK = 0xFF;    // exponent bit mask
 #if !STANDARD_ARITHMETIC
-		private static readonly DIMENSION CARRY = 0x7F7F7F7F7F7F7F7F;	// carry/borrow bits for binary addition/subtraction
+        private static readonly DIMENSION CARRY = 0x7F7F7F7F7F7F7F7F;   // carry/borrow bits for binary addition/subtraction
 #endif
 #else
         // Constants for exponent fields within UInt32 dimension structure:
-        private static readonly int COMPLEMENT = 16;	// 2's complement base
-        private static readonly int MAXEXP = 7;	// exponent max value
-        private static readonly int MINEXP = -8;	// exponent min value
-        private static readonly int LOGWIDTH = 2;	// exponent bit-width = 2^LOGWIDTH
-        private static readonly byte EXPMASK = 0x0F;	// exponent bit mask
+        private static readonly int COMPLEMENT = 16;    // 2's complement base
+        private static readonly int MAXEXP = 7; // exponent max value
+        private static readonly int MINEXP = -8;    // exponent min value
+        private static readonly int LOGWIDTH = 2;   // exponent bit-width = 2^LOGWIDTH
+        private static readonly byte EXPMASK = 0x0F;    // exponent bit mask
 #if !STANDARD_ARITHMETIC
-        private static readonly DIMENSION CARRY = 0x77777777;	// carry/borrow bits for binary addition/subtraction
+        private static readonly DIMENSION CARRY = 0x77777777;   // carry/borrow bits for binary addition/subtraction
 #endif
 #endif
 
         private static readonly string[] s_symbol = 
-		{ 
-			"L",		/* Length */
-			"T",		/* Time */
-			"M",		/* Mass */
-			"\u03F4"	/* Temperature (Θ - greek capital letter theta) */,
-			"I",		/* Electric Current */
-			"N",		/* Amount of Substance */
-			"J",		/* Luminous Intensity */
-			"\u00A4"	/* Money (¤ - generic currency sign) */
-		};
+        { 
+            "L",        /* Length */
+            "T",        /* Time */
+            "M",        /* Mass */
+            "\u03F4"    /* Temperature (Θ - greek capital letter theta) */,
+            "I",        /* Electric Current */
+            "N",        /* Amount of Substance */
+            "J",        /* Luminous Intensity */
+            "\u00A4"    /* Money (¤ - generic currency sign) */
+        };
 
         #endregion
 
@@ -192,16 +192,16 @@ namespace Man.UnitsOfMeasurement
         public static Dimension operator *(Dimension x, Dimension y)
         {
 #if STANDARD_ARITHMETIC
-			return new Dimension(
-				x[Magnitude.Length] + y[Magnitude.Length],
-				x[Magnitude.Time] + y[Magnitude.Time],
-				x[Magnitude.Mass] + y[Magnitude.Mass],
-				x[Magnitude.Temperature] + y[Magnitude.Temperature],
-				x[Magnitude.ElectricCurrent] + y[Magnitude.ElectricCurrent],
-				x[Magnitude.AmountOfSubstance] + y[Magnitude.AmountOfSubstance],
-				x[Magnitude.LuminousIntensity] + y[Magnitude.LuminousIntensity],
-				x[Magnitude.Other] + y[Magnitude.Other]
-			);
+            return new Dimension(
+                x[Magnitude.Length] + y[Magnitude.Length],
+                x[Magnitude.Time] + y[Magnitude.Time],
+                x[Magnitude.Mass] + y[Magnitude.Mass],
+                x[Magnitude.Temperature] + y[Magnitude.Temperature],
+                x[Magnitude.ElectricCurrent] + y[Magnitude.ElectricCurrent],
+                x[Magnitude.AmountOfSubstance] + y[Magnitude.AmountOfSubstance],
+                x[Magnitude.LuminousIntensity] + y[Magnitude.LuminousIntensity],
+                x[Magnitude.Other] + y[Magnitude.Other]
+            );
 #else
             // The algoritm below is a modified binary addition of two's complement integers.
             // It performs parallel addition of 8 exponents numbers packed within dimension structure.
@@ -215,7 +215,7 @@ namespace Man.UnitsOfMeasurement
             while (carry != 0)
             {
                 carried |= carry;
-                carry &= CARRY;	// no bit can be carried over between adjacent exponent numbers
+                carry &= CARRY; // no bit can be carried over between adjacent exponent numbers
                 carry <<= 1;
                 summed = sum;
                 sum = summed ^ carry;
@@ -232,16 +232,16 @@ namespace Man.UnitsOfMeasurement
         public static Dimension operator /(Dimension x, Dimension y)
         {
 #if STANDARD_ARITHMETIC
-			return new Dimension(
-				x[Magnitude.Length] - y[Magnitude.Length],
-				x[Magnitude.Time] - y[Magnitude.Time],
-				x[Magnitude.Mass] - y[Magnitude.Mass],
-				x[Magnitude.Temperature] - y[Magnitude.Temperature],
-				x[Magnitude.ElectricCurrent] - y[Magnitude.ElectricCurrent],
-				x[Magnitude.AmountOfSubstance] - y[Magnitude.AmountOfSubstance],
-				x[Magnitude.LuminousIntensity] - y[Magnitude.LuminousIntensity],
-				x[Magnitude.Other] - y[Magnitude.Other]
-			);
+            return new Dimension(
+                x[Magnitude.Length] - y[Magnitude.Length],
+                x[Magnitude.Time] - y[Magnitude.Time],
+                x[Magnitude.Mass] - y[Magnitude.Mass],
+                x[Magnitude.Temperature] - y[Magnitude.Temperature],
+                x[Magnitude.ElectricCurrent] - y[Magnitude.ElectricCurrent],
+                x[Magnitude.AmountOfSubstance] - y[Magnitude.AmountOfSubstance],
+                x[Magnitude.LuminousIntensity] - y[Magnitude.LuminousIntensity],
+                x[Magnitude.Other] - y[Magnitude.Other]
+            );
 #else
             // The algoritm below is a modified binary subtraction of two's complement integers.
             // It performs parallel subtraction of 8 exponents numbers packed within dimension structure.
@@ -254,12 +254,12 @@ namespace Man.UnitsOfMeasurement
             while (borrow != 0)
             {
                 borrowed |= borrow;
-                borrow &= CARRY;	// no bit can be carried over between adjacent exponent numbers
+                borrow &= CARRY;    // no bit can be carried over between adjacent exponent numbers
                 borrow <<= 1;
                 difference ^= borrow;
                 borrow &= difference;
             }
-            // Check overflow condition:				
+            // Check overflow condition:                
             if (((borrowed ^ (borrowed << 1)) & ~CARRY) != 0)
                 throw new OverflowException(String.Format("Dimension quotient \"{0} / {1}\" out of range [{2},{3}]", x.ToString(), y.ToString(), MINEXP, MAXEXP));
 

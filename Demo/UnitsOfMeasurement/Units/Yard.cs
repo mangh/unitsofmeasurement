@@ -13,104 +13,104 @@ using System;
 
 namespace Demo.UnitsOfMeasurement
 {
-	public partial struct Yard : IQuantity<double>, IEquatable<Yard>, IComparable<Yard>
-	{
-		#region Fields
-		private readonly double m_value;
-		#endregion
+    public partial struct Yard : IQuantity<double>, IEquatable<Yard>, IComparable<Yard>
+    {
+        #region Fields
+        private readonly double m_value;
+        #endregion
 
-		#region Properties
+        #region Properties
 
-		// instance properties
-		public double Value { get { return m_value; } }
+        // instance properties
+        public double Value { get { return m_value; } }
 
-		// unit properties
-		public Dimension UnitSense { get { return Yard.Sense; } }
-		public int UnitFamily { get { return Yard.Family; } }
-		public double UnitFactor { get { return Yard.Factor; } }
-		public string UnitFormat { get { return Yard.Format; } }
-		public SymbolCollection UnitSymbol { get { return Yard.Symbol; } }
+        // unit properties
+        public Dimension UnitSense { get { return Yard.Sense; } }
+        public int UnitFamily { get { return Yard.Family; } }
+        public double UnitFactor { get { return Yard.Factor; } }
+        public string UnitFormat { get { return Yard.Format; } }
+        public SymbolCollection UnitSymbol { get { return Yard.Symbol; } }
 
-		#endregion
+        #endregion
 
-		#region Constructor(s)
-		public Yard(double value)
-		{
-			m_value = value;
-		}
-		#endregion
+        #region Constructor(s)
+        public Yard(double value)
+        {
+            m_value = value;
+        }
+        #endregion
 
-		#region Conversions
-		public static explicit operator Yard(double q) { return new Yard(q); }
-		public static explicit operator Yard(Mile q) { return new Yard((Yard.Factor / Mile.Factor) * q.Value); }
-		public static explicit operator Yard(Kilometer q) { return new Yard((Yard.Factor / Kilometer.Factor) * q.Value); }
-		public static explicit operator Yard(Millimeter q) { return new Yard((Yard.Factor / Millimeter.Factor) * q.Value); }
-		public static explicit operator Yard(Centimeter q) { return new Yard((Yard.Factor / Centimeter.Factor) * q.Value); }
-		public static explicit operator Yard(Meter q) { return new Yard((Yard.Factor / Meter.Factor) * q.Value); }
-		public static explicit operator Yard(Inch q) { return new Yard((Yard.Factor / Inch.Factor) * q.Value); }
-		public static explicit operator Yard(Foot q) { return new Yard((Yard.Factor / Foot.Factor) * q.Value); }
+        #region Conversions
+        public static explicit operator Yard(double q) { return new Yard(q); }
+        public static explicit operator Yard(Mile q) { return new Yard((Yard.Factor / Mile.Factor) * q.Value); }
+        public static explicit operator Yard(Kilometer q) { return new Yard((Yard.Factor / Kilometer.Factor) * q.Value); }
+        public static explicit operator Yard(Millimeter q) { return new Yard((Yard.Factor / Millimeter.Factor) * q.Value); }
+        public static explicit operator Yard(Centimeter q) { return new Yard((Yard.Factor / Centimeter.Factor) * q.Value); }
+        public static explicit operator Yard(Meter q) { return new Yard((Yard.Factor / Meter.Factor) * q.Value); }
+        public static explicit operator Yard(Inch q) { return new Yard((Yard.Factor / Inch.Factor) * q.Value); }
+        public static explicit operator Yard(Foot q) { return new Yard((Yard.Factor / Foot.Factor) * q.Value); }
         public static Yard From(IQuantity<double> q)
         {
-			if (q.UnitSense != Yard.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"Yard\"", q.GetType().Name));
-			return new Yard((Yard.Factor / q.UnitFactor) * q.Value);
+            if (q.UnitSense != Yard.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"Yard\"", q.GetType().Name));
+            return new Yard((Yard.Factor / q.UnitFactor) * q.Value);
         }
-		#endregion
+        #endregion
 
-		#region IObject / IEquatable / IComparable
-		public override int GetHashCode() { return m_value.GetHashCode(); }
-		public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Yard) && Equals((Yard)obj); }
-		public bool /* IEquatable<Yard> */ Equals(Yard other) { return this.Value == other.Value; }
-		public int /* IComparable<Yard> */ CompareTo(Yard other) { return this.Value.CompareTo(other.Value); }
-		#endregion
+        #region IObject / IEquatable / IComparable
+        public override int GetHashCode() { return m_value.GetHashCode(); }
+        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Yard) && Equals((Yard)obj); }
+        public bool /* IEquatable<Yard> */ Equals(Yard other) { return this.Value == other.Value; }
+        public int /* IComparable<Yard> */ CompareTo(Yard other) { return this.Value.CompareTo(other.Value); }
+        #endregion
 
-		#region Comparison
-		public static bool operator ==(Yard lhs, Yard rhs) { return lhs.Value == rhs.Value; }
-		public static bool operator !=(Yard lhs, Yard rhs) { return lhs.Value != rhs.Value; }
-		public static bool operator <(Yard lhs, Yard rhs) { return lhs.Value < rhs.Value; }
-		public static bool operator >(Yard lhs, Yard rhs) { return lhs.Value > rhs.Value; }
-		public static bool operator <=(Yard lhs, Yard rhs) { return lhs.Value <= rhs.Value; }
-		public static bool operator >=(Yard lhs, Yard rhs) { return lhs.Value >= rhs.Value; }
-		#endregion
+        #region Comparison
+        public static bool operator ==(Yard lhs, Yard rhs) { return lhs.Value == rhs.Value; }
+        public static bool operator !=(Yard lhs, Yard rhs) { return lhs.Value != rhs.Value; }
+        public static bool operator <(Yard lhs, Yard rhs) { return lhs.Value < rhs.Value; }
+        public static bool operator >(Yard lhs, Yard rhs) { return lhs.Value > rhs.Value; }
+        public static bool operator <=(Yard lhs, Yard rhs) { return lhs.Value <= rhs.Value; }
+        public static bool operator >=(Yard lhs, Yard rhs) { return lhs.Value >= rhs.Value; }
+        #endregion
 
-		#region Arithmetic
-		// Inner:
-		public static Yard operator +(Yard lhs, Yard rhs) { return new Yard(lhs.Value + rhs.Value); }
-		public static Yard operator -(Yard lhs, Yard rhs) { return new Yard(lhs.Value - rhs.Value); }
-		public static Yard operator ++(Yard q) { return new Yard(q.Value + 1d); }
-		public static Yard operator --(Yard q) { return new Yard(q.Value - 1d); }
-		public static Yard operator -(Yard q) { return new Yard(-q.Value); }
-		public static Yard operator *(double lhs, Yard rhs) { return new Yard(lhs * rhs.Value); }
-		public static Yard operator *(Yard lhs, double rhs) { return new Yard(lhs.Value * rhs); }
-		public static Yard operator /(Yard lhs, double rhs) { return new Yard(lhs.Value / rhs); }
-		// Outer:
-		public static double operator /(Yard lhs, Yard rhs) { return lhs.Value / rhs.Value; }
-		#endregion
+        #region Arithmetic
+        // Inner:
+        public static Yard operator +(Yard lhs, Yard rhs) { return new Yard(lhs.Value + rhs.Value); }
+        public static Yard operator -(Yard lhs, Yard rhs) { return new Yard(lhs.Value - rhs.Value); }
+        public static Yard operator ++(Yard q) { return new Yard(q.Value + 1d); }
+        public static Yard operator --(Yard q) { return new Yard(q.Value - 1d); }
+        public static Yard operator -(Yard q) { return new Yard(-q.Value); }
+        public static Yard operator *(double lhs, Yard rhs) { return new Yard(lhs * rhs.Value); }
+        public static Yard operator *(Yard lhs, double rhs) { return new Yard(lhs.Value * rhs); }
+        public static Yard operator /(Yard lhs, double rhs) { return new Yard(lhs.Value / rhs); }
+        // Outer:
+        public static double operator /(Yard lhs, Yard rhs) { return lhs.Value / rhs.Value; }
+        #endregion
 
-		#region Formatting
-		public override string ToString() { return ToString(null, Yard.Format); }
-		public string ToString(string format) { return ToString(null, format); }
-		public string ToString(IFormatProvider fp) { return ToString(fp, Yard.Format); }
-		public string ToString(IFormatProvider fp, string format) { return String.Format(fp, format, Value, Yard.Symbol[0]); }
-		#endregion
+        #region Formatting
+        public override string ToString() { return ToString(null, Yard.Format); }
+        public string ToString(string format) { return ToString(null, format); }
+        public string ToString(IFormatProvider fp) { return ToString(fp, Yard.Format); }
+        public string ToString(IFormatProvider fp, string format) { return String.Format(fp, format, Value, Yard.Symbol[0]); }
+        #endregion
 
-		#region Statics
-		private static readonly Dimension s_sense = Foot.Sense;
-		private static readonly int s_family = 0;
-		private static double s_factor = Foot.Factor / 3d;
-		private static string s_format = "{0} {1}";
-		private static readonly SymbolCollection s_symbol = new SymbolCollection("yd");
+        #region Statics
+        private static readonly Dimension s_sense = Foot.Sense;
+        private static readonly int s_family = 0;
+        private static double s_factor = Foot.Factor / 3d;
+        private static string s_format = "{0} {1}";
+        private static readonly SymbolCollection s_symbol = new SymbolCollection("yd");
 
-		private static readonly Yard s_one = new Yard(1d);
-		private static readonly Yard s_zero = new Yard(0d);
-		
-		public static Dimension Sense { get { return s_sense; } }
-		public static int Family { get { return s_family; } }
-		public static double Factor { get { return s_factor; } set { s_factor = value; } }
-		public static string Format { get { return s_format; } set { s_format = value; } }
-		public static SymbolCollection Symbol { get { return s_symbol; } }
+        private static readonly Yard s_one = new Yard(1d);
+        private static readonly Yard s_zero = new Yard(0d);
+        
+        public static Dimension Sense { get { return s_sense; } }
+        public static int Family { get { return s_family; } }
+        public static double Factor { get { return s_factor; } set { s_factor = value; } }
+        public static string Format { get { return s_format; } set { s_format = value; } }
+        public static SymbolCollection Symbol { get { return s_symbol; } }
 
-		public static Yard One { get { return s_one; } }
-		public static Yard Zero { get { return s_zero; } }
-		#endregion
-	}
+        public static Yard One { get { return s_one; } }
+        public static Yard Zero { get { return s_zero; } }
+        #endregion
+    }
 }

@@ -15,58 +15,58 @@ using System.IO;
 
 namespace Man.UnitsOfMeasurement
 {
-	public partial class Lexer
-	{
-		#region Fields
-		private Token m_token;
-		private TokenReader m_input;
+    public partial class Lexer
+    {
+        #region Fields
+        private Token m_token;
+        private TokenReader m_input;
         private Action<bool, int, int, string, string> m_logger;
-		#endregion
+        #endregion
 
-		#region Properties
-		public Symbol TokenSymbol { get { return m_token.Symbol; } }
-		public string TokenText { get { return m_token.Text; } }
-		#endregion
+        #region Properties
+        public Symbol TokenSymbol { get { return m_token.Symbol; } }
+        public string TokenText { get { return m_token.Text; } }
+        #endregion
 
-		#region Constructor(s)
-		public Lexer(TextReader input, Action<bool, int, int, string, string> logger)
-		{
-			m_token = new Token();
-			m_input = new TokenReader(input);
-			m_logger = logger;
+        #region Constructor(s)
+        public Lexer(TextReader input, Action<bool, int, int, string, string> logger)
+        {
+            m_token = new Token();
+            m_input = new TokenReader(input);
+            m_logger = logger;
 
-			m_input.Read();
-		}
-		#endregion
+            m_input.Read();
+        }
+        #endregion
 
-		#region Methods
-		public Symbol GetToken()
-		{
-			if ((m_token.Symbol = FindToken()) != Symbol.Unknown)
-				return m_token.Symbol;
+        #region Methods
+        public Symbol GetToken()
+        {
+            if ((m_token.Symbol = FindToken()) != Symbol.Unknown)
+                return m_token.Symbol;
 
-			// "A" .. "Z", "a" .. "z", "_", "@"
-			else if (Char.IsLetter(m_input.Char) || (m_input.Char == '_') || (m_input.Char == '@'))
-				return GetQualifiedName();
+            // "A" .. "Z", "a" .. "z", "_", "@"
+            else if (Char.IsLetter(m_input.Char) || (m_input.Char == '_') || (m_input.Char == '@'))
+                return GetQualifiedName();
 
-			// "0" .. "9", "."
-			else if (Char.IsDigit(m_input.Char) || (m_input.Char == '.'))
-				return GetPositiveNumber();
+            // "0" .. "9", "."
+            else if (Char.IsDigit(m_input.Char) || (m_input.Char == '.'))
+                return GetPositiveNumber();
 
-			else if (m_input.Char == '"')
-				return GetStringLiteral();
+            else if (m_input.Char == '"')
+                return GetStringLiteral();
 
-			else if (m_input.Char == '<') { m_token.Symbol = Symbol.LT; }
+            else if (m_input.Char == '<') { m_token.Symbol = Symbol.LT; }
             else if (m_input.Char == '>') { m_token.Symbol = Symbol.GT; }
             else if (m_input.Char == '=') { m_token.Symbol = Symbol.EQ; }
             else if (m_input.Char == '(') { m_token.Symbol = Symbol.Lparen; }
-			else if (m_input.Char == ')') { m_token.Symbol = Symbol.Rparen; }
-			else if (m_input.Char == '|') { m_token.Symbol = Symbol.Pipe; }
-			else if (m_input.Char == '+') { m_token.Symbol = Symbol.Plus; }
-			else if (m_input.Char == '-') { m_token.Symbol = Symbol.Minus; }
-			else if (m_input.Char == '*') { m_token.Symbol = Symbol.Times; }
-			else if (m_input.Char == ':') { m_token.Symbol = Symbol.Colon; }
-			else if (m_input.Char == ';') { m_token.Symbol = Symbol.Semicolon; }
+            else if (m_input.Char == ')') { m_token.Symbol = Symbol.Rparen; }
+            else if (m_input.Char == '|') { m_token.Symbol = Symbol.Pipe; }
+            else if (m_input.Char == '+') { m_token.Symbol = Symbol.Plus; }
+            else if (m_input.Char == '-') { m_token.Symbol = Symbol.Minus; }
+            else if (m_input.Char == '*') { m_token.Symbol = Symbol.Times; }
+            else if (m_input.Char == ':') { m_token.Symbol = Symbol.Colon; }
+            else if (m_input.Char == ';') { m_token.Symbol = Symbol.Semicolon; }
             else
             {
                 CopyChar(); 
@@ -74,15 +74,15 @@ namespace Man.UnitsOfMeasurement
                 return m_token.Symbol = Symbol.Error;
             }
 
-			CopyChar();
-			return m_token.Symbol;
-		}
+            CopyChar();
+            return m_token.Symbol;
+        }
 
-		private bool CopyChar()
-		{
-			m_token.Append(m_input.Char);
-			return m_input.Read();
-		}
+        private bool CopyChar()
+        {
+            m_token.Append(m_input.Char);
+            return m_input.Read();
+        }
 
         private Symbol FindToken()
         {
@@ -105,16 +105,16 @@ namespace Man.UnitsOfMeasurement
         }
 
         private void SkipWhitespace()
-		{
-			while (!m_input.EOF && Char.IsWhiteSpace(m_input.Char)) m_input.Read();
-		}
+        {
+            while (!m_input.EOF && Char.IsWhiteSpace(m_input.Char)) m_input.Read();
+        }
 
-		private void SkipLineComment()
-		{
+        private void SkipLineComment()
+        {
             m_token.Append(m_input.Char);
             m_token.Symbol = Symbol.Comment;
             while (!m_input.EOF && m_input.Char != '\n') m_input.Read();
-		}
+        }
 
         private void SkipBlockComment()
         {
@@ -134,21 +134,21 @@ namespace Man.UnitsOfMeasurement
             Note("Unexpected EOF while looking for the closing token \"*/\"");
         }
 
-		// StringLiteral = '"'( {String Ch} | '\'{Printable} )* '"'
-		private Symbol GetStringLiteral()
-		{
+        // StringLiteral = '"'( {String Ch} | '\'{Printable} )* '"'
+        private Symbol GetStringLiteral()
+        {
             string noteUnexpectedEOL = "Unexpected EOL while looking for the closing quotation mark (\")";
             m_token.Symbol = Symbol.StringLiteral;
             int escape = 0;
             while (m_input.Read())
-			{
-				escape--;
-				if (m_input.Char == '"')
+            {
+                escape--;
+                if (m_input.Char == '"')
                 {
                     if (escape > 0) m_token.Append(m_input.Char);
                     else { m_input.Read(); return Symbol.StringLiteral; }
                 }
-				else if (m_input.Char == '\\')
+                else if (m_input.Char == '\\')
                 {
                     m_token.Append(m_input.Char);
                     escape = (escape > 0) ? 0 : 2;
@@ -162,35 +162,35 @@ namespace Man.UnitsOfMeasurement
                 {
                     m_token.Append(m_input.Char);
                 }
-			}
+            }
             Note(noteUnexpectedEOL);
             return Symbol.Error;
-		}
+        }
 
-		// <QualifiedName> ::= <QualifiedName> '.' Identifier |  Identifier
-		// Identifier      = [@]? {ID Head} {ID Tail}*   !The @ is an override char
-		// {ID Head}     = {Letter} + [_]
-		// {ID Tail}     = {Alphanumeric} + [_]
-		private Symbol GetQualifiedName()
-		{
+        // <QualifiedName> ::= <QualifiedName> '.' Identifier |  Identifier
+        // Identifier      = [@]? {ID Head} {ID Tail}*   !The @ is an override char
+        // {ID Head}     = {Letter} + [_]
+        // {ID Tail}     = {Alphanumeric} + [_]
+        private Symbol GetQualifiedName()
+        {
             m_token.Symbol = Symbol.Identifier;
             do
-			{
-				while (CopyChar() && (Char.IsLetterOrDigit(m_input.Char) || (m_input.Char == '_'))) ;
+            {
+                while (CopyChar() && (Char.IsLetterOrDigit(m_input.Char) || (m_input.Char == '_'))) ;
                 if (m_input.Char != '.') return m_token.Symbol;
                 m_token.Symbol = Symbol.Qualifiedname;
-			}
-			while (CopyChar() && (Char.IsLetter(m_input.Char) || (m_input.Char == '_') || (m_input.Char == '@')));
+            }
+            while (CopyChar() && (Char.IsLetter(m_input.Char) || (m_input.Char == '_') || (m_input.Char == '@')));
 
             Note("\"{0}\": badly formed (qualified) identifier", m_token.Text);
             return Symbol.Error;
-		}
+        }
 
-		// <Positive Number> ::= IntLiteral | RealLiteral
-		// IntLiteral    = {Digit}+
-		// RealLiteral   = {Digit}*'.'{Digit}+(('e'|'E')('+'|'-')*{Digit}+)*('f'|'F'|'d'|'D'|'m'|'M')*
-		private Symbol GetPositiveNumber()
-		{
+        // <Positive Number> ::= IntLiteral | RealLiteral
+        // IntLiteral    = {Digit}+
+        // RealLiteral   = {Digit}*'.'{Digit}+(('e'|'E')('+'|'-')*{Digit}+)*('f'|'F'|'d'|'D'|'m'|'M')*
+        private Symbol GetPositiveNumber()
+        {
             // {Digit}* ...
             int integers = GetDigits();
             m_token.Symbol = Symbol.IntNumber;
@@ -200,7 +200,7 @@ namespace Man.UnitsOfMeasurement
             {
                 m_token.Symbol = Symbol.RealNumber;
 
-                CopyChar();	// '.' --> token
+                CopyChar(); // '.' --> token
                 // {Digit}*'.'{Digit}+ ...
                 if (GetDigits() <= 0)
                 {
@@ -215,7 +215,7 @@ namespace Man.UnitsOfMeasurement
             {
                 m_token.Symbol = Symbol.RealNumber;
 
-                CopyChar();	// 'e|E' --> token
+                CopyChar(); // 'e|E' --> token
 
                 // {Digit}*'.'{Digit}+(('e'|'E')('+'|'-')* ...)*
                 if ((m_input.Char == '+') || (m_input.Char == '-'))
@@ -249,5 +249,5 @@ namespace Man.UnitsOfMeasurement
             m_logger(true, m_token.Line, m_token.Column, m_token.Text, String.Format(format, info));
         }
         #endregion
-	}
+    }
 }

@@ -13,99 +13,99 @@ using System;
 
 namespace Demo.UnitsOfMeasurement
 {
-	public partial struct Ohm : IQuantity<double>, IEquatable<Ohm>, IComparable<Ohm>
-	{
-		#region Fields
-		private readonly double m_value;
-		#endregion
+    public partial struct Ohm : IQuantity<double>, IEquatable<Ohm>, IComparable<Ohm>
+    {
+        #region Fields
+        private readonly double m_value;
+        #endregion
 
-		#region Properties
+        #region Properties
 
-		// instance properties
-		public double Value { get { return m_value; } }
+        // instance properties
+        public double Value { get { return m_value; } }
 
-		// unit properties
-		public Dimension UnitSense { get { return Ohm.Sense; } }
-		public int UnitFamily { get { return Ohm.Family; } }
-		public double UnitFactor { get { return Ohm.Factor; } }
-		public string UnitFormat { get { return Ohm.Format; } }
-		public SymbolCollection UnitSymbol { get { return Ohm.Symbol; } }
+        // unit properties
+        public Dimension UnitSense { get { return Ohm.Sense; } }
+        public int UnitFamily { get { return Ohm.Family; } }
+        public double UnitFactor { get { return Ohm.Factor; } }
+        public string UnitFormat { get { return Ohm.Format; } }
+        public SymbolCollection UnitSymbol { get { return Ohm.Symbol; } }
 
-		#endregion
+        #endregion
 
-		#region Constructor(s)
-		public Ohm(double value)
-		{
-			m_value = value;
-		}
-		#endregion
+        #region Constructor(s)
+        public Ohm(double value)
+        {
+            m_value = value;
+        }
+        #endregion
 
-		#region Conversions
-		public static explicit operator Ohm(double q) { return new Ohm(q); }
+        #region Conversions
+        public static explicit operator Ohm(double q) { return new Ohm(q); }
         public static Ohm From(IQuantity<double> q)
         {
-			if (q.UnitSense != Ohm.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"Ohm\"", q.GetType().Name));
-			return new Ohm((Ohm.Factor / q.UnitFactor) * q.Value);
+            if (q.UnitSense != Ohm.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"Ohm\"", q.GetType().Name));
+            return new Ohm((Ohm.Factor / q.UnitFactor) * q.Value);
         }
-		#endregion
+        #endregion
 
-		#region IObject / IEquatable / IComparable
-		public override int GetHashCode() { return m_value.GetHashCode(); }
-		public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Ohm) && Equals((Ohm)obj); }
-		public bool /* IEquatable<Ohm> */ Equals(Ohm other) { return this.Value == other.Value; }
-		public int /* IComparable<Ohm> */ CompareTo(Ohm other) { return this.Value.CompareTo(other.Value); }
-		#endregion
+        #region IObject / IEquatable / IComparable
+        public override int GetHashCode() { return m_value.GetHashCode(); }
+        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Ohm) && Equals((Ohm)obj); }
+        public bool /* IEquatable<Ohm> */ Equals(Ohm other) { return this.Value == other.Value; }
+        public int /* IComparable<Ohm> */ CompareTo(Ohm other) { return this.Value.CompareTo(other.Value); }
+        #endregion
 
-		#region Comparison
-		public static bool operator ==(Ohm lhs, Ohm rhs) { return lhs.Value == rhs.Value; }
-		public static bool operator !=(Ohm lhs, Ohm rhs) { return lhs.Value != rhs.Value; }
-		public static bool operator <(Ohm lhs, Ohm rhs) { return lhs.Value < rhs.Value; }
-		public static bool operator >(Ohm lhs, Ohm rhs) { return lhs.Value > rhs.Value; }
-		public static bool operator <=(Ohm lhs, Ohm rhs) { return lhs.Value <= rhs.Value; }
-		public static bool operator >=(Ohm lhs, Ohm rhs) { return lhs.Value >= rhs.Value; }
-		#endregion
+        #region Comparison
+        public static bool operator ==(Ohm lhs, Ohm rhs) { return lhs.Value == rhs.Value; }
+        public static bool operator !=(Ohm lhs, Ohm rhs) { return lhs.Value != rhs.Value; }
+        public static bool operator <(Ohm lhs, Ohm rhs) { return lhs.Value < rhs.Value; }
+        public static bool operator >(Ohm lhs, Ohm rhs) { return lhs.Value > rhs.Value; }
+        public static bool operator <=(Ohm lhs, Ohm rhs) { return lhs.Value <= rhs.Value; }
+        public static bool operator >=(Ohm lhs, Ohm rhs) { return lhs.Value >= rhs.Value; }
+        #endregion
 
-		#region Arithmetic
-		// Inner:
-		public static Ohm operator +(Ohm lhs, Ohm rhs) { return new Ohm(lhs.Value + rhs.Value); }
-		public static Ohm operator -(Ohm lhs, Ohm rhs) { return new Ohm(lhs.Value - rhs.Value); }
-		public static Ohm operator ++(Ohm q) { return new Ohm(q.Value + 1d); }
-		public static Ohm operator --(Ohm q) { return new Ohm(q.Value - 1d); }
-		public static Ohm operator -(Ohm q) { return new Ohm(-q.Value); }
-		public static Ohm operator *(double lhs, Ohm rhs) { return new Ohm(lhs * rhs.Value); }
-		public static Ohm operator *(Ohm lhs, double rhs) { return new Ohm(lhs.Value * rhs); }
-		public static Ohm operator /(Ohm lhs, double rhs) { return new Ohm(lhs.Value / rhs); }
-		// Outer:
-		public static double operator /(Ohm lhs, Ohm rhs) { return lhs.Value / rhs.Value; }
-		public static Volt operator *(Ohm lhs, Ampere rhs) { return new Volt(lhs.Value * rhs.Value); }
-		public static Volt operator *(Ampere lhs, Ohm rhs) { return new Volt(lhs.Value * rhs.Value); }
-		#endregion
+        #region Arithmetic
+        // Inner:
+        public static Ohm operator +(Ohm lhs, Ohm rhs) { return new Ohm(lhs.Value + rhs.Value); }
+        public static Ohm operator -(Ohm lhs, Ohm rhs) { return new Ohm(lhs.Value - rhs.Value); }
+        public static Ohm operator ++(Ohm q) { return new Ohm(q.Value + 1d); }
+        public static Ohm operator --(Ohm q) { return new Ohm(q.Value - 1d); }
+        public static Ohm operator -(Ohm q) { return new Ohm(-q.Value); }
+        public static Ohm operator *(double lhs, Ohm rhs) { return new Ohm(lhs * rhs.Value); }
+        public static Ohm operator *(Ohm lhs, double rhs) { return new Ohm(lhs.Value * rhs); }
+        public static Ohm operator /(Ohm lhs, double rhs) { return new Ohm(lhs.Value / rhs); }
+        // Outer:
+        public static double operator /(Ohm lhs, Ohm rhs) { return lhs.Value / rhs.Value; }
+        public static Volt operator *(Ohm lhs, Ampere rhs) { return new Volt(lhs.Value * rhs.Value); }
+        public static Volt operator *(Ampere lhs, Ohm rhs) { return new Volt(lhs.Value * rhs.Value); }
+        #endregion
 
-		#region Formatting
-		public override string ToString() { return ToString(null, Ohm.Format); }
-		public string ToString(string format) { return ToString(null, format); }
-		public string ToString(IFormatProvider fp) { return ToString(fp, Ohm.Format); }
-		public string ToString(IFormatProvider fp, string format) { return String.Format(fp, format, Value, Ohm.Symbol[0]); }
-		#endregion
+        #region Formatting
+        public override string ToString() { return ToString(null, Ohm.Format); }
+        public string ToString(string format) { return ToString(null, format); }
+        public string ToString(IFormatProvider fp) { return ToString(fp, Ohm.Format); }
+        public string ToString(IFormatProvider fp, string format) { return String.Format(fp, format, Value, Ohm.Symbol[0]); }
+        #endregion
 
-		#region Statics
-		private static readonly Dimension s_sense = Volt.Sense / Ampere.Sense;
-		private static readonly int s_family = 58;
-		private static double s_factor = Volt.Factor / Ampere.Factor;
-		private static string s_format = "{0} {1}";
-		private static readonly SymbolCollection s_symbol = new SymbolCollection("\u03A9", "ohm");
+        #region Statics
+        private static readonly Dimension s_sense = Volt.Sense / Ampere.Sense;
+        private static readonly int s_family = 58;
+        private static double s_factor = Volt.Factor / Ampere.Factor;
+        private static string s_format = "{0} {1}";
+        private static readonly SymbolCollection s_symbol = new SymbolCollection("\u03A9", "ohm");
 
-		private static readonly Ohm s_one = new Ohm(1d);
-		private static readonly Ohm s_zero = new Ohm(0d);
-		
-		public static Dimension Sense { get { return s_sense; } }
-		public static int Family { get { return s_family; } }
-		public static double Factor { get { return s_factor; } set { s_factor = value; } }
-		public static string Format { get { return s_format; } set { s_format = value; } }
-		public static SymbolCollection Symbol { get { return s_symbol; } }
+        private static readonly Ohm s_one = new Ohm(1d);
+        private static readonly Ohm s_zero = new Ohm(0d);
+        
+        public static Dimension Sense { get { return s_sense; } }
+        public static int Family { get { return s_family; } }
+        public static double Factor { get { return s_factor; } set { s_factor = value; } }
+        public static string Format { get { return s_format; } set { s_format = value; } }
+        public static SymbolCollection Symbol { get { return s_symbol; } }
 
-		public static Ohm One { get { return s_one; } }
-		public static Ohm Zero { get { return s_zero; } }
-		#endregion
-	}
+        public static Ohm One { get { return s_one; } }
+        public static Ohm Zero { get { return s_zero; } }
+        #endregion
+    }
 }

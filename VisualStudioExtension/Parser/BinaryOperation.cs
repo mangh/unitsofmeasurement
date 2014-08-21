@@ -13,8 +13,8 @@
 namespace Man.UnitsOfMeasurement
 {
     /// <summary>
-	/// TODO: Update summary.
-	/// </summary>
+    /// TODO: Update summary.
+    /// </summary>
     public class BinaryOperation
     {
         public AbstractType Result { get; private set; }

@@ -18,13 +18,13 @@ using Demo.UnitsOfMeasurement;
 
 namespace UnitOfMeasureTest
 {
-	[TestClass]
-	public class QuantityTests
-	{
-		[TestClass]
-		public class Conversions
-		{
-			[TestMethod]
+    [TestClass]
+    public class QuantityTests
+    {
+        [TestClass]
+        public class Conversions
+        {
+            [TestMethod]
             [ExpectedException(typeof(System.InvalidOperationException))]
             public void CastingInconvertibleThrowsException()
             {
@@ -58,20 +58,20 @@ namespace UnitOfMeasureTest
                 var badCast = (Yard)quantity;
             }
 
-			[TestMethod]
-			public void TemperatureUnits()
-			{
-				DegCelsius celsius = new DegCelsius(100.0);
-				DegFahrenheit fahrenheit = (DegFahrenheit)celsius;
-				DegRankine rankine = (DegRankine)fahrenheit;
-				DegKelvin kelvin = (DegKelvin)rankine;
-				celsius = (DegCelsius)kelvin;
+            [TestMethod]
+            public void TemperatureUnits()
+            {
+                DegCelsius celsius = new DegCelsius(100.0);
+                DegFahrenheit fahrenheit = (DegFahrenheit)celsius;
+                DegRankine rankine = (DegRankine)fahrenheit;
+                DegKelvin kelvin = (DegKelvin)rankine;
+                celsius = (DegCelsius)kelvin;
 
-				Assert.AreEqual((DegFahrenheit)180.0, fahrenheit, "Celsius-to-Fahrenheit conversion failed");
-				Assert.AreEqual((DegRankine)180.0, rankine, "Fahrenheit-to-Rankine conversion failed");
-				Assert.AreEqual((DegKelvin)100.0, kelvin, "Rankine-to-Kelvin conversion failed");
-				Assert.AreEqual((DegCelsius)100.0, celsius, "Kelvin-to-Celsius conversion failed");
-			}
+                Assert.AreEqual((DegFahrenheit)180.0, fahrenheit, "Celsius-to-Fahrenheit conversion failed");
+                Assert.AreEqual((DegRankine)180.0, rankine, "Fahrenheit-to-Rankine conversion failed");
+                Assert.AreEqual((DegKelvin)100.0, kelvin, "Rankine-to-Kelvin conversion failed");
+                Assert.AreEqual((DegCelsius)100.0, celsius, "Kelvin-to-Celsius conversion failed");
+            }
 
             [TestMethod]
             public void LengthUnits()
@@ -228,113 +228,113 @@ namespace UnitOfMeasureTest
             }
         }
 
-		[TestClass]
-		public class ComaprisonOperators
-		{
-			[TestMethod]
-			public void FloatingPointMangle()
-			{
-				var expected = (Meter)100.0;
-				var calculated = (Meter)(Yard)(Foot)(Inch)(Centimeter)expected;
+        [TestClass]
+        public class ComaprisonOperators
+        {
+            [TestMethod]
+            public void FloatingPointMangle()
+            {
+                var expected = (Meter)100.0;
+                var calculated = (Meter)(Yard)(Foot)(Inch)(Centimeter)expected;
                 // unfortunately, due to whimsical floating-point accuracy...:
                 Assert.AreNotEqual(expected, calculated);
-				// but...:
-				Assert.AreEqual((Meter)99.999999999999986, calculated);
-			}
+                // but...:
+                Assert.AreEqual((Meter)99.999999999999986, calculated);
+            }
 
-			[TestMethod]
-			public void CompareQuantities()
-			{
-				{
-					// 5.0 tonnes == 5000 kilograms
-					Tonne tonnes = (Tonne)5.0;
-					Kilogram kilograms = (Kilogram)5000.0;
-					Assert.IsTrue((tonnes.Value != kilograms.Value) && (tonnes == (Tonne)kilograms));
-				}
-				{
-					// 5 pounds < 5 kilograms
-					Pound pounds = (Pound)5.0;
-					Kilogram kilograms = (Kilogram)5.0;
-					Assert.IsTrue((kilograms.Value == pounds.Value) && ((Kilogram)pounds != kilograms) && (pounds < (Pound)kilograms) && (kilograms >= (Kilogram)pounds));
-				}
-				{
-					// 5 tonnes > 3000 kilograms
-					Tonne tonnes = (Tonne)5.0;
-					Kilogram kilograms = (Kilogram)3000.0;
-					Assert.IsTrue((tonnes.Value < kilograms.Value) && (tonnes != (Tonne)kilograms) && ((Kilogram)tonnes > kilograms) && ((Tonne)kilograms <= tonnes));
-				}
-			}
-		}
+            [TestMethod]
+            public void CompareQuantities()
+            {
+                {
+                    // 5.0 tonnes == 5000 kilograms
+                    Tonne tonnes = (Tonne)5.0;
+                    Kilogram kilograms = (Kilogram)5000.0;
+                    Assert.IsTrue((tonnes.Value != kilograms.Value) && (tonnes == (Tonne)kilograms));
+                }
+                {
+                    // 5 pounds < 5 kilograms
+                    Pound pounds = (Pound)5.0;
+                    Kilogram kilograms = (Kilogram)5.0;
+                    Assert.IsTrue((kilograms.Value == pounds.Value) && ((Kilogram)pounds != kilograms) && (pounds < (Pound)kilograms) && (kilograms >= (Kilogram)pounds));
+                }
+                {
+                    // 5 tonnes > 3000 kilograms
+                    Tonne tonnes = (Tonne)5.0;
+                    Kilogram kilograms = (Kilogram)3000.0;
+                    Assert.IsTrue((tonnes.Value < kilograms.Value) && (tonnes != (Tonne)kilograms) && ((Kilogram)tonnes > kilograms) && ((Tonne)kilograms <= tonnes));
+                }
+            }
+        }
 
 
-		[TestClass]
-		public class AdditiveOperators
-		{
-			[TestMethod]
-			public void AddSubtract()
-			{
-				Meter meters = (Meter)5.0;	// 5 meters
-				Centimeter centimeters = (Centimeter)25.0;	// 25 centimeters
+        [TestClass]
+        public class AdditiveOperators
+        {
+            [TestMethod]
+            public void AddSubtract()
+            {
+                Meter meters = (Meter)5.0;  // 5 meters
+                Centimeter centimeters = (Centimeter)25.0;  // 25 centimeters
 
-				Meter m = meters + (Meter)centimeters;
-				Assert.AreEqual((Meter)5.25, m);
+                Meter m = meters + (Meter)centimeters;
+                Assert.AreEqual((Meter)5.25, m);
 
-				Centimeter cm = (Centimeter)meters + centimeters;
-				Assert.AreEqual((Centimeter)525.0, cm);
+                Centimeter cm = (Centimeter)meters + centimeters;
+                Assert.AreEqual((Centimeter)525.0, cm);
 
-				m = meters - (Meter)centimeters;
-				Assert.AreEqual((Meter)4.75, m);
+                m = meters - (Meter)centimeters;
+                Assert.AreEqual((Meter)4.75, m);
 
-				cm = (Centimeter)meters - centimeters; ;
-				Assert.AreEqual((Centimeter)475.0, cm);
-			}
+                cm = (Centimeter)meters - centimeters; ;
+                Assert.AreEqual((Centimeter)475.0, cm);
+            }
 
-			[TestMethod]
-			public void IncrementDecrement()
-			{
-				Meter meters = (Meter)5.0;
-				Meter post = meters++;
-				Assert.IsTrue(meters == (Meter)6.0);
-				Meter pre = --meters;
-				Assert.IsTrue((post == pre) && (pre == meters) && (meters == (Meter)5.0));
-			}
-		}
+            [TestMethod]
+            public void IncrementDecrement()
+            {
+                Meter meters = (Meter)5.0;
+                Meter post = meters++;
+                Assert.IsTrue(meters == (Meter)6.0);
+                Meter pre = --meters;
+                Assert.IsTrue((post == pre) && (pre == meters) && (meters == (Meter)5.0));
+            }
+        }
 
-		[TestClass]
-		public class MultiplicativeOperators
-		{
-			[TestMethod]
-			public void MultiplyDivide()
-			{
-				MPH speed = (MPH)100.0;	// 100 mph
-				Minute duration = (Minute)30.0;		// 30 minutes
+        [TestClass]
+        public class MultiplicativeOperators
+        {
+            [TestMethod]
+            public void MultiplyDivide()
+            {
+                MPH speed = (MPH)100.0; // 100 mph
+                Minute duration = (Minute)30.0;     // 30 minutes
 
-				Mile miles = speed * (Hour)duration;
-				Assert.AreEqual((Mile)50.0, miles);
-				Assert.AreEqual("50 mil", miles.ToString(CultureInfo.InvariantCulture));
+                Mile miles = speed * (Hour)duration;
+                Assert.AreEqual((Mile)50.0, miles);
+                Assert.AreEqual("50 mil", miles.ToString(CultureInfo.InvariantCulture));
 
-				Kilometer kilometers = (Kilometer)miles;
-				Assert.AreEqual((Kilometer)80.467199999999991, kilometers);
-				Assert.AreEqual("80.4672 km", kilometers.ToString(CultureInfo.InvariantCulture));
+                Kilometer kilometers = (Kilometer)miles;
+                Assert.AreEqual((Kilometer)80.467199999999991, kilometers);
+                Assert.AreEqual("80.4672 km", kilometers.ToString(CultureInfo.InvariantCulture));
 
-				speed = miles / (Hour)duration;
-				Assert.AreEqual((MPH)100.0, speed);
-				Assert.AreEqual("100 mph", speed.ToString(CultureInfo.InvariantCulture));
-				Assert.AreEqual("160.9344 km/h", ((Kilometer_Hour)speed).ToString(CultureInfo.InvariantCulture));
-				Assert.AreEqual("44.704 m/s", ((Meter_Sec)speed).ToString(CultureInfo.InvariantCulture));
-			}
+                speed = miles / (Hour)duration;
+                Assert.AreEqual((MPH)100.0, speed);
+                Assert.AreEqual("100 mph", speed.ToString(CultureInfo.InvariantCulture));
+                Assert.AreEqual("160.9344 km/h", ((Kilometer_Hour)speed).ToString(CultureInfo.InvariantCulture));
+                Assert.AreEqual("44.704 m/s", ((Meter_Sec)speed).ToString(CultureInfo.InvariantCulture));
+            }
 
-			[TestMethod]
-			public void MultiplyDivideByNumber()
-			{
-				Meter meters = (Meter)5.0;	// 5 meters
+            [TestMethod]
+            public void MultiplyDivideByNumber()
+            {
+                Meter meters = (Meter)5.0;  // 5 meters
 
-				meters *= 2.0;	// 10 meters
-				Assert.AreEqual((Meter)10.0, meters);
+                meters *= 2.0;  // 10 meters
+                Assert.AreEqual((Meter)10.0, meters);
 
-				meters /= 5.0;	// 2 meters
-				Assert.AreEqual((Meter)2.0, meters);
-			}
-		}
-	}
+                meters /= 5.0;  // 2 meters
+                Assert.AreEqual((Meter)2.0, meters);
+            }
+        }
+    }
 }

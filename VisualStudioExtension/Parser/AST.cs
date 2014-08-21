@@ -15,31 +15,31 @@ using System;
 namespace Man.UnitsOfMeasurement
 {
     /// <summary>
-	/// TODO: Update summary.
-	/// </summary>
-	internal interface IASTEncoder
-	{
-		void Encode(ASTNumber number);
-		void Encode(ASTLiteral literal);
-		void Encode(ASTMagnitude magnitude);
-		void Encode(ASTUnit unit);
-		void Encode(ASTUnary term);
-		void Encode(ASTParenthesized term);
-		void Encode(ASTProduct product);
-		void Encode(ASTQuotient quotient);
-		void Encode(ASTSum sum);
-		void Encode(ASTDifference difference);
-	}
+    /// TODO: Update summary.
+    /// </summary>
+    internal interface IASTEncoder
+    {
+        void Encode(ASTNumber number);
+        void Encode(ASTLiteral literal);
+        void Encode(ASTMagnitude magnitude);
+        void Encode(ASTUnit unit);
+        void Encode(ASTUnary term);
+        void Encode(ASTParenthesized term);
+        void Encode(ASTProduct product);
+        void Encode(ASTQuotient quotient);
+        void Encode(ASTSum sum);
+        void Encode(ASTDifference difference);
+    }
 
-	/// <summary>
-	/// TODO: Update summary.
-	/// </summary>
-	internal abstract class ASTNode
-	{
-		#region Properties
-		public virtual bool IsNumeric { get { return false; } }
-		public virtual bool IsLiteral { get { return false; } }
-		public virtual UnitType Unit { get { return null; } }
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    internal abstract class ASTNode
+    {
+        #region Properties
+        public virtual bool IsNumeric { get { return false; } }
+        public virtual bool IsLiteral { get { return false; } }
+        public virtual UnitType Unit { get { return null; } }
         #endregion
 
         #region Constructor(s)
@@ -95,90 +95,90 @@ namespace Man.UnitsOfMeasurement
         /// <remarks>u, v - units. x - numeric expression (made of numbers and/or literals only)</remarks>
         public virtual void Bind(UnitType result) { }
 
-		#endregion
-	}
+        #endregion
+    }
 
     internal class ASTNumber : ASTNode
-	{
-		public Number Number { get; private set; }
+    {
+        public Number Number { get; private set; }
 
-		public override bool IsNumeric { get { return true; } }
+        public override bool IsNumeric { get { return true; } }
 
-		public ASTNumber(Number number) :
-			base()
-		{
-			Number = number;
-		}
+        public ASTNumber(Number number) :
+            base()
+        {
+            Number = number;
+        }
 
-		public override void Accept(IASTEncoder encoder) { encoder.Encode(this); }
-	}
+        public override void Accept(IASTEncoder encoder) { encoder.Encode(this); }
+    }
 
     internal class ASTLiteral : ASTNode
-	{
-		public string Literal { get; private set; }
+    {
+        public string Literal { get; private set; }
 
-		public override bool IsNumeric { get { return true; } }
-		public override bool IsLiteral { get { return true; } }
+        public override bool IsNumeric { get { return true; } }
+        public override bool IsLiteral { get { return true; } }
 
-		public ASTLiteral(string literal) :
-			base()
-		{
-			Literal = literal;
-		}
+        public ASTLiteral(string literal) :
+            base()
+        {
+            Literal = literal;
+        }
 
-		public override void Accept(IASTEncoder encoder) { encoder.Encode(this); }
-	}
+        public override void Accept(IASTEncoder encoder) { encoder.Encode(this); }
+    }
 
     internal class ASTMagnitude : ASTNode
-	{
-		public int Exponent { get; private set; }
+    {
+        public int Exponent { get; private set; }
 
-		public ASTMagnitude(Magnitude magnitude) :
-			base()
-		{
-			Exponent = (int)magnitude;
-		}
-		public ASTMagnitude() :
-			base()
-		{
-			Exponent = -1;
-		}
+        public ASTMagnitude(Magnitude magnitude) :
+            base()
+        {
+            Exponent = (int)magnitude;
+        }
+        public ASTMagnitude() :
+            base()
+        {
+            Exponent = -1;
+        }
 
-		public override void Accept(IASTEncoder encoder) { encoder.Encode(this); }
-	}
+        public override void Accept(IASTEncoder encoder) { encoder.Encode(this); }
+    }
 
     internal class ASTUnit : ASTNode
-	{
-		private UnitType m_unit;
-		public override UnitType Unit { get { return m_unit; } }
+    {
+        private UnitType m_unit;
+        public override UnitType Unit { get { return m_unit; } }
 
-		public ASTUnit(UnitType unit) :
-			base()
-		{
-			m_unit = unit;
-		}
+        public ASTUnit(UnitType unit) :
+            base()
+        {
+            m_unit = unit;
+        }
 
-		public override void Accept(IASTEncoder encoder) { encoder.Encode(this); }
+        public override void Accept(IASTEncoder encoder) { encoder.Encode(this); }
 
-		public override void Bind(UnitType result) { m_unit.AddRelative(result); }
-	}
+        public override void Bind(UnitType result) { m_unit.AddRelative(result); }
+    }
 
     internal class ASTUnary : ASTNode
-	{
-		public bool Plus { get; private set; }
-		public ASTNode Expr { get; private set; }
+    {
+        public bool Plus { get; private set; }
+        public ASTNode Expr { get; private set; }
 
-		public override bool IsNumeric { get { return Expr.IsNumeric; } }
-		public override bool IsLiteral { get { return Expr.IsLiteral; } }
+        public override bool IsNumeric { get { return Expr.IsNumeric; } }
+        public override bool IsLiteral { get { return Expr.IsLiteral; } }
 
-		public ASTUnary(bool plus, ASTNode expr) :
-			base()
-		{
-			Plus = plus;
-			Expr = expr;
-		}
+        public ASTUnary(bool plus, ASTNode expr) :
+            base()
+        {
+            Plus = plus;
+            Expr = expr;
+        }
 
-		public override void Accept(IASTEncoder encoder) { Expr.Accept(encoder); encoder.Encode(this); }
+        public override void Accept(IASTEncoder encoder) { Expr.Accept(encoder); encoder.Encode(this); }
 
         public override ASTNode TryNormalize()
         {
@@ -198,20 +198,20 @@ namespace Man.UnitsOfMeasurement
     }
 
     internal class ASTParenthesized : ASTNode
-	{
-		public ASTNode Expr { get; private set; }
+    {
+        public ASTNode Expr { get; private set; }
 
-		public override bool IsNumeric { get { return Expr.IsNumeric; } }
-		public override bool IsLiteral { get { return Expr.IsLiteral; } }
-		public override UnitType Unit { get { return Expr.Unit; } }
+        public override bool IsNumeric { get { return Expr.IsNumeric; } }
+        public override bool IsLiteral { get { return Expr.IsLiteral; } }
+        public override UnitType Unit { get { return Expr.Unit; } }
 
-		public ASTParenthesized(ASTNode expr) :
-			base()
-		{
-			Expr = expr;
-		}
+        public ASTParenthesized(ASTNode expr) :
+            base()
+        {
+            Expr = expr;
+        }
 
-		public override void Accept(IASTEncoder encoder) { Expr.Accept(encoder); encoder.Encode(this); }
+        public override void Accept(IASTEncoder encoder) { Expr.Accept(encoder); encoder.Encode(this); }
 
         public override ASTNode TryNormalize()
         {
@@ -231,21 +231,21 @@ namespace Man.UnitsOfMeasurement
     }
 
     internal class ASTProduct : ASTNode
-	{
-		public ASTNode Lhs { get; private set; }
-		public ASTNode Rhs { get; private set; }
+    {
+        public ASTNode Lhs { get; private set; }
+        public ASTNode Rhs { get; private set; }
 
-		public override bool IsNumeric { get { return Lhs.IsNumeric && Rhs.IsNumeric; } }
-		public override bool IsLiteral { get { return Lhs.IsLiteral || Rhs.IsLiteral; } }
+        public override bool IsNumeric { get { return Lhs.IsNumeric && Rhs.IsNumeric; } }
+        public override bool IsLiteral { get { return Lhs.IsLiteral || Rhs.IsLiteral; } }
 
-		public ASTProduct(ASTNode lhs, ASTNode rhs) :
-			base()
-		{
-			Lhs = lhs;
-			Rhs = rhs;
-		}
+        public ASTProduct(ASTNode lhs, ASTNode rhs) :
+            base()
+        {
+            Lhs = lhs;
+            Rhs = rhs;
+        }
 
-		public override void Accept(IASTEncoder encoder) { Lhs.Accept(encoder); Rhs.Accept(encoder); encoder.Encode(this); }
+        public override void Accept(IASTEncoder encoder) { Lhs.Accept(encoder); Rhs.Accept(encoder); encoder.Encode(this); }
 
         public override ASTNode TryNormalize()
         {
@@ -303,17 +303,17 @@ namespace Man.UnitsOfMeasurement
 
                 // E.g.: Joule = Newton * Meter
                 // Newton.cs (or Meter.cs): 
-                //		public static Joule operator *(Newton lhs, Meter rhs) { return new Joule(lhs.Value * rhs.Value); }
-                //		public static Joule operator *(Meter lhs, Newton rhs) { return new Joule(lhs.Value * rhs.Value); }
+                //      public static Joule operator *(Newton lhs, Meter rhs) { return new Joule(lhs.Value * rhs.Value); }
+                //      public static Joule operator *(Meter lhs, Newton rhs) { return new Joule(lhs.Value * rhs.Value); }
                 L.AddOuterOperation(result, "*", L, R);
-                if (L.Name != R.Name) L.AddOuterOperation(result, "*", R, L);	// --or -- R.Arithmetic.Add(result, "*", R, L);
+                if (L.Name != R.Name) L.AddOuterOperation(result, "*", R, L);   // --or -- R.Arithmetic.Add(result, "*", R, L);
 
                 // => result / unitL = unitR
                 // => result / unitR = unitL
                 //
                 // Joule.cs: 
-                //		public static Newton operator /(Joule lhs, Meter rhs) { return new Newton(lhs.Value / rhs.Value); }
-                //		public static Meter operator /(Joule lhs, Newton rhs) { return new Meter(lhs.Value / rhs.Value); }
+                //      public static Newton operator /(Joule lhs, Meter rhs) { return new Newton(lhs.Value / rhs.Value); }
+                //      public static Meter operator /(Joule lhs, Newton rhs) { return new Meter(lhs.Value / rhs.Value); }
                 result.AddOuterOperation(R, "/", result, L);
                 if (L.Name != R.Name) result.AddOuterOperation(L, "/", result, R);
             }
@@ -323,9 +323,9 @@ namespace Man.UnitsOfMeasurement
                 //
                 // E.g. Centimeter = Meter * 100.0
                 // Meter.cs:
-                //		public static explicit operator Meter(Centimeter q) { return new Meter((Meter.Factor / Centimeter.Factor) * q.Value); }
+                //      public static explicit operator Meter(Centimeter q) { return new Meter((Meter.Factor / Centimeter.Factor) * q.Value); }
                 // Centimeter.cs:
-                //		public static explicit operator Centimeter(Meter q) { return new Centimeter((Centimeter.Factor / Meter.Factor) * q.Value); }
+                //      public static explicit operator Centimeter(Meter q) { return new Centimeter((Centimeter.Factor / Meter.Factor) * q.Value); }
                 //
                 Lhs.Bind(result);
             }
@@ -334,10 +334,10 @@ namespace Man.UnitsOfMeasurement
                 // result = number * unit (conversion)
 
                 // E.g. Centimeter = 100.0 * Meter
-                //	Meter.cs:
-                //		public static explicit operator Meter(Centimeter q) { return new Meter((Meter.Factor / Centimeter.Factor) * q.Value); }
-                //	Centimeter.cs:
-                //		public static explicit operator Centimeter(Meter q) { return new Centimeter((Centimeter.Factor / Meter.Factor) * q.Value); }
+                //  Meter.cs:
+                //      public static explicit operator Meter(Centimeter q) { return new Meter((Meter.Factor / Centimeter.Factor) * q.Value); }
+                //  Centimeter.cs:
+                //      public static explicit operator Centimeter(Meter q) { return new Centimeter((Centimeter.Factor / Meter.Factor) * q.Value); }
                 //
                 Rhs.Bind(result);
             }
@@ -345,21 +345,21 @@ namespace Man.UnitsOfMeasurement
     }
 
     internal class ASTQuotient : ASTNode
-	{
-		public ASTNode Lhs { get; private set; }
-		public ASTNode Rhs { get; private set; }
+    {
+        public ASTNode Lhs { get; private set; }
+        public ASTNode Rhs { get; private set; }
 
-		public override bool IsNumeric { get { return Lhs.IsNumeric && Rhs.IsNumeric; } }
-		public override bool IsLiteral { get { return Lhs.IsLiteral || Rhs.IsLiteral; } }
+        public override bool IsNumeric { get { return Lhs.IsNumeric && Rhs.IsNumeric; } }
+        public override bool IsLiteral { get { return Lhs.IsLiteral || Rhs.IsLiteral; } }
 
-		public ASTQuotient(ASTNode lhs, ASTNode rhs) :
-			base()
-		{
-			Lhs = lhs;
-			Rhs = rhs;
-		}
+        public ASTQuotient(ASTNode lhs, ASTNode rhs) :
+            base()
+        {
+            Lhs = lhs;
+            Rhs = rhs;
+        }
 
-		public override void Accept(IASTEncoder encoder) { Lhs.Accept(encoder); Rhs.Accept(encoder); encoder.Encode(this); }
+        public override void Accept(IASTEncoder encoder) { Lhs.Accept(encoder); Rhs.Accept(encoder); encoder.Encode(this); }
 
         public override ASTNode TryNormalize()
         {
@@ -417,17 +417,17 @@ namespace Man.UnitsOfMeasurement
 
                 // E.g.: MPH = Mile / Hour
                 // Mile.cs (or Hour.cs): 
-                //		public static MPH operator *(Mile lhs, Hour rhs) { return new MPH(lhs.Value / rhs.Value); }
+                //      public static MPH operator *(Mile lhs, Hour rhs) { return new MPH(lhs.Value / rhs.Value); }
                 L.AddOuterOperation(result, "/", L, R);
 
                 // => unitL / result = unitR
                 // Mile.cs (or MPH.cs): 
-                //		public static Hour operator /(Mile lhs, MPH rhs) { return new Hour(lhs.Value / rhs.Value); }
+                //      public static Hour operator /(Mile lhs, MPH rhs) { return new Hour(lhs.Value / rhs.Value); }
                 L.AddOuterOperation(R, "/", L, result);
 
                 // => result * unitR = unitL
                 // Hour.cs (or MPH.cs): 
-                //		public static Mile operator *(MPH lhs, Hour rhs) { return new Mile(lhs.Value / rhs.Value); }
+                //      public static Mile operator *(MPH lhs, Hour rhs) { return new Mile(lhs.Value / rhs.Value); }
                 result.AddOuterOperation(L, "*", result, R);
                 result.AddOuterOperation(L, "*", R, result);
             }
@@ -437,9 +437,9 @@ namespace Man.UnitsOfMeasurement
                 //
                 // E.g. Meter = Centimeter / 100.0
                 // Meter.cs:
-                //		public static explicit operator Meter(Centimeter q) { return new Meter((Meter.Factor / Centimeter.Factor) * q.Value); }
+                //      public static explicit operator Meter(Centimeter q) { return new Meter((Meter.Factor / Centimeter.Factor) * q.Value); }
                 // Centimeter.cs:
-                //		public static explicit operator Centimeter(Meter q) { return new Centimeter((Centimeter.Factor / Meter.Factor) * q.Value); }
+                //      public static explicit operator Centimeter(Meter q) { return new Centimeter((Centimeter.Factor / Meter.Factor) * q.Value); }
                 //
                 Lhs.Bind(result);
             }
@@ -450,16 +450,16 @@ namespace Man.UnitsOfMeasurement
 
                 // E.g. Hertz "Hz" = 1.0 / Second
                 // Second.cs
-                //		public static Hertz operator /(double lhs, Second rhs) { return new Hertz(lhs / rhs.Value); }
+                //      public static Hertz operator /(double lhs, Second rhs) { return new Hertz(lhs / rhs.Value); }
                 R.AddOuterOperation(result, "/", numType, R);
 
                 // Hertz.cs
-                //		public static Second operator /(double lhs, Hertz rhs) { return new Second(lhs / rhs.Value); }
+                //      public static Second operator /(double lhs, Hertz rhs) { return new Second(lhs / rhs.Value); }
                 result.AddOuterOperation(R, "/", numType, result);
 
                 // Hertz.cs (or Second.cs)
-                //		public static double operator *(Hertz lhs, Second rhs) { return lhs.Value * rhs.Value; }
-                //		public static double operator *(Second lhs, Hertz rhs) { return lhs.Value * rhs.Value; }
+                //      public static double operator *(Hertz lhs, Second rhs) { return lhs.Value * rhs.Value; }
+                //      public static double operator *(Second lhs, Hertz rhs) { return lhs.Value * rhs.Value; }
                 result.AddOuterOperation(numType, "*", result, R);
                 result.AddOuterOperation(numType, "*", R, result);
             }
@@ -467,36 +467,36 @@ namespace Man.UnitsOfMeasurement
     }
 
     internal class ASTSum : ASTNode
-	{
-		public ASTNode Lhs { get; private set; }
-		public ASTNode Rhs { get; private set; }
+    {
+        public ASTNode Lhs { get; private set; }
+        public ASTNode Rhs { get; private set; }
 
-		public override bool IsNumeric { get { return Lhs.IsNumeric && Rhs.IsNumeric; } }
-		public override bool IsLiteral { get { return Lhs.IsLiteral || Rhs.IsLiteral; } }
+        public override bool IsNumeric { get { return Lhs.IsNumeric && Rhs.IsNumeric; } }
+        public override bool IsLiteral { get { return Lhs.IsLiteral || Rhs.IsLiteral; } }
 
-		public ASTSum(ASTNode lhs, ASTNode rhs) :
-			base()
-		{
-			Lhs = lhs;
-			Rhs = rhs;
-		}
-		public override void Accept(IASTEncoder encoder) { Lhs.Accept(encoder); Rhs.Accept(encoder); encoder.Encode(this); }
-	}
+        public ASTSum(ASTNode lhs, ASTNode rhs) :
+            base()
+        {
+            Lhs = lhs;
+            Rhs = rhs;
+        }
+        public override void Accept(IASTEncoder encoder) { Lhs.Accept(encoder); Rhs.Accept(encoder); encoder.Encode(this); }
+    }
 
     internal class ASTDifference : ASTNode
-	{
-		public ASTNode Lhs { get; private set; }
-		public ASTNode Rhs { get; private set; }
+    {
+        public ASTNode Lhs { get; private set; }
+        public ASTNode Rhs { get; private set; }
 
-		public override bool IsNumeric { get { return Lhs.IsNumeric && Rhs.IsNumeric; } }
-		public override bool IsLiteral { get { return Lhs.IsLiteral || Rhs.IsLiteral; } }
+        public override bool IsNumeric { get { return Lhs.IsNumeric && Rhs.IsNumeric; } }
+        public override bool IsLiteral { get { return Lhs.IsLiteral || Rhs.IsLiteral; } }
 
-		public ASTDifference(ASTNode lhs, ASTNode rhs) :
-			base()
-		{
-			Lhs = lhs;
-			Rhs = rhs;
-		}
-		public override void Accept(IASTEncoder encoder) { Lhs.Accept(encoder); Rhs.Accept(encoder); encoder.Encode(this); }
-	}
+        public ASTDifference(ASTNode lhs, ASTNode rhs) :
+            base()
+        {
+            Lhs = lhs;
+            Rhs = rhs;
+        }
+        public override void Accept(IASTEncoder encoder) { Lhs.Accept(encoder); Rhs.Accept(encoder); encoder.Encode(this); }
+    }
 }

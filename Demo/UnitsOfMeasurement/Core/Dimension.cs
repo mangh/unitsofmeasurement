@@ -17,28 +17,28 @@
 using System;
 
 #if DIMENSION_UINT64 
-	using DIMENSION = System.UInt64;
+    using DIMENSION = System.UInt64;
 #else
-	using DIMENSION = System.UInt32;
+    using DIMENSION = System.UInt32;
 #endif
 
 namespace Demo.UnitsOfMeasurement
 {
-	public enum Magnitude : int
-	{
-		Length = 0,
-		Time = 1,
-		Mass = 2,
-		Temperature = 3,
-		ElectricCurrent = 4,
-		AmountOfSubstance = 5,
-		LuminousIntensity = 6,
-		Other = 7,
-		Money = Other,
-	}
+    public enum Magnitude : int
+    {
+        Length = 0,
+        Time = 1,
+        Mass = 2,
+        Temperature = 3,
+        ElectricCurrent = 4,
+        AmountOfSubstance = 5,
+        LuminousIntensity = 6,
+        Other = 7,
+        Money = Other,
+    }
 
-	public struct Dimension : IEquatable<Dimension>
-	{
+    public struct Dimension : IEquatable<Dimension>
+    {
         #region Static constants
 
         // Dimensional constants
@@ -68,278 +68,278 @@ namespace Demo.UnitsOfMeasurement
 
 #if DIMENSION_UINT64 
         // Constants for exponent fields within UInt64 dimension structure:
-		private static readonly int COMPLEMENT = 256;	// 2's complement base
-		private static readonly int MAXEXP = 127;	// exponent max value
-		private static readonly int MINEXP = -128;	// exponent min value
-		private static readonly int LOGWIDTH = 3;	// exponent bit-width = 2^LOGWIDTH
-		private static readonly byte EXPMASK = 0xFF;	// exponent bit mask
+        private static readonly int COMPLEMENT = 256;   // 2's complement base
+        private static readonly int MAXEXP = 127;   // exponent max value
+        private static readonly int MINEXP = -128;  // exponent min value
+        private static readonly int LOGWIDTH = 3;   // exponent bit-width = 2^LOGWIDTH
+        private static readonly byte EXPMASK = 0xFF;    // exponent bit mask
 #if !STANDARD_ARITHMETIC
-		private static readonly DIMENSION CARRY = 0x7F7F7F7F7F7F7F7F;	// carry/borrow bits for binary addition/subtraction
+        private static readonly DIMENSION CARRY = 0x7F7F7F7F7F7F7F7F;   // carry/borrow bits for binary addition/subtraction
 #endif
 #else
         // Constants for exponent fields within UInt32 dimension structure:
-        private static readonly int COMPLEMENT = 16;	// 2's complement base
-        private static readonly int MAXEXP = 7;	// exponent max value
-        private static readonly int MINEXP = -8;	// exponent min value
-        private static readonly int LOGWIDTH = 2;	// exponent bit-width = 2^LOGWIDTH
-        private static readonly byte EXPMASK = 0x0F;	// exponent bit mask
+        private static readonly int COMPLEMENT = 16;    // 2's complement base
+        private static readonly int MAXEXP = 7; // exponent max value
+        private static readonly int MINEXP = -8;    // exponent min value
+        private static readonly int LOGWIDTH = 2;   // exponent bit-width = 2^LOGWIDTH
+        private static readonly byte EXPMASK = 0x0F;    // exponent bit mask
 #if !STANDARD_ARITHMETIC
-        private static readonly DIMENSION CARRY = 0x77777777;	// carry/borrow bits for binary addition/subtraction
+        private static readonly DIMENSION CARRY = 0x77777777;   // carry/borrow bits for binary addition/subtraction
 #endif
 #endif
 
         private static readonly string[] s_symbol = 
-		{ 
-			"L",		/* Length */
-			"T",		/* Time */
-			"M",		/* Mass */
-			"\u03F4"	/* Temperature (Θ - greek capital letter theta) */,
-			"I",		/* Electric Current */
-			"N",		/* Amount of Substance */
-			"J",		/* Luminous Intensity */
-			"\u00A4"	/* Money (¤ - generic currency sign) */
-		};
+        { 
+            "L",        /* Length */
+            "T",        /* Time */
+            "M",        /* Mass */
+            "\u03F4"    /* Temperature (Θ - greek capital letter theta) */,
+            "I",        /* Electric Current */
+            "N",        /* Amount of Substance */
+            "J",        /* Luminous Intensity */
+            "\u00A4"    /* Money (¤ - generic currency sign) */
+        };
 
         #endregion
 
         #region Properties
 
-		private DIMENSION m_exponents;
-		public DIMENSION Exponents { get { return m_exponents; } }
+        private DIMENSION m_exponents;
+        public DIMENSION Exponents { get { return m_exponents; } }
 
-		#endregion
+        #endregion
 
-		#region Constructor(s)
+        #region Constructor(s)
 
-		// Base unit
-		public Dimension(Magnitude magnitude)
-		{
-			m_exponents = 0;
-			this[magnitude] = 1;
-		}
+        // Base unit
+        public Dimension(Magnitude magnitude)
+        {
+            m_exponents = 0;
+            this[magnitude] = 1;
+        }
 
-		// Complex unit
-		public Dimension(int length, int time, int mass, int temperature, int current, int substance, int intensity, int other)
-		{
-			m_exponents = 0;
+        // Complex unit
+        public Dimension(int length, int time, int mass, int temperature, int current, int substance, int intensity, int other)
+        {
+            m_exponents = 0;
 
-			this[Magnitude.Length] = length;
-			this[Magnitude.Time] = time;
-			this[Magnitude.Mass] = mass;
-			this[Magnitude.Temperature] = temperature;
-			this[Magnitude.ElectricCurrent] = current;
-			this[Magnitude.AmountOfSubstance] = substance;
-			this[Magnitude.LuminousIntensity] = intensity;
-			this[Magnitude.Other] = other;
-		}
+            this[Magnitude.Length] = length;
+            this[Magnitude.Time] = time;
+            this[Magnitude.Mass] = mass;
+            this[Magnitude.Temperature] = temperature;
+            this[Magnitude.ElectricCurrent] = current;
+            this[Magnitude.AmountOfSubstance] = substance;
+            this[Magnitude.LuminousIntensity] = intensity;
+            this[Magnitude.Other] = other;
+        }
 
-		private Dimension(DIMENSION exponents)
-		{
-			m_exponents = exponents;
-		}
+        private Dimension(DIMENSION exponents)
+        {
+            m_exponents = exponents;
+        }
 
-		#endregion Constructor(s)
+        #endregion Constructor(s)
 
-		#region Indexer(s)
+        #region Indexer(s)
 
-		public int this[Magnitude magnitude]
-		{
-			get
-			{
-				int exponent = (int)magnitude;
-				byte x = (byte)((m_exponents >> (exponent << LOGWIDTH)) & EXPMASK);
-				return (x > MAXEXP) ? ((int)x - COMPLEMENT) : (int)x;
-			}
-			private set
-			{
-				int exponent = (int)magnitude;
-				if ((value < MINEXP) || (MAXEXP < value))
-					throw new OverflowException(String.Format("Dimension \"{0}\": exponent value \"{1}\" out of range [{2},{3}].", magnitude.ToString(), value, MINEXP, MAXEXP));
-				m_exponents |= ((DIMENSION)(value & EXPMASK)) << (exponent << LOGWIDTH);
-			}
-		}
+        public int this[Magnitude magnitude]
+        {
+            get
+            {
+                int exponent = (int)magnitude;
+                byte x = (byte)((m_exponents >> (exponent << LOGWIDTH)) & EXPMASK);
+                return (x > MAXEXP) ? ((int)x - COMPLEMENT) : (int)x;
+            }
+            private set
+            {
+                int exponent = (int)magnitude;
+                if ((value < MINEXP) || (MAXEXP < value))
+                    throw new OverflowException(String.Format("Dimension \"{0}\": exponent value \"{1}\" out of range [{2},{3}].", magnitude.ToString(), value, MINEXP, MAXEXP));
+                m_exponents |= ((DIMENSION)(value & EXPMASK)) << (exponent << LOGWIDTH);
+            }
+        }
 
-		#endregion Indexer(s)
+        #endregion Indexer(s)
 
-		#region IEquatable<Dimension>
+        #region IEquatable<Dimension>
 
-		public bool Equals(Dimension other)
-		{
-			return m_exponents == other.Exponents;
-		}
+        public bool Equals(Dimension other)
+        {
+            return m_exponents == other.Exponents;
+        }
 
-		public override bool Equals(object obj)
-		{
-			return (obj != null) && (obj is Dimension) && Equals((Dimension)obj);
-		}
+        public override bool Equals(object obj)
+        {
+            return (obj != null) && (obj is Dimension) && Equals((Dimension)obj);
+        }
 
-		public override int GetHashCode()
-		{
-			return m_exponents.GetHashCode();
-		}
+        public override int GetHashCode()
+        {
+            return m_exponents.GetHashCode();
+        }
 
-		#endregion IEquatable<Dimension>
+        #endregion IEquatable<Dimension>
 
-		#region Operators
+        #region Operators
 
-		public static bool operator ==(Dimension A, Dimension B)
-		{
-			return A.Equals(B);
-		}
+        public static bool operator ==(Dimension A, Dimension B)
+        {
+            return A.Equals(B);
+        }
 
-		public static bool operator !=(Dimension A, Dimension B)
-		{
-			return !A.Equals(B);
-		}
+        public static bool operator !=(Dimension A, Dimension B)
+        {
+            return !A.Equals(B);
+        }
 
-		public static Dimension operator *(Dimension x, Dimension y)
-		{
+        public static Dimension operator *(Dimension x, Dimension y)
+        {
 #if STANDARD_ARITHMETIC
-			return new Dimension(
-				x[Magnitude.Length] + y[Magnitude.Length],
-				x[Magnitude.Time] + y[Magnitude.Time],
-				x[Magnitude.Mass] + y[Magnitude.Mass],
-				x[Magnitude.Temperature] + y[Magnitude.Temperature],
-				x[Magnitude.ElectricCurrent] + y[Magnitude.ElectricCurrent],
-				x[Magnitude.AmountOfSubstance] + y[Magnitude.AmountOfSubstance],
-				x[Magnitude.LuminousIntensity] + y[Magnitude.LuminousIntensity],
-				x[Magnitude.Other] + y[Magnitude.Other]
-			);
+            return new Dimension(
+                x[Magnitude.Length] + y[Magnitude.Length],
+                x[Magnitude.Time] + y[Magnitude.Time],
+                x[Magnitude.Mass] + y[Magnitude.Mass],
+                x[Magnitude.Temperature] + y[Magnitude.Temperature],
+                x[Magnitude.ElectricCurrent] + y[Magnitude.ElectricCurrent],
+                x[Magnitude.AmountOfSubstance] + y[Magnitude.AmountOfSubstance],
+                x[Magnitude.LuminousIntensity] + y[Magnitude.LuminousIntensity],
+                x[Magnitude.Other] + y[Magnitude.Other]
+            );
 #else
-			// The algoritm below is a modified binary addition of two's complement integers.
-			// It performs parallel addition of 8 exponents numbers packed within dimension structure.
-			// The addition is performed in UP TO 5 iterations (for 4-bit exponents) or 9 iteration (for 8-bit exponents).
-			// This is significantly faster than old algorithm (above) that always requires 16 unpacks, 8 additions and 8 packs.
-			// However it's very ugly (in that it's hard to see what is it doing) and that's why I left the old one as an option.
-			DIMENSION sum = x.Exponents ^ y.Exponents;
-			DIMENSION summed;
-			DIMENSION carry = x.Exponents & y.Exponents;
-			DIMENSION carried = 0;
-			while (carry != 0)
-			{
-				carried |= carry;
-				carry &= CARRY;	// no bit can be carried over between adjacent exponent numbers
-				carry <<= 1;
-				summed = sum;
-				sum = summed ^ carry;
-				carry = summed & carry;
-			}
-			// Check overflow condition:
-			if (((carried ^ (carried << 1)) & ~CARRY) != 0)
-				throw new OverflowException(String.Format("Dimension product \"{0} * {1}\" out of range [{2},{3}]", x.ToString(), y.ToString(), MINEXP, MAXEXP));
+            // The algoritm below is a modified binary addition of two's complement integers.
+            // It performs parallel addition of 8 exponents numbers packed within dimension structure.
+            // The addition is performed in UP TO 5 iterations (for 4-bit exponents) or 9 iteration (for 8-bit exponents).
+            // This is significantly faster than old algorithm (above) that always requires 16 unpacks, 8 additions and 8 packs.
+            // However it's very ugly (in that it's hard to see what is it doing) and that's why I left the old one as an option.
+            DIMENSION sum = x.Exponents ^ y.Exponents;
+            DIMENSION summed;
+            DIMENSION carry = x.Exponents & y.Exponents;
+            DIMENSION carried = 0;
+            while (carry != 0)
+            {
+                carried |= carry;
+                carry &= CARRY; // no bit can be carried over between adjacent exponent numbers
+                carry <<= 1;
+                summed = sum;
+                sum = summed ^ carry;
+                carry = summed & carry;
+            }
+            // Check overflow condition:
+            if (((carried ^ (carried << 1)) & ~CARRY) != 0)
+                throw new OverflowException(String.Format("Dimension product \"{0} * {1}\" out of range [{2},{3}]", x.ToString(), y.ToString(), MINEXP, MAXEXP));
 
-			return new Dimension(sum);
+            return new Dimension(sum);
 #endif
-		}
+        }
 
-		public static Dimension operator /(Dimension x, Dimension y)
-		{
+        public static Dimension operator /(Dimension x, Dimension y)
+        {
 #if STANDARD_ARITHMETIC
-			return new Dimension(
-				x[Magnitude.Length] - y[Magnitude.Length],
-				x[Magnitude.Time] - y[Magnitude.Time],
-				x[Magnitude.Mass] - y[Magnitude.Mass],
-				x[Magnitude.Temperature] - y[Magnitude.Temperature],
-				x[Magnitude.ElectricCurrent] - y[Magnitude.ElectricCurrent],
-				x[Magnitude.AmountOfSubstance] - y[Magnitude.AmountOfSubstance],
-				x[Magnitude.LuminousIntensity] - y[Magnitude.LuminousIntensity],
-				x[Magnitude.Other] - y[Magnitude.Other]
-			);
+            return new Dimension(
+                x[Magnitude.Length] - y[Magnitude.Length],
+                x[Magnitude.Time] - y[Magnitude.Time],
+                x[Magnitude.Mass] - y[Magnitude.Mass],
+                x[Magnitude.Temperature] - y[Magnitude.Temperature],
+                x[Magnitude.ElectricCurrent] - y[Magnitude.ElectricCurrent],
+                x[Magnitude.AmountOfSubstance] - y[Magnitude.AmountOfSubstance],
+                x[Magnitude.LuminousIntensity] - y[Magnitude.LuminousIntensity],
+                x[Magnitude.Other] - y[Magnitude.Other]
+            );
 #else
-			// The algoritm below is a modified binary subtraction of two's complement integers.
-			// It performs parallel subtraction of 8 exponents numbers packed within dimension structure.
-			// The subtraction is performed in UP TO 5 iterations (for 4-bit exponents) or 9 iteration (for 8-bit exponents).
-			// This is significantly faster than old algorithm (above) that always requires 16 unpacks, 8 subtractions and 8 packs.
-			// However it's very ugly (in that it's hard to see what is it doing) and that's why I left the old one as an option.
-			DIMENSION difference = x.Exponents ^ y.Exponents;
-			DIMENSION borrow = difference & y.Exponents;
-			DIMENSION borrowed = 0;
-			while (borrow != 0)
-			{
-				borrowed |= borrow;
-				borrow &= CARRY;	// no bit can be carried over between adjacent exponent numbers
-				borrow <<= 1;
-				difference ^= borrow;
-				borrow &= difference;
-			}
-			// Check overflow condition:				
-			if (((borrowed ^ (borrowed << 1)) & ~CARRY) != 0)
-				throw new OverflowException(String.Format("Dimension quotient \"{0} / {1}\" out of range [{2},{3}]", x.ToString(), y.ToString(), MINEXP, MAXEXP));
+            // The algoritm below is a modified binary subtraction of two's complement integers.
+            // It performs parallel subtraction of 8 exponents numbers packed within dimension structure.
+            // The subtraction is performed in UP TO 5 iterations (for 4-bit exponents) or 9 iteration (for 8-bit exponents).
+            // This is significantly faster than old algorithm (above) that always requires 16 unpacks, 8 subtractions and 8 packs.
+            // However it's very ugly (in that it's hard to see what is it doing) and that's why I left the old one as an option.
+            DIMENSION difference = x.Exponents ^ y.Exponents;
+            DIMENSION borrow = difference & y.Exponents;
+            DIMENSION borrowed = 0;
+            while (borrow != 0)
+            {
+                borrowed |= borrow;
+                borrow &= CARRY;    // no bit can be carried over between adjacent exponent numbers
+                borrow <<= 1;
+                difference ^= borrow;
+                borrow &= difference;
+            }
+            // Check overflow condition:                
+            if (((borrowed ^ (borrowed << 1)) & ~CARRY) != 0)
+                throw new OverflowException(String.Format("Dimension quotient \"{0} / {1}\" out of range [{2},{3}]", x.ToString(), y.ToString(), MINEXP, MAXEXP));
 
-			return new Dimension(difference);
+            return new Dimension(difference);
 #endif
-		}
+        }
 
-		public static Dimension Pow(Dimension x, int num, int den)
-		{
-			int xLength = x[Magnitude.Length];
-			int xTime = x[Magnitude.Time];
-			int xMass = x[Magnitude.Mass];
-			int xTemperature = x[Magnitude.Temperature];
-			int xCurrent = x[Magnitude.ElectricCurrent];
-			int xSubstance = x[Magnitude.AmountOfSubstance];
-			int xIntensity = x[Magnitude.LuminousIntensity];
-			int xOther = x[Magnitude.Other];
+        public static Dimension Pow(Dimension x, int num, int den)
+        {
+            int xLength = x[Magnitude.Length];
+            int xTime = x[Magnitude.Time];
+            int xMass = x[Magnitude.Mass];
+            int xTemperature = x[Magnitude.Temperature];
+            int xCurrent = x[Magnitude.ElectricCurrent];
+            int xSubstance = x[Magnitude.AmountOfSubstance];
+            int xIntensity = x[Magnitude.LuminousIntensity];
+            int xOther = x[Magnitude.Other];
 
-			if ((den != 1) &&
-				(((xLength % den) != 0) ||
-				((xTime % den) != 0) ||
-				((xMass % den) != 0) ||
-				((xTemperature % den) != 0) ||
-				((xCurrent % den) != 0) ||
-				((xSubstance % den) != 0) ||
-				((xIntensity % den) != 0) ||
-				((xOther % den) != 0)))
-				throw new ArgumentException(String.Format("Pow({0},{1},{2}): cannot create dimension with fractional exponent(s)", x, num, den));
+            if ((den != 1) &&
+                (((xLength % den) != 0) ||
+                ((xTime % den) != 0) ||
+                ((xMass % den) != 0) ||
+                ((xTemperature % den) != 0) ||
+                ((xCurrent % den) != 0) ||
+                ((xSubstance % den) != 0) ||
+                ((xIntensity % den) != 0) ||
+                ((xOther % den) != 0)))
+                throw new ArgumentException(String.Format("Pow({0},{1},{2}): cannot create dimension with fractional exponent(s)", x, num, den));
 
-			return new Dimension(
-				(xLength / den) * num,
-				(xTime / den) * num,
-				(xMass / den) * num,
-				(xTemperature / den) * num,
-				(xCurrent / den) * num,
-				(xSubstance / den) * num,
-				(xIntensity / den) * num,
-				(xOther / den) * num
-			);
-		}
+            return new Dimension(
+                (xLength / den) * num,
+                (xTime / den) * num,
+                (xMass / den) * num,
+                (xTemperature / den) * num,
+                (xCurrent / den) * num,
+                (xSubstance / den) * num,
+                (xIntensity / den) * num,
+                (xOther / den) * num
+            );
+        }
 
-		public static Dimension Pow(Dimension x, int num)
-		{
-			return Pow(x, num, 1);
-		}
+        public static Dimension Pow(Dimension x, int num)
+        {
+            return Pow(x, num, 1);
+        }
 
-		public static Dimension Sqrt(Dimension x)
-		{
-			return Pow(x, 1, 2);
-		}
+        public static Dimension Sqrt(Dimension x)
+        {
+            return Pow(x, 1, 2);
+        }
 
-		#endregion Operators
+        #endregion Operators
 
-		#region Formatting
+        #region Formatting
 
-		public override string ToString()
-		{
-			string ret = ExponentToString(Magnitude.Length) +
-						ExponentToString(Magnitude.Time) +
-						ExponentToString(Magnitude.Mass) +
-						ExponentToString(Magnitude.Temperature) +
-						ExponentToString(Magnitude.ElectricCurrent) +
-						ExponentToString(Magnitude.AmountOfSubstance) +
-						ExponentToString(Magnitude.LuminousIntensity) +
-						ExponentToString(Magnitude.Other);
+        public override string ToString()
+        {
+            string ret = ExponentToString(Magnitude.Length) +
+                        ExponentToString(Magnitude.Time) +
+                        ExponentToString(Magnitude.Mass) +
+                        ExponentToString(Magnitude.Temperature) +
+                        ExponentToString(Magnitude.ElectricCurrent) +
+                        ExponentToString(Magnitude.AmountOfSubstance) +
+                        ExponentToString(Magnitude.LuminousIntensity) +
+                        ExponentToString(Magnitude.Other);
 
-			return String.IsNullOrWhiteSpace(ret) ? "1" : ret;
-		}
+            return String.IsNullOrWhiteSpace(ret) ? "1" : ret;
+        }
 
-		private string ExponentToString(Magnitude magnitude)
-		{
-			int exponent = this[magnitude];
+        private string ExponentToString(Magnitude magnitude)
+        {
+            int exponent = this[magnitude];
             return (exponent == 0) ? String.Empty :
                 ((exponent == 1) ? s_symbol[(int)magnitude] : s_symbol[(int)magnitude] + /* "^" + */ exponent.ToString());
         }
 
-		#endregion Formatting
+        #endregion Formatting
 
     }
 }

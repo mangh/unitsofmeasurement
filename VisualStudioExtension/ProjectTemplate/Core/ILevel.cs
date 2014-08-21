@@ -12,9 +12,9 @@
 
 namespace $safeprojectname$
 {
-	/// <summary>
-	/// TODO: Update summary.
-	/// </summary>
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
     public interface ILevel<T> where T : struct
     {
         // Instance properties

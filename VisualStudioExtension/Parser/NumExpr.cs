@@ -13,19 +13,19 @@
 namespace Man.UnitsOfMeasurement
 {
     /// <summary>
-	/// TODO: Update summary.
-	/// </summary>
-	public class NumExpr
-	{
+    /// TODO: Update summary.
+    /// </summary>
+    public class NumExpr
+    {
         public Number Value { get; private set; }
         public string Code { get; private set; }
         public bool IsTrueValue { get; private set; }
 
-		public NumExpr(bool isTrueValue, Number value, string code)
-		{
+        public NumExpr(bool isTrueValue, Number value, string code)
+        {
             IsTrueValue = isTrueValue;
-			Value = value;
-			Code = code;
-		}
-	}
+            Value = value;
+            Code = code;
+        }
+    }
 }

@@ -14,25 +14,25 @@ using System.Collections.Generic;
 
 namespace Man.UnitsOfMeasurement
 {
-	/// <summary>
-	/// TODO: Update summary.
-	/// </summary>
-	public abstract class AbstractType
-	{
-		#region Properties
-		public string Namespace { get; private set; }
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public abstract class AbstractType
+    {
+        #region Properties
+        public string Namespace { get; private set; }
         public string Name { get; private set; }
         public bool IsPredefined { get; private set; }
         #endregion
 
-		#region Constructor(s)
-		protected AbstractType(string nameSpace, string name, bool isPredefined)
-		{
-			Namespace = nameSpace;
-			Name = name;
+        #region Constructor(s)
+        protected AbstractType(string nameSpace, string name, bool isPredefined)
+        {
+            Namespace = nameSpace;
+            Name = name;
             IsPredefined = isPredefined;
         }
-		#endregion
+        #endregion
     }
 
     /// <summary>
@@ -49,7 +49,7 @@ namespace Man.UnitsOfMeasurement
         protected MeasureType(string nameSpace, string name) :
             base(nameSpace, name, false )
         {
-            Relative = this;	// Initially, no relatives
+            Relative = this;    // Initially, no relatives
         }
         #endregion
 

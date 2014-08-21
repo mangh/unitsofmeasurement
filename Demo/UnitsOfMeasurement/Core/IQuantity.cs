@@ -12,19 +12,19 @@
 
 namespace Demo.UnitsOfMeasurement
 {
-	/// <summary>
-	/// TODO: Update summary.
-	/// </summary>
-	public interface IQuantity<T> where T : struct
-	{
-		// Instance/quantity property 
-		T Value { get; }
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public interface IQuantity<T> where T : struct
+    {
+        // Instance/quantity property 
+        T Value { get; }
 
-		// Type/unit properties & methods 
-		Dimension UnitSense { get; }
+        // Type/unit properties & methods 
+        Dimension UnitSense { get; }
         int UnitFamily { get; }
         T UnitFactor { get; }
-		string UnitFormat { get; }
-		SymbolCollection UnitSymbol { get; }
-	}
+        string UnitFormat { get; }
+        SymbolCollection UnitSymbol { get; }
+    }
 }

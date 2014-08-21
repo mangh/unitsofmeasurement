@@ -13,100 +13,100 @@ using System;
 
 namespace Demo.UnitsOfMeasurement
 {
-	public partial struct Meter2_Sec2 : IQuantity<double>, IEquatable<Meter2_Sec2>, IComparable<Meter2_Sec2>
-	{
-		#region Fields
-		private readonly double m_value;
-		#endregion
+    public partial struct Meter2_Sec2 : IQuantity<double>, IEquatable<Meter2_Sec2>, IComparable<Meter2_Sec2>
+    {
+        #region Fields
+        private readonly double m_value;
+        #endregion
 
-		#region Properties
+        #region Properties
 
-		// instance properties
-		public double Value { get { return m_value; } }
+        // instance properties
+        public double Value { get { return m_value; } }
 
-		// unit properties
-		public Dimension UnitSense { get { return Meter2_Sec2.Sense; } }
-		public int UnitFamily { get { return Meter2_Sec2.Family; } }
-		public double UnitFactor { get { return Meter2_Sec2.Factor; } }
-		public string UnitFormat { get { return Meter2_Sec2.Format; } }
-		public SymbolCollection UnitSymbol { get { return Meter2_Sec2.Symbol; } }
+        // unit properties
+        public Dimension UnitSense { get { return Meter2_Sec2.Sense; } }
+        public int UnitFamily { get { return Meter2_Sec2.Family; } }
+        public double UnitFactor { get { return Meter2_Sec2.Factor; } }
+        public string UnitFormat { get { return Meter2_Sec2.Format; } }
+        public SymbolCollection UnitSymbol { get { return Meter2_Sec2.Symbol; } }
 
-		#endregion
+        #endregion
 
-		#region Constructor(s)
-		public Meter2_Sec2(double value)
-		{
-			m_value = value;
-		}
-		#endregion
+        #region Constructor(s)
+        public Meter2_Sec2(double value)
+        {
+            m_value = value;
+        }
+        #endregion
 
-		#region Conversions
-		public static explicit operator Meter2_Sec2(double q) { return new Meter2_Sec2(q); }
+        #region Conversions
+        public static explicit operator Meter2_Sec2(double q) { return new Meter2_Sec2(q); }
         public static Meter2_Sec2 From(IQuantity<double> q)
         {
-			if (q.UnitSense != Meter2_Sec2.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"Meter2_Sec2\"", q.GetType().Name));
-			return new Meter2_Sec2((Meter2_Sec2.Factor / q.UnitFactor) * q.Value);
+            if (q.UnitSense != Meter2_Sec2.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"Meter2_Sec2\"", q.GetType().Name));
+            return new Meter2_Sec2((Meter2_Sec2.Factor / q.UnitFactor) * q.Value);
         }
-		#endregion
+        #endregion
 
-		#region IObject / IEquatable / IComparable
-		public override int GetHashCode() { return m_value.GetHashCode(); }
-		public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Meter2_Sec2) && Equals((Meter2_Sec2)obj); }
-		public bool /* IEquatable<Meter2_Sec2> */ Equals(Meter2_Sec2 other) { return this.Value == other.Value; }
-		public int /* IComparable<Meter2_Sec2> */ CompareTo(Meter2_Sec2 other) { return this.Value.CompareTo(other.Value); }
-		#endregion
+        #region IObject / IEquatable / IComparable
+        public override int GetHashCode() { return m_value.GetHashCode(); }
+        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Meter2_Sec2) && Equals((Meter2_Sec2)obj); }
+        public bool /* IEquatable<Meter2_Sec2> */ Equals(Meter2_Sec2 other) { return this.Value == other.Value; }
+        public int /* IComparable<Meter2_Sec2> */ CompareTo(Meter2_Sec2 other) { return this.Value.CompareTo(other.Value); }
+        #endregion
 
-		#region Comparison
-		public static bool operator ==(Meter2_Sec2 lhs, Meter2_Sec2 rhs) { return lhs.Value == rhs.Value; }
-		public static bool operator !=(Meter2_Sec2 lhs, Meter2_Sec2 rhs) { return lhs.Value != rhs.Value; }
-		public static bool operator <(Meter2_Sec2 lhs, Meter2_Sec2 rhs) { return lhs.Value < rhs.Value; }
-		public static bool operator >(Meter2_Sec2 lhs, Meter2_Sec2 rhs) { return lhs.Value > rhs.Value; }
-		public static bool operator <=(Meter2_Sec2 lhs, Meter2_Sec2 rhs) { return lhs.Value <= rhs.Value; }
-		public static bool operator >=(Meter2_Sec2 lhs, Meter2_Sec2 rhs) { return lhs.Value >= rhs.Value; }
-		#endregion
+        #region Comparison
+        public static bool operator ==(Meter2_Sec2 lhs, Meter2_Sec2 rhs) { return lhs.Value == rhs.Value; }
+        public static bool operator !=(Meter2_Sec2 lhs, Meter2_Sec2 rhs) { return lhs.Value != rhs.Value; }
+        public static bool operator <(Meter2_Sec2 lhs, Meter2_Sec2 rhs) { return lhs.Value < rhs.Value; }
+        public static bool operator >(Meter2_Sec2 lhs, Meter2_Sec2 rhs) { return lhs.Value > rhs.Value; }
+        public static bool operator <=(Meter2_Sec2 lhs, Meter2_Sec2 rhs) { return lhs.Value <= rhs.Value; }
+        public static bool operator >=(Meter2_Sec2 lhs, Meter2_Sec2 rhs) { return lhs.Value >= rhs.Value; }
+        #endregion
 
-		#region Arithmetic
-		// Inner:
-		public static Meter2_Sec2 operator +(Meter2_Sec2 lhs, Meter2_Sec2 rhs) { return new Meter2_Sec2(lhs.Value + rhs.Value); }
-		public static Meter2_Sec2 operator -(Meter2_Sec2 lhs, Meter2_Sec2 rhs) { return new Meter2_Sec2(lhs.Value - rhs.Value); }
-		public static Meter2_Sec2 operator ++(Meter2_Sec2 q) { return new Meter2_Sec2(q.Value + 1d); }
-		public static Meter2_Sec2 operator --(Meter2_Sec2 q) { return new Meter2_Sec2(q.Value - 1d); }
-		public static Meter2_Sec2 operator -(Meter2_Sec2 q) { return new Meter2_Sec2(-q.Value); }
-		public static Meter2_Sec2 operator *(double lhs, Meter2_Sec2 rhs) { return new Meter2_Sec2(lhs * rhs.Value); }
-		public static Meter2_Sec2 operator *(Meter2_Sec2 lhs, double rhs) { return new Meter2_Sec2(lhs.Value * rhs); }
-		public static Meter2_Sec2 operator /(Meter2_Sec2 lhs, double rhs) { return new Meter2_Sec2(lhs.Value / rhs); }
-		// Outer:
-		public static double operator /(Meter2_Sec2 lhs, Meter2_Sec2 rhs) { return lhs.Value / rhs.Value; }
-		public static Meter_Sec operator /(Meter2_Sec2 lhs, Meter_Sec rhs) { return new Meter_Sec(lhs.Value / rhs.Value); }
-		public static Meter operator /(Meter2_Sec2 lhs, Meter_Sec2 rhs) { return new Meter(lhs.Value / rhs.Value); }
-		public static Meter_Sec2 operator /(Meter2_Sec2 lhs, Meter rhs) { return new Meter_Sec2(lhs.Value / rhs.Value); }
-		#endregion
+        #region Arithmetic
+        // Inner:
+        public static Meter2_Sec2 operator +(Meter2_Sec2 lhs, Meter2_Sec2 rhs) { return new Meter2_Sec2(lhs.Value + rhs.Value); }
+        public static Meter2_Sec2 operator -(Meter2_Sec2 lhs, Meter2_Sec2 rhs) { return new Meter2_Sec2(lhs.Value - rhs.Value); }
+        public static Meter2_Sec2 operator ++(Meter2_Sec2 q) { return new Meter2_Sec2(q.Value + 1d); }
+        public static Meter2_Sec2 operator --(Meter2_Sec2 q) { return new Meter2_Sec2(q.Value - 1d); }
+        public static Meter2_Sec2 operator -(Meter2_Sec2 q) { return new Meter2_Sec2(-q.Value); }
+        public static Meter2_Sec2 operator *(double lhs, Meter2_Sec2 rhs) { return new Meter2_Sec2(lhs * rhs.Value); }
+        public static Meter2_Sec2 operator *(Meter2_Sec2 lhs, double rhs) { return new Meter2_Sec2(lhs.Value * rhs); }
+        public static Meter2_Sec2 operator /(Meter2_Sec2 lhs, double rhs) { return new Meter2_Sec2(lhs.Value / rhs); }
+        // Outer:
+        public static double operator /(Meter2_Sec2 lhs, Meter2_Sec2 rhs) { return lhs.Value / rhs.Value; }
+        public static Meter_Sec operator /(Meter2_Sec2 lhs, Meter_Sec rhs) { return new Meter_Sec(lhs.Value / rhs.Value); }
+        public static Meter operator /(Meter2_Sec2 lhs, Meter_Sec2 rhs) { return new Meter(lhs.Value / rhs.Value); }
+        public static Meter_Sec2 operator /(Meter2_Sec2 lhs, Meter rhs) { return new Meter_Sec2(lhs.Value / rhs.Value); }
+        #endregion
 
-		#region Formatting
-		public override string ToString() { return ToString(null, Meter2_Sec2.Format); }
-		public string ToString(string format) { return ToString(null, format); }
-		public string ToString(IFormatProvider fp) { return ToString(fp, Meter2_Sec2.Format); }
-		public string ToString(IFormatProvider fp, string format) { return String.Format(fp, format, Value, Meter2_Sec2.Symbol[0]); }
-		#endregion
+        #region Formatting
+        public override string ToString() { return ToString(null, Meter2_Sec2.Format); }
+        public string ToString(string format) { return ToString(null, format); }
+        public string ToString(IFormatProvider fp) { return ToString(fp, Meter2_Sec2.Format); }
+        public string ToString(IFormatProvider fp, string format) { return String.Format(fp, format, Value, Meter2_Sec2.Symbol[0]); }
+        #endregion
 
-		#region Statics
-		private static readonly Dimension s_sense = Meter_Sec.Sense * Meter_Sec.Sense;
-		private static readonly int s_family = 62;
-		private static double s_factor = Meter_Sec.Factor * Meter_Sec.Factor;
-		private static string s_format = "{0} {1}";
-		private static readonly SymbolCollection s_symbol = new SymbolCollection("m2/s2");
+        #region Statics
+        private static readonly Dimension s_sense = Meter_Sec.Sense * Meter_Sec.Sense;
+        private static readonly int s_family = 62;
+        private static double s_factor = Meter_Sec.Factor * Meter_Sec.Factor;
+        private static string s_format = "{0} {1}";
+        private static readonly SymbolCollection s_symbol = new SymbolCollection("m2/s2");
 
-		private static readonly Meter2_Sec2 s_one = new Meter2_Sec2(1d);
-		private static readonly Meter2_Sec2 s_zero = new Meter2_Sec2(0d);
-		
-		public static Dimension Sense { get { return s_sense; } }
-		public static int Family { get { return s_family; } }
-		public static double Factor { get { return s_factor; } set { s_factor = value; } }
-		public static string Format { get { return s_format; } set { s_format = value; } }
-		public static SymbolCollection Symbol { get { return s_symbol; } }
+        private static readonly Meter2_Sec2 s_one = new Meter2_Sec2(1d);
+        private static readonly Meter2_Sec2 s_zero = new Meter2_Sec2(0d);
+        
+        public static Dimension Sense { get { return s_sense; } }
+        public static int Family { get { return s_family; } }
+        public static double Factor { get { return s_factor; } set { s_factor = value; } }
+        public static string Format { get { return s_format; } set { s_format = value; } }
+        public static SymbolCollection Symbol { get { return s_symbol; } }
 
-		public static Meter2_Sec2 One { get { return s_one; } }
-		public static Meter2_Sec2 Zero { get { return s_zero; } }
-		#endregion
-	}
+        public static Meter2_Sec2 One { get { return s_one; } }
+        public static Meter2_Sec2 Zero { get { return s_zero; } }
+        #endregion
+    }
 }

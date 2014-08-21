@@ -13,18 +13,18 @@
 namespace Man.UnitsOfMeasurement
 {
     /// <summary>
-	/// TODO: Update summary.
-	/// </summary>
-	public class SenseExpr
-	{
-		public Dimension Value { get; private set; }
-		public string Code { get; private set; }
-		public bool IsSenseless { get { return Value == Dimension.None; } }
+    /// TODO: Update summary.
+    /// </summary>
+    public class SenseExpr
+    {
+        public Dimension Value { get; private set; }
+        public string Code { get; private set; }
+        public bool IsSenseless { get { return Value == Dimension.None; } }
 
-		public SenseExpr(Dimension value, string code)
-		{
-			Value = value;
-			Code = code;
-		}
-	}
+        public SenseExpr(Dimension value, string code)
+        {
+            Value = value;
+            Code = code;
+        }
+    }
 }

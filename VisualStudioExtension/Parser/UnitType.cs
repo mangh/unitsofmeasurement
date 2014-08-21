@@ -10,40 +10,40 @@
 
 ********************************************************************************/
 
-using System.Collections;	// IEnumerable.GetEnumerator()
+using System.Collections;   // IEnumerable.GetEnumerator()
 using System.Collections.Generic;
 
 namespace Man.UnitsOfMeasurement
 {
-	/// <summary>
-	/// TODO: Update summary.
-	/// </summary>
-	/// <summary>
-	/// TODO: Update summary.
-	/// </summary>
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
     public class UnitType : MeasureType
-	{
+    {
         #region Properties
         public SenseExpr Sense { get; set; }
         public int Family { get; set; }
         public NumExpr Factor { get; set; }
-		public string Format { get; set; }
-		public List<string> Tags { get; private set; }
+        public string Format { get; set; }
+        public List<string> Tags { get; private set; }
         // Binary operations, returning values of another (outer) type
         public List<BinaryOperation> OuterOperations { get; private set; }
-		#endregion
+        #endregion
 
-		#region Constructor(s)
-		public UnitType(string nameSpace, string name) :
-			base(nameSpace, name)
-		{
-			Tags = new List<string>();
+        #region Constructor(s)
+        public UnitType(string nameSpace, string name) :
+            base(nameSpace, name)
+        {
+            Tags = new List<string>();
             OuterOperations = new List<BinaryOperation>();
-            Family = s_family++;	// Initially, assign to the next family
+            Family = s_family++;    // Initially, assign to the next family
         }
-		#endregion
+        #endregion
 
-		#region Methods
+        #region Methods
         public void AddRelative(UnitType relative)
         {
             base.AddRelative(relative);
@@ -69,14 +69,14 @@ namespace Man.UnitsOfMeasurement
     /// </summary>
     public class UnitTypes : IEnumerable<UnitType>
     {
-		#region Fields
+        #region Fields
         private List<UnitType> m_collection;
-		#endregion
+        #endregion
 
-		#region Properties
-		#endregion
+        #region Properties
+        #endregion
 
-		#region Constructor(s)
+        #region Constructor(s)
         public UnitTypes()
         {
             m_collection = new List<UnitType>();

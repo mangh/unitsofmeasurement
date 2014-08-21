@@ -10,29 +10,29 @@
 
 ********************************************************************************/
 
-using System.Collections;	// IEnumerable.GetEnumerator()
+using System.Collections;   // IEnumerable.GetEnumerator()
 using System.Collections.Generic;
 
 namespace Man.UnitsOfMeasurement
 {
     /// <summary>
-	/// TODO: Update summary.
-	/// </summary>
+    /// TODO: Update summary.
+    /// </summary>
     public class ScaleType : MeasureType
-	{
-		#region Properties
+    {
+        #region Properties
         public UnitType Unit { get; private set; }
         public NumExpr Offset { get; set; }
-		public string Format { get; set; }
+        public string Format { get; set; }
         #endregion
 
-		#region Constructor(s)
+        #region Constructor(s)
         public ScaleType(string nameSpace, string name, UnitType unit) :
-			base(nameSpace, name)
-		{
-			Unit = unit;
+            base(nameSpace, name)
+        {
+            Unit = unit;
         }
-		#endregion
+        #endregion
     }
 
     /// <summary>

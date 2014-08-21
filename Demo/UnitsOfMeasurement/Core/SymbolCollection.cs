@@ -12,14 +12,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections;	// IEnumerable.GetEnumerator()
+using System.Collections;   // IEnumerable.GetEnumerator()
 
 namespace Demo.UnitsOfMeasurement
 {
-	/// <summary>
-	/// TODO: Update summary.
-	/// </summary>
-	public class SymbolCollection
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public class SymbolCollection
     {
         #region Fields
         private string[] m_collection;
@@ -31,12 +31,12 @@ namespace Demo.UnitsOfMeasurement
 
         #region Constructor(s)
         public SymbolCollection(params string[] symbols)
-		{
-			if ((symbols == null) || (symbols.Length < 1) || (Array.FindIndex(symbols, s => String.IsNullOrWhiteSpace(s)) >= 0))
-				throw new ArgumentException("Unit symbol collection cannot be empty/null or contain empty/null items.");
+        {
+            if ((symbols == null) || (symbols.Length < 1) || (Array.FindIndex(symbols, s => String.IsNullOrWhiteSpace(s)) >= 0))
+                throw new ArgumentException("Unit symbol collection cannot be empty/null or contain empty/null items.");
 
-			m_collection = symbols;
-		}
+            m_collection = symbols;
+        }
         #endregion
 
         #region IEnumerator, Indexer

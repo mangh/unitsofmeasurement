@@ -12,14 +12,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections;	// IEnumerable.GetEnumerator()
+using System.Collections;   // IEnumerable.GetEnumerator()
 
 namespace $safeprojectname$
 {
-	/// <summary>
-	/// TODO: Update summary.
-	/// </summary>
-	public class SymbolCollection
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public class SymbolCollection
     {
         #region Fields
         private string[] m_collection;

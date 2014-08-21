@@ -13,104 +13,104 @@ using System;
 
 namespace Demo.UnitsOfMeasurement
 {
-	public partial struct Meter_Sec : IQuantity<double>, IEquatable<Meter_Sec>, IComparable<Meter_Sec>
-	{
-		#region Fields
-		private readonly double m_value;
-		#endregion
+    public partial struct Meter_Sec : IQuantity<double>, IEquatable<Meter_Sec>, IComparable<Meter_Sec>
+    {
+        #region Fields
+        private readonly double m_value;
+        #endregion
 
-		#region Properties
+        #region Properties
 
-		// instance properties
-		public double Value { get { return m_value; } }
+        // instance properties
+        public double Value { get { return m_value; } }
 
-		// unit properties
-		public Dimension UnitSense { get { return Meter_Sec.Sense; } }
-		public int UnitFamily { get { return Meter_Sec.Family; } }
-		public double UnitFactor { get { return Meter_Sec.Factor; } }
-		public string UnitFormat { get { return Meter_Sec.Format; } }
-		public SymbolCollection UnitSymbol { get { return Meter_Sec.Symbol; } }
+        // unit properties
+        public Dimension UnitSense { get { return Meter_Sec.Sense; } }
+        public int UnitFamily { get { return Meter_Sec.Family; } }
+        public double UnitFactor { get { return Meter_Sec.Factor; } }
+        public string UnitFormat { get { return Meter_Sec.Format; } }
+        public SymbolCollection UnitSymbol { get { return Meter_Sec.Symbol; } }
 
-		#endregion
+        #endregion
 
-		#region Constructor(s)
-		public Meter_Sec(double value)
-		{
-			m_value = value;
-		}
-		#endregion
+        #region Constructor(s)
+        public Meter_Sec(double value)
+        {
+            m_value = value;
+        }
+        #endregion
 
-		#region Conversions
-		public static explicit operator Meter_Sec(double q) { return new Meter_Sec(q); }
-		public static explicit operator Meter_Sec(MPH q) { return new Meter_Sec((Meter_Sec.Factor / MPH.Factor) * q.Value); }
-		public static explicit operator Meter_Sec(Kilometer_Hour q) { return new Meter_Sec((Meter_Sec.Factor / Kilometer_Hour.Factor) * q.Value); }
+        #region Conversions
+        public static explicit operator Meter_Sec(double q) { return new Meter_Sec(q); }
+        public static explicit operator Meter_Sec(MPH q) { return new Meter_Sec((Meter_Sec.Factor / MPH.Factor) * q.Value); }
+        public static explicit operator Meter_Sec(Kilometer_Hour q) { return new Meter_Sec((Meter_Sec.Factor / Kilometer_Hour.Factor) * q.Value); }
         public static Meter_Sec From(IQuantity<double> q)
         {
-			if (q.UnitSense != Meter_Sec.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"Meter_Sec\"", q.GetType().Name));
-			return new Meter_Sec((Meter_Sec.Factor / q.UnitFactor) * q.Value);
+            if (q.UnitSense != Meter_Sec.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"Meter_Sec\"", q.GetType().Name));
+            return new Meter_Sec((Meter_Sec.Factor / q.UnitFactor) * q.Value);
         }
-		#endregion
+        #endregion
 
-		#region IObject / IEquatable / IComparable
-		public override int GetHashCode() { return m_value.GetHashCode(); }
-		public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Meter_Sec) && Equals((Meter_Sec)obj); }
-		public bool /* IEquatable<Meter_Sec> */ Equals(Meter_Sec other) { return this.Value == other.Value; }
-		public int /* IComparable<Meter_Sec> */ CompareTo(Meter_Sec other) { return this.Value.CompareTo(other.Value); }
-		#endregion
+        #region IObject / IEquatable / IComparable
+        public override int GetHashCode() { return m_value.GetHashCode(); }
+        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Meter_Sec) && Equals((Meter_Sec)obj); }
+        public bool /* IEquatable<Meter_Sec> */ Equals(Meter_Sec other) { return this.Value == other.Value; }
+        public int /* IComparable<Meter_Sec> */ CompareTo(Meter_Sec other) { return this.Value.CompareTo(other.Value); }
+        #endregion
 
-		#region Comparison
-		public static bool operator ==(Meter_Sec lhs, Meter_Sec rhs) { return lhs.Value == rhs.Value; }
-		public static bool operator !=(Meter_Sec lhs, Meter_Sec rhs) { return lhs.Value != rhs.Value; }
-		public static bool operator <(Meter_Sec lhs, Meter_Sec rhs) { return lhs.Value < rhs.Value; }
-		public static bool operator >(Meter_Sec lhs, Meter_Sec rhs) { return lhs.Value > rhs.Value; }
-		public static bool operator <=(Meter_Sec lhs, Meter_Sec rhs) { return lhs.Value <= rhs.Value; }
-		public static bool operator >=(Meter_Sec lhs, Meter_Sec rhs) { return lhs.Value >= rhs.Value; }
-		#endregion
+        #region Comparison
+        public static bool operator ==(Meter_Sec lhs, Meter_Sec rhs) { return lhs.Value == rhs.Value; }
+        public static bool operator !=(Meter_Sec lhs, Meter_Sec rhs) { return lhs.Value != rhs.Value; }
+        public static bool operator <(Meter_Sec lhs, Meter_Sec rhs) { return lhs.Value < rhs.Value; }
+        public static bool operator >(Meter_Sec lhs, Meter_Sec rhs) { return lhs.Value > rhs.Value; }
+        public static bool operator <=(Meter_Sec lhs, Meter_Sec rhs) { return lhs.Value <= rhs.Value; }
+        public static bool operator >=(Meter_Sec lhs, Meter_Sec rhs) { return lhs.Value >= rhs.Value; }
+        #endregion
 
-		#region Arithmetic
-		// Inner:
-		public static Meter_Sec operator +(Meter_Sec lhs, Meter_Sec rhs) { return new Meter_Sec(lhs.Value + rhs.Value); }
-		public static Meter_Sec operator -(Meter_Sec lhs, Meter_Sec rhs) { return new Meter_Sec(lhs.Value - rhs.Value); }
-		public static Meter_Sec operator ++(Meter_Sec q) { return new Meter_Sec(q.Value + 1d); }
-		public static Meter_Sec operator --(Meter_Sec q) { return new Meter_Sec(q.Value - 1d); }
-		public static Meter_Sec operator -(Meter_Sec q) { return new Meter_Sec(-q.Value); }
-		public static Meter_Sec operator *(double lhs, Meter_Sec rhs) { return new Meter_Sec(lhs * rhs.Value); }
-		public static Meter_Sec operator *(Meter_Sec lhs, double rhs) { return new Meter_Sec(lhs.Value * rhs); }
-		public static Meter_Sec operator /(Meter_Sec lhs, double rhs) { return new Meter_Sec(lhs.Value / rhs); }
-		// Outer:
-		public static double operator /(Meter_Sec lhs, Meter_Sec rhs) { return lhs.Value / rhs.Value; }
-		public static Meter operator *(Meter_Sec lhs, Second rhs) { return new Meter(lhs.Value * rhs.Value); }
-		public static Meter operator *(Second lhs, Meter_Sec rhs) { return new Meter(lhs.Value * rhs.Value); }
-		public static Meter_Sec2 operator /(Meter_Sec lhs, Second rhs) { return new Meter_Sec2(lhs.Value / rhs.Value); }
-		public static Second operator /(Meter_Sec lhs, Meter_Sec2 rhs) { return new Second(lhs.Value / rhs.Value); }
-		public static Meter2_Sec2 operator *(Meter_Sec lhs, Meter_Sec rhs) { return new Meter2_Sec2(lhs.Value * rhs.Value); }
-		#endregion
+        #region Arithmetic
+        // Inner:
+        public static Meter_Sec operator +(Meter_Sec lhs, Meter_Sec rhs) { return new Meter_Sec(lhs.Value + rhs.Value); }
+        public static Meter_Sec operator -(Meter_Sec lhs, Meter_Sec rhs) { return new Meter_Sec(lhs.Value - rhs.Value); }
+        public static Meter_Sec operator ++(Meter_Sec q) { return new Meter_Sec(q.Value + 1d); }
+        public static Meter_Sec operator --(Meter_Sec q) { return new Meter_Sec(q.Value - 1d); }
+        public static Meter_Sec operator -(Meter_Sec q) { return new Meter_Sec(-q.Value); }
+        public static Meter_Sec operator *(double lhs, Meter_Sec rhs) { return new Meter_Sec(lhs * rhs.Value); }
+        public static Meter_Sec operator *(Meter_Sec lhs, double rhs) { return new Meter_Sec(lhs.Value * rhs); }
+        public static Meter_Sec operator /(Meter_Sec lhs, double rhs) { return new Meter_Sec(lhs.Value / rhs); }
+        // Outer:
+        public static double operator /(Meter_Sec lhs, Meter_Sec rhs) { return lhs.Value / rhs.Value; }
+        public static Meter operator *(Meter_Sec lhs, Second rhs) { return new Meter(lhs.Value * rhs.Value); }
+        public static Meter operator *(Second lhs, Meter_Sec rhs) { return new Meter(lhs.Value * rhs.Value); }
+        public static Meter_Sec2 operator /(Meter_Sec lhs, Second rhs) { return new Meter_Sec2(lhs.Value / rhs.Value); }
+        public static Second operator /(Meter_Sec lhs, Meter_Sec2 rhs) { return new Second(lhs.Value / rhs.Value); }
+        public static Meter2_Sec2 operator *(Meter_Sec lhs, Meter_Sec rhs) { return new Meter2_Sec2(lhs.Value * rhs.Value); }
+        #endregion
 
-		#region Formatting
-		public override string ToString() { return ToString(null, Meter_Sec.Format); }
-		public string ToString(string format) { return ToString(null, format); }
-		public string ToString(IFormatProvider fp) { return ToString(fp, Meter_Sec.Format); }
-		public string ToString(IFormatProvider fp, string format) { return String.Format(fp, format, Value, Meter_Sec.Symbol[0]); }
-		#endregion
+        #region Formatting
+        public override string ToString() { return ToString(null, Meter_Sec.Format); }
+        public string ToString(string format) { return ToString(null, format); }
+        public string ToString(IFormatProvider fp) { return ToString(fp, Meter_Sec.Format); }
+        public string ToString(IFormatProvider fp, string format) { return String.Format(fp, format, Value, Meter_Sec.Symbol[0]); }
+        #endregion
 
-		#region Statics
-		private static readonly Dimension s_sense = Meter.Sense / Second.Sense;
-		private static readonly int s_family = 38;
-		private static double s_factor = Meter.Factor / Second.Factor;
-		private static string s_format = "{0} {1}";
-		private static readonly SymbolCollection s_symbol = new SymbolCollection("m/s");
+        #region Statics
+        private static readonly Dimension s_sense = Meter.Sense / Second.Sense;
+        private static readonly int s_family = 38;
+        private static double s_factor = Meter.Factor / Second.Factor;
+        private static string s_format = "{0} {1}";
+        private static readonly SymbolCollection s_symbol = new SymbolCollection("m/s");
 
-		private static readonly Meter_Sec s_one = new Meter_Sec(1d);
-		private static readonly Meter_Sec s_zero = new Meter_Sec(0d);
-		
-		public static Dimension Sense { get { return s_sense; } }
-		public static int Family { get { return s_family; } }
-		public static double Factor { get { return s_factor; } set { s_factor = value; } }
-		public static string Format { get { return s_format; } set { s_format = value; } }
-		public static SymbolCollection Symbol { get { return s_symbol; } }
+        private static readonly Meter_Sec s_one = new Meter_Sec(1d);
+        private static readonly Meter_Sec s_zero = new Meter_Sec(0d);
+        
+        public static Dimension Sense { get { return s_sense; } }
+        public static int Family { get { return s_family; } }
+        public static double Factor { get { return s_factor; } set { s_factor = value; } }
+        public static string Format { get { return s_format; } set { s_format = value; } }
+        public static SymbolCollection Symbol { get { return s_symbol; } }
 
-		public static Meter_Sec One { get { return s_one; } }
-		public static Meter_Sec Zero { get { return s_zero; } }
-		#endregion
-	}
+        public static Meter_Sec One { get { return s_one; } }
+        public static Meter_Sec Zero { get { return s_zero; } }
+        #endregion
+    }
 }
