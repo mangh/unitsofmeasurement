@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9C7633E5-4BFA-49F3-B558-3370B5EC8F82}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ProjectTemplate</RootNamespace>
+    <AssemblyName>ProjectTemplate</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Core\Dimension.cs" />
+    <Compile Include="Core\ILevel.cs" />
+    <Compile Include="Core\IQuantity.cs" />
+    <Compile Include="Core\ITextParser.cs" />
+    <Compile Include="Core\SymbolCollection.cs" />
+    <Compile Include="Core\TextParser.cs" />
+    <Compile Include="Core\UnitCatalog.cs" />
+    <Compile Include="Core\UnitProxy.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Units\Celsius.cs">
+      <DependentUpon>_generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Units\Cycles.cs">
+      <DependentUpon>_generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Units\DegCelsius.cs">
+      <DependentUpon>_generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Units\DegFahrenheit.cs">
+      <DependentUpon>_generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Units\DegKelvin.cs">
+      <DependentUpon>_generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Units\DegRankine.cs">
+      <DependentUpon>_generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Units\Degree.cs">
+      <DependentUpon>_generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Units\EUR.cs">
+      <DependentUpon>_generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Units\Fahrenheit.cs">
+      <DependentUpon>_generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Units\Hertz.cs">
+      <DependentUpon>_generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Units\Joule.cs">
+      <DependentUpon>_generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Units\Kelvin.cs">
+      <DependentUpon>_generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Units\Kilogram.cs">
+      <DependentUpon>_generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Units\Meter.cs">
+      <DependentUpon>_generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Units\Meter_Sec.cs">
+      <DependentUpon>_generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Units\Meter_Sec2.cs">
+      <DependentUpon>_generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Units\Newton.cs">
+      <DependentUpon>_generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Units\NewtonMeter.cs">
+      <DependentUpon>_generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Units\PLN.cs">
+      <DependentUpon>_generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Units\Radian.cs">
+      <DependentUpon>_generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Units\Rankine.cs">
+      <DependentUpon>_generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Units\Second.cs">
+      <DependentUpon>_generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Units\SquareMeter.cs">
+      <DependentUpon>_generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Units\USD.cs">
+      <DependentUpon>_generator.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Units\_definitions.txt" />
+    <Content Include="Units\_generator.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_generator.tt</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Units\_generator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>_generator.txt</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

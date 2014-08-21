@@ -1,0 +1,113 @@
+﻿! /*******************************************************************************
+! 
+!     Units of Measurement for C# applications
+! 
+!     Copyright (C) Marek Aniola
+! 
+!     This program is provided to you under the terms of the license
+!     as published at http://unitsofmeasurement.codeplex.com/license
+! 
+! 
+! ********************************************************************************/
+
+"Name"     = 'Unit of Measurement Grammar'
+"Author"   = 'Marek Anioła'
+"Version"  = '1.0'
+"About"    = 'A short description of the grammar'
+
+"Case Sensitive" = 'True'
+"Start Symbol" = <UnitsOfMeasure>
+
+! -------------------------------------------------
+! Character Sets
+! -------------------------------------------------
+{ID Head}     = {Letter} + [_]
+{ID Tail}     = {Alphanumeric} + [_]
+{String Ch}   = {Printable} - ["]
+
+! -------------------------------------------------
+! Terminals
+! -------------------------------------------------
+Identifier      = [@]? {ID Head} {ID Tail}*   !The @ is an override char
+StringLiteral = '"'( {String Ch} | '\'{Printable} )* '"'
+IntLiteral    = {Digit}+
+RealLiteral   = {Digit}*'.'{Digit}+(('e'|'E')('+'|'-')*{Digit}+)*
+              
+! ----------------------------------------------------------------- Comments
+Comment Line  = '//'
+Comment Start = '/*'
+Comment End   = '*/'
+
+! -------------------------------------------------
+! The grammar starts below
+! -------------------------------------------------
+<UnitsOfMeasure> ::=  <UnitsOfMeasure> <Entity> | <Entity>
+<Entity> ::= <Unit> | <Scale>
+<Unit> ::= 'unit'<ValueType> Identifier <Tags> <Format> '=' <Dim Expr> ';'
+<Scale> ::= 'scale' Identifier <Format> '=' Identifier <Num Expr> ';'   ! 1st identifier = scale identifier, 2nd identifier = unit identifier
+
+! -------------------------------------------------
+! Dimensional expressions
+! -------------------------------------------------
+<Dim Expr> ::= <Dim Expr> '|' <Dim Term>
+            |   <Dim Term>
+
+<Dim Term> ::= <Dim Term> '*' <Dim Factor>
+            |  <Dim Term> '/' <Dim Factor>
+            |  <Dim Factor>
+
+<Dim Factor> ::= '<' <Magnitude> '>'
+             |    Identifier    ! Unit name (e.g. Meter)
+             |    <Num Literal>
+             |   '(' <Dim Term> ')'
+
+<Magnitude> ::= Length
+             | Time
+             | Mass
+             | Temperature
+             | ElectricCurrent
+             | AmountOfSubstance
+             | LuminousIntensity
+             | Other | Money    ! Other and Money represent the same magnitude.
+             |  ! No magnitude -> Dimensionless unit
+! -------------------------------------------------
+! Numeric expressions
+! -------------------------------------------------
+<Num Expr> ::= <Num Expr> '+' <Num Term>
+            |  <Num Expr> '-' <Num Term>
+            |  <Num Term>
+
+<Num Term> ::= <Num Term> '*' <Num Unary>
+            |  <Num Term> '/' <Num Unary>
+            |  <Num Unary>
+
+<Num Unary> ::= <Num Factor>
+            | '+' <Num Unary>
+            | '-' <Num Unary>
+             
+<Num Factor> ::= <Num Literal>
+             | '(' <Num Expr> ')'
+
+<Num Literal> ::= IntLiteral
+              | RealLiteral
+              | StringLiteral  ! Member-access (e.g. "Math.PI")
+                   
+! -------------------------------------------------
+! Tag (unit symbol) and (optional) format literals
+! -------------------------------------------------
+<Tags> ::= <Tags> StringLiteral
+         | StringLiteral
+
+<Format> ::= ':' StringLiteral
+         |  ! No format -> default format: "{0} {1}" ("value symbol" e.g. "100 mph")
+
+! -------------------------------------------------
+! Type names
+! -------------------------------------------------
+<ValueType> ::= '<' <ValueTypeName> '>'
+             | ! no value type -> default type "double"
+
+<ValueTypeName> ::= double
+                 | float
+                 | decimal
+
