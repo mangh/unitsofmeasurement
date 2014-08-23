@@ -6,9 +6,9 @@
         <Version>1.0</Version>
         <Description xml:space="preserve">Project template and parser utility for creating Units of Measurement C# class libraries (.dll)</Description>
         <Locale>1033</Locale>
-        <MoreInfoUrl>http://unitsofmeasurement.codeplex.com/license</MoreInfoUrl>
+        <MoreInfoUrl>http://unitsofmeasurement.codeplex.com</MoreInfoUrl>
         <License>license.txt</License>
-        <GettingStartedGuide>http://unitsofmeasurement.codeplex.com/license</GettingStartedGuide>
+        <GettingStartedGuide>http://unitsofmeasurement.codeplex.com</GettingStartedGuide>
         <Icon>templateIcon.ico</Icon>
         <SupportedProducts>
             <VisualStudio Version="10.0">

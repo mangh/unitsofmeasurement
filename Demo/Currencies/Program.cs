@@ -95,3 +95,14 @@ namespace Currencies
         }
     }
 }
+/*
+ Sample output:
+
+ Updating exchange rates in currency units (demo application).
+
+ Connecting to http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml ...
+ USD rate = 1,3267 (previously 1,3433)
+ GBP rate = 0,80030 (previously 0,79055)
+ PLN rate = 4,1863 (previously 4,1437)
+
+ */
