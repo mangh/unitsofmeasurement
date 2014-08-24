@@ -12,37 +12,33 @@
 
     *****************************************************************
 
-    Syntax abstract (case sensitive):
+    Syntax abstract:
     
     <Unit> ::= 'unit'[<ValueType>] unit-name <Tags> [<Format>] '=' <Dim Expr> [ '|' <Dim Expr> ] ';'
     <Scale> ::= 'scale' scale-name [<Format>] '=' unit-name <Num Expr> ';'
     
-    <Num Expr> ::= arithmetic expression build of numbers and/or string literals
-    <Dim Expr> ::= arithmetic expression build of numbers, string literals, unit names and/or dimension keywords
-    Dimension keywords ::= <Length>
-                        |  <Time>
-                        |  <Mass>
-                        |  <Temperature>
-                        |  <ElectricCurrent>
-                        |  <AmountOfSubstance>
-                        |  <LuminousIntensity>
-                        |  <Other> | <Money>
-                        |  <>    // for dimensionless quantities
+    <Num Expr> ::= expression build of numbers, string literals and arithmetic operators (*, /, +, -).
+    <Dim Expr> ::= expression build of numbers, string literals, unit names, <Magnitude>s and multiplicative operators (*, /).
+    <Magnitude> ::= '<Length>'
+                 |  '<Time>'
+                 |  '<Mass>'
+                 |  '<Temperature>'
+                 |  '<ElectricCurrent>'
+                 |  '<AmountOfSubstance>'
+                 |  '<LuminousIntensity>'
+                 |  '<Other>' | '<Money>'
+                 |  '<>'    // for dimensionless quantities
     
-    <ValueType> ::= '<double>' | '<float>' | '<decimal>'
+    <ValueType> ::= '<double>' | '<float>' | '<decimal>'    // default '<double>'
     <Tags> ::= StringLiteral+
-    <Format> ::= ':' StringLiteral
-
-    Default value type: '<double>'.
-    Default unit format: "{0} {1}" // "{value} {symbol}" -> e.g. "100 mph".
-    Default scale format: inherited from unit.
+    <Format> ::= ':' StringLiteral  // default: "{0} {1}"
 
     *****************************************************************
 
-    Syntactic <Dim Expr> constructs of special importance:
+    <Dim Expr> expressions of special importance:
 
-    * Product (or quotient) of (exactly) 2 units
-      generate binary (2-argument) operators. E.g. definition:
+    * Product (or quotient) of (exactly) 2 units generates binary (2-argument) operators.
+      E.g. definition: 
 
         unit Watt "W" = Joule / Second;
 
@@ -52,8 +48,8 @@
         public static Joule operator *(Watt lhs, Second rhs)
         public static Joule operator *(Second lhs, Watt rhs)
 
-    * Product (or quotient) of a unit and numeric expression
-      generate conversion operators. E.g. definition:
+    * Product (or quotient) of a unit and numeric expression generates conversion operators.
+      E.g. definition:
 
         unit Kilometer "km" = Meter / 1000;
 
