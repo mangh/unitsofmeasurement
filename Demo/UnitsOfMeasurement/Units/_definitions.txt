@@ -7,56 +7,8 @@
     This program is provided to you under the terms of the license
     as published at http://unitsofmeasurement.codeplex.com/license
 
-    The unit definitions below (in particular conversion factors) are
+    The definitions below (in particular conversion factors) are
     based on Wikipedia at http://en.wikipedia.org/wiki/Conversion_of_units
-
-    *****************************************************************
-
-    Syntax abstract:
-    
-    <Unit> ::= 'unit'[<ValueType>] unit-name <Tags> [<Format>] '=' <Dim Expr> [ '|' <Dim Expr> ] ';'
-    <Scale> ::= 'scale' scale-name [<Format>] '=' unit-name <Num Expr> ';'
-    
-    <Num Expr> ::= expression build of numbers, string literals and arithmetic operators (*, /, +, -).
-    <Dim Expr> ::= expression build of numbers, string literals, unit names, <Magnitude>s and multiplicative operators (*, /).
-    <Magnitude> ::= '<Length>'
-                 |  '<Time>'
-                 |  '<Mass>'
-                 |  '<Temperature>'
-                 |  '<ElectricCurrent>'
-                 |  '<AmountOfSubstance>'
-                 |  '<LuminousIntensity>'
-                 |  '<Other>' | '<Money>'
-                 |  '<>'    // for dimensionless quantities
-    
-    <ValueType> ::= '<double>' | '<float>' | '<decimal>'    // default '<double>'
-    <Tags> ::= StringLiteral+
-    <Format> ::= ':' StringLiteral  // default: "{0} {1}"
-
-    *****************************************************************
-
-    <Dim Expr> expressions of special importance:
-
-    * Product (or quotient) of (exactly) 2 units generates binary (2-argument) operators.
-      E.g. definition: 
-
-        unit Watt "W" = Joule / Second;
-
-      generates the following operators:
-
-        public static Watt operator /(Joule lhs, Second rhs)
-        public static Joule operator *(Watt lhs, Second rhs)
-        public static Joule operator *(Second lhs, Watt rhs)
-
-    * Product (or quotient) of a unit and numeric expression generates conversion operators.
-      E.g. definition:
-
-        unit Kilometer "km" = Meter / 1000;
-
-      generates the following conversion operators:
-
-        public static explicit operator Meter(Kilometer q)
-        public static explicit operator Kilometer(Meter q)
 
 
 ********************************************************************************/
@@ -456,6 +408,6 @@ unit Weber "Wb" = Joule / Ampere | Volt * Second;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
-//      Auxiliary units (for temporary results)
+//      Auxiliary units (to be used in ProjectileRange application only)
 //
 unit Meter2_Sec2 "m2/s2" = Meter_Sec * Meter_Sec | Meter_Sec2 * Meter;

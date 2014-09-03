@@ -158,7 +158,6 @@
     <Compile Include="Units\Meter2_Sec2.cs">
       <DependentUpon>_generator.tt</DependentUpon>
     </Compile>
-    <Compile Include="Units\MeterEx.cs" />
     <Compile Include="Units\Meter_Sec.cs">
       <DependentUpon>_generator.tt</DependentUpon>
     </Compile>
