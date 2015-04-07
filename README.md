@@ -1,9 +1,3 @@
-### Repository under construction (transfer from Codeplex) !!!
-* Old repository at: [Codeplex](http://unitsofmeasurement.codeplex.com/)
-* Project template VSIX at: [Visual Studio Gallery](https://visualstudiogallery.msdn.microsoft.com/a5cfc415-a98c-42c0-99e9-2149f5b88db8)
-
----
-
 ### Product description
 * Visual Studio project template for creating Units of Measurement C# class library. 
 * Units of measurement generated from design-time T4 text template according to simple definitions in a text file (data model). You specify (in the text file) what units are required, their naming, underlying value type (_float_, _double_ or _decimal_) as well as conversion and arithmetic (operator) relationships between units. Text template generating units can be modified so the functionality of target library can be easily fit to your needs. 
@@ -12,7 +6,7 @@
 Arithmetic (+, ++, -, --, *, /) and comparison (==, !=, <, <=, >, >=) operators to perform calculations directly on quantities of unit type. See the example below. 
 * Conversions of _quantities_ to/from other (but compatible) unit types.
 
-See [Codeplex Documentation](http://unitsofmeasurement.codeplex.com/documentation) page for more information.
+See [Documentation](https://github.com/mangh/unitsofmeasurement/wiki/Documentation) page for more information.
 
 ### How to use it?
 Assuming you have already installed `UnitsOfMeasurement.vsix` component (see [Releases](https://github.com/mangh/unitsofmeasurement/releases) page for download and installation instructions), follow this general process to create a library:
