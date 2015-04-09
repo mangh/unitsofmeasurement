@@ -1,16 +1,10 @@
 ### Product description
+
 * Visual Studio project template for creating Units of Measurement C# class library.
-* Units of measurement generated from design-time T4 text template according to simple definitions in a text file (data model).
-
-    You specify (in the text file) what units are required, their naming, underlying value type (_float_, _double_ or _decimal_) as well as conversion and arithmetic (operator) relationships between units. Text template generating units can be modified so the functionality of target library can be easily fit to your needs.
-
-* Units of measurement generated as types (_partial structs_).
-
-    Thus, dimensional analysis can be performed as a syntax check at compile time (dimensional issues displayed in Visual Studio as syntax errors). See [this](https://github.com/mangh/unitsofmeasurement/wiki/Detecting-dimensional-issues-(example)) example.
- 
-* Units of measurement for any of the fundamental dimensions: _Length_, _Time_, _Mass_, _Temperature_, _ElectricCurrent_, _AmountOfSubstance_, _LuminousIntensity_ as well as _Other_ (e.g. _Money_ for currency units) and any of their combinations.
+* Units of measurement are generated from simple definitions in a text file (data model) by means of (design-time) T4 text template. See [here](https://github.com/mangh/unitsofmeasurement/wiki/Overview) for an overview of unit generation process.
+* Units of measurement are generated as types (_partial structs_). Thus dimensional analysis can be performed as a syntax check at compile time. Dimensional issues are displayed in Visual Studio as syntax errors. See [this](https://github.com/mangh/unitsofmeasurement/wiki/Detecting-dimensional-issues-(example)) example.
+* All fundamental dimensions are supported i.e.: _Length_, _Time_, _Mass_, _Temperature_, _ElectricCurrent_, _AmountOfSubstance_, _LuminousIntensity_ as well as _Other_ (e.g. _Money_ for currency units) and any of their combinations.
 * Arithmetic (+, ++, -, --, *, /) and comparison (==, !=, <, <=, >, >=) operators to perform calculations directly on _quantities_ of unit type. See [this](https://github.com/mangh/unitsofmeasurement/wiki/Detecting-dimensional-issues-(example)) example.
-  
 * Conversions of _quantities_ to/from other (but compatible) unit types.
 
 Go to [Wiki](https://github.com/mangh/unitsofmeasurement/wiki) pages for more information.
