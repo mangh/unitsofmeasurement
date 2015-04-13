@@ -39,54 +39,39 @@ namespace Demo.UnitsOfMeasurement
 
     public struct Dimension : IEquatable<Dimension>
     {
-        #region Static constants
+        #region Constants
+        // Constants for exponent fields within UInt64/32 dimension structure:
+#if DIMENSION_UINT64 
+        private const int COMPLEMENT = 256;   // 2's complement base
+        private const int MAXEXP = 127;   // exponent max value
+        private const int MINEXP = -128;  // exponent min value
+        private const int LOGWIDTH = 3;   // exponent bit-width = 2^LOGWIDTH
+        private const byte EXPMASK = 0xFF;    // exponent bit mask
+#if !STANDARD_ARITHMETIC
+        private const DIMENSION CARRY = 0x7F7F7F7F7F7F7F7F;   // carry/borrow bits for binary addition/subtraction
+#endif
+#else
+        private const int COMPLEMENT = 16;    // 2's complement base
+        private const int MAXEXP = 7; // exponent max value
+        private const int MINEXP = -8;    // exponent min value
+        private const int LOGWIDTH = 2;   // exponent bit-width = 2^LOGWIDTH
+        private const byte EXPMASK = 0x0F;    // exponent bit mask
+#if !STANDARD_ARITHMETIC
+        private const DIMENSION CARRY = 0x77777777;   // carry/borrow bits for binary addition/subtraction
+#endif
+#endif
 
         // Dimensional constants
-#if DIMENSION_UINT64 
-        public static readonly Dimension None = new Dimension(0ul);
-        public static readonly Dimension Length = new Dimension(0x0000000000000001);
-        public static readonly Dimension Time = new Dimension(0x0000000000000100);
-        public static readonly Dimension Mass = new Dimension(0x0000000000010000);
-        public static readonly Dimension Temperature = new Dimension(0x0000000001000000);
-        public static readonly Dimension ElectricCurrent = new Dimension(0x0000000100000000);
-        public static readonly Dimension AmountOfSubstance = new Dimension(0x0000010000000000);
-        public static readonly Dimension LuminousIntensity = new Dimension(0x0001000000000000);
-        public static readonly Dimension Other = new Dimension(0x0100000000000000);
-        public static readonly Dimension Money = Dimension.Other;
-#else
-        public static readonly Dimension None = new Dimension(0u);
-        public static readonly Dimension Length = new Dimension(0x00000001);
-        public static readonly Dimension Time = new Dimension(0x00000010);
-        public static readonly Dimension Mass = new Dimension(0x00000100);
-        public static readonly Dimension Temperature = new Dimension(0x00001000);
-        public static readonly Dimension ElectricCurrent = new Dimension(0x00010000);
-        public static readonly Dimension AmountOfSubstance = new Dimension(0x00100000);
-        public static readonly Dimension LuminousIntensity = new Dimension(0x01000000);
-        public static readonly Dimension Other = new Dimension(0x10000000);
-        public static readonly Dimension Money = Dimension.Other;
-#endif
-
-#if DIMENSION_UINT64 
-        // Constants for exponent fields within UInt64 dimension structure:
-        private static readonly int COMPLEMENT = 256;   // 2's complement base
-        private static readonly int MAXEXP = 127;   // exponent max value
-        private static readonly int MINEXP = -128;  // exponent min value
-        private static readonly int LOGWIDTH = 3;   // exponent bit-width = 2^LOGWIDTH
-        private static readonly byte EXPMASK = 0xFF;    // exponent bit mask
-#if !STANDARD_ARITHMETIC
-        private static readonly DIMENSION CARRY = 0x7F7F7F7F7F7F7F7F;   // carry/borrow bits for binary addition/subtraction
-#endif
-#else
-        // Constants for exponent fields within UInt32 dimension structure:
-        private static readonly int COMPLEMENT = 16;    // 2's complement base
-        private static readonly int MAXEXP = 7; // exponent max value
-        private static readonly int MINEXP = -8;    // exponent min value
-        private static readonly int LOGWIDTH = 2;   // exponent bit-width = 2^LOGWIDTH
-        private static readonly byte EXPMASK = 0x0F;    // exponent bit mask
-#if !STANDARD_ARITHMETIC
-        private static readonly DIMENSION CARRY = 0x77777777;   // carry/borrow bits for binary addition/subtraction
-#endif
-#endif
+        public static readonly Dimension None = new Dimension();    // new Dimension(0, 0, 0, 0, 0, 0, 0, 0);
+        public static readonly Dimension Length = new Dimension(Magnitude.Length);
+        public static readonly Dimension Time = new Dimension(Magnitude.Time);
+        public static readonly Dimension Mass = new Dimension(Magnitude.Mass);
+        public static readonly Dimension Temperature = new Dimension(Magnitude.Temperature);
+        public static readonly Dimension ElectricCurrent = new Dimension(Magnitude.ElectricCurrent);
+        public static readonly Dimension AmountOfSubstance = new Dimension(Magnitude.AmountOfSubstance);
+        public static readonly Dimension LuminousIntensity = new Dimension(Magnitude.LuminousIntensity);
+        public static readonly Dimension Other = new Dimension(Magnitude.Money);
+        public static readonly Dimension Money = new Dimension(Magnitude.Other);
 
         private static readonly string[] s_symbol = 
         { 
@@ -99,18 +84,14 @@ namespace Demo.UnitsOfMeasurement
             "J",        /* Luminous Intensity */
             "\u00A4"    /* Money (¤ - generic currency sign) */
         };
-
         #endregion
 
         #region Properties
-
         private DIMENSION m_exponents;
         public DIMENSION Exponents { get { return m_exponents; } }
-
         #endregion
 
         #region Constructor(s)
-
         // Base unit
         public Dimension(Magnitude magnitude)
         {
@@ -141,7 +122,6 @@ namespace Demo.UnitsOfMeasurement
         #endregion Constructor(s)
 
         #region Indexer(s)
-
         public int this[Magnitude magnitude]
         {
             get
@@ -158,39 +138,26 @@ namespace Demo.UnitsOfMeasurement
                 m_exponents |= ((DIMENSION)(value & EXPMASK)) << (exponent << LOGWIDTH);
             }
         }
-
         #endregion Indexer(s)
 
         #region IEquatable<Dimension>
-
         public bool Equals(Dimension other)
         {
             return m_exponents == other.Exponents;
         }
-
         public override bool Equals(object obj)
         {
             return (obj != null) && (obj is Dimension) && Equals((Dimension)obj);
         }
-
         public override int GetHashCode()
         {
             return m_exponents.GetHashCode();
         }
-
         #endregion IEquatable<Dimension>
 
         #region Operators
-
-        public static bool operator ==(Dimension A, Dimension B)
-        {
-            return A.Equals(B);
-        }
-
-        public static bool operator !=(Dimension A, Dimension B)
-        {
-            return !A.Equals(B);
-        }
+        public static bool operator ==(Dimension A, Dimension B) { return A.Equals(B); }
+        public static bool operator !=(Dimension A, Dimension B) { return !A.Equals(B); }
 
         public static Dimension operator *(Dimension x, Dimension y)
         {
@@ -313,11 +280,9 @@ namespace Demo.UnitsOfMeasurement
         {
             return Pow(x, 1, 2);
         }
-
         #endregion Operators
 
         #region Formatting
-
         public override string ToString()
         {
             string ret = ExponentToString(Magnitude.Length) +
@@ -338,8 +303,6 @@ namespace Demo.UnitsOfMeasurement
             return (exponent == 0) ? String.Empty :
                 ((exponent == 1) ? s_symbol[(int)magnitude] : s_symbol[(int)magnitude] + /* "^" + */ exponent.ToString());
         }
-
         #endregion Formatting
-
     }
 }

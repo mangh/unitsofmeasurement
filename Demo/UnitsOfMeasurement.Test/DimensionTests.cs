@@ -46,27 +46,6 @@ namespace MeasurementUnitsTest
         }
 
         [TestClass]
-        public class Constants
-        {
-            [TestMethod]
-            public void ConsistentConstants()
-            {
-                Assert.AreEqual(Dimension.None, new Dimension(0,0,0,0,0,0,0,0), "Incorrect Dimension.None constant");
-                Assert.AreEqual(Dimension.Length, new Dimension(Magnitude.Length), "Incorrect Dimension.Length constant");
-                Assert.AreEqual(Dimension.Time, new Dimension(Magnitude.Time), "Incorrect Dimension.Time constant");
-                Assert.AreEqual(Dimension.Mass, new Dimension(Magnitude.Mass), "Incorrect Dimension.Mass constant");
-                Assert.AreEqual(Dimension.Temperature, new Dimension(Magnitude.Temperature), "Incorrect Dimension.Temperature constant");
-                Assert.AreEqual(Dimension.ElectricCurrent, new Dimension(Magnitude.ElectricCurrent), "Incorrect Dimension.ElectricCurrent constant");
-                Assert.AreEqual(Dimension.AmountOfSubstance, new Dimension(Magnitude.AmountOfSubstance), "Incorrect Dimension.AmountOfSubstance constant");
-                Assert.AreEqual(Dimension.LuminousIntensity, new Dimension(Magnitude.LuminousIntensity), "Incorrect Dimension.LuminousIntensity constant");
-                Assert.AreEqual(Dimension.Other, new Dimension(Magnitude.Other), "Incorrect Dimension.Other constant");
-                Assert.AreEqual(Dimension.Money, new Dimension(Magnitude.Money), "Incorrect Dimension.Money constant");
-
-                Assert.AreEqual(Dimension.Other, Dimension.Money, "Dimension.Other and Dimension.Money constants are not equal");
-            }
-        }
-
-        [TestClass]
         public class Operators
         {
             [TestMethod]
