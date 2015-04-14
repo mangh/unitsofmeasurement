@@ -49,20 +49,20 @@ namespace Demo.UnitsOfMeasurement
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<Steradian>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Steradian) && Equals((Steradian)obj); }
         public bool /* IEquatable<Steradian> */ Equals(Steradian other) { return this.Value == other.Value; }
-        public int /* IComparable<Steradian> */ CompareTo(Steradian other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<Steradian>
         public static bool operator ==(Steradian lhs, Steradian rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(Steradian lhs, Steradian rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(Steradian lhs, Steradian rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(Steradian lhs, Steradian rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(Steradian lhs, Steradian rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(Steradian lhs, Steradian rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<Steradian> */ CompareTo(Steradian other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -75,8 +75,8 @@ namespace Demo.UnitsOfMeasurement
         public static Steradian operator *(double lhs, Steradian rhs) { return new Steradian(lhs * rhs.Value); }
         public static Steradian operator *(Steradian lhs, double rhs) { return new Steradian(lhs.Value * rhs); }
         public static Steradian operator /(Steradian lhs, double rhs) { return new Steradian(lhs.Value / rhs); }
-        // Outer:
         public static double operator /(Steradian lhs, Steradian rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         #endregion
 
         #region Formatting
@@ -88,7 +88,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region Statics
         private static readonly Dimension s_sense = Dimension.None;
-        private static readonly int s_family = 31;
+        private static readonly int s_family = 9;
         private static double s_factor = 1d;
         private static string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("sr");

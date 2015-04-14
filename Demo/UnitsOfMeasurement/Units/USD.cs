@@ -52,20 +52,20 @@ namespace Demo.UnitsOfMeasurement
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<USD>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is USD) && Equals((USD)obj); }
         public bool /* IEquatable<USD> */ Equals(USD other) { return this.Value == other.Value; }
-        public int /* IComparable<USD> */ CompareTo(USD other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<USD>
         public static bool operator ==(USD lhs, USD rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(USD lhs, USD rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(USD lhs, USD rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(USD lhs, USD rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(USD lhs, USD rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(USD lhs, USD rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<USD> */ CompareTo(USD other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -78,8 +78,8 @@ namespace Demo.UnitsOfMeasurement
         public static USD operator *(decimal lhs, USD rhs) { return new USD(lhs * rhs.Value); }
         public static USD operator *(USD lhs, decimal rhs) { return new USD(lhs.Value * rhs); }
         public static USD operator /(USD lhs, decimal rhs) { return new USD(lhs.Value / rhs); }
-        // Outer:
         public static decimal operator /(USD lhs, USD rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         #endregion
 
         #region Formatting
@@ -91,7 +91,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region Statics
         private static readonly Dimension s_sense = EUR.Sense;
-        private static readonly int s_family = 23;
+        private static readonly int s_family = EUR.Family;
         private static decimal s_factor = 1.3433m * EUR.Factor;
         private static string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("USD");

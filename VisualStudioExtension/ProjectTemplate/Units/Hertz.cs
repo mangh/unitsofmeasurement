@@ -49,20 +49,20 @@ namespace $safeprojectname$
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<Hertz>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Hertz) && Equals((Hertz)obj); }
         public bool /* IEquatable<Hertz> */ Equals(Hertz other) { return this.Value == other.Value; }
-        public int /* IComparable<Hertz> */ CompareTo(Hertz other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<Hertz>
         public static bool operator ==(Hertz lhs, Hertz rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(Hertz lhs, Hertz rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(Hertz lhs, Hertz rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(Hertz lhs, Hertz rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(Hertz lhs, Hertz rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(Hertz lhs, Hertz rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<Hertz> */ CompareTo(Hertz other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -75,8 +75,8 @@ namespace $safeprojectname$
         public static Hertz operator *(double lhs, Hertz rhs) { return new Hertz(lhs * rhs.Value); }
         public static Hertz operator *(Hertz lhs, double rhs) { return new Hertz(lhs.Value * rhs); }
         public static Hertz operator /(Hertz lhs, double rhs) { return new Hertz(lhs.Value / rhs); }
-        // Outer:
         public static double operator /(Hertz lhs, Hertz rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         public static Cycles operator *(Hertz lhs, Second rhs) { return new Cycles(lhs.Value * rhs.Value); }
         public static Cycles operator *(Second lhs, Hertz rhs) { return new Cycles(lhs.Value * rhs.Value); }
         #endregion
@@ -90,7 +90,7 @@ namespace $safeprojectname$
 
         #region Statics
         private static readonly Dimension s_sense = Cycles.Sense / Second.Sense;
-        private static readonly int s_family = 13;
+        private static readonly int s_family = 6;
         private static double s_factor = Cycles.Factor / Second.Factor;
         private static string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("Hz");

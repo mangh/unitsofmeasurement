@@ -53,20 +53,20 @@ namespace Demo.UnitsOfMeasurement
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<AtmStandard>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is AtmStandard) && Equals((AtmStandard)obj); }
         public bool /* IEquatable<AtmStandard> */ Equals(AtmStandard other) { return this.Value == other.Value; }
-        public int /* IComparable<AtmStandard> */ CompareTo(AtmStandard other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<AtmStandard>
         public static bool operator ==(AtmStandard lhs, AtmStandard rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(AtmStandard lhs, AtmStandard rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(AtmStandard lhs, AtmStandard rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(AtmStandard lhs, AtmStandard rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(AtmStandard lhs, AtmStandard rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(AtmStandard lhs, AtmStandard rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<AtmStandard> */ CompareTo(AtmStandard other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -79,8 +79,8 @@ namespace Demo.UnitsOfMeasurement
         public static AtmStandard operator *(double lhs, AtmStandard rhs) { return new AtmStandard(lhs * rhs.Value); }
         public static AtmStandard operator *(AtmStandard lhs, double rhs) { return new AtmStandard(lhs.Value * rhs); }
         public static AtmStandard operator /(AtmStandard lhs, double rhs) { return new AtmStandard(lhs.Value / rhs); }
-        // Outer:
         public static double operator /(AtmStandard lhs, AtmStandard rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         #endregion
 
         #region Formatting
@@ -92,7 +92,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region Statics
         private static readonly Dimension s_sense = Pascal.Sense;
-        private static readonly int s_family = 51;
+        private static readonly int s_family = Pascal.Family;
         private static double s_factor = Pascal.Factor / 101325d;
         private static string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("atm");

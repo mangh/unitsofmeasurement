@@ -52,20 +52,20 @@ namespace Demo.UnitsOfMeasurement
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<Dyne>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Dyne) && Equals((Dyne)obj); }
         public bool /* IEquatable<Dyne> */ Equals(Dyne other) { return this.Value == other.Value; }
-        public int /* IComparable<Dyne> */ CompareTo(Dyne other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<Dyne>
         public static bool operator ==(Dyne lhs, Dyne rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(Dyne lhs, Dyne rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(Dyne lhs, Dyne rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(Dyne lhs, Dyne rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(Dyne lhs, Dyne rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(Dyne lhs, Dyne rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<Dyne> */ CompareTo(Dyne other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -78,8 +78,8 @@ namespace Demo.UnitsOfMeasurement
         public static Dyne operator *(double lhs, Dyne rhs) { return new Dyne(lhs * rhs.Value); }
         public static Dyne operator *(Dyne lhs, double rhs) { return new Dyne(lhs.Value * rhs); }
         public static Dyne operator /(Dyne lhs, double rhs) { return new Dyne(lhs.Value / rhs); }
-        // Outer:
         public static double operator /(Dyne lhs, Dyne rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         #endregion
 
         #region Formatting
@@ -91,7 +91,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region Statics
         private static readonly Dimension s_sense = Newton.Sense;
-        private static readonly int s_family = 42;
+        private static readonly int s_family = Newton.Family;
         private static double s_factor = 100000d * Newton.Factor;
         private static string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("dyn");

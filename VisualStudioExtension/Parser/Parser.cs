@@ -51,8 +51,6 @@ namespace Man.UnitsOfMeasurement
         // <Scale> ::= 'scale' Identifier <Format> Identifier '=' Identifier <Num Expr> ';'
         public void Parse()
         {
-            UnitType.ResetFamilyID();
-
             string badTokenFormat = "\"{0}\": expecting \"unit\" or \"scale\" keyword (or a comment)";
 
             while (m_symbol != Lexer.Symbol.EOF)

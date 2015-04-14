@@ -52,20 +52,20 @@ namespace Demo.UnitsOfMeasurement
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<PoundForce>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is PoundForce) && Equals((PoundForce)obj); }
         public bool /* IEquatable<PoundForce> */ Equals(PoundForce other) { return this.Value == other.Value; }
-        public int /* IComparable<PoundForce> */ CompareTo(PoundForce other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<PoundForce>
         public static bool operator ==(PoundForce lhs, PoundForce rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(PoundForce lhs, PoundForce rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(PoundForce lhs, PoundForce rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(PoundForce lhs, PoundForce rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(PoundForce lhs, PoundForce rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(PoundForce lhs, PoundForce rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<PoundForce> */ CompareTo(PoundForce other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -78,8 +78,8 @@ namespace Demo.UnitsOfMeasurement
         public static PoundForce operator *(double lhs, PoundForce rhs) { return new PoundForce(lhs * rhs.Value); }
         public static PoundForce operator *(PoundForce lhs, double rhs) { return new PoundForce(lhs.Value * rhs); }
         public static PoundForce operator /(PoundForce lhs, double rhs) { return new PoundForce(lhs.Value / rhs); }
-        // Outer:
         public static double operator /(PoundForce lhs, PoundForce rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         #endregion
 
         #region Formatting
@@ -91,7 +91,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region Statics
         private static readonly Dimension s_sense = Newton.Sense;
-        private static readonly int s_family = 42;
+        private static readonly int s_family = Newton.Family;
         private static double s_factor = Newton.Factor / 4.4482216152605d;
         private static string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("lbf");

@@ -53,20 +53,20 @@ namespace Demo.UnitsOfMeasurement
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<Ounce>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Ounce) && Equals((Ounce)obj); }
         public bool /* IEquatable<Ounce> */ Equals(Ounce other) { return this.Value == other.Value; }
-        public int /* IComparable<Ounce> */ CompareTo(Ounce other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<Ounce>
         public static bool operator ==(Ounce lhs, Ounce rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(Ounce lhs, Ounce rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(Ounce lhs, Ounce rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(Ounce lhs, Ounce rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(Ounce lhs, Ounce rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(Ounce lhs, Ounce rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<Ounce> */ CompareTo(Ounce other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -79,8 +79,8 @@ namespace Demo.UnitsOfMeasurement
         public static Ounce operator *(double lhs, Ounce rhs) { return new Ounce(lhs * rhs.Value); }
         public static Ounce operator *(Ounce lhs, double rhs) { return new Ounce(lhs.Value * rhs); }
         public static Ounce operator /(Ounce lhs, double rhs) { return new Ounce(lhs.Value / rhs); }
-        // Outer:
         public static double operator /(Ounce lhs, Ounce rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         #endregion
 
         #region Formatting
@@ -92,7 +92,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region Statics
         private static readonly Dimension s_sense = Pound.Sense;
-        private static readonly int s_family = 11;
+        private static readonly int s_family = Kilogram.Family;
         private static double s_factor = Pound.Factor * 16d;
         private static string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("ou");

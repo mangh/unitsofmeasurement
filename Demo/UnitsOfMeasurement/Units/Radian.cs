@@ -52,20 +52,20 @@ namespace Demo.UnitsOfMeasurement
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<Radian>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Radian) && Equals((Radian)obj); }
         public bool /* IEquatable<Radian> */ Equals(Radian other) { return this.Value == other.Value; }
-        public int /* IComparable<Radian> */ CompareTo(Radian other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<Radian>
         public static bool operator ==(Radian lhs, Radian rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(Radian lhs, Radian rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(Radian lhs, Radian rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(Radian lhs, Radian rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(Radian lhs, Radian rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(Radian lhs, Radian rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<Radian> */ CompareTo(Radian other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -78,8 +78,8 @@ namespace Demo.UnitsOfMeasurement
         public static Radian operator *(double lhs, Radian rhs) { return new Radian(lhs * rhs.Value); }
         public static Radian operator *(Radian lhs, double rhs) { return new Radian(lhs.Value * rhs); }
         public static Radian operator /(Radian lhs, double rhs) { return new Radian(lhs.Value / rhs); }
-        // Outer:
         public static double operator /(Radian lhs, Radian rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         public static Radian_Sec operator /(Radian lhs, Second rhs) { return new Radian_Sec(lhs.Value / rhs.Value); }
         public static Second operator /(Radian lhs, Radian_Sec rhs) { return new Second(lhs.Value / rhs.Value); }
         #endregion
@@ -93,7 +93,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region Statics
         private static readonly Dimension s_sense = Dimension.None;
-        private static readonly int s_family = 27;
+        private static readonly int s_family = 8;
         private static double s_factor = 1d;
         private static string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("rad");

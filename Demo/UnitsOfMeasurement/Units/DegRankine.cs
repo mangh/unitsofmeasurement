@@ -52,20 +52,20 @@ namespace Demo.UnitsOfMeasurement
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<DegRankine>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is DegRankine) && Equals((DegRankine)obj); }
         public bool /* IEquatable<DegRankine> */ Equals(DegRankine other) { return this.Value == other.Value; }
-        public int /* IComparable<DegRankine> */ CompareTo(DegRankine other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<DegRankine>
         public static bool operator ==(DegRankine lhs, DegRankine rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(DegRankine lhs, DegRankine rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(DegRankine lhs, DegRankine rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(DegRankine lhs, DegRankine rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(DegRankine lhs, DegRankine rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(DegRankine lhs, DegRankine rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<DegRankine> */ CompareTo(DegRankine other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -78,8 +78,8 @@ namespace Demo.UnitsOfMeasurement
         public static DegRankine operator *(double lhs, DegRankine rhs) { return new DegRankine(lhs * rhs.Value); }
         public static DegRankine operator *(DegRankine lhs, double rhs) { return new DegRankine(lhs.Value * rhs); }
         public static DegRankine operator /(DegRankine lhs, double rhs) { return new DegRankine(lhs.Value / rhs); }
-        // Outer:
         public static double operator /(DegRankine lhs, DegRankine rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         #endregion
 
         #region Formatting
@@ -91,7 +91,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region Statics
         private static readonly Dimension s_sense = DegKelvin.Sense;
-        private static readonly int s_family = 16;
+        private static readonly int s_family = DegKelvin.Family;
         private static double s_factor = (9d / 5d) * DegKelvin.Factor;
         private static string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("\u00B0R", "deg.R");

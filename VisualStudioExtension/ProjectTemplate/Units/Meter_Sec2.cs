@@ -49,20 +49,20 @@ namespace $safeprojectname$
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<Meter_Sec2>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Meter_Sec2) && Equals((Meter_Sec2)obj); }
         public bool /* IEquatable<Meter_Sec2> */ Equals(Meter_Sec2 other) { return this.Value == other.Value; }
-        public int /* IComparable<Meter_Sec2> */ CompareTo(Meter_Sec2 other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<Meter_Sec2>
         public static bool operator ==(Meter_Sec2 lhs, Meter_Sec2 rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(Meter_Sec2 lhs, Meter_Sec2 rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(Meter_Sec2 lhs, Meter_Sec2 rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(Meter_Sec2 lhs, Meter_Sec2 rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(Meter_Sec2 lhs, Meter_Sec2 rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(Meter_Sec2 lhs, Meter_Sec2 rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<Meter_Sec2> */ CompareTo(Meter_Sec2 other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -75,8 +75,8 @@ namespace $safeprojectname$
         public static Meter_Sec2 operator *(double lhs, Meter_Sec2 rhs) { return new Meter_Sec2(lhs * rhs.Value); }
         public static Meter_Sec2 operator *(Meter_Sec2 lhs, double rhs) { return new Meter_Sec2(lhs.Value * rhs); }
         public static Meter_Sec2 operator /(Meter_Sec2 lhs, double rhs) { return new Meter_Sec2(lhs.Value / rhs); }
-        // Outer:
         public static double operator /(Meter_Sec2 lhs, Meter_Sec2 rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         public static Meter_Sec operator *(Meter_Sec2 lhs, Second rhs) { return new Meter_Sec(lhs.Value * rhs.Value); }
         public static Meter_Sec operator *(Second lhs, Meter_Sec2 rhs) { return new Meter_Sec(lhs.Value * rhs.Value); }
         #endregion
@@ -90,7 +90,7 @@ namespace $safeprojectname$
 
         #region Statics
         private static readonly Dimension s_sense = Meter_Sec.Sense / Second.Sense;
-        private static readonly int s_family = 16;
+        private static readonly int s_family = 9;
         private static double s_factor = Meter_Sec.Factor / Second.Factor;
         private static string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("m/s2");

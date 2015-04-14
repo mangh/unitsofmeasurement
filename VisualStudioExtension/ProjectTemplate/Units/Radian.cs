@@ -51,20 +51,20 @@ namespace $safeprojectname$
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<Radian>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Radian) && Equals((Radian)obj); }
         public bool /* IEquatable<Radian> */ Equals(Radian other) { return this.Value == other.Value; }
-        public int /* IComparable<Radian> */ CompareTo(Radian other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<Radian>
         public static bool operator ==(Radian lhs, Radian rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(Radian lhs, Radian rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(Radian lhs, Radian rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(Radian lhs, Radian rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(Radian lhs, Radian rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(Radian lhs, Radian rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<Radian> */ CompareTo(Radian other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -77,8 +77,8 @@ namespace $safeprojectname$
         public static Radian operator *(double lhs, Radian rhs) { return new Radian(lhs * rhs.Value); }
         public static Radian operator *(Radian lhs, double rhs) { return new Radian(lhs.Value * rhs); }
         public static Radian operator /(Radian lhs, double rhs) { return new Radian(lhs.Value / rhs); }
-        // Outer:
         public static double operator /(Radian lhs, Radian rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         #endregion
 
         #region Formatting
@@ -90,7 +90,7 @@ namespace $safeprojectname$
 
         #region Statics
         private static readonly Dimension s_sense = Dimension.None;
-        private static readonly int s_family = 10;
+        private static readonly int s_family = 5;
         private static double s_factor = 1d;
         private static string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("rad");

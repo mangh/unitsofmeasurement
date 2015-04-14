@@ -43,6 +43,11 @@ namespace Man.UnitsOfMeasurement
             ScaleType scale = new ScaleType(scaleName, unit);
             scale.Format = String.IsNullOrWhiteSpace(format) ? unit.Format : format;
             scale.Offset = m_exprEncoder.Encode(offset, scale.Unit.Factor.Value.Type);
+
+            ScaleType relative = GetRelativeScale(scale);
+            if (relative != null)
+                relative.AddRelative(scale);
+
             m_scales.Add(scale);
 
             CheckSemicolon();
@@ -177,6 +182,11 @@ namespace Man.UnitsOfMeasurement
                 Note("\"{0}\": expected numeric factor: number | (numeric expression) | \"stringliteral\"", m_lexer.TokenText);
             }
             return factor;
+        }
+
+        public ScaleType GetRelativeScale(ScaleType scale)
+        {
+            return m_scales.Find(s => object.ReferenceEquals(s.Unit.FamilyPrime(), scale.Unit.FamilyPrime()));
         }
         #endregion
     }

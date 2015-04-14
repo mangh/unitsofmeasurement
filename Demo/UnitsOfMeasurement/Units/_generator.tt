@@ -5,7 +5,7 @@
 <#@ assembly name="Microsoft.VisualStudio.OLE.Interop" #>
 <#@ assembly name="Microsoft.VisualStudio.Shell" #>
 <#@ assembly name="Microsoft.VisualStudio.Shell.Interop" #>
-<#@ assembly name="Man.UnitsOfMeasurement.Parser.dll" #>
+<#@ assembly name="C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\VisualStudioExtension\Parser\bin\Debug\Man.UnitsOfMeasurement.Parser.dll" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Diagnostics" #>
 <#@ import namespace="System.IO" #>
@@ -45,6 +45,7 @@
 #>
 
 <#+
+    int __family = 0;
     string __inputFilePath;
     string __defaultNamespace;
     string __projectNamespace;
@@ -218,7 +219,7 @@
         
         string Unit = u.Name;
         string Sense = u.Sense.Code;
-        string Family = u.Family.ToString();
+        string Family = (u.Prime == null) ? (__family++).ToString() : String.Format("{0}.Family", u.FamilyPrime().Name);
         string Format = u.Format;
         string Tags = String.Format("\"{0}\"", String.Join("\", \"", u.Tags));
         
@@ -287,20 +288,20 @@ namespace <#= Namespace #>
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<<#= Unit #>>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is <#= Unit #>) && Equals((<#= Unit #>)obj); }
         public bool /* IEquatable<<#= Unit #>> */ Equals(<#= Unit #> other) { return this.Value == other.Value; }
-        public int /* IComparable<<#= Unit #>> */ CompareTo(<#= Unit #> other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<<#= Unit #>>
         public static bool operator ==(<#= Unit #> lhs, <#= Unit #> rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(<#= Unit #> lhs, <#= Unit #> rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(<#= Unit #> lhs, <#= Unit #> rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(<#= Unit #> lhs, <#= Unit #> rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(<#= Unit #> lhs, <#= Unit #> rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(<#= Unit #> lhs, <#= Unit #> rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<<#= Unit #>> */ CompareTo(<#= Unit #> other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -313,8 +314,8 @@ namespace <#= Namespace #>
         public static <#= Unit #> operator *(<#= Value #> lhs, <#= Unit #> rhs) { return new <#= Unit #>(lhs * rhs.Value); }
         public static <#= Unit #> operator *(<#= Unit #> lhs, <#= Value #> rhs) { return new <#= Unit #>(lhs.Value * rhs); }
         public static <#= Unit #> operator /(<#= Unit #> lhs, <#= Value #> rhs) { return new <#= Unit #>(lhs.Value / rhs); }
-        // Outer:
         public static <#= Value #> operator /(<#= Unit #> lhs, <#= Unit #> rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
 <#+
         foreach (BinaryOperation o in u.OuterOperations)
         {
@@ -371,6 +372,7 @@ namespace <#= Namespace #>
         string Scale = s.Name;
         string Unit = s.Unit.Name;
         string Offset = s.Offset.Code;
+        string Family = (s.Prime == null) ? (__family++).ToString() : String.Format("{0}.Family", s.FamilyPrime().Name);
         string Format = s.Format;
 
         string Value = s.Unit.Factor.Value.Type.Name;
@@ -421,7 +423,7 @@ namespace <#= Namespace #>
             m_level = level;
         }
         public <#= Scale #>(<#= Value #> level) :
-            this((<#= Unit #>)level)
+            this(new <#= Unit #>(level))
         {
         }
         #endregion
@@ -429,6 +431,7 @@ namespace <#= Namespace #>
         #region Conversions
         public static explicit operator <#= Scale #>(<#= Value #> q) { return new <#= Scale #>(q); }
         public static explicit operator <#= Scale #>(<#= Unit #> q) { return new <#= Scale #>(q); }
+
 <#+
         foreach (MeasureType x in s.Relatives())
         {
@@ -438,26 +441,27 @@ namespace <#= Namespace #>
 <#+
         }
 #>
+
         public static <#= Scale #> From(ILevel<<#= Value #>> q)
         {
             return new <#= Scale #>(<#= Unit #>.From(q.Extent) + <#= Scale #>.Offset);
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<<#= Scale #>>
         public override int GetHashCode() { return m_level.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is <#= Scale #>) && Equals((<#= Scale #>)obj); }
         public bool /* IEquatable<<#= Scale #>> */ Equals(<#= Scale #> other) { return this.Level == other.Level; }
-        public int /* IComparable<<#= Scale #>> */ CompareTo(<#= Scale #> other) { return this.Level.CompareTo(other.Level); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<<#= Scale #>>
         public static bool operator ==(<#= Scale #> lhs, <#= Scale #> rhs) { return lhs.Level == rhs.Level; }
         public static bool operator !=(<#= Scale #> lhs, <#= Scale #> rhs) { return lhs.Level != rhs.Level; }
         public static bool operator <(<#= Scale #> lhs, <#= Scale #> rhs) { return lhs.Level < rhs.Level; }
         public static bool operator >(<#= Scale #> lhs, <#= Scale #> rhs) { return lhs.Level > rhs.Level; }
         public static bool operator <=(<#= Scale #> lhs, <#= Scale #> rhs) { return lhs.Level <= rhs.Level; }
         public static bool operator >=(<#= Scale #> lhs, <#= Scale #> rhs) { return lhs.Level >= rhs.Level; }
+        public int /* IComparable<<#= Scale #>> */ CompareTo(<#= Scale #> other) { return this.Level.CompareTo(other.Level); }
         #endregion
 
         #region Arithmetic
@@ -478,11 +482,13 @@ namespace <#= Namespace #>
         #endregion
 
         #region Statics
-        private static <#= Unit #> s_offset = new <#= Unit #>(<#= Offset #>);
+        private static readonly <#= Unit #> s_offset = new <#= Unit #>(<#= Offset #>);
+        private static readonly int s_family = <#= Family #>;
         private static string s_format = "<#= Format #>";
-        private static <#= Scale #> s_zero = new <#= Scale #>(<#= Zero #>);
+        private static readonly <#= Scale #> s_zero = new <#= Scale #>(<#= Zero #>);
         
         public static <#= Unit #> Offset { get { return s_offset; } }
+        public static int Family { get { return s_family; } }
         public static string Format { get { return s_format; } set { s_format = value; } }
         public static <#= Scale #> Zero { get { return s_zero; } }
         #endregion
@@ -497,13 +503,17 @@ namespace <#= Namespace #>
     void Summarize(List<UnitType> units, List<ScaleType> scales)
     {
 #>
-UNITS (family) name {dimension} * conv.factor
+//////////////////////////////////////////////////////////
+//
+//  U N I T S
+//
+//  (family) [dim] name : factor {tags}
 <#+
         foreach (UnitType u in units)
         {
 #>
 
-    (<#= u.Family.ToString() #>) <#= u.Name #> {<#= u.Sense.Value.ToString() #>} * <#= u.Factor.Value.ToString() #>
+    (<#= u.FamilyPrime().Name #>) <#= u.ToString() #>
 
 <#+
             foreach (MeasureType s in u.Relatives())
@@ -522,14 +532,18 @@ UNITS (family) name {dimension} * conv.factor
         }
 #>
 
-SCALES (family) name {dimension} * conv.factor + offset
+//////////////////////////////////////////////////////////
+//
+//  S C A L E S
+//
+//  (family) [dim] name : refpoint = unit offset
 <#+
         foreach (ScaleType s in scales)
         {
             UnitType u = s.Unit;
 #>
 
-    (<#= u.Family.ToString() #>) <#= s.Name #> {<#= u.Sense.Value.ToString() #>} * <#= u.Factor.Value.ToString() #> + <#= s.Offset.Value.ToString() #>
+    (<#= s.FamilyPrime().Name #>) <#= s.ToString() #>
 
 <#+
             foreach (MeasureType x in s.Relatives())

@@ -49,20 +49,20 @@ namespace Demo.UnitsOfMeasurement
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<Joule_Kelvin>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Joule_Kelvin) && Equals((Joule_Kelvin)obj); }
         public bool /* IEquatable<Joule_Kelvin> */ Equals(Joule_Kelvin other) { return this.Value == other.Value; }
-        public int /* IComparable<Joule_Kelvin> */ CompareTo(Joule_Kelvin other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<Joule_Kelvin>
         public static bool operator ==(Joule_Kelvin lhs, Joule_Kelvin rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(Joule_Kelvin lhs, Joule_Kelvin rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(Joule_Kelvin lhs, Joule_Kelvin rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(Joule_Kelvin lhs, Joule_Kelvin rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(Joule_Kelvin lhs, Joule_Kelvin rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(Joule_Kelvin lhs, Joule_Kelvin rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<Joule_Kelvin> */ CompareTo(Joule_Kelvin other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -75,8 +75,8 @@ namespace Demo.UnitsOfMeasurement
         public static Joule_Kelvin operator *(double lhs, Joule_Kelvin rhs) { return new Joule_Kelvin(lhs * rhs.Value); }
         public static Joule_Kelvin operator *(Joule_Kelvin lhs, double rhs) { return new Joule_Kelvin(lhs.Value * rhs); }
         public static Joule_Kelvin operator /(Joule_Kelvin lhs, double rhs) { return new Joule_Kelvin(lhs.Value / rhs); }
-        // Outer:
         public static double operator /(Joule_Kelvin lhs, Joule_Kelvin rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         public static Joule operator *(Joule_Kelvin lhs, DegKelvin rhs) { return new Joule(lhs.Value * rhs.Value); }
         public static Joule operator *(DegKelvin lhs, Joule_Kelvin rhs) { return new Joule(lhs.Value * rhs.Value); }
         public static Joule_Kelvin_Kilogram operator /(Joule_Kelvin lhs, Kilogram rhs) { return new Joule_Kelvin_Kilogram(lhs.Value / rhs.Value); }
@@ -92,7 +92,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region Statics
         private static readonly Dimension s_sense = Joule.Sense / DegKelvin.Sense;
-        private static readonly int s_family = 49;
+        private static readonly int s_family = 19;
         private static double s_factor = Joule.Factor / DegKelvin.Factor;
         private static string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("J/K");

@@ -49,20 +49,20 @@ namespace Demo.UnitsOfMeasurement
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<Watt>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Watt) && Equals((Watt)obj); }
         public bool /* IEquatable<Watt> */ Equals(Watt other) { return this.Value == other.Value; }
-        public int /* IComparable<Watt> */ CompareTo(Watt other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<Watt>
         public static bool operator ==(Watt lhs, Watt rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(Watt lhs, Watt rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(Watt lhs, Watt rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(Watt lhs, Watt rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(Watt lhs, Watt rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(Watt lhs, Watt rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<Watt> */ CompareTo(Watt other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -75,8 +75,8 @@ namespace Demo.UnitsOfMeasurement
         public static Watt operator *(double lhs, Watt rhs) { return new Watt(lhs * rhs.Value); }
         public static Watt operator *(Watt lhs, double rhs) { return new Watt(lhs.Value * rhs); }
         public static Watt operator /(Watt lhs, double rhs) { return new Watt(lhs.Value / rhs); }
-        // Outer:
         public static double operator /(Watt lhs, Watt rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         public static Joule operator *(Watt lhs, Second rhs) { return new Joule(lhs.Value * rhs.Value); }
         public static Joule operator *(Second lhs, Watt rhs) { return new Joule(lhs.Value * rhs.Value); }
         public static Volt operator /(Watt lhs, Ampere rhs) { return new Volt(lhs.Value / rhs.Value); }
@@ -92,7 +92,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region Statics
         private static readonly Dimension s_sense = Joule.Sense / Second.Sense;
-        private static readonly int s_family = 47;
+        private static readonly int s_family = 17;
         private static double s_factor = Joule.Factor / Second.Factor;
         private static string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("W");

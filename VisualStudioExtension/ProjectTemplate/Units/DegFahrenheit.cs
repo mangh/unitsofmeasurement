@@ -52,20 +52,20 @@ namespace $safeprojectname$
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<DegFahrenheit>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is DegFahrenheit) && Equals((DegFahrenheit)obj); }
         public bool /* IEquatable<DegFahrenheit> */ Equals(DegFahrenheit other) { return this.Value == other.Value; }
-        public int /* IComparable<DegFahrenheit> */ CompareTo(DegFahrenheit other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<DegFahrenheit>
         public static bool operator ==(DegFahrenheit lhs, DegFahrenheit rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(DegFahrenheit lhs, DegFahrenheit rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(DegFahrenheit lhs, DegFahrenheit rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(DegFahrenheit lhs, DegFahrenheit rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(DegFahrenheit lhs, DegFahrenheit rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(DegFahrenheit lhs, DegFahrenheit rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<DegFahrenheit> */ CompareTo(DegFahrenheit other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -78,8 +78,8 @@ namespace $safeprojectname$
         public static DegFahrenheit operator *(double lhs, DegFahrenheit rhs) { return new DegFahrenheit(lhs * rhs.Value); }
         public static DegFahrenheit operator *(DegFahrenheit lhs, double rhs) { return new DegFahrenheit(lhs.Value * rhs); }
         public static DegFahrenheit operator /(DegFahrenheit lhs, double rhs) { return new DegFahrenheit(lhs.Value / rhs); }
-        // Outer:
         public static double operator /(DegFahrenheit lhs, DegFahrenheit rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         #endregion
 
         #region Formatting
@@ -91,7 +91,7 @@ namespace $safeprojectname$
 
         #region Statics
         private static readonly Dimension s_sense = DegKelvin.Sense;
-        private static readonly int s_family = 3;
+        private static readonly int s_family = DegKelvin.Family;
         private static double s_factor = (9d / 5d) * DegKelvin.Factor;
         private static string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("\u00B0F", "deg.F");

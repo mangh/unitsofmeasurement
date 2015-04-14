@@ -53,20 +53,20 @@ namespace Demo.UnitsOfMeasurement
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<Tonne>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Tonne) && Equals((Tonne)obj); }
         public bool /* IEquatable<Tonne> */ Equals(Tonne other) { return this.Value == other.Value; }
-        public int /* IComparable<Tonne> */ CompareTo(Tonne other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<Tonne>
         public static bool operator ==(Tonne lhs, Tonne rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(Tonne lhs, Tonne rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(Tonne lhs, Tonne rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(Tonne lhs, Tonne rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(Tonne lhs, Tonne rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(Tonne lhs, Tonne rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<Tonne> */ CompareTo(Tonne other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -79,8 +79,8 @@ namespace Demo.UnitsOfMeasurement
         public static Tonne operator *(double lhs, Tonne rhs) { return new Tonne(lhs * rhs.Value); }
         public static Tonne operator *(Tonne lhs, double rhs) { return new Tonne(lhs.Value * rhs); }
         public static Tonne operator /(Tonne lhs, double rhs) { return new Tonne(lhs.Value / rhs); }
-        // Outer:
         public static double operator /(Tonne lhs, Tonne rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         #endregion
 
         #region Formatting
@@ -92,7 +92,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region Statics
         private static readonly Dimension s_sense = Kilogram.Sense;
-        private static readonly int s_family = 11;
+        private static readonly int s_family = Kilogram.Family;
         private static double s_factor = Kilogram.Factor / 1000d;
         private static string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("t");

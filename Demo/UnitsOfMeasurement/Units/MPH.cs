@@ -51,20 +51,20 @@ namespace Demo.UnitsOfMeasurement
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<MPH>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is MPH) && Equals((MPH)obj); }
         public bool /* IEquatable<MPH> */ Equals(MPH other) { return this.Value == other.Value; }
-        public int /* IComparable<MPH> */ CompareTo(MPH other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<MPH>
         public static bool operator ==(MPH lhs, MPH rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(MPH lhs, MPH rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(MPH lhs, MPH rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(MPH lhs, MPH rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(MPH lhs, MPH rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(MPH lhs, MPH rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<MPH> */ CompareTo(MPH other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -77,8 +77,8 @@ namespace Demo.UnitsOfMeasurement
         public static MPH operator *(double lhs, MPH rhs) { return new MPH(lhs * rhs.Value); }
         public static MPH operator *(MPH lhs, double rhs) { return new MPH(lhs.Value * rhs); }
         public static MPH operator /(MPH lhs, double rhs) { return new MPH(lhs.Value / rhs); }
-        // Outer:
         public static double operator /(MPH lhs, MPH rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         public static Mile operator *(MPH lhs, Hour rhs) { return new Mile(lhs.Value * rhs.Value); }
         public static Mile operator *(Hour lhs, MPH rhs) { return new Mile(lhs.Value * rhs.Value); }
         #endregion
@@ -92,7 +92,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region Statics
         private static readonly Dimension s_sense = Mile.Sense / Hour.Sense;
-        private static readonly int s_family = 38;
+        private static readonly int s_family = Meter_Sec.Family;
         private static double s_factor = Mile.Factor / Hour.Factor;
         private static string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("mph", "mi/h");

@@ -50,20 +50,20 @@ namespace Demo.UnitsOfMeasurement
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<SquareFoot>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is SquareFoot) && Equals((SquareFoot)obj); }
         public bool /* IEquatable<SquareFoot> */ Equals(SquareFoot other) { return this.Value == other.Value; }
-        public int /* IComparable<SquareFoot> */ CompareTo(SquareFoot other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<SquareFoot>
         public static bool operator ==(SquareFoot lhs, SquareFoot rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(SquareFoot lhs, SquareFoot rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(SquareFoot lhs, SquareFoot rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(SquareFoot lhs, SquareFoot rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(SquareFoot lhs, SquareFoot rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(SquareFoot lhs, SquareFoot rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<SquareFoot> */ CompareTo(SquareFoot other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -76,8 +76,8 @@ namespace Demo.UnitsOfMeasurement
         public static SquareFoot operator *(double lhs, SquareFoot rhs) { return new SquareFoot(lhs * rhs.Value); }
         public static SquareFoot operator *(SquareFoot lhs, double rhs) { return new SquareFoot(lhs.Value * rhs); }
         public static SquareFoot operator /(SquareFoot lhs, double rhs) { return new SquareFoot(lhs.Value / rhs); }
-        // Outer:
         public static double operator /(SquareFoot lhs, SquareFoot rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         public static Foot operator /(SquareFoot lhs, Foot rhs) { return new Foot(lhs.Value / rhs.Value); }
         #endregion
 
@@ -90,7 +90,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region Statics
         private static readonly Dimension s_sense = Foot.Sense * Foot.Sense;
-        private static readonly int s_family = 35;
+        private static readonly int s_family = SquareMeter.Family;
         private static double s_factor = Foot.Factor * Foot.Factor;
         private static string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("ft\u00B2", "sq ft");

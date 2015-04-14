@@ -51,20 +51,20 @@ namespace $safeprojectname$
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<PLN>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is PLN) && Equals((PLN)obj); }
         public bool /* IEquatable<PLN> */ Equals(PLN other) { return this.Value == other.Value; }
-        public int /* IComparable<PLN> */ CompareTo(PLN other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<PLN>
         public static bool operator ==(PLN lhs, PLN rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(PLN lhs, PLN rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(PLN lhs, PLN rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(PLN lhs, PLN rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(PLN lhs, PLN rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(PLN lhs, PLN rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<PLN> */ CompareTo(PLN other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -77,8 +77,8 @@ namespace $safeprojectname$
         public static PLN operator *(decimal lhs, PLN rhs) { return new PLN(lhs * rhs.Value); }
         public static PLN operator *(PLN lhs, decimal rhs) { return new PLN(lhs.Value * rhs); }
         public static PLN operator /(PLN lhs, decimal rhs) { return new PLN(lhs.Value / rhs); }
-        // Outer:
         public static decimal operator /(PLN lhs, PLN rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         #endregion
 
         #region Formatting
@@ -90,7 +90,7 @@ namespace $safeprojectname$
 
         #region Statics
         private static readonly Dimension s_sense = EUR.Sense;
-        private static readonly int s_family = 7;
+        private static readonly int s_family = EUR.Family;
         private static decimal s_factor = 4.1437m * EUR.Factor;
         private static string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("PLN");

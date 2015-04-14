@@ -49,20 +49,20 @@ namespace Demo.UnitsOfMeasurement
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<Ohm>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Ohm) && Equals((Ohm)obj); }
         public bool /* IEquatable<Ohm> */ Equals(Ohm other) { return this.Value == other.Value; }
-        public int /* IComparable<Ohm> */ CompareTo(Ohm other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<Ohm>
         public static bool operator ==(Ohm lhs, Ohm rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(Ohm lhs, Ohm rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(Ohm lhs, Ohm rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(Ohm lhs, Ohm rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(Ohm lhs, Ohm rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(Ohm lhs, Ohm rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<Ohm> */ CompareTo(Ohm other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -75,8 +75,8 @@ namespace Demo.UnitsOfMeasurement
         public static Ohm operator *(double lhs, Ohm rhs) { return new Ohm(lhs * rhs.Value); }
         public static Ohm operator *(Ohm lhs, double rhs) { return new Ohm(lhs.Value * rhs); }
         public static Ohm operator /(Ohm lhs, double rhs) { return new Ohm(lhs.Value / rhs); }
-        // Outer:
         public static double operator /(Ohm lhs, Ohm rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         public static Volt operator *(Ohm lhs, Ampere rhs) { return new Volt(lhs.Value * rhs.Value); }
         public static Volt operator *(Ampere lhs, Ohm rhs) { return new Volt(lhs.Value * rhs.Value); }
         #endregion
@@ -90,7 +90,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region Statics
         private static readonly Dimension s_sense = Volt.Sense / Ampere.Sense;
-        private static readonly int s_family = 58;
+        private static readonly int s_family = 24;
         private static double s_factor = Volt.Factor / Ampere.Factor;
         private static string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("\u03A9", "ohm");

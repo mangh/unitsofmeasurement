@@ -56,20 +56,20 @@ namespace Demo.UnitsOfMeasurement
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<Meter>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Meter) && Equals((Meter)obj); }
         public bool /* IEquatable<Meter> */ Equals(Meter other) { return this.Value == other.Value; }
-        public int /* IComparable<Meter> */ CompareTo(Meter other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<Meter>
         public static bool operator ==(Meter lhs, Meter rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(Meter lhs, Meter rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(Meter lhs, Meter rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(Meter lhs, Meter rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(Meter lhs, Meter rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(Meter lhs, Meter rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<Meter> */ CompareTo(Meter other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -82,8 +82,8 @@ namespace Demo.UnitsOfMeasurement
         public static Meter operator *(double lhs, Meter rhs) { return new Meter(lhs * rhs.Value); }
         public static Meter operator *(Meter lhs, double rhs) { return new Meter(lhs.Value * rhs); }
         public static Meter operator /(Meter lhs, double rhs) { return new Meter(lhs.Value / rhs); }
-        // Outer:
         public static double operator /(Meter lhs, Meter rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         public static SquareMeter operator *(Meter lhs, Meter rhs) { return new SquareMeter(lhs.Value * rhs.Value); }
         public static Meter_Sec operator /(Meter lhs, Second rhs) { return new Meter_Sec(lhs.Value / rhs.Value); }
         public static Second operator /(Meter lhs, Meter_Sec rhs) { return new Second(lhs.Value / rhs.Value); }

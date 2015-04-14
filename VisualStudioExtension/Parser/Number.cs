@@ -91,7 +91,12 @@ namespace Man.UnitsOfMeasurement
         }
 
         public override string CSString() { return String.Format(CultureInfo.InvariantCulture, "{0}d", Value); }
-        public override string ToString() { return Value.ToString(CultureInfo.InvariantCulture); }
+        public override string ToString()
+        {
+            string valueString = Value.ToString("R", CultureInfo.InvariantCulture);
+            double roundTripped = double.Parse(valueString, CultureInfo.InvariantCulture);
+            return Value.Equals(roundTripped) ? valueString : Value.ToString("G17", CultureInfo.InvariantCulture);
+        }
         #endregion
     }
 
@@ -128,7 +133,6 @@ namespace Man.UnitsOfMeasurement
             return rhs;
         }
 
-        //public override string CSString() { return String.Format(CultureInfo.InvariantCulture, "{0}m", Value); }
         public override string CSString() { return IsZero ? "decimal.Zero" : (IsOne ? "decimal.One" : String.Format(CultureInfo.InvariantCulture, "{0}m", Value)); }
         public override string ToString() { return Value.ToString(CultureInfo.InvariantCulture); }
         #endregion
@@ -168,7 +172,7 @@ namespace Man.UnitsOfMeasurement
         }
 
         public override string CSString() { return String.Format(CultureInfo.InvariantCulture, "{0}f", Value); }
-        public override string ToString() { return Value.ToString(CultureInfo.InvariantCulture); }
+        public override string ToString() { return Value.ToString("R", CultureInfo.InvariantCulture); }
         #endregion
     }
 }

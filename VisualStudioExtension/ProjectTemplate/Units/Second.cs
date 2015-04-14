@@ -49,20 +49,20 @@ namespace $safeprojectname$
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<Second>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Second) && Equals((Second)obj); }
         public bool /* IEquatable<Second> */ Equals(Second other) { return this.Value == other.Value; }
-        public int /* IComparable<Second> */ CompareTo(Second other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<Second>
         public static bool operator ==(Second lhs, Second rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(Second lhs, Second rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(Second lhs, Second rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(Second lhs, Second rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(Second lhs, Second rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(Second lhs, Second rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<Second> */ CompareTo(Second other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -75,8 +75,8 @@ namespace $safeprojectname$
         public static Second operator *(double lhs, Second rhs) { return new Second(lhs * rhs.Value); }
         public static Second operator *(Second lhs, double rhs) { return new Second(lhs.Value * rhs); }
         public static Second operator /(Second lhs, double rhs) { return new Second(lhs.Value / rhs); }
-        // Outer:
         public static double operator /(Second lhs, Second rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         #endregion
 
         #region Formatting

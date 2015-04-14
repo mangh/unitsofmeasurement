@@ -53,20 +53,20 @@ namespace Demo.UnitsOfMeasurement
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<Gram>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Gram) && Equals((Gram)obj); }
         public bool /* IEquatable<Gram> */ Equals(Gram other) { return this.Value == other.Value; }
-        public int /* IComparable<Gram> */ CompareTo(Gram other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<Gram>
         public static bool operator ==(Gram lhs, Gram rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(Gram lhs, Gram rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(Gram lhs, Gram rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(Gram lhs, Gram rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(Gram lhs, Gram rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(Gram lhs, Gram rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<Gram> */ CompareTo(Gram other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -79,8 +79,8 @@ namespace Demo.UnitsOfMeasurement
         public static Gram operator *(double lhs, Gram rhs) { return new Gram(lhs * rhs.Value); }
         public static Gram operator *(Gram lhs, double rhs) { return new Gram(lhs.Value * rhs); }
         public static Gram operator /(Gram lhs, double rhs) { return new Gram(lhs.Value / rhs); }
-        // Outer:
         public static double operator /(Gram lhs, Gram rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         #endregion
 
         #region Formatting
@@ -92,7 +92,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region Statics
         private static readonly Dimension s_sense = Kilogram.Sense;
-        private static readonly int s_family = 11;
+        private static readonly int s_family = Kilogram.Family;
         private static double s_factor = 1000d * Kilogram.Factor;
         private static string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("g");

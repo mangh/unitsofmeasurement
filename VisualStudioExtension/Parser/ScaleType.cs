@@ -9,7 +9,7 @@
 
 
 ********************************************************************************/
-
+using System;
 using System.Collections;   // IEnumerable.GetEnumerator()
 using System.Collections.Generic;
 
@@ -31,6 +31,13 @@ namespace Man.UnitsOfMeasurement
             base(MeasureType.DefaultNamespace, name)
         {
             Unit = unit;
+        }
+        #endregion
+
+        #region Methods
+        public override string ToString()
+        {
+            return String.Format("[{0}] {1} : {2} = {3} {4}", Unit.Sense.Value, Name, "<common reference point>", Unit.Name, Offset.Value);
         }
         #endregion
     }

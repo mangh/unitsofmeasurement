@@ -52,20 +52,20 @@ namespace $safeprojectname$
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<DegKelvin>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is DegKelvin) && Equals((DegKelvin)obj); }
         public bool /* IEquatable<DegKelvin> */ Equals(DegKelvin other) { return this.Value == other.Value; }
-        public int /* IComparable<DegKelvin> */ CompareTo(DegKelvin other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<DegKelvin>
         public static bool operator ==(DegKelvin lhs, DegKelvin rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(DegKelvin lhs, DegKelvin rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(DegKelvin lhs, DegKelvin rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(DegKelvin lhs, DegKelvin rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(DegKelvin lhs, DegKelvin rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(DegKelvin lhs, DegKelvin rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<DegKelvin> */ CompareTo(DegKelvin other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -78,8 +78,8 @@ namespace $safeprojectname$
         public static DegKelvin operator *(double lhs, DegKelvin rhs) { return new DegKelvin(lhs * rhs.Value); }
         public static DegKelvin operator *(DegKelvin lhs, double rhs) { return new DegKelvin(lhs.Value * rhs); }
         public static DegKelvin operator /(DegKelvin lhs, double rhs) { return new DegKelvin(lhs.Value / rhs); }
-        // Outer:
         public static double operator /(DegKelvin lhs, DegKelvin rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         #endregion
 
         #region Formatting

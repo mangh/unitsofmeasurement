@@ -49,20 +49,20 @@ namespace Demo.UnitsOfMeasurement
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<CubicMeter>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is CubicMeter) && Equals((CubicMeter)obj); }
         public bool /* IEquatable<CubicMeter> */ Equals(CubicMeter other) { return this.Value == other.Value; }
-        public int /* IComparable<CubicMeter> */ CompareTo(CubicMeter other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<CubicMeter>
         public static bool operator ==(CubicMeter lhs, CubicMeter rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(CubicMeter lhs, CubicMeter rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(CubicMeter lhs, CubicMeter rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(CubicMeter lhs, CubicMeter rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(CubicMeter lhs, CubicMeter rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(CubicMeter lhs, CubicMeter rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<CubicMeter> */ CompareTo(CubicMeter other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -75,8 +75,8 @@ namespace Demo.UnitsOfMeasurement
         public static CubicMeter operator *(double lhs, CubicMeter rhs) { return new CubicMeter(lhs * rhs.Value); }
         public static CubicMeter operator *(CubicMeter lhs, double rhs) { return new CubicMeter(lhs.Value * rhs); }
         public static CubicMeter operator /(CubicMeter lhs, double rhs) { return new CubicMeter(lhs.Value / rhs); }
-        // Outer:
         public static double operator /(CubicMeter lhs, CubicMeter rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         public static Meter operator /(CubicMeter lhs, SquareMeter rhs) { return new Meter(lhs.Value / rhs.Value); }
         public static SquareMeter operator /(CubicMeter lhs, Meter rhs) { return new SquareMeter(lhs.Value / rhs.Value); }
         #endregion
@@ -90,7 +90,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region Statics
         private static readonly Dimension s_sense = SquareMeter.Sense * Meter.Sense;
-        private static readonly int s_family = 37;
+        private static readonly int s_family = 12;
         private static double s_factor = SquareMeter.Factor * Meter.Factor;
         private static string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("m\u00B3", "m3");

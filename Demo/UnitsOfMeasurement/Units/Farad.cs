@@ -49,20 +49,20 @@ namespace Demo.UnitsOfMeasurement
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<Farad>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Farad) && Equals((Farad)obj); }
         public bool /* IEquatable<Farad> */ Equals(Farad other) { return this.Value == other.Value; }
-        public int /* IComparable<Farad> */ CompareTo(Farad other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<Farad>
         public static bool operator ==(Farad lhs, Farad rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(Farad lhs, Farad rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(Farad lhs, Farad rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(Farad lhs, Farad rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(Farad lhs, Farad rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(Farad lhs, Farad rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<Farad> */ CompareTo(Farad other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -75,8 +75,8 @@ namespace Demo.UnitsOfMeasurement
         public static Farad operator *(double lhs, Farad rhs) { return new Farad(lhs * rhs.Value); }
         public static Farad operator *(Farad lhs, double rhs) { return new Farad(lhs.Value * rhs); }
         public static Farad operator /(Farad lhs, double rhs) { return new Farad(lhs.Value / rhs); }
-        // Outer:
         public static double operator /(Farad lhs, Farad rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         public static Coulomb operator *(Farad lhs, Volt rhs) { return new Coulomb(lhs.Value * rhs.Value); }
         public static Coulomb operator *(Volt lhs, Farad rhs) { return new Coulomb(lhs.Value * rhs.Value); }
         public static Second operator *(Farad lhs, Ohm rhs) { return new Second(lhs.Value * rhs.Value); }
@@ -92,7 +92,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region Statics
         private static readonly Dimension s_sense = Coulomb.Sense / Volt.Sense;
-        private static readonly int s_family = 60;
+        private static readonly int s_family = 26;
         private static double s_factor = Coulomb.Factor / Volt.Factor;
         private static string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("F");

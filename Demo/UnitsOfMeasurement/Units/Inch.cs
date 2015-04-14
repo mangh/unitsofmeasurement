@@ -56,20 +56,20 @@ namespace Demo.UnitsOfMeasurement
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<Inch>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Inch) && Equals((Inch)obj); }
         public bool /* IEquatable<Inch> */ Equals(Inch other) { return this.Value == other.Value; }
-        public int /* IComparable<Inch> */ CompareTo(Inch other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<Inch>
         public static bool operator ==(Inch lhs, Inch rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(Inch lhs, Inch rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(Inch lhs, Inch rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(Inch lhs, Inch rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(Inch lhs, Inch rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(Inch lhs, Inch rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<Inch> */ CompareTo(Inch other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -82,8 +82,8 @@ namespace Demo.UnitsOfMeasurement
         public static Inch operator *(double lhs, Inch rhs) { return new Inch(lhs * rhs.Value); }
         public static Inch operator *(Inch lhs, double rhs) { return new Inch(lhs.Value * rhs); }
         public static Inch operator /(Inch lhs, double rhs) { return new Inch(lhs.Value / rhs); }
-        // Outer:
         public static double operator /(Inch lhs, Inch rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         #endregion
 
         #region Formatting
@@ -95,7 +95,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region Statics
         private static readonly Dimension s_sense = Meter.Sense;
-        private static readonly int s_family = 0;
+        private static readonly int s_family = Meter.Family;
         private static double s_factor = 100d * Meter.Factor / 2.54d;
         private static string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("in");

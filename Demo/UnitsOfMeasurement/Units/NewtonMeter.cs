@@ -49,20 +49,20 @@ namespace Demo.UnitsOfMeasurement
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<NewtonMeter>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is NewtonMeter) && Equals((NewtonMeter)obj); }
         public bool /* IEquatable<NewtonMeter> */ Equals(NewtonMeter other) { return this.Value == other.Value; }
-        public int /* IComparable<NewtonMeter> */ CompareTo(NewtonMeter other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<NewtonMeter>
         public static bool operator ==(NewtonMeter lhs, NewtonMeter rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(NewtonMeter lhs, NewtonMeter rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(NewtonMeter lhs, NewtonMeter rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(NewtonMeter lhs, NewtonMeter rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(NewtonMeter lhs, NewtonMeter rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(NewtonMeter lhs, NewtonMeter rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<NewtonMeter> */ CompareTo(NewtonMeter other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -75,8 +75,8 @@ namespace Demo.UnitsOfMeasurement
         public static NewtonMeter operator *(double lhs, NewtonMeter rhs) { return new NewtonMeter(lhs * rhs.Value); }
         public static NewtonMeter operator *(NewtonMeter lhs, double rhs) { return new NewtonMeter(lhs.Value * rhs); }
         public static NewtonMeter operator /(NewtonMeter lhs, double rhs) { return new NewtonMeter(lhs.Value / rhs); }
-        // Outer:
         public static double operator /(NewtonMeter lhs, NewtonMeter rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         #endregion
 
         #region Formatting
@@ -88,7 +88,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region Statics
         private static readonly Dimension s_sense = Kilogram.Sense * Meter_Sec2.Sense * Meter.Sense;
-        private static readonly int s_family = 48;
+        private static readonly int s_family = 18;
         private static double s_factor = Kilogram.Factor * Meter_Sec2.Factor * Meter.Factor;
         private static string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("N\u00B7m", "N*m");

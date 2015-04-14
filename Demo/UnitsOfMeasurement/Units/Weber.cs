@@ -49,20 +49,20 @@ namespace Demo.UnitsOfMeasurement
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<Weber>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Weber) && Equals((Weber)obj); }
         public bool /* IEquatable<Weber> */ Equals(Weber other) { return this.Value == other.Value; }
-        public int /* IComparable<Weber> */ CompareTo(Weber other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<Weber>
         public static bool operator ==(Weber lhs, Weber rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(Weber lhs, Weber rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(Weber lhs, Weber rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(Weber lhs, Weber rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(Weber lhs, Weber rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(Weber lhs, Weber rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<Weber> */ CompareTo(Weber other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -75,8 +75,8 @@ namespace Demo.UnitsOfMeasurement
         public static Weber operator *(double lhs, Weber rhs) { return new Weber(lhs * rhs.Value); }
         public static Weber operator *(Weber lhs, double rhs) { return new Weber(lhs.Value * rhs); }
         public static Weber operator /(Weber lhs, double rhs) { return new Weber(lhs.Value / rhs); }
-        // Outer:
         public static double operator /(Weber lhs, Weber rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         public static Joule operator *(Weber lhs, Ampere rhs) { return new Joule(lhs.Value * rhs.Value); }
         public static Joule operator *(Ampere lhs, Weber rhs) { return new Joule(lhs.Value * rhs.Value); }
         public static Second operator /(Weber lhs, Volt rhs) { return new Second(lhs.Value / rhs.Value); }
@@ -92,7 +92,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region Statics
         private static readonly Dimension s_sense = Joule.Sense / Ampere.Sense;
-        private static readonly int s_family = 61;
+        private static readonly int s_family = 27;
         private static double s_factor = Joule.Factor / Ampere.Factor;
         private static string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("Wb");

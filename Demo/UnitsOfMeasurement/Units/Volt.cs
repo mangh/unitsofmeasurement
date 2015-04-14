@@ -49,20 +49,20 @@ namespace Demo.UnitsOfMeasurement
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<Volt>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Volt) && Equals((Volt)obj); }
         public bool /* IEquatable<Volt> */ Equals(Volt other) { return this.Value == other.Value; }
-        public int /* IComparable<Volt> */ CompareTo(Volt other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<Volt>
         public static bool operator ==(Volt lhs, Volt rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(Volt lhs, Volt rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(Volt lhs, Volt rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(Volt lhs, Volt rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(Volt lhs, Volt rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(Volt lhs, Volt rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<Volt> */ CompareTo(Volt other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -75,8 +75,8 @@ namespace Demo.UnitsOfMeasurement
         public static Volt operator *(double lhs, Volt rhs) { return new Volt(lhs * rhs.Value); }
         public static Volt operator *(Volt lhs, double rhs) { return new Volt(lhs.Value * rhs); }
         public static Volt operator /(Volt lhs, double rhs) { return new Volt(lhs.Value / rhs); }
-        // Outer:
         public static double operator /(Volt lhs, Volt rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         public static Joule operator *(Volt lhs, Coulomb rhs) { return new Joule(lhs.Value * rhs.Value); }
         public static Joule operator *(Coulomb lhs, Volt rhs) { return new Joule(lhs.Value * rhs.Value); }
         public static Watt operator *(Volt lhs, Ampere rhs) { return new Watt(lhs.Value * rhs.Value); }
@@ -96,7 +96,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region Statics
         private static readonly Dimension s_sense = Joule.Sense / Coulomb.Sense;
-        private static readonly int s_family = 57;
+        private static readonly int s_family = 23;
         private static double s_factor = Joule.Factor / Coulomb.Factor;
         private static string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("V");

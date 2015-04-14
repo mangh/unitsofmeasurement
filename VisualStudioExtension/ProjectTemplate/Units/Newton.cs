@@ -49,20 +49,20 @@ namespace $safeprojectname$
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<Newton>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Newton) && Equals((Newton)obj); }
         public bool /* IEquatable<Newton> */ Equals(Newton other) { return this.Value == other.Value; }
-        public int /* IComparable<Newton> */ CompareTo(Newton other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<Newton>
         public static bool operator ==(Newton lhs, Newton rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(Newton lhs, Newton rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(Newton lhs, Newton rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(Newton lhs, Newton rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(Newton lhs, Newton rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(Newton lhs, Newton rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<Newton> */ CompareTo(Newton other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -75,8 +75,8 @@ namespace $safeprojectname$
         public static Newton operator *(double lhs, Newton rhs) { return new Newton(lhs * rhs.Value); }
         public static Newton operator *(Newton lhs, double rhs) { return new Newton(lhs.Value * rhs); }
         public static Newton operator /(Newton lhs, double rhs) { return new Newton(lhs.Value / rhs); }
-        // Outer:
         public static double operator /(Newton lhs, Newton rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         public static Meter_Sec2 operator /(Newton lhs, Kilogram rhs) { return new Meter_Sec2(lhs.Value / rhs.Value); }
         public static Kilogram operator /(Newton lhs, Meter_Sec2 rhs) { return new Kilogram(lhs.Value / rhs.Value); }
         public static Joule operator *(Newton lhs, Meter rhs) { return new Joule(lhs.Value * rhs.Value); }
@@ -92,7 +92,7 @@ namespace $safeprojectname$
 
         #region Statics
         private static readonly Dimension s_sense = Kilogram.Sense * Meter_Sec2.Sense;
-        private static readonly int s_family = 17;
+        private static readonly int s_family = 10;
         private static double s_factor = Kilogram.Factor * Meter_Sec2.Factor;
         private static string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("N");

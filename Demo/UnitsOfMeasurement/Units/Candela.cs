@@ -49,20 +49,20 @@ namespace Demo.UnitsOfMeasurement
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<Candela>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Candela) && Equals((Candela)obj); }
         public bool /* IEquatable<Candela> */ Equals(Candela other) { return this.Value == other.Value; }
-        public int /* IComparable<Candela> */ CompareTo(Candela other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<Candela>
         public static bool operator ==(Candela lhs, Candela rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(Candela lhs, Candela rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(Candela lhs, Candela rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(Candela lhs, Candela rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(Candela lhs, Candela rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(Candela lhs, Candela rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<Candela> */ CompareTo(Candela other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -75,8 +75,8 @@ namespace Demo.UnitsOfMeasurement
         public static Candela operator *(double lhs, Candela rhs) { return new Candela(lhs * rhs.Value); }
         public static Candela operator *(Candela lhs, double rhs) { return new Candela(lhs.Value * rhs); }
         public static Candela operator /(Candela lhs, double rhs) { return new Candela(lhs.Value / rhs); }
-        // Outer:
         public static double operator /(Candela lhs, Candela rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         #endregion
 
         #region Formatting
@@ -88,7 +88,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region Statics
         private static readonly Dimension s_sense = Dimension.LuminousIntensity;
-        private static readonly int s_family = 22;
+        private static readonly int s_family = 6;
         private static double s_factor = 1d;
         private static string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("cd");

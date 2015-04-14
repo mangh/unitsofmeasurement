@@ -51,20 +51,20 @@ namespace Demo.UnitsOfMeasurement
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<Hour>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Hour) && Equals((Hour)obj); }
         public bool /* IEquatable<Hour> */ Equals(Hour other) { return this.Value == other.Value; }
-        public int /* IComparable<Hour> */ CompareTo(Hour other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<Hour>
         public static bool operator ==(Hour lhs, Hour rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(Hour lhs, Hour rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(Hour lhs, Hour rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(Hour lhs, Hour rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(Hour lhs, Hour rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(Hour lhs, Hour rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<Hour> */ CompareTo(Hour other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -77,8 +77,8 @@ namespace Demo.UnitsOfMeasurement
         public static Hour operator *(double lhs, Hour rhs) { return new Hour(lhs * rhs.Value); }
         public static Hour operator *(Hour lhs, double rhs) { return new Hour(lhs.Value * rhs); }
         public static Hour operator /(Hour lhs, double rhs) { return new Hour(lhs.Value / rhs); }
-        // Outer:
         public static double operator /(Hour lhs, Hour rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         #endregion
 
         #region Formatting
@@ -90,7 +90,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region Statics
         private static readonly Dimension s_sense = Minute.Sense;
-        private static readonly int s_family = 8;
+        private static readonly int s_family = Second.Family;
         private static double s_factor = Minute.Factor / 60d;
         private static string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("h");

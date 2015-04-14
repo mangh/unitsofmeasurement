@@ -49,20 +49,20 @@ namespace Demo.UnitsOfMeasurement
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<Siemens>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Siemens) && Equals((Siemens)obj); }
         public bool /* IEquatable<Siemens> */ Equals(Siemens other) { return this.Value == other.Value; }
-        public int /* IComparable<Siemens> */ CompareTo(Siemens other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<Siemens>
         public static bool operator ==(Siemens lhs, Siemens rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(Siemens lhs, Siemens rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(Siemens lhs, Siemens rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(Siemens lhs, Siemens rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(Siemens lhs, Siemens rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(Siemens lhs, Siemens rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<Siemens> */ CompareTo(Siemens other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -75,8 +75,8 @@ namespace Demo.UnitsOfMeasurement
         public static Siemens operator *(double lhs, Siemens rhs) { return new Siemens(lhs * rhs.Value); }
         public static Siemens operator *(Siemens lhs, double rhs) { return new Siemens(lhs.Value * rhs); }
         public static Siemens operator /(Siemens lhs, double rhs) { return new Siemens(lhs.Value / rhs); }
-        // Outer:
         public static double operator /(Siemens lhs, Siemens rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         public static Ampere operator *(Siemens lhs, Volt rhs) { return new Ampere(lhs.Value * rhs.Value); }
         public static Ampere operator *(Volt lhs, Siemens rhs) { return new Ampere(lhs.Value * rhs.Value); }
         #endregion
@@ -90,7 +90,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region Statics
         private static readonly Dimension s_sense = Ampere.Sense / Volt.Sense;
-        private static readonly int s_family = 59;
+        private static readonly int s_family = 25;
         private static double s_factor = Ampere.Factor / Volt.Factor;
         private static string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("S");

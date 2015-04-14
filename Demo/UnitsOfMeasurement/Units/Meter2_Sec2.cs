@@ -49,20 +49,20 @@ namespace Demo.UnitsOfMeasurement
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<Meter2_Sec2>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Meter2_Sec2) && Equals((Meter2_Sec2)obj); }
         public bool /* IEquatable<Meter2_Sec2> */ Equals(Meter2_Sec2 other) { return this.Value == other.Value; }
-        public int /* IComparable<Meter2_Sec2> */ CompareTo(Meter2_Sec2 other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<Meter2_Sec2>
         public static bool operator ==(Meter2_Sec2 lhs, Meter2_Sec2 rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(Meter2_Sec2 lhs, Meter2_Sec2 rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(Meter2_Sec2 lhs, Meter2_Sec2 rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(Meter2_Sec2 lhs, Meter2_Sec2 rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(Meter2_Sec2 lhs, Meter2_Sec2 rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(Meter2_Sec2 lhs, Meter2_Sec2 rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<Meter2_Sec2> */ CompareTo(Meter2_Sec2 other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -75,8 +75,8 @@ namespace Demo.UnitsOfMeasurement
         public static Meter2_Sec2 operator *(double lhs, Meter2_Sec2 rhs) { return new Meter2_Sec2(lhs * rhs.Value); }
         public static Meter2_Sec2 operator *(Meter2_Sec2 lhs, double rhs) { return new Meter2_Sec2(lhs.Value * rhs); }
         public static Meter2_Sec2 operator /(Meter2_Sec2 lhs, double rhs) { return new Meter2_Sec2(lhs.Value / rhs); }
-        // Outer:
         public static double operator /(Meter2_Sec2 lhs, Meter2_Sec2 rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         public static Meter_Sec operator /(Meter2_Sec2 lhs, Meter_Sec rhs) { return new Meter_Sec(lhs.Value / rhs.Value); }
         public static Meter operator /(Meter2_Sec2 lhs, Meter_Sec2 rhs) { return new Meter(lhs.Value / rhs.Value); }
         public static Meter_Sec2 operator /(Meter2_Sec2 lhs, Meter rhs) { return new Meter_Sec2(lhs.Value / rhs.Value); }
@@ -91,7 +91,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region Statics
         private static readonly Dimension s_sense = Meter_Sec.Sense * Meter_Sec.Sense;
-        private static readonly int s_family = 62;
+        private static readonly int s_family = 28;
         private static double s_factor = Meter_Sec.Factor * Meter_Sec.Factor;
         private static string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("m2/s2");

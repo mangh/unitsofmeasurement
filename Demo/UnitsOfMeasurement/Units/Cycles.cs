@@ -52,20 +52,20 @@ namespace Demo.UnitsOfMeasurement
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<Cycles>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Cycles) && Equals((Cycles)obj); }
         public bool /* IEquatable<Cycles> */ Equals(Cycles other) { return this.Value == other.Value; }
-        public int /* IComparable<Cycles> */ CompareTo(Cycles other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<Cycles>
         public static bool operator ==(Cycles lhs, Cycles rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(Cycles lhs, Cycles rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(Cycles lhs, Cycles rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(Cycles lhs, Cycles rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(Cycles lhs, Cycles rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(Cycles lhs, Cycles rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<Cycles> */ CompareTo(Cycles other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -78,8 +78,8 @@ namespace Demo.UnitsOfMeasurement
         public static Cycles operator *(double lhs, Cycles rhs) { return new Cycles(lhs * rhs.Value); }
         public static Cycles operator *(Cycles lhs, double rhs) { return new Cycles(lhs.Value * rhs); }
         public static Cycles operator /(Cycles lhs, double rhs) { return new Cycles(lhs.Value / rhs); }
-        // Outer:
         public static double operator /(Cycles lhs, Cycles rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         public static Hertz operator /(Cycles lhs, Second rhs) { return new Hertz(lhs.Value / rhs.Value); }
         public static Second operator /(Cycles lhs, Hertz rhs) { return new Second(lhs.Value / rhs.Value); }
         public static RPM operator /(Cycles lhs, Minute rhs) { return new RPM(lhs.Value / rhs.Value); }
@@ -95,7 +95,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region Statics
         private static readonly Dimension s_sense = Radian.Sense;
-        private static readonly int s_family = 27;
+        private static readonly int s_family = Radian.Family;
         private static double s_factor = Radian.Factor / (2d * Math.PI);
         private static string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("c");

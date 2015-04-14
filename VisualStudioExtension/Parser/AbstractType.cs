@@ -11,6 +11,7 @@
 ********************************************************************************/
 
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Man.UnitsOfMeasurement
 {
@@ -43,14 +44,15 @@ namespace Man.UnitsOfMeasurement
         public static readonly string DefaultNamespace = typeof(MeasureType).Namespace;
 
         #region Properties
-        public MeasureType Relative { get; protected set; }
-        public bool HasRelatives { get { return !object.ReferenceEquals(Relative, this); } }
+        public MeasureType Relative { get; private set; }
+        public MeasureType Prime { get; private set; }
         #endregion
 
         #region Constructor(s)
         protected MeasureType(string nameSpace, string name) :
             base(nameSpace, name, false)
         {
+            Prime = null;       // Initially, no prime measure (it's a prime for itself and a candidate for the family prime)
             Relative = this;    // Initially, no relatives
         }
         #endregion
@@ -58,9 +60,15 @@ namespace Man.UnitsOfMeasurement
         #region Methods
         public void AddRelative(MeasureType relative)
         {
-            MeasureType prev = Relative;
-            Relative = relative;
-            relative.Relative = prev;
+            relative.Prime = this;
+
+            MeasureType otherrelative = this.Relative;
+            this.Relative = relative;
+            relative.Relative = otherrelative;
+        }
+        public MeasureType FamilyPrime()
+        {
+            return (this.Prime == null) ? this : this.Relatives().First(m => m.Prime == null);
         }
         public IEnumerable<MeasureType> Relatives()
         {

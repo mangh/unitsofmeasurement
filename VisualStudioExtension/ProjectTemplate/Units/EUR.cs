@@ -51,20 +51,20 @@ namespace $safeprojectname$
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<EUR>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is EUR) && Equals((EUR)obj); }
         public bool /* IEquatable<EUR> */ Equals(EUR other) { return this.Value == other.Value; }
-        public int /* IComparable<EUR> */ CompareTo(EUR other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<EUR>
         public static bool operator ==(EUR lhs, EUR rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(EUR lhs, EUR rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(EUR lhs, EUR rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(EUR lhs, EUR rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(EUR lhs, EUR rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(EUR lhs, EUR rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<EUR> */ CompareTo(EUR other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -77,8 +77,8 @@ namespace $safeprojectname$
         public static EUR operator *(decimal lhs, EUR rhs) { return new EUR(lhs * rhs.Value); }
         public static EUR operator *(EUR lhs, decimal rhs) { return new EUR(lhs.Value * rhs); }
         public static EUR operator /(EUR lhs, decimal rhs) { return new EUR(lhs.Value / rhs); }
-        // Outer:
         public static decimal operator /(EUR lhs, EUR rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         #endregion
 
         #region Formatting
@@ -90,7 +90,7 @@ namespace $safeprojectname$
 
         #region Statics
         private static readonly Dimension s_sense = Dimension.Other;
-        private static readonly int s_family = 7;
+        private static readonly int s_family = 4;
         private static decimal s_factor = decimal.One;
         private static string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("EUR");

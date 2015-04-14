@@ -49,20 +49,20 @@ namespace Demo.UnitsOfMeasurement
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<Ampere>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Ampere) && Equals((Ampere)obj); }
         public bool /* IEquatable<Ampere> */ Equals(Ampere other) { return this.Value == other.Value; }
-        public int /* IComparable<Ampere> */ CompareTo(Ampere other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<Ampere>
         public static bool operator ==(Ampere lhs, Ampere rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(Ampere lhs, Ampere rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(Ampere lhs, Ampere rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(Ampere lhs, Ampere rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(Ampere lhs, Ampere rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(Ampere lhs, Ampere rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<Ampere> */ CompareTo(Ampere other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -75,8 +75,8 @@ namespace Demo.UnitsOfMeasurement
         public static Ampere operator *(double lhs, Ampere rhs) { return new Ampere(lhs * rhs.Value); }
         public static Ampere operator *(Ampere lhs, double rhs) { return new Ampere(lhs.Value * rhs); }
         public static Ampere operator /(Ampere lhs, double rhs) { return new Ampere(lhs.Value / rhs); }
-        // Outer:
         public static double operator /(Ampere lhs, Ampere rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         public static Coulomb operator *(Ampere lhs, Second rhs) { return new Coulomb(lhs.Value * rhs.Value); }
         public static Coulomb operator *(Second lhs, Ampere rhs) { return new Coulomb(lhs.Value * rhs.Value); }
         public static Siemens operator /(Ampere lhs, Volt rhs) { return new Siemens(lhs.Value / rhs.Value); }
@@ -92,7 +92,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region Statics
         private static readonly Dimension s_sense = Dimension.ElectricCurrent;
-        private static readonly int s_family = 20;
+        private static readonly int s_family = 4;
         private static double s_factor = 1d;
         private static string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("A");

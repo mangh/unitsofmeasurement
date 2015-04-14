@@ -9,7 +9,7 @@
 
 
 ********************************************************************************/
-
+using System;
 using System.Collections;   // IEnumerable.GetEnumerator()
 using System.Collections.Generic;
 
@@ -25,7 +25,6 @@ namespace Man.UnitsOfMeasurement
     {
         #region Properties
         public SenseExpr Sense { get; set; }
-        public int Family { get; set; }
         public NumExpr Factor { get; set; }
         public string Format { get; set; }
         public List<string> Tags { get; private set; }
@@ -39,27 +38,22 @@ namespace Man.UnitsOfMeasurement
         {
             Tags = new List<string>();
             OuterOperations = new List<BinaryOperation>();
-            Family = s_family++;    // Initially, assign to the next family
         }
         #endregion
 
         #region Methods
-        public void AddRelative(UnitType relative)
-        {
-            base.AddRelative(relative);
-            relative.Family = this.Family;
-        }
         public void AddOuterOperation(AbstractType ret, string op, AbstractType lhs, AbstractType rhs)
         {
             OuterOperations.Add(new BinaryOperation(ret, op, lhs, rhs));
         }
-        #endregion
-
-        #region Statics
-        private static int s_family = 0;
-        public static void ResetFamilyID()
+        public override string ToString()
         {
-            s_family = 0;
+            return String.Format("[{0}] {1} : {2} {{{3}}}",
+                (Sense == null) ? String.Empty : Sense.Value.ToString(), 
+                Name,
+                (Factor == null) ? String.Empty : (Factor.IsTrueValue ? Factor.Value.ToString() : (Factor.Code ?? String.Empty)),
+                Tags.Count <= 0 ? String.Empty : String.Format("\"{0}\"", String.Join("\", \"", Tags))
+            );
         }
         #endregion
     }

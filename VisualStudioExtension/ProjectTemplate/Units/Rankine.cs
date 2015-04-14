@@ -42,7 +42,7 @@ namespace $safeprojectname$
             m_level = level;
         }
         public Rankine(double level) :
-            this((DegRankine)level)
+            this(new DegRankine(level))
         {
         }
         #endregion
@@ -50,29 +50,31 @@ namespace $safeprojectname$
         #region Conversions
         public static explicit operator Rankine(double q) { return new Rankine(q); }
         public static explicit operator Rankine(DegRankine q) { return new Rankine(q); }
+
         public static explicit operator Rankine(Celsius q) { return new Rankine((DegRankine)(q.Extent) + Rankine.Offset); }
         public static explicit operator Rankine(Kelvin q) { return new Rankine((DegRankine)(q.Extent) + Rankine.Offset); }
         public static explicit operator Rankine(Fahrenheit q) { return new Rankine((DegRankine)(q.Extent) + Rankine.Offset); }
+
         public static Rankine From(ILevel<double> q)
         {
             return new Rankine(DegRankine.From(q.Extent) + Rankine.Offset);
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<Rankine>
         public override int GetHashCode() { return m_level.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Rankine) && Equals((Rankine)obj); }
         public bool /* IEquatable<Rankine> */ Equals(Rankine other) { return this.Level == other.Level; }
-        public int /* IComparable<Rankine> */ CompareTo(Rankine other) { return this.Level.CompareTo(other.Level); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<Rankine>
         public static bool operator ==(Rankine lhs, Rankine rhs) { return lhs.Level == rhs.Level; }
         public static bool operator !=(Rankine lhs, Rankine rhs) { return lhs.Level != rhs.Level; }
         public static bool operator <(Rankine lhs, Rankine rhs) { return lhs.Level < rhs.Level; }
         public static bool operator >(Rankine lhs, Rankine rhs) { return lhs.Level > rhs.Level; }
         public static bool operator <=(Rankine lhs, Rankine rhs) { return lhs.Level <= rhs.Level; }
         public static bool operator >=(Rankine lhs, Rankine rhs) { return lhs.Level >= rhs.Level; }
+        public int /* IComparable<Rankine> */ CompareTo(Rankine other) { return this.Level.CompareTo(other.Level); }
         #endregion
 
         #region Arithmetic
@@ -93,11 +95,13 @@ namespace $safeprojectname$
         #endregion
 
         #region Statics
-        private static DegRankine s_offset = new DegRankine(0d);
+        private static readonly DegRankine s_offset = new DegRankine(0d);
+        private static readonly int s_family = Kelvin.Family;
         private static string s_format = "{0} {1}";
-        private static Rankine s_zero = new Rankine(0d);
+        private static readonly Rankine s_zero = new Rankine(0d);
         
         public static DegRankine Offset { get { return s_offset; } }
+        public static int Family { get { return s_family; } }
         public static string Format { get { return s_format; } set { s_format = value; } }
         public static Rankine Zero { get { return s_zero; } }
         #endregion

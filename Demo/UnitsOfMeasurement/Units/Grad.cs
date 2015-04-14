@@ -52,20 +52,20 @@ namespace Demo.UnitsOfMeasurement
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<Grad>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Grad) && Equals((Grad)obj); }
         public bool /* IEquatable<Grad> */ Equals(Grad other) { return this.Value == other.Value; }
-        public int /* IComparable<Grad> */ CompareTo(Grad other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<Grad>
         public static bool operator ==(Grad lhs, Grad rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(Grad lhs, Grad rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(Grad lhs, Grad rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(Grad lhs, Grad rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(Grad lhs, Grad rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(Grad lhs, Grad rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<Grad> */ CompareTo(Grad other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -78,8 +78,8 @@ namespace Demo.UnitsOfMeasurement
         public static Grad operator *(double lhs, Grad rhs) { return new Grad(lhs * rhs.Value); }
         public static Grad operator *(Grad lhs, double rhs) { return new Grad(lhs.Value * rhs); }
         public static Grad operator /(Grad lhs, double rhs) { return new Grad(lhs.Value / rhs); }
-        // Outer:
         public static double operator /(Grad lhs, Grad rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         #endregion
 
         #region Formatting
@@ -91,7 +91,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region Statics
         private static readonly Dimension s_sense = Radian.Sense;
-        private static readonly int s_family = 27;
+        private static readonly int s_family = Radian.Family;
         private static double s_factor = (200d / Math.PI) * Radian.Factor;
         private static string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("grad");

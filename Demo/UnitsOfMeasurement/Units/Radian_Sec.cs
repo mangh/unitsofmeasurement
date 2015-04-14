@@ -51,20 +51,20 @@ namespace Demo.UnitsOfMeasurement
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<Radian_Sec>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Radian_Sec) && Equals((Radian_Sec)obj); }
         public bool /* IEquatable<Radian_Sec> */ Equals(Radian_Sec other) { return this.Value == other.Value; }
-        public int /* IComparable<Radian_Sec> */ CompareTo(Radian_Sec other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<Radian_Sec>
         public static bool operator ==(Radian_Sec lhs, Radian_Sec rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(Radian_Sec lhs, Radian_Sec rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(Radian_Sec lhs, Radian_Sec rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(Radian_Sec lhs, Radian_Sec rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(Radian_Sec lhs, Radian_Sec rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(Radian_Sec lhs, Radian_Sec rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<Radian_Sec> */ CompareTo(Radian_Sec other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -77,8 +77,8 @@ namespace Demo.UnitsOfMeasurement
         public static Radian_Sec operator *(double lhs, Radian_Sec rhs) { return new Radian_Sec(lhs * rhs.Value); }
         public static Radian_Sec operator *(Radian_Sec lhs, double rhs) { return new Radian_Sec(lhs.Value * rhs); }
         public static Radian_Sec operator /(Radian_Sec lhs, double rhs) { return new Radian_Sec(lhs.Value / rhs); }
-        // Outer:
         public static double operator /(Radian_Sec lhs, Radian_Sec rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         public static Radian operator *(Radian_Sec lhs, Second rhs) { return new Radian(lhs.Value * rhs.Value); }
         public static Radian operator *(Second lhs, Radian_Sec rhs) { return new Radian(lhs.Value * rhs.Value); }
         #endregion
@@ -92,7 +92,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region Statics
         private static readonly Dimension s_sense = Radian.Sense / Second.Sense;
-        private static readonly int s_family = 32;
+        private static readonly int s_family = Hertz.Family;
         private static double s_factor = Radian.Factor / Second.Factor;
         private static string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("rad/s");

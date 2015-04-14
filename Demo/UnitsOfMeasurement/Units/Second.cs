@@ -51,20 +51,20 @@ namespace Demo.UnitsOfMeasurement
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<Second>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Second) && Equals((Second)obj); }
         public bool /* IEquatable<Second> */ Equals(Second other) { return this.Value == other.Value; }
-        public int /* IComparable<Second> */ CompareTo(Second other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<Second>
         public static bool operator ==(Second lhs, Second rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(Second lhs, Second rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(Second lhs, Second rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(Second lhs, Second rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(Second lhs, Second rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(Second lhs, Second rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<Second> */ CompareTo(Second other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -77,8 +77,8 @@ namespace Demo.UnitsOfMeasurement
         public static Second operator *(double lhs, Second rhs) { return new Second(lhs * rhs.Value); }
         public static Second operator *(Second lhs, double rhs) { return new Second(lhs.Value * rhs); }
         public static Second operator /(Second lhs, double rhs) { return new Second(lhs.Value / rhs); }
-        // Outer:
         public static double operator /(Second lhs, Second rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         public static Farad operator /(Second lhs, Ohm rhs) { return new Farad(lhs.Value / rhs.Value); }
         public static Ohm operator /(Second lhs, Farad rhs) { return new Ohm(lhs.Value / rhs.Value); }
         #endregion
@@ -92,7 +92,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region Statics
         private static readonly Dimension s_sense = Dimension.Time;
-        private static readonly int s_family = 8;
+        private static readonly int s_family = 1;
         private static double s_factor = 1d;
         private static string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("s");

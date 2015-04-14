@@ -49,20 +49,20 @@ namespace Demo.UnitsOfMeasurement
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<Coulomb>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Coulomb) && Equals((Coulomb)obj); }
         public bool /* IEquatable<Coulomb> */ Equals(Coulomb other) { return this.Value == other.Value; }
-        public int /* IComparable<Coulomb> */ CompareTo(Coulomb other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<Coulomb>
         public static bool operator ==(Coulomb lhs, Coulomb rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(Coulomb lhs, Coulomb rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(Coulomb lhs, Coulomb rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(Coulomb lhs, Coulomb rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(Coulomb lhs, Coulomb rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(Coulomb lhs, Coulomb rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<Coulomb> */ CompareTo(Coulomb other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -75,8 +75,8 @@ namespace Demo.UnitsOfMeasurement
         public static Coulomb operator *(double lhs, Coulomb rhs) { return new Coulomb(lhs * rhs.Value); }
         public static Coulomb operator *(Coulomb lhs, double rhs) { return new Coulomb(lhs.Value * rhs); }
         public static Coulomb operator /(Coulomb lhs, double rhs) { return new Coulomb(lhs.Value / rhs); }
-        // Outer:
         public static double operator /(Coulomb lhs, Coulomb rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         public static Second operator /(Coulomb lhs, Ampere rhs) { return new Second(lhs.Value / rhs.Value); }
         public static Ampere operator /(Coulomb lhs, Second rhs) { return new Ampere(lhs.Value / rhs.Value); }
         public static Farad operator /(Coulomb lhs, Volt rhs) { return new Farad(lhs.Value / rhs.Value); }
@@ -92,7 +92,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region Statics
         private static readonly Dimension s_sense = Ampere.Sense * Second.Sense;
-        private static readonly int s_family = 56;
+        private static readonly int s_family = 22;
         private static double s_factor = Ampere.Factor * Second.Factor;
         private static string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("C");

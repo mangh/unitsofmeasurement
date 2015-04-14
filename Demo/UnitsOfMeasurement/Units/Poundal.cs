@@ -52,20 +52,20 @@ namespace Demo.UnitsOfMeasurement
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<Poundal>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Poundal) && Equals((Poundal)obj); }
         public bool /* IEquatable<Poundal> */ Equals(Poundal other) { return this.Value == other.Value; }
-        public int /* IComparable<Poundal> */ CompareTo(Poundal other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<Poundal>
         public static bool operator ==(Poundal lhs, Poundal rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(Poundal lhs, Poundal rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(Poundal lhs, Poundal rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(Poundal lhs, Poundal rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(Poundal lhs, Poundal rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(Poundal lhs, Poundal rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<Poundal> */ CompareTo(Poundal other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -78,8 +78,8 @@ namespace Demo.UnitsOfMeasurement
         public static Poundal operator *(double lhs, Poundal rhs) { return new Poundal(lhs * rhs.Value); }
         public static Poundal operator *(Poundal lhs, double rhs) { return new Poundal(lhs.Value * rhs); }
         public static Poundal operator /(Poundal lhs, double rhs) { return new Poundal(lhs.Value / rhs); }
-        // Outer:
         public static double operator /(Poundal lhs, Poundal rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         #endregion
 
         #region Formatting
@@ -91,7 +91,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region Statics
         private static readonly Dimension s_sense = Newton.Sense;
-        private static readonly int s_family = 42;
+        private static readonly int s_family = Newton.Family;
         private static double s_factor = Newton.Factor / 0.138254954376d;
         private static string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("pdl");

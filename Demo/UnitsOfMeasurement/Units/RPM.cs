@@ -51,20 +51,20 @@ namespace Demo.UnitsOfMeasurement
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<RPM>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is RPM) && Equals((RPM)obj); }
         public bool /* IEquatable<RPM> */ Equals(RPM other) { return this.Value == other.Value; }
-        public int /* IComparable<RPM> */ CompareTo(RPM other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<RPM>
         public static bool operator ==(RPM lhs, RPM rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(RPM lhs, RPM rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(RPM lhs, RPM rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(RPM lhs, RPM rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(RPM lhs, RPM rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(RPM lhs, RPM rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<RPM> */ CompareTo(RPM other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -77,8 +77,8 @@ namespace Demo.UnitsOfMeasurement
         public static RPM operator *(double lhs, RPM rhs) { return new RPM(lhs * rhs.Value); }
         public static RPM operator *(RPM lhs, double rhs) { return new RPM(lhs.Value * rhs); }
         public static RPM operator /(RPM lhs, double rhs) { return new RPM(lhs.Value / rhs); }
-        // Outer:
         public static double operator /(RPM lhs, RPM rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         public static Cycles operator *(RPM lhs, Minute rhs) { return new Cycles(lhs.Value * rhs.Value); }
         public static Cycles operator *(Minute lhs, RPM rhs) { return new Cycles(lhs.Value * rhs.Value); }
         #endregion
@@ -92,7 +92,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region Statics
         private static readonly Dimension s_sense = Cycles.Sense / Minute.Sense;
-        private static readonly int s_family = 32;
+        private static readonly int s_family = Hertz.Family;
         private static double s_factor = Cycles.Factor / Minute.Factor;
         private static string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("rpm");

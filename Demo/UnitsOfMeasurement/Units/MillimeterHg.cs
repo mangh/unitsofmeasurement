@@ -53,20 +53,20 @@ namespace Demo.UnitsOfMeasurement
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<MillimeterHg>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is MillimeterHg) && Equals((MillimeterHg)obj); }
         public bool /* IEquatable<MillimeterHg> */ Equals(MillimeterHg other) { return this.Value == other.Value; }
-        public int /* IComparable<MillimeterHg> */ CompareTo(MillimeterHg other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<MillimeterHg>
         public static bool operator ==(MillimeterHg lhs, MillimeterHg rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(MillimeterHg lhs, MillimeterHg rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(MillimeterHg lhs, MillimeterHg rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(MillimeterHg lhs, MillimeterHg rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(MillimeterHg lhs, MillimeterHg rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(MillimeterHg lhs, MillimeterHg rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<MillimeterHg> */ CompareTo(MillimeterHg other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -79,8 +79,8 @@ namespace Demo.UnitsOfMeasurement
         public static MillimeterHg operator *(double lhs, MillimeterHg rhs) { return new MillimeterHg(lhs * rhs.Value); }
         public static MillimeterHg operator *(MillimeterHg lhs, double rhs) { return new MillimeterHg(lhs.Value * rhs); }
         public static MillimeterHg operator /(MillimeterHg lhs, double rhs) { return new MillimeterHg(lhs.Value / rhs); }
-        // Outer:
         public static double operator /(MillimeterHg lhs, MillimeterHg rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         #endregion
 
         #region Formatting
@@ -92,7 +92,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region Statics
         private static readonly Dimension s_sense = Pascal.Sense;
-        private static readonly int s_family = 51;
+        private static readonly int s_family = Pascal.Family;
         private static double s_factor = Pascal.Factor * (13.5951d * 9.80665d);
         private static string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("mmHg");

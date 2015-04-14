@@ -49,20 +49,20 @@ namespace Demo.UnitsOfMeasurement
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<Joule>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Joule) && Equals((Joule)obj); }
         public bool /* IEquatable<Joule> */ Equals(Joule other) { return this.Value == other.Value; }
-        public int /* IComparable<Joule> */ CompareTo(Joule other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<Joule>
         public static bool operator ==(Joule lhs, Joule rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(Joule lhs, Joule rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(Joule lhs, Joule rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(Joule lhs, Joule rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(Joule lhs, Joule rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(Joule lhs, Joule rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<Joule> */ CompareTo(Joule other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -75,8 +75,8 @@ namespace Demo.UnitsOfMeasurement
         public static Joule operator *(double lhs, Joule rhs) { return new Joule(lhs * rhs.Value); }
         public static Joule operator *(Joule lhs, double rhs) { return new Joule(lhs.Value * rhs); }
         public static Joule operator /(Joule lhs, double rhs) { return new Joule(lhs.Value / rhs); }
-        // Outer:
         public static double operator /(Joule lhs, Joule rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         public static Meter operator /(Joule lhs, Newton rhs) { return new Meter(lhs.Value / rhs.Value); }
         public static Newton operator /(Joule lhs, Meter rhs) { return new Newton(lhs.Value / rhs.Value); }
         public static Watt operator /(Joule lhs, Second rhs) { return new Watt(lhs.Value / rhs.Value); }
@@ -98,7 +98,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region Statics
         private static readonly Dimension s_sense = Newton.Sense * Meter.Sense;
-        private static readonly int s_family = 46;
+        private static readonly int s_family = 16;
         private static double s_factor = Newton.Factor * Meter.Factor;
         private static string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("J");

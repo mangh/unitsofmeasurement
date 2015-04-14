@@ -53,20 +53,20 @@ namespace Demo.UnitsOfMeasurement
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<Pascal>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Pascal) && Equals((Pascal)obj); }
         public bool /* IEquatable<Pascal> */ Equals(Pascal other) { return this.Value == other.Value; }
-        public int /* IComparable<Pascal> */ CompareTo(Pascal other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<Pascal>
         public static bool operator ==(Pascal lhs, Pascal rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(Pascal lhs, Pascal rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(Pascal lhs, Pascal rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(Pascal lhs, Pascal rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(Pascal lhs, Pascal rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(Pascal lhs, Pascal rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<Pascal> */ CompareTo(Pascal other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -79,8 +79,8 @@ namespace Demo.UnitsOfMeasurement
         public static Pascal operator *(double lhs, Pascal rhs) { return new Pascal(lhs * rhs.Value); }
         public static Pascal operator *(Pascal lhs, double rhs) { return new Pascal(lhs.Value * rhs); }
         public static Pascal operator /(Pascal lhs, double rhs) { return new Pascal(lhs.Value / rhs); }
-        // Outer:
         public static double operator /(Pascal lhs, Pascal rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         public static Newton operator *(Pascal lhs, SquareMeter rhs) { return new Newton(lhs.Value * rhs.Value); }
         public static Newton operator *(SquareMeter lhs, Pascal rhs) { return new Newton(lhs.Value * rhs.Value); }
         #endregion
@@ -94,7 +94,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region Statics
         private static readonly Dimension s_sense = Newton.Sense / SquareMeter.Sense;
-        private static readonly int s_family = 51;
+        private static readonly int s_family = 21;
         private static double s_factor = Newton.Factor / SquareMeter.Factor;
         private static string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("Pa");

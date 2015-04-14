@@ -56,20 +56,20 @@ namespace Demo.UnitsOfMeasurement
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<Kilometer>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Kilometer) && Equals((Kilometer)obj); }
         public bool /* IEquatable<Kilometer> */ Equals(Kilometer other) { return this.Value == other.Value; }
-        public int /* IComparable<Kilometer> */ CompareTo(Kilometer other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<Kilometer>
         public static bool operator ==(Kilometer lhs, Kilometer rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(Kilometer lhs, Kilometer rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(Kilometer lhs, Kilometer rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(Kilometer lhs, Kilometer rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(Kilometer lhs, Kilometer rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(Kilometer lhs, Kilometer rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<Kilometer> */ CompareTo(Kilometer other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -82,8 +82,8 @@ namespace Demo.UnitsOfMeasurement
         public static Kilometer operator *(double lhs, Kilometer rhs) { return new Kilometer(lhs * rhs.Value); }
         public static Kilometer operator *(Kilometer lhs, double rhs) { return new Kilometer(lhs.Value * rhs); }
         public static Kilometer operator /(Kilometer lhs, double rhs) { return new Kilometer(lhs.Value / rhs); }
-        // Outer:
         public static double operator /(Kilometer lhs, Kilometer rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         public static Kilometer_Hour operator /(Kilometer lhs, Hour rhs) { return new Kilometer_Hour(lhs.Value / rhs.Value); }
         public static Hour operator /(Kilometer lhs, Kilometer_Hour rhs) { return new Hour(lhs.Value / rhs.Value); }
         #endregion
@@ -97,7 +97,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region Statics
         private static readonly Dimension s_sense = Meter.Sense;
-        private static readonly int s_family = 0;
+        private static readonly int s_family = Meter.Family;
         private static double s_factor = Meter.Factor / 1000d;
         private static string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("km");

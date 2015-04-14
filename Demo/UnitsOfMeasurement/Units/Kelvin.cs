@@ -42,7 +42,7 @@ namespace Demo.UnitsOfMeasurement
             m_level = level;
         }
         public Kelvin(double level) :
-            this((DegKelvin)level)
+            this(new DegKelvin(level))
         {
         }
         #endregion
@@ -50,29 +50,31 @@ namespace Demo.UnitsOfMeasurement
         #region Conversions
         public static explicit operator Kelvin(double q) { return new Kelvin(q); }
         public static explicit operator Kelvin(DegKelvin q) { return new Kelvin(q); }
+
         public static explicit operator Kelvin(Fahrenheit q) { return new Kelvin((DegKelvin)(q.Extent) + Kelvin.Offset); }
         public static explicit operator Kelvin(Rankine q) { return new Kelvin((DegKelvin)(q.Extent) + Kelvin.Offset); }
         public static explicit operator Kelvin(Celsius q) { return new Kelvin((DegKelvin)(q.Extent) + Kelvin.Offset); }
+
         public static Kelvin From(ILevel<double> q)
         {
             return new Kelvin(DegKelvin.From(q.Extent) + Kelvin.Offset);
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<Kelvin>
         public override int GetHashCode() { return m_level.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Kelvin) && Equals((Kelvin)obj); }
         public bool /* IEquatable<Kelvin> */ Equals(Kelvin other) { return this.Level == other.Level; }
-        public int /* IComparable<Kelvin> */ CompareTo(Kelvin other) { return this.Level.CompareTo(other.Level); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<Kelvin>
         public static bool operator ==(Kelvin lhs, Kelvin rhs) { return lhs.Level == rhs.Level; }
         public static bool operator !=(Kelvin lhs, Kelvin rhs) { return lhs.Level != rhs.Level; }
         public static bool operator <(Kelvin lhs, Kelvin rhs) { return lhs.Level < rhs.Level; }
         public static bool operator >(Kelvin lhs, Kelvin rhs) { return lhs.Level > rhs.Level; }
         public static bool operator <=(Kelvin lhs, Kelvin rhs) { return lhs.Level <= rhs.Level; }
         public static bool operator >=(Kelvin lhs, Kelvin rhs) { return lhs.Level >= rhs.Level; }
+        public int /* IComparable<Kelvin> */ CompareTo(Kelvin other) { return this.Level.CompareTo(other.Level); }
         #endregion
 
         #region Arithmetic
@@ -93,11 +95,13 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Statics
-        private static DegKelvin s_offset = new DegKelvin(0d);
+        private static readonly DegKelvin s_offset = new DegKelvin(0d);
+        private static readonly int s_family = 29;
         private static string s_format = "{0} {1}";
-        private static Kelvin s_zero = new Kelvin(0d);
+        private static readonly Kelvin s_zero = new Kelvin(0d);
         
         public static DegKelvin Offset { get { return s_offset; } }
+        public static int Family { get { return s_family; } }
         public static string Format { get { return s_format; } set { s_format = value; } }
         public static Kelvin Zero { get { return s_zero; } }
         #endregion

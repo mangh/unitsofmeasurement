@@ -56,20 +56,20 @@ namespace Demo.UnitsOfMeasurement
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<Foot>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Foot) && Equals((Foot)obj); }
         public bool /* IEquatable<Foot> */ Equals(Foot other) { return this.Value == other.Value; }
-        public int /* IComparable<Foot> */ CompareTo(Foot other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<Foot>
         public static bool operator ==(Foot lhs, Foot rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(Foot lhs, Foot rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(Foot lhs, Foot rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(Foot lhs, Foot rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(Foot lhs, Foot rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(Foot lhs, Foot rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<Foot> */ CompareTo(Foot other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -82,8 +82,8 @@ namespace Demo.UnitsOfMeasurement
         public static Foot operator *(double lhs, Foot rhs) { return new Foot(lhs * rhs.Value); }
         public static Foot operator *(Foot lhs, double rhs) { return new Foot(lhs.Value * rhs); }
         public static Foot operator /(Foot lhs, double rhs) { return new Foot(lhs.Value / rhs); }
-        // Outer:
         public static double operator /(Foot lhs, Foot rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         public static SquareFoot operator *(Foot lhs, Foot rhs) { return new SquareFoot(lhs.Value * rhs.Value); }
         #endregion
 
@@ -96,7 +96,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region Statics
         private static readonly Dimension s_sense = Inch.Sense;
-        private static readonly int s_family = 0;
+        private static readonly int s_family = Meter.Family;
         private static double s_factor = Inch.Factor / 12d;
         private static string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("ft");

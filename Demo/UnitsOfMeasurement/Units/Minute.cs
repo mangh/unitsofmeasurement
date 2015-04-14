@@ -51,20 +51,20 @@ namespace Demo.UnitsOfMeasurement
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<Minute>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Minute) && Equals((Minute)obj); }
         public bool /* IEquatable<Minute> */ Equals(Minute other) { return this.Value == other.Value; }
-        public int /* IComparable<Minute> */ CompareTo(Minute other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<Minute>
         public static bool operator ==(Minute lhs, Minute rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(Minute lhs, Minute rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(Minute lhs, Minute rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(Minute lhs, Minute rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(Minute lhs, Minute rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(Minute lhs, Minute rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<Minute> */ CompareTo(Minute other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -77,8 +77,8 @@ namespace Demo.UnitsOfMeasurement
         public static Minute operator *(double lhs, Minute rhs) { return new Minute(lhs * rhs.Value); }
         public static Minute operator *(Minute lhs, double rhs) { return new Minute(lhs.Value * rhs); }
         public static Minute operator /(Minute lhs, double rhs) { return new Minute(lhs.Value / rhs); }
-        // Outer:
         public static double operator /(Minute lhs, Minute rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         #endregion
 
         #region Formatting
@@ -90,7 +90,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region Statics
         private static readonly Dimension s_sense = Second.Sense;
-        private static readonly int s_family = 8;
+        private static readonly int s_family = Second.Family;
         private static double s_factor = Second.Factor / 60d;
         private static string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("min");

@@ -1,0 +1,142 @@
+﻿//////////////////////////////////////////////////////////
+//
+//  U N I T S
+//
+//  (family) [dim] name : factor {tags}
+
+    (Meter) [L] Meter : 1 {"m"}
+
+        SquareMeter = Meter * Meter
+        Meter_Sec = Meter / Second
+        Second = Meter / Meter_Sec
+
+    (Second) [T] Second : 1 {"s"}
+
+
+    (Kilogram) [M] Kilogram : 1 {"kg"}
+
+        Newton = Kilogram * Meter_Sec2
+        Newton = Meter_Sec2 * Kilogram
+
+    (DegKelvin) [ϴ] DegKelvin : 1 {"K", "deg.K"}
+
+        (DegKelvin)DegFahrenheit
+        (DegKelvin)DegRankine
+        (DegKelvin)DegCelsius
+
+    (DegKelvin) [ϴ] DegCelsius : 1 {"\u00B0C", "deg.C"}
+
+        (DegCelsius)DegKelvin
+        (DegCelsius)DegFahrenheit
+        (DegCelsius)DegRankine
+
+    (DegKelvin) [ϴ] DegRankine : 1.8 {"\u00B0R", "deg.R"}
+
+        (DegRankine)DegCelsius
+        (DegRankine)DegKelvin
+        (DegRankine)DegFahrenheit
+
+    (DegKelvin) [ϴ] DegFahrenheit : 1.8 {"\u00B0F", "deg.F"}
+
+        (DegFahrenheit)DegRankine
+        (DegFahrenheit)DegCelsius
+        (DegFahrenheit)DegKelvin
+
+    (EUR) [¤] EUR : 1 {"EUR"}
+
+        (EUR)PLN
+        (EUR)USD
+
+    (EUR) [¤] USD : 1.3433 {"USD"}
+
+        (USD)EUR
+        (USD)PLN
+
+    (EUR) [¤] PLN : 4.1437 {"PLN"}
+
+        (PLN)USD
+        (PLN)EUR
+
+    (Radian) [1] Radian : 1 {"rad"}
+
+        (Radian)Cycles
+        (Radian)Degree
+
+    (Radian) [1] Degree : (180d / Math.PI) * Radian.Factor {"\u00B0", "deg"}
+
+        (Degree)Radian
+        (Degree)Cycles
+
+    (Radian) [1] Cycles : Radian.Factor / (2d * Math.PI) {"c"}
+
+        (Cycles)Degree
+        (Cycles)Radian
+        Hertz = Cycles / Second
+        Second = Cycles / Hertz
+
+    (Hertz) [T-1] Hertz : Cycles.Factor / Second.Factor {"Hz"}
+
+        Cycles = Hertz * Second
+        Cycles = Second * Hertz
+
+    (SquareMeter) [L2] SquareMeter : 1 {"m\u00B2", "m2"}
+
+        Meter = SquareMeter / Meter
+
+    (Meter_Sec) [LT-1] Meter_Sec : 1 {"m/s"}
+
+        Meter = Meter_Sec * Second
+        Meter = Second * Meter_Sec
+        Meter_Sec2 = Meter_Sec / Second
+        Second = Meter_Sec / Meter_Sec2
+
+    (Meter_Sec2) [LT-2] Meter_Sec2 : 1 {"m/s2"}
+
+        Meter_Sec = Meter_Sec2 * Second
+        Meter_Sec = Second * Meter_Sec2
+
+    (Newton) [LT-2M] Newton : 1 {"N"}
+
+        Meter_Sec2 = Newton / Kilogram
+        Kilogram = Newton / Meter_Sec2
+        Joule = Newton * Meter
+        Joule = Meter * Newton
+
+    (Joule) [L2T-2M] Joule : 1 {"J"}
+
+        Meter = Joule / Newton
+        Newton = Joule / Meter
+
+    (NewtonMeter) [L2T-2M] NewtonMeter : 1 {"N\u00B7m", "N*m"}
+
+
+//////////////////////////////////////////////////////////
+//
+//  S C A L E S
+//
+//  (family) [dim] name : refpoint = unit offset
+
+    (Kelvin) [ϴ] Kelvin : <common reference point> = DegKelvin 0
+
+        (Kelvin)Fahrenheit
+        (Kelvin)Rankine
+        (Kelvin)Celsius
+
+    (Kelvin) [ϴ] Celsius : <common reference point> = DegCelsius -273.15
+
+        (Celsius)Kelvin
+        (Celsius)Fahrenheit
+        (Celsius)Rankine
+
+    (Kelvin) [ϴ] Rankine : <common reference point> = DegRankine 0
+
+        (Rankine)Celsius
+        (Rankine)Kelvin
+        (Rankine)Fahrenheit
+
+    (Kelvin) [ϴ] Fahrenheit : <common reference point> = DegFahrenheit -459.66999999999996
+
+        (Fahrenheit)Rankine
+        (Fahrenheit)Celsius
+        (Fahrenheit)Kelvin
+

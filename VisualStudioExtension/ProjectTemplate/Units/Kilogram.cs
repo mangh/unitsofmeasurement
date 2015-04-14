@@ -49,20 +49,20 @@ namespace $safeprojectname$
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<Kilogram>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Kilogram) && Equals((Kilogram)obj); }
         public bool /* IEquatable<Kilogram> */ Equals(Kilogram other) { return this.Value == other.Value; }
-        public int /* IComparable<Kilogram> */ CompareTo(Kilogram other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<Kilogram>
         public static bool operator ==(Kilogram lhs, Kilogram rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(Kilogram lhs, Kilogram rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(Kilogram lhs, Kilogram rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(Kilogram lhs, Kilogram rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(Kilogram lhs, Kilogram rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(Kilogram lhs, Kilogram rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<Kilogram> */ CompareTo(Kilogram other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -75,8 +75,8 @@ namespace $safeprojectname$
         public static Kilogram operator *(double lhs, Kilogram rhs) { return new Kilogram(lhs * rhs.Value); }
         public static Kilogram operator *(Kilogram lhs, double rhs) { return new Kilogram(lhs.Value * rhs); }
         public static Kilogram operator /(Kilogram lhs, double rhs) { return new Kilogram(lhs.Value / rhs); }
-        // Outer:
         public static double operator /(Kilogram lhs, Kilogram rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         public static Newton operator *(Kilogram lhs, Meter_Sec2 rhs) { return new Newton(lhs.Value * rhs.Value); }
         public static Newton operator *(Meter_Sec2 lhs, Kilogram rhs) { return new Newton(lhs.Value * rhs.Value); }
         #endregion

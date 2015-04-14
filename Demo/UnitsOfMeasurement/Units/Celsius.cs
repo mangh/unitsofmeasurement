@@ -42,7 +42,7 @@ namespace Demo.UnitsOfMeasurement
             m_level = level;
         }
         public Celsius(double level) :
-            this((DegCelsius)level)
+            this(new DegCelsius(level))
         {
         }
         #endregion
@@ -50,29 +50,31 @@ namespace Demo.UnitsOfMeasurement
         #region Conversions
         public static explicit operator Celsius(double q) { return new Celsius(q); }
         public static explicit operator Celsius(DegCelsius q) { return new Celsius(q); }
+
         public static explicit operator Celsius(Kelvin q) { return new Celsius((DegCelsius)(q.Extent) + Celsius.Offset); }
         public static explicit operator Celsius(Fahrenheit q) { return new Celsius((DegCelsius)(q.Extent) + Celsius.Offset); }
         public static explicit operator Celsius(Rankine q) { return new Celsius((DegCelsius)(q.Extent) + Celsius.Offset); }
+
         public static Celsius From(ILevel<double> q)
         {
             return new Celsius(DegCelsius.From(q.Extent) + Celsius.Offset);
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<Celsius>
         public override int GetHashCode() { return m_level.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Celsius) && Equals((Celsius)obj); }
         public bool /* IEquatable<Celsius> */ Equals(Celsius other) { return this.Level == other.Level; }
-        public int /* IComparable<Celsius> */ CompareTo(Celsius other) { return this.Level.CompareTo(other.Level); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<Celsius>
         public static bool operator ==(Celsius lhs, Celsius rhs) { return lhs.Level == rhs.Level; }
         public static bool operator !=(Celsius lhs, Celsius rhs) { return lhs.Level != rhs.Level; }
         public static bool operator <(Celsius lhs, Celsius rhs) { return lhs.Level < rhs.Level; }
         public static bool operator >(Celsius lhs, Celsius rhs) { return lhs.Level > rhs.Level; }
         public static bool operator <=(Celsius lhs, Celsius rhs) { return lhs.Level <= rhs.Level; }
         public static bool operator >=(Celsius lhs, Celsius rhs) { return lhs.Level >= rhs.Level; }
+        public int /* IComparable<Celsius> */ CompareTo(Celsius other) { return this.Level.CompareTo(other.Level); }
         #endregion
 
         #region Arithmetic
@@ -93,11 +95,13 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Statics
-        private static DegCelsius s_offset = new DegCelsius(-273.15d);
+        private static readonly DegCelsius s_offset = new DegCelsius(-273.15d);
+        private static readonly int s_family = Kelvin.Family;
         private static string s_format = "{0} {1}";
-        private static Celsius s_zero = new Celsius(0d);
+        private static readonly Celsius s_zero = new Celsius(0d);
         
         public static DegCelsius Offset { get { return s_offset; } }
+        public static int Family { get { return s_family; } }
         public static string Format { get { return s_format; } set { s_format = value; } }
         public static Celsius Zero { get { return s_zero; } }
         #endregion

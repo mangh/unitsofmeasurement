@@ -51,20 +51,20 @@ namespace $safeprojectname$
         }
         #endregion
 
-        #region IObject / IEquatable / IComparable
+        #region IObject / IEquatable<Degree>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Degree) && Equals((Degree)obj); }
         public bool /* IEquatable<Degree> */ Equals(Degree other) { return this.Value == other.Value; }
-        public int /* IComparable<Degree> */ CompareTo(Degree other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
-        #region Comparison
+        #region Comparison / IComparable<Degree>
         public static bool operator ==(Degree lhs, Degree rhs) { return lhs.Value == rhs.Value; }
         public static bool operator !=(Degree lhs, Degree rhs) { return lhs.Value != rhs.Value; }
         public static bool operator <(Degree lhs, Degree rhs) { return lhs.Value < rhs.Value; }
         public static bool operator >(Degree lhs, Degree rhs) { return lhs.Value > rhs.Value; }
         public static bool operator <=(Degree lhs, Degree rhs) { return lhs.Value <= rhs.Value; }
         public static bool operator >=(Degree lhs, Degree rhs) { return lhs.Value >= rhs.Value; }
+        public int /* IComparable<Degree> */ CompareTo(Degree other) { return this.Value.CompareTo(other.Value); }
         #endregion
 
         #region Arithmetic
@@ -77,8 +77,8 @@ namespace $safeprojectname$
         public static Degree operator *(double lhs, Degree rhs) { return new Degree(lhs * rhs.Value); }
         public static Degree operator *(Degree lhs, double rhs) { return new Degree(lhs.Value * rhs); }
         public static Degree operator /(Degree lhs, double rhs) { return new Degree(lhs.Value / rhs); }
-        // Outer:
         public static double operator /(Degree lhs, Degree rhs) { return lhs.Value / rhs.Value; }
+        // Outer:
         #endregion
 
         #region Formatting
@@ -90,7 +90,7 @@ namespace $safeprojectname$
 
         #region Statics
         private static readonly Dimension s_sense = Radian.Sense;
-        private static readonly int s_family = 10;
+        private static readonly int s_family = Radian.Family;
         private static double s_factor = (180d / Math.PI) * Radian.Factor;
         private static string s_format = "{0}{1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("\u00B0", "deg");
