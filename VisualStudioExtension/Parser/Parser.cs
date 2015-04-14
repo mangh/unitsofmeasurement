@@ -10,6 +10,7 @@
 
 ********************************************************************************/
 using System;
+using System.Collections.Generic;
 
 namespace Man.UnitsOfMeasurement
 {
@@ -21,9 +22,8 @@ namespace Man.UnitsOfMeasurement
         #region Fields
         private Lexer m_lexer;
         private Lexer.Symbol m_symbol;
-        private UnitTypes m_units;
-        private ScaleTypes m_scales;
-        private string m_currentNamespace;
+        private List<UnitType> m_units;
+        private List<ScaleType> m_scales;
         private SenseEncoderCS m_senseEncoder;
         private NumExprEncoderCS m_exprEncoder;
         #endregion
@@ -32,7 +32,7 @@ namespace Man.UnitsOfMeasurement
         #endregion
 
         #region Constructor(s)
-        public Parser(Lexer lexer, UnitTypes units, ScaleTypes scales)
+        public Parser(Lexer lexer, List<UnitType> units, List<ScaleType> scales)
         {
             m_lexer = lexer;
             m_units = units;
@@ -55,19 +55,19 @@ namespace Man.UnitsOfMeasurement
 
             string badTokenFormat = "\"{0}\": expecting \"unit\" or \"scale\" keyword (or a comment)";
 
-            m_currentNamespace = "Man.UnitsOfMeasurement";
-
             while (m_symbol != Lexer.Symbol.EOF)
             {
                 string token = m_lexer.TokenText;
+
                 if (m_symbol != Lexer.Symbol.Identifier)
                     Note(badTokenFormat, token);
+                else if (token == "unit")
+                    { GetToken(); ParseUnit();}
+                else if (token == "scale")
+                    { GetToken(); ParseScale(); }
                 else
-                {
-                    if (token == "unit") { GetToken(); ParseUnit(); }
-                    else if (token == "scale") { GetToken(); ParseScale(); }
-                    else Note(badTokenFormat, token);
-                }
+                    Note(badTokenFormat, token);
+
                 Synchronize();
             }
         }
@@ -81,6 +81,10 @@ namespace Man.UnitsOfMeasurement
         {
             if (m_symbol != Lexer.Symbol.Semicolon) Note("\"{0}\": expected semicolon \";\"", m_lexer.TokenText);
         }
+
+        private UnitType FindUnit(string name) { return m_units.Find(u => u.Name == name); }
+        private ScaleType FindScale(string name) { return m_scales.Find(s => s.Name == name); }
+        private bool IsUniqueName(string name) { return (FindUnit(name) == null) && (FindScale(name) == null); }
 
         private void Synchronize()
         {

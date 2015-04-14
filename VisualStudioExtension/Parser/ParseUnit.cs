@@ -30,7 +30,7 @@ namespace Man.UnitsOfMeasurement
             // Identifier (unit name)
             string unitName = GetUnitName(); if (unitName == null) return;
 
-            UnitType unit = new UnitType(m_currentNamespace, unitName);
+            UnitType unit = new UnitType(unitName);
 
             // Tags
             if (!GetUnitTags(unit)) return;
@@ -75,8 +75,7 @@ namespace Man.UnitsOfMeasurement
             else
             {
                 string name = m_lexer.TokenText;
-                if ((m_units.Find(m_currentNamespace, name) == null) &&
-                    (m_scales.Find(m_currentNamespace, name) == null))
+                if (IsUniqueName(name))
                 {
                     GetToken();
                     return name;
@@ -140,8 +139,8 @@ namespace Man.UnitsOfMeasurement
 
             if ((basic = GetDimTerm(numType)) == null) return false;
 
-            unit.Sense = m_senseEncoder.Encode(basic, unit.Namespace);
-            unit.Factor = m_exprEncoder.Encode(basic, numType, unit.Namespace);
+            unit.Sense = m_senseEncoder.Encode(basic);
+            unit.Factor = m_exprEncoder.Encode(basic, numType);
             basic.Normalized().Bind(unit);
 
             while (m_symbol == Lexer.Symbol.Pipe)
@@ -149,15 +148,15 @@ namespace Man.UnitsOfMeasurement
                 GetToken();
                 if ((alternate = GetDimTerm(numType)) == null) return false;
 
-                SenseExpr sense = m_senseEncoder.Encode(alternate, unit.Namespace);
+                SenseExpr sense = m_senseEncoder.Encode(alternate);
                 if (sense.Value != unit.Sense.Value)
                 {
                     Note("Inconsistent dimensions: \"{0}\" -> {1} != {2} <- \"{3}\"", 
                         unit.Sense.Code, unit.Sense.Value, sense.Value, sense.Code);
                     return false;
                 }
-                NumExpr factor = m_exprEncoder.Encode(alternate, numType, unit.Namespace);
-                if (factor.IsTrueValue && (factor.Value != unit.Factor.Value))
+                NumExpr factor = m_exprEncoder.Encode(alternate, numType);
+                if (factor.IsTrueValue && unit.Factor.IsTrueValue && (factor.Value != unit.Factor.Value))
                 {
                     Note("Inconsistent conversion factors: \"{0}\" -> {1} != {2} <- \"{3}\"",
                         unit.Factor.Code, unit.Factor.Value, factor.Value, factor.Code);
@@ -236,11 +235,12 @@ namespace Man.UnitsOfMeasurement
             // Unit identifier?
             else if (m_symbol == Lexer.Symbol.Identifier)
             {
-                UnitType u = m_units.Find(m_currentNamespace, m_lexer.TokenText);
+                string name = m_lexer.TokenText;
+                UnitType u = FindUnit(name);
                 if (u == null)
-                    Note("Undefined unit \"{0}\"", m_lexer.TokenText);
+                    Note("Undefined unit \"{0}\"", name);
                 else if (u.Factor.Value.Type != numType)
-                    Note("Unit \"{0}\" is of type <{1}> != <{2}>", m_lexer.TokenText, u.Factor.Value.Type.Name, numType.Name);
+                    Note("Unit \"{0}\" is of type <{1}> != <{2}>", name, u.Factor.Value.Type.Name, numType.Name);
                 else
                 {
                     factor = new ASTUnit(u);

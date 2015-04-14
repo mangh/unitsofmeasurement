@@ -27,47 +27,11 @@ namespace Man.UnitsOfMeasurement
         #endregion
 
         #region Constructor(s)
-        public ScaleType(string nameSpace, string name, UnitType unit) :
-            base(nameSpace, name)
+        public ScaleType(string name, UnitType unit) :
+            base(MeasureType.DefaultNamespace, name)
         {
             Unit = unit;
         }
-        #endregion
-    }
-
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
-    public class ScaleTypes : IEnumerable<ScaleType>
-    {
-        #region Fields
-        private List<ScaleType> m_collection;
-        #endregion
-
-        #region Properties
-        #endregion
-
-        #region Constructor(s)
-        public ScaleTypes()
-        {
-            m_collection = new List<ScaleType>();
-        }
-        #endregion
-
-        #region Methods
-        public ScaleType Find(string nameSpace, string name)
-        {
-            return m_collection.Find(t => (t.Namespace == nameSpace) && (t.Name == name));
-        }
-        public void Add(ScaleType scale)
-        {
-            ScaleType relative = m_collection.Find(s => s.Unit.Family == scale.Unit.Family);
-            if (relative != null) relative.AddRelative(scale);
-            m_collection.Add(scale);
-        }
-        // IEnumerable<T> interface
-        public IEnumerator<ScaleType> GetEnumerator() { return m_collection.GetEnumerator(); }
-        IEnumerator IEnumerable.GetEnumerator() { return m_collection.GetEnumerator(); }
         #endregion
     }
 }

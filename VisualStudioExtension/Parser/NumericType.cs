@@ -122,7 +122,7 @@ namespace Man.UnitsOfMeasurement
 
         #region Constructor(s)
         public FloatType() :
-            base("System", "Float", "float")
+            base("System", "Single", "float")
         {
         }
         #endregion

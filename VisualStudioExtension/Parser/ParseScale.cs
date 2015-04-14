@@ -40,9 +40,9 @@ namespace Man.UnitsOfMeasurement
             // Scale offset <Num Expr>
             ASTNode offset = GetNumExpr(unit.Factor.Value.Type); if (offset == null) return;
 
-            ScaleType scale = new ScaleType(m_currentNamespace, scaleName, unit);
+            ScaleType scale = new ScaleType(scaleName, unit);
             scale.Format = String.IsNullOrWhiteSpace(format) ? unit.Format : format;
-            scale.Offset = m_exprEncoder.Encode(offset, scale.Unit.Factor.Value.Type, scale.Namespace);
+            scale.Offset = m_exprEncoder.Encode(offset, scale.Unit.Factor.Value.Type);
             m_scales.Add(scale);
 
             CheckSemicolon();
@@ -57,8 +57,7 @@ namespace Man.UnitsOfMeasurement
             else
             {
                 string name = m_lexer.TokenText;
-                if ((m_units.Find(m_currentNamespace, name) == null) &&
-                    (m_scales.Find(m_currentNamespace, name) == null))
+                if (IsUniqueName(name))
                 {
                     GetToken();
                     return name;
@@ -78,7 +77,7 @@ namespace Man.UnitsOfMeasurement
             }
             else
             {
-                unit = m_units.Find(m_currentNamespace, m_lexer.TokenText);
+                unit = FindUnit(m_lexer.TokenText);
                 if (unit == null) Note("\"{0}\": undefined unit", m_lexer.TokenText);
                 else GetToken();
             }

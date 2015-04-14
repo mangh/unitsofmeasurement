@@ -23,17 +23,15 @@ namespace Man.UnitsOfMeasurement
     {
         private Stack<NumExpr> m_stack;
         private NumericType m_numtype;
-        private string m_targetnamespace;
 
         public NumExprEncoderCS()
         {
             m_stack = new Stack<NumExpr>(16);
         }
 
-        public NumExpr Encode(ASTNode node, NumericType numType, string unitnamespace)
+        public NumExpr Encode(ASTNode node, NumericType numType)
         {
             m_numtype = numType;
-            m_targetnamespace = unitnamespace;
 
             node.Accept(this);
             if (m_stack.Count() != 1) throw new InvalidOperationException(String.Format("{0}: invalid stack processing", this.GetType().Name));

@@ -31,7 +31,7 @@ namespace Man.UnitsOfMeasurement
             m_stack = new Stack<SenseExpr>(16);
         }
 
-        public SenseExpr Encode(ASTNode node, string targetnamespace)
+        public SenseExpr Encode(ASTNode node)
         {
             node.Accept(this);
             if (m_stack.Count() != 1) throw new InvalidOperationException(String.Format("{0}: invalid stack processing", this.GetType().Name));

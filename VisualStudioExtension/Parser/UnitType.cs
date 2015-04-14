@@ -34,8 +34,8 @@ namespace Man.UnitsOfMeasurement
         #endregion
 
         #region Constructor(s)
-        public UnitType(string nameSpace, string name) :
-            base(nameSpace, name)
+        public UnitType(string name) :
+            base(MeasureType.DefaultNamespace, name)
         {
             Tags = new List<string>();
             OuterOperations = new List<BinaryOperation>();
@@ -61,40 +61,6 @@ namespace Man.UnitsOfMeasurement
         {
             s_family = 0;
         }
-        #endregion
-    }
-
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
-    public class UnitTypes : IEnumerable<UnitType>
-    {
-        #region Fields
-        private List<UnitType> m_collection;
-        #endregion
-
-        #region Properties
-        #endregion
-
-        #region Constructor(s)
-        public UnitTypes()
-        {
-            m_collection = new List<UnitType>();
-        }
-        #endregion
-
-        #region Methods
-        public UnitType Find(string nameSpace, string name)
-        {
-            return m_collection.Find(t => (t.Namespace == nameSpace) && (t.Name == name));
-        }
-        public void Add(UnitType unit)
-        {
-            m_collection.Add(unit);
-        }
-        // IEnumerable<T> interface
-        public IEnumerator<UnitType> GetEnumerator() { return m_collection.GetEnumerator(); }
-        IEnumerator IEnumerable.GetEnumerator() { return m_collection.GetEnumerator(); }
         #endregion
     }
 }

@@ -19,8 +19,8 @@
 <#
     Initialize("_definitions.txt");
 
-    UnitTypes units = new UnitTypes();
-    ScaleTypes scales = new ScaleTypes();
+    List<UnitType> units = new List<UnitType>();
+    List<ScaleType> scales = new List<ScaleType>();
 
     using (StreamReader input = File.OpenText(__inputFilePath))
     {
@@ -494,7 +494,7 @@ namespace <#= Namespace #>
 #>
 
 <#+
-    void Summarize(UnitTypes units, ScaleTypes scales)
+    void Summarize(List<UnitType> units, List<ScaleType> scales)
     {
 #>
 UNITS (family) name {dimension} * conv.factor

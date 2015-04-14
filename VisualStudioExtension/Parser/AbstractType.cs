@@ -40,6 +40,8 @@ namespace Man.UnitsOfMeasurement
     /// </summary>
     public abstract class MeasureType : AbstractType
     {
+        public static readonly string DefaultNamespace = typeof(MeasureType).Namespace;
+
         #region Properties
         public MeasureType Relative { get; protected set; }
         public bool HasRelatives { get { return !object.ReferenceEquals(Relative, this); } }
@@ -47,7 +49,7 @@ namespace Man.UnitsOfMeasurement
 
         #region Constructor(s)
         protected MeasureType(string nameSpace, string name) :
-            base(nameSpace, name, false )
+            base(nameSpace, name, false)
         {
             Relative = this;    // Initially, no relatives
         }
