@@ -20,9 +20,10 @@ namespace Man.UnitsOfMeasurement
     public partial class Parser
     {
         #region Methods
-        // <Scale> ::= 'scale' Identifier <Format> '=' Identifier <Num Expr> ';'
+        // <Scale> ::= 'scale' Identifier <Format> Identifier '=' Identifier <Num Expr> ';'
         //      1st identifier = scale identifier, 
-        //      2nd identifier = unit identifier, 
+        //      2nd identifier = ref.point identifier, 
+        //      3rd identifier = unit identifier, 
         private void ParseScale()
         {
             // Identifier (scale name)
@@ -31,6 +32,9 @@ namespace Man.UnitsOfMeasurement
             // Format
             string format = GetFormat(String.Empty); if (format == null) return;
 
+            // Identifier (refpoint)
+            string refpoint = GetReferencePoint(); if (refpoint == null) return;
+
             // "="
             if (m_symbol == Lexer.Symbol.EQ) GetToken(); else { Note("\"{0}\": expected equal sign \"=\"", m_lexer.TokenText); return; }
 
@@ -38,11 +42,12 @@ namespace Man.UnitsOfMeasurement
             UnitType unit = GetScaleUnit(); if (unit == null) return;
 
             // Scale offset <Num Expr>
-            ASTNode offset = GetNumExpr(unit.Factor.Value.Type); if (offset == null) return;
+            ASTNode offsetAST = GetNumExpr(unit.Factor.Value.Type); if (offsetAST == null) return;
+            NumExpr offsetExpr = m_exprEncoder.Encode(offsetAST, unit.Factor.Value.Type);
 
-            ScaleType scale = new ScaleType(scaleName, unit);
+            ScaleType scale = new ScaleType(scaleName, refpoint, unit, offsetExpr);
+
             scale.Format = String.IsNullOrWhiteSpace(format) ? unit.Format : format;
-            scale.Offset = m_exprEncoder.Encode(offset, scale.Unit.Factor.Value.Type);
 
             ScaleType relative = GetRelativeScale(scale);
             if (relative != null)
@@ -69,6 +74,21 @@ namespace Man.UnitsOfMeasurement
                 }
                 Note("Duplicate \"{0}\" definition", name);
             }
+            return null;
+        }
+
+        private string GetReferencePoint()
+        {
+            if (m_symbol == Lexer.Symbol.EQ)
+                return String.Empty;
+
+            if (m_symbol == Lexer.Symbol.Identifier)
+            {
+                string refpoint = m_lexer.TokenText;
+                GetToken();
+                return refpoint;
+            }
+            Note("\"{0}\": expected reference-point name or equal sign \"=\"", m_lexer.TokenText);
             return null;
         }
 
@@ -186,7 +206,10 @@ namespace Man.UnitsOfMeasurement
 
         public ScaleType GetRelativeScale(ScaleType scale)
         {
-            return m_scales.Find(s => object.ReferenceEquals(s.Unit.FamilyPrime(), scale.Unit.FamilyPrime()));
+            return m_scales.Find(s => 
+                object.ReferenceEquals(s.Unit.FamilyPrime(), scale.Unit.FamilyPrime()) &&
+                String.Equals(s.RefPoint, scale.RefPoint, StringComparison.Ordinal)
+            );
         }
         #endregion
     }

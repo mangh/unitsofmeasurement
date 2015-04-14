@@ -13,6 +13,7 @@ using System;
 
 namespace $safeprojectname$
 {
+    [ScaleReferencePoint("AbsoluteZero")]
     public partial struct Kelvin : ILevel<double>, IEquatable<Kelvin>, IComparable<Kelvin>, IFormattable
     {
         #region Fields
@@ -98,7 +99,7 @@ namespace $safeprojectname$
         #endregion
 
         #region Statics
-        private static readonly DegKelvin s_offset = new DegKelvin(0d);
+        private static readonly DegKelvin s_offset = new DegKelvin(0d);  // offset to AbsoluteZero
         private static readonly int s_family = 13;
         private static string s_format = "{0} {1}";
         private static readonly Kelvin s_zero = new Kelvin(0d);

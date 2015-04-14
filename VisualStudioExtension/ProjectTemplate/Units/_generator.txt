@@ -116,25 +116,25 @@
 //
 //  (family) [dim] name : refpoint = unit offset
 
-    (Kelvin) [ϴ] Kelvin : <common reference point> = DegKelvin 0
+    (Kelvin) [ϴ] Kelvin : AbsoluteZero = DegKelvin 0
 
         (Kelvin)Fahrenheit
         (Kelvin)Rankine
         (Kelvin)Celsius
 
-    (Kelvin) [ϴ] Celsius : <common reference point> = DegCelsius -273.15
+    (Kelvin) [ϴ] Celsius : AbsoluteZero = DegCelsius -273.15
 
         (Celsius)Kelvin
         (Celsius)Fahrenheit
         (Celsius)Rankine
 
-    (Kelvin) [ϴ] Rankine : <common reference point> = DegRankine 0
+    (Kelvin) [ϴ] Rankine : AbsoluteZero = DegRankine 0
 
         (Rankine)Celsius
         (Rankine)Kelvin
         (Rankine)Fahrenheit
 
-    (Kelvin) [ϴ] Fahrenheit : <common reference point> = DegFahrenheit -459.66999999999996
+    (Kelvin) [ϴ] Fahrenheit : AbsoluteZero = DegFahrenheit -459.66999999999996
 
         (Fahrenheit)Rankine
         (Fahrenheit)Celsius

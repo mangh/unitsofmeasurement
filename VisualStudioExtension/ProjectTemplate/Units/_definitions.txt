@@ -64,10 +64,10 @@ unit DegCelsius "\u00B0C" "deg.C" = DegKelvin;
 unit DegRankine "\u00B0R" "deg.R" = (9 / 5) * DegKelvin;
 unit DegFahrenheit "\u00B0F" "deg.F" = (9 / 5) * DegKelvin;
 
-scale Kelvin = DegKelvin 0.0;
-scale Celsius = DegCelsius -273.15;
-scale Rankine = DegRankine 0.0;
-scale Fahrenheit = DegFahrenheit -273.15 * (9 / 5) + 32;
+scale Kelvin AbsoluteZero = DegKelvin 0.0;
+scale Celsius AbsoluteZero = DegCelsius -273.15;
+scale Rankine AbsoluteZero = DegRankine 0.0;
+scale Fahrenheit AbsoluteZero = DegFahrenheit -273.15 * (9 / 5) + 32;
 
 ////////////////////////////////////////////////////////////////////////////////
 //

@@ -47,6 +47,7 @@
     <Compile Include="Core\ILevel.cs" />
     <Compile Include="Core\IQuantity.cs" />
     <Compile Include="Core\ITextParser.cs" />
+    <Compile Include="Core\ScaleReferencePointAttribute.cs" />
     <Compile Include="Core\SymbolCollection.cs" />
     <Compile Include="Core\TextParser.cs" />
     <Compile Include="Core\UnitCatalog.cs" />

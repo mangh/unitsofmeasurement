@@ -397,6 +397,14 @@ using System;
 
 namespace <#= Namespace #>
 {
+<#+
+        if (!String.IsNullOrWhiteSpace(s.RefPoint))
+        {
+#>
+    [ScaleReferencePoint("<#= s.RefPoint #>")]
+<#+
+        }
+#>
     public partial struct <#= Scale #> : ILevel<<#= Value #>>, IEquatable<<#= Scale #>>, IComparable<<#= Scale #>>, IFormattable
     {
         #region Fields
@@ -488,7 +496,7 @@ namespace <#= Namespace #>
         #endregion
 
         #region Statics
-        private static readonly <#= Unit #> s_offset = new <#= Unit #>(<#= Offset #>);
+        private static readonly <#= Unit #> s_offset = new <#= Unit #>(<#= Offset #>);  // offset to <#= s.RefPointNormalized #>
         private static readonly int s_family = <#= Family #>;
         private static string s_format = "<#= Format #>";
         private static readonly <#= Scale #> s_zero = new <#= Scale #>(<#= Zero #>);

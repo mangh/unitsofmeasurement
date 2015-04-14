@@ -13,6 +13,7 @@ using System;
 
 namespace Demo.UnitsOfMeasurement
 {
+    [ScaleReferencePoint("AbsoluteZero")]
     public partial struct Rankine : ILevel<double>, IEquatable<Rankine>, IComparable<Rankine>, IFormattable
     {
         #region Fields
@@ -98,7 +99,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Statics
-        private static readonly DegRankine s_offset = new DegRankine(0d);
+        private static readonly DegRankine s_offset = new DegRankine(0d);  // offset to AbsoluteZero
         private static readonly int s_family = Kelvin.Family;
         private static string s_format = "{0} {1}";
         private static readonly Rankine s_zero = new Rankine(0d);

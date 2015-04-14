@@ -44,7 +44,7 @@ Comment End   = '*/'
 <UnitsOfMeasure> ::=  <UnitsOfMeasure> <Entity> | <Entity>
 <Entity> ::= <Unit> | <Scale>
 <Unit> ::= 'unit'<ValueType> Identifier <Tags> <Format> '=' <Dim Expr> ';'
-<Scale> ::= 'scale' Identifier <Format> '=' Identifier <Num Expr> ';'   ! 1st identifier = scale identifier, 2nd identifier = unit identifier
+<Scale> ::= 'scale' Identifier <Format> <RefPoint> '=' Identifier <Num Expr> ';'   ! 1st identifier = scale, 2nd identifier = unit
 
 ! -------------------------------------------------
 ! Dimensional expressions
@@ -110,4 +110,10 @@ Comment End   = '*/'
 <ValueTypeName> ::= double
                  | float
                  | decimal
+
+! -------------------------------------------------
+! Scale reference point
+! -------------------------------------------------
+<RefPoint> ::= Identifier
+             | ! no ref.point -> default ref.point
 

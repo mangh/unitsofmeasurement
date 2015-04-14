@@ -20,24 +20,30 @@ namespace Man.UnitsOfMeasurement
     /// </summary>
     public class ScaleType : MeasureType
     {
+        public static readonly string DefaultRefPoint = "<common reference point>";
+
         #region Properties
         public UnitType Unit { get; private set; }
-        public NumExpr Offset { get; set; }
+        public NumExpr Offset { get; private set; }
+        public string RefPoint { get; private set; }
+        public string RefPointNormalized { get { return String.IsNullOrWhiteSpace(RefPoint) ? ScaleType.DefaultRefPoint : RefPoint; } }
         public string Format { get; set; }
         #endregion
 
         #region Constructor(s)
-        public ScaleType(string name, UnitType unit) :
+        public ScaleType(string name, string refpoint, UnitType unit, NumExpr offset) :
             base(MeasureType.DefaultNamespace, name)
         {
+            RefPoint = refpoint;
             Unit = unit;
+            Offset = offset;
         }
         #endregion
 
         #region Methods
         public override string ToString()
         {
-            return String.Format("[{0}] {1} : {2} = {3} {4}", Unit.Sense.Value, Name, "<common reference point>", Unit.Name, Offset.Value);
+            return String.Format("[{0}] {1} : {2} = {3} {4}", Unit.Sense.Value, Name, RefPointNormalized, Unit.Name, Offset.Value);
         }
         #endregion
     }

@@ -13,6 +13,7 @@ using System;
 
 namespace $safeprojectname$
 {
+    [ScaleReferencePoint("AbsoluteZero")]
     public partial struct Fahrenheit : ILevel<double>, IEquatable<Fahrenheit>, IComparable<Fahrenheit>, IFormattable
     {
         #region Fields
@@ -98,7 +99,7 @@ namespace $safeprojectname$
         #endregion
 
         #region Statics
-        private static readonly DegFahrenheit s_offset = new DegFahrenheit(-273.15d * (9d / 5d) + 32d);
+        private static readonly DegFahrenheit s_offset = new DegFahrenheit(-273.15d * (9d / 5d) + 32d);  // offset to AbsoluteZero
         private static readonly int s_family = Kelvin.Family;
         private static string s_format = "{0} {1}";
         private static readonly Fahrenheit s_zero = new Fahrenheit(0d);

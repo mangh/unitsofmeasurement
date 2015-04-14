@@ -13,6 +13,7 @@ using System;
 
 namespace Demo.UnitsOfMeasurement
 {
+    [ScaleReferencePoint("AbsoluteZero")]
     public partial struct Celsius : ILevel<double>, IEquatable<Celsius>, IComparable<Celsius>, IFormattable
     {
         #region Fields
@@ -98,7 +99,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Statics
-        private static readonly DegCelsius s_offset = new DegCelsius(-273.15d);
+        private static readonly DegCelsius s_offset = new DegCelsius(-273.15d);  // offset to AbsoluteZero
         private static readonly int s_family = Kelvin.Family;
         private static string s_format = "{0} {1}";
         private static readonly Celsius s_zero = new Celsius(0d);
