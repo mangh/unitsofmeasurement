@@ -13,7 +13,7 @@ using System;
 
 namespace $safeprojectname$
 {
-    public partial struct DegRankine : IQuantity<double>, IEquatable<DegRankine>, IComparable<DegRankine>
+    public partial struct DegRankine : IQuantity<double>, IEquatable<DegRankine>, IComparable<DegRankine>, IFormattable
     {
         #region Fields
         private readonly double m_value;
@@ -83,10 +83,13 @@ namespace $safeprojectname$
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(null, DegRankine.Format); }
-        public string ToString(string format) { return ToString(null, format); }
-        public string ToString(IFormatProvider fp) { return ToString(fp, DegRankine.Format); }
-        public string ToString(IFormatProvider fp, string format) { return String.Format(fp, format, Value, DegRankine.Symbol[0]); }
+        public override string ToString() { return ToString(DegRankine.Format, null); }
+        public string ToString(string format) { return ToString(format, null); }
+        public string ToString(IFormatProvider fp) { return ToString(DegRankine.Format, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        {
+            return String.Format(fp, format ?? DegRankine.Format, Value, DegRankine.Symbol[0]);
+        }
         #endregion
 
         #region Statics

@@ -13,7 +13,7 @@ using System;
 
 namespace $safeprojectname$
 {
-    public partial struct Rankine : ILevel<double>, IEquatable<Rankine>, IComparable<Rankine>
+    public partial struct Rankine : ILevel<double>, IEquatable<Rankine>, IComparable<Rankine>, IFormattable
     {
         #region Fields
         private readonly DegRankine m_level;
@@ -88,10 +88,13 @@ namespace $safeprojectname$
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(null, Rankine.Format); }
-        public string ToString(string format) { return ToString(null, format); }
-        public string ToString(IFormatProvider fp) { return ToString(fp, Rankine.Format); }
-        public string ToString(IFormatProvider fp, string format) { return m_level.ToString(fp, format); }
+        public override string ToString() { return ToString(Rankine.Format, null); }
+        public string ToString(string format) { return ToString(format, null); }
+        public string ToString(IFormatProvider fp) { return ToString(Rankine.Format, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        {
+            return m_level.ToString(format ?? Rankine.Format, fp);
+        }
         #endregion
 
         #region Statics

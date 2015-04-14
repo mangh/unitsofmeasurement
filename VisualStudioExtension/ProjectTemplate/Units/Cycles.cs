@@ -13,7 +13,7 @@ using System;
 
 namespace $safeprojectname$
 {
-    public partial struct Cycles : IQuantity<double>, IEquatable<Cycles>, IComparable<Cycles>
+    public partial struct Cycles : IQuantity<double>, IEquatable<Cycles>, IComparable<Cycles>, IFormattable
     {
         #region Fields
         private readonly double m_value;
@@ -84,10 +84,13 @@ namespace $safeprojectname$
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(null, Cycles.Format); }
-        public string ToString(string format) { return ToString(null, format); }
-        public string ToString(IFormatProvider fp) { return ToString(fp, Cycles.Format); }
-        public string ToString(IFormatProvider fp, string format) { return String.Format(fp, format, Value, Cycles.Symbol[0]); }
+        public override string ToString() { return ToString(Cycles.Format, null); }
+        public string ToString(string format) { return ToString(format, null); }
+        public string ToString(IFormatProvider fp) { return ToString(Cycles.Format, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        {
+            return String.Format(fp, format ?? Cycles.Format, Value, Cycles.Symbol[0]);
+        }
         #endregion
 
         #region Statics

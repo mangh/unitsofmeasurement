@@ -13,7 +13,7 @@ using System;
 
 namespace Demo.UnitsOfMeasurement
 {
-    public partial struct Degree : IQuantity<double>, IEquatable<Degree>, IComparable<Degree>
+    public partial struct Degree : IQuantity<double>, IEquatable<Degree>, IComparable<Degree>, IFormattable
     {
         #region Fields
         private readonly double m_value;
@@ -83,10 +83,13 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(null, Degree.Format); }
-        public string ToString(string format) { return ToString(null, format); }
-        public string ToString(IFormatProvider fp) { return ToString(fp, Degree.Format); }
-        public string ToString(IFormatProvider fp, string format) { return String.Format(fp, format, Value, Degree.Symbol[0]); }
+        public override string ToString() { return ToString(Degree.Format, null); }
+        public string ToString(string format) { return ToString(format, null); }
+        public string ToString(IFormatProvider fp) { return ToString(Degree.Format, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        {
+            return String.Format(fp, format ?? Degree.Format, Value, Degree.Symbol[0]);
+        }
         #endregion
 
         #region Statics

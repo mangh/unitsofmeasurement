@@ -13,7 +13,7 @@ using System;
 
 namespace Demo.UnitsOfMeasurement
 {
-    public partial struct CubicMeter : IQuantity<double>, IEquatable<CubicMeter>, IComparable<CubicMeter>
+    public partial struct CubicMeter : IQuantity<double>, IEquatable<CubicMeter>, IComparable<CubicMeter>, IFormattable
     {
         #region Fields
         private readonly double m_value;
@@ -82,10 +82,13 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(null, CubicMeter.Format); }
-        public string ToString(string format) { return ToString(null, format); }
-        public string ToString(IFormatProvider fp) { return ToString(fp, CubicMeter.Format); }
-        public string ToString(IFormatProvider fp, string format) { return String.Format(fp, format, Value, CubicMeter.Symbol[0]); }
+        public override string ToString() { return ToString(CubicMeter.Format, null); }
+        public string ToString(string format) { return ToString(format, null); }
+        public string ToString(IFormatProvider fp) { return ToString(CubicMeter.Format, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        {
+            return String.Format(fp, format ?? CubicMeter.Format, Value, CubicMeter.Symbol[0]);
+        }
         #endregion
 
         #region Statics

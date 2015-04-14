@@ -13,7 +13,7 @@ using System;
 
 namespace Demo.UnitsOfMeasurement
 {
-    public partial struct SquareFoot : IQuantity<double>, IEquatable<SquareFoot>, IComparable<SquareFoot>
+    public partial struct SquareFoot : IQuantity<double>, IEquatable<SquareFoot>, IComparable<SquareFoot>, IFormattable
     {
         #region Fields
         private readonly double m_value;
@@ -82,10 +82,13 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(null, SquareFoot.Format); }
-        public string ToString(string format) { return ToString(null, format); }
-        public string ToString(IFormatProvider fp) { return ToString(fp, SquareFoot.Format); }
-        public string ToString(IFormatProvider fp, string format) { return String.Format(fp, format, Value, SquareFoot.Symbol[0]); }
+        public override string ToString() { return ToString(SquareFoot.Format, null); }
+        public string ToString(string format) { return ToString(format, null); }
+        public string ToString(IFormatProvider fp) { return ToString(SquareFoot.Format, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        {
+            return String.Format(fp, format ?? SquareFoot.Format, Value, SquareFoot.Symbol[0]);
+        }
         #endregion
 
         #region Statics

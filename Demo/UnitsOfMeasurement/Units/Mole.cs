@@ -13,7 +13,7 @@ using System;
 
 namespace Demo.UnitsOfMeasurement
 {
-    public partial struct Mole : IQuantity<double>, IEquatable<Mole>, IComparable<Mole>
+    public partial struct Mole : IQuantity<double>, IEquatable<Mole>, IComparable<Mole>, IFormattable
     {
         #region Fields
         private readonly double m_value;
@@ -80,10 +80,13 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(null, Mole.Format); }
-        public string ToString(string format) { return ToString(null, format); }
-        public string ToString(IFormatProvider fp) { return ToString(fp, Mole.Format); }
-        public string ToString(IFormatProvider fp, string format) { return String.Format(fp, format, Value, Mole.Symbol[0]); }
+        public override string ToString() { return ToString(Mole.Format, null); }
+        public string ToString(string format) { return ToString(format, null); }
+        public string ToString(IFormatProvider fp) { return ToString(Mole.Format, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        {
+            return String.Format(fp, format ?? Mole.Format, Value, Mole.Symbol[0]);
+        }
         #endregion
 
         #region Statics

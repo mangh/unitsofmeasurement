@@ -13,7 +13,7 @@ using System;
 
 namespace Demo.UnitsOfMeasurement
 {
-    public partial struct Kelvin : ILevel<double>, IEquatable<Kelvin>, IComparable<Kelvin>
+    public partial struct Kelvin : ILevel<double>, IEquatable<Kelvin>, IComparable<Kelvin>, IFormattable
     {
         #region Fields
         private readonly DegKelvin m_level;
@@ -88,10 +88,13 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(null, Kelvin.Format); }
-        public string ToString(string format) { return ToString(null, format); }
-        public string ToString(IFormatProvider fp) { return ToString(fp, Kelvin.Format); }
-        public string ToString(IFormatProvider fp, string format) { return m_level.ToString(fp, format); }
+        public override string ToString() { return ToString(Kelvin.Format, null); }
+        public string ToString(string format) { return ToString(format, null); }
+        public string ToString(IFormatProvider fp) { return ToString(Kelvin.Format, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        {
+            return m_level.ToString(format ?? Kelvin.Format, fp);
+        }
         #endregion
 
         #region Statics

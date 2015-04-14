@@ -13,7 +13,7 @@ using System;
 
 namespace Demo.UnitsOfMeasurement
 {
-    public partial struct Radian_Sec : IQuantity<double>, IEquatable<Radian_Sec>, IComparable<Radian_Sec>
+    public partial struct Radian_Sec : IQuantity<double>, IEquatable<Radian_Sec>, IComparable<Radian_Sec>, IFormattable
     {
         #region Fields
         private readonly double m_value;
@@ -84,10 +84,13 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(null, Radian_Sec.Format); }
-        public string ToString(string format) { return ToString(null, format); }
-        public string ToString(IFormatProvider fp) { return ToString(fp, Radian_Sec.Format); }
-        public string ToString(IFormatProvider fp, string format) { return String.Format(fp, format, Value, Radian_Sec.Symbol[0]); }
+        public override string ToString() { return ToString(Radian_Sec.Format, null); }
+        public string ToString(string format) { return ToString(format, null); }
+        public string ToString(IFormatProvider fp) { return ToString(Radian_Sec.Format, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        {
+            return String.Format(fp, format ?? Radian_Sec.Format, Value, Radian_Sec.Symbol[0]);
+        }
         #endregion
 
         #region Statics

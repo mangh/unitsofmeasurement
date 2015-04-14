@@ -13,7 +13,7 @@ using System;
 
 namespace Demo.UnitsOfMeasurement
 {
-    public partial struct Pascal : IQuantity<double>, IEquatable<Pascal>, IComparable<Pascal>
+    public partial struct Pascal : IQuantity<double>, IEquatable<Pascal>, IComparable<Pascal>, IFormattable
     {
         #region Fields
         private readonly double m_value;
@@ -86,10 +86,13 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(null, Pascal.Format); }
-        public string ToString(string format) { return ToString(null, format); }
-        public string ToString(IFormatProvider fp) { return ToString(fp, Pascal.Format); }
-        public string ToString(IFormatProvider fp, string format) { return String.Format(fp, format, Value, Pascal.Symbol[0]); }
+        public override string ToString() { return ToString(Pascal.Format, null); }
+        public string ToString(string format) { return ToString(format, null); }
+        public string ToString(IFormatProvider fp) { return ToString(Pascal.Format, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        {
+            return String.Format(fp, format ?? Pascal.Format, Value, Pascal.Symbol[0]);
+        }
         #endregion
 
         #region Statics

@@ -13,7 +13,7 @@ using System;
 
 namespace Demo.UnitsOfMeasurement
 {
-    public partial struct Dyne : IQuantity<double>, IEquatable<Dyne>, IComparable<Dyne>
+    public partial struct Dyne : IQuantity<double>, IEquatable<Dyne>, IComparable<Dyne>, IFormattable
     {
         #region Fields
         private readonly double m_value;
@@ -83,10 +83,13 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(null, Dyne.Format); }
-        public string ToString(string format) { return ToString(null, format); }
-        public string ToString(IFormatProvider fp) { return ToString(fp, Dyne.Format); }
-        public string ToString(IFormatProvider fp, string format) { return String.Format(fp, format, Value, Dyne.Symbol[0]); }
+        public override string ToString() { return ToString(Dyne.Format, null); }
+        public string ToString(string format) { return ToString(format, null); }
+        public string ToString(IFormatProvider fp) { return ToString(Dyne.Format, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        {
+            return String.Format(fp, format ?? Dyne.Format, Value, Dyne.Symbol[0]);
+        }
         #endregion
 
         #region Statics

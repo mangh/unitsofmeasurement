@@ -13,7 +13,7 @@ using System;
 
 namespace Demo.UnitsOfMeasurement
 {
-    public partial struct Tonne : IQuantity<double>, IEquatable<Tonne>, IComparable<Tonne>
+    public partial struct Tonne : IQuantity<double>, IEquatable<Tonne>, IComparable<Tonne>, IFormattable
     {
         #region Fields
         private readonly double m_value;
@@ -84,10 +84,13 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(null, Tonne.Format); }
-        public string ToString(string format) { return ToString(null, format); }
-        public string ToString(IFormatProvider fp) { return ToString(fp, Tonne.Format); }
-        public string ToString(IFormatProvider fp, string format) { return String.Format(fp, format, Value, Tonne.Symbol[0]); }
+        public override string ToString() { return ToString(Tonne.Format, null); }
+        public string ToString(string format) { return ToString(format, null); }
+        public string ToString(IFormatProvider fp) { return ToString(Tonne.Format, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        {
+            return String.Format(fp, format ?? Tonne.Format, Value, Tonne.Symbol[0]);
+        }
         #endregion
 
         #region Statics

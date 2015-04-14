@@ -13,7 +13,7 @@ using System;
 
 namespace Demo.UnitsOfMeasurement
 {
-    public partial struct Millimeter : IQuantity<double>, IEquatable<Millimeter>, IComparable<Millimeter>
+    public partial struct Millimeter : IQuantity<double>, IEquatable<Millimeter>, IComparable<Millimeter>, IFormattable
     {
         #region Fields
         private readonly double m_value;
@@ -87,10 +87,13 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(null, Millimeter.Format); }
-        public string ToString(string format) { return ToString(null, format); }
-        public string ToString(IFormatProvider fp) { return ToString(fp, Millimeter.Format); }
-        public string ToString(IFormatProvider fp, string format) { return String.Format(fp, format, Value, Millimeter.Symbol[0]); }
+        public override string ToString() { return ToString(Millimeter.Format, null); }
+        public string ToString(string format) { return ToString(format, null); }
+        public string ToString(IFormatProvider fp) { return ToString(Millimeter.Format, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        {
+            return String.Format(fp, format ?? Millimeter.Format, Value, Millimeter.Symbol[0]);
+        }
         #endregion
 
         #region Statics

@@ -13,7 +13,7 @@ using System;
 
 namespace Demo.UnitsOfMeasurement
 {
-    public partial struct Farad : IQuantity<double>, IEquatable<Farad>, IComparable<Farad>
+    public partial struct Farad : IQuantity<double>, IEquatable<Farad>, IComparable<Farad>, IFormattable
     {
         #region Fields
         private readonly double m_value;
@@ -84,10 +84,13 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(null, Farad.Format); }
-        public string ToString(string format) { return ToString(null, format); }
-        public string ToString(IFormatProvider fp) { return ToString(fp, Farad.Format); }
-        public string ToString(IFormatProvider fp, string format) { return String.Format(fp, format, Value, Farad.Symbol[0]); }
+        public override string ToString() { return ToString(Farad.Format, null); }
+        public string ToString(string format) { return ToString(format, null); }
+        public string ToString(IFormatProvider fp) { return ToString(Farad.Format, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        {
+            return String.Format(fp, format ?? Farad.Format, Value, Farad.Symbol[0]);
+        }
         #endregion
 
         #region Statics

@@ -13,7 +13,7 @@ using System;
 
 namespace $safeprojectname$
 {
-    public partial struct SquareMeter : IQuantity<double>, IEquatable<SquareMeter>, IComparable<SquareMeter>
+    public partial struct SquareMeter : IQuantity<double>, IEquatable<SquareMeter>, IComparable<SquareMeter>, IFormattable
     {
         #region Fields
         private readonly double m_value;
@@ -81,10 +81,13 @@ namespace $safeprojectname$
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(null, SquareMeter.Format); }
-        public string ToString(string format) { return ToString(null, format); }
-        public string ToString(IFormatProvider fp) { return ToString(fp, SquareMeter.Format); }
-        public string ToString(IFormatProvider fp, string format) { return String.Format(fp, format, Value, SquareMeter.Symbol[0]); }
+        public override string ToString() { return ToString(SquareMeter.Format, null); }
+        public string ToString(string format) { return ToString(format, null); }
+        public string ToString(IFormatProvider fp) { return ToString(SquareMeter.Format, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        {
+            return String.Format(fp, format ?? SquareMeter.Format, Value, SquareMeter.Symbol[0]);
+        }
         #endregion
 
         #region Statics

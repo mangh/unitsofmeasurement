@@ -13,7 +13,7 @@ using System;
 
 namespace Demo.UnitsOfMeasurement
 {
-    public partial struct Hertz : IQuantity<double>, IEquatable<Hertz>, IComparable<Hertz>
+    public partial struct Hertz : IQuantity<double>, IEquatable<Hertz>, IComparable<Hertz>, IFormattable
     {
         #region Fields
         private readonly double m_value;
@@ -84,10 +84,13 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(null, Hertz.Format); }
-        public string ToString(string format) { return ToString(null, format); }
-        public string ToString(IFormatProvider fp) { return ToString(fp, Hertz.Format); }
-        public string ToString(IFormatProvider fp, string format) { return String.Format(fp, format, Value, Hertz.Symbol[0]); }
+        public override string ToString() { return ToString(Hertz.Format, null); }
+        public string ToString(string format) { return ToString(format, null); }
+        public string ToString(IFormatProvider fp) { return ToString(Hertz.Format, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        {
+            return String.Format(fp, format ?? Hertz.Format, Value, Hertz.Symbol[0]);
+        }
         #endregion
 
         #region Statics

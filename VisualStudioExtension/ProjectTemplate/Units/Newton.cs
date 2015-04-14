@@ -13,7 +13,7 @@ using System;
 
 namespace $safeprojectname$
 {
-    public partial struct Newton : IQuantity<double>, IEquatable<Newton>, IComparable<Newton>
+    public partial struct Newton : IQuantity<double>, IEquatable<Newton>, IComparable<Newton>, IFormattable
     {
         #region Fields
         private readonly double m_value;
@@ -84,10 +84,13 @@ namespace $safeprojectname$
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(null, Newton.Format); }
-        public string ToString(string format) { return ToString(null, format); }
-        public string ToString(IFormatProvider fp) { return ToString(fp, Newton.Format); }
-        public string ToString(IFormatProvider fp, string format) { return String.Format(fp, format, Value, Newton.Symbol[0]); }
+        public override string ToString() { return ToString(Newton.Format, null); }
+        public string ToString(string format) { return ToString(format, null); }
+        public string ToString(IFormatProvider fp) { return ToString(Newton.Format, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        {
+            return String.Format(fp, format ?? Newton.Format, Value, Newton.Symbol[0]);
+        }
         #endregion
 
         #region Statics

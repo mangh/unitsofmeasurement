@@ -13,7 +13,7 @@ using System;
 
 namespace Demo.UnitsOfMeasurement
 {
-    public partial struct Hour : IQuantity<double>, IEquatable<Hour>, IComparable<Hour>
+    public partial struct Hour : IQuantity<double>, IEquatable<Hour>, IComparable<Hour>, IFormattable
     {
         #region Fields
         private readonly double m_value;
@@ -82,10 +82,13 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(null, Hour.Format); }
-        public string ToString(string format) { return ToString(null, format); }
-        public string ToString(IFormatProvider fp) { return ToString(fp, Hour.Format); }
-        public string ToString(IFormatProvider fp, string format) { return String.Format(fp, format, Value, Hour.Symbol[0]); }
+        public override string ToString() { return ToString(Hour.Format, null); }
+        public string ToString(string format) { return ToString(format, null); }
+        public string ToString(IFormatProvider fp) { return ToString(Hour.Format, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        {
+            return String.Format(fp, format ?? Hour.Format, Value, Hour.Symbol[0]);
+        }
         #endregion
 
         #region Statics

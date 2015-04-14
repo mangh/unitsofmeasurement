@@ -13,7 +13,7 @@ using System;
 
 namespace Demo.UnitsOfMeasurement
 {
-    public partial struct GBP : IQuantity<decimal>, IEquatable<GBP>, IComparable<GBP>
+    public partial struct GBP : IQuantity<decimal>, IEquatable<GBP>, IComparable<GBP>, IFormattable
     {
         #region Fields
         private readonly decimal m_value;
@@ -83,10 +83,13 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(null, GBP.Format); }
-        public string ToString(string format) { return ToString(null, format); }
-        public string ToString(IFormatProvider fp) { return ToString(fp, GBP.Format); }
-        public string ToString(IFormatProvider fp, string format) { return String.Format(fp, format, Value, GBP.Symbol[0]); }
+        public override string ToString() { return ToString(GBP.Format, null); }
+        public string ToString(string format) { return ToString(format, null); }
+        public string ToString(IFormatProvider fp) { return ToString(GBP.Format, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        {
+            return String.Format(fp, format ?? GBP.Format, Value, GBP.Symbol[0]);
+        }
         #endregion
 
         #region Statics

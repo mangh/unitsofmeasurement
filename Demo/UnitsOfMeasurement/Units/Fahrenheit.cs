@@ -13,7 +13,7 @@ using System;
 
 namespace Demo.UnitsOfMeasurement
 {
-    public partial struct Fahrenheit : ILevel<double>, IEquatable<Fahrenheit>, IComparable<Fahrenheit>
+    public partial struct Fahrenheit : ILevel<double>, IEquatable<Fahrenheit>, IComparable<Fahrenheit>, IFormattable
     {
         #region Fields
         private readonly DegFahrenheit m_level;
@@ -88,10 +88,13 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(null, Fahrenheit.Format); }
-        public string ToString(string format) { return ToString(null, format); }
-        public string ToString(IFormatProvider fp) { return ToString(fp, Fahrenheit.Format); }
-        public string ToString(IFormatProvider fp, string format) { return m_level.ToString(fp, format); }
+        public override string ToString() { return ToString(Fahrenheit.Format, null); }
+        public string ToString(string format) { return ToString(format, null); }
+        public string ToString(IFormatProvider fp) { return ToString(Fahrenheit.Format, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        {
+            return m_level.ToString(format ?? Fahrenheit.Format, fp);
+        }
         #endregion
 
         #region Statics

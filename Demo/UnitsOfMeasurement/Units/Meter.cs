@@ -13,7 +13,7 @@ using System;
 
 namespace Demo.UnitsOfMeasurement
 {
-    public partial struct Meter : IQuantity<double>, IEquatable<Meter>, IComparable<Meter>
+    public partial struct Meter : IQuantity<double>, IEquatable<Meter>, IComparable<Meter>, IFormattable
     {
         #region Fields
         private readonly double m_value;
@@ -90,10 +90,13 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(null, Meter.Format); }
-        public string ToString(string format) { return ToString(null, format); }
-        public string ToString(IFormatProvider fp) { return ToString(fp, Meter.Format); }
-        public string ToString(IFormatProvider fp, string format) { return String.Format(fp, format, Value, Meter.Symbol[0]); }
+        public override string ToString() { return ToString(Meter.Format, null); }
+        public string ToString(string format) { return ToString(format, null); }
+        public string ToString(IFormatProvider fp) { return ToString(Meter.Format, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        {
+            return String.Format(fp, format ?? Meter.Format, Value, Meter.Symbol[0]);
+        }
         #endregion
 
         #region Statics

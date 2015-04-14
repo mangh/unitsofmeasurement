@@ -13,7 +13,7 @@ using System;
 
 namespace Demo.UnitsOfMeasurement
 {
-    public partial struct Celsius : ILevel<double>, IEquatable<Celsius>, IComparable<Celsius>
+    public partial struct Celsius : ILevel<double>, IEquatable<Celsius>, IComparable<Celsius>, IFormattable
     {
         #region Fields
         private readonly DegCelsius m_level;
@@ -88,10 +88,13 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(null, Celsius.Format); }
-        public string ToString(string format) { return ToString(null, format); }
-        public string ToString(IFormatProvider fp) { return ToString(fp, Celsius.Format); }
-        public string ToString(IFormatProvider fp, string format) { return m_level.ToString(fp, format); }
+        public override string ToString() { return ToString(Celsius.Format, null); }
+        public string ToString(string format) { return ToString(format, null); }
+        public string ToString(IFormatProvider fp) { return ToString(Celsius.Format, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        {
+            return m_level.ToString(format ?? Celsius.Format, fp);
+        }
         #endregion
 
         #region Statics

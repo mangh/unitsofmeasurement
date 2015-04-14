@@ -13,7 +13,7 @@ using System;
 
 namespace Demo.UnitsOfMeasurement
 {
-    public partial struct Candela : IQuantity<double>, IEquatable<Candela>, IComparable<Candela>
+    public partial struct Candela : IQuantity<double>, IEquatable<Candela>, IComparable<Candela>, IFormattable
     {
         #region Fields
         private readonly double m_value;
@@ -80,10 +80,13 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(null, Candela.Format); }
-        public string ToString(string format) { return ToString(null, format); }
-        public string ToString(IFormatProvider fp) { return ToString(fp, Candela.Format); }
-        public string ToString(IFormatProvider fp, string format) { return String.Format(fp, format, Value, Candela.Symbol[0]); }
+        public override string ToString() { return ToString(Candela.Format, null); }
+        public string ToString(string format) { return ToString(format, null); }
+        public string ToString(IFormatProvider fp) { return ToString(Candela.Format, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        {
+            return String.Format(fp, format ?? Candela.Format, Value, Candela.Symbol[0]);
+        }
         #endregion
 
         #region Statics

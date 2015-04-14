@@ -13,7 +13,7 @@ using System;
 
 namespace Demo.UnitsOfMeasurement
 {
-    public partial struct NewtonMeter : IQuantity<double>, IEquatable<NewtonMeter>, IComparable<NewtonMeter>
+    public partial struct NewtonMeter : IQuantity<double>, IEquatable<NewtonMeter>, IComparable<NewtonMeter>, IFormattable
     {
         #region Fields
         private readonly double m_value;
@@ -80,10 +80,13 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(null, NewtonMeter.Format); }
-        public string ToString(string format) { return ToString(null, format); }
-        public string ToString(IFormatProvider fp) { return ToString(fp, NewtonMeter.Format); }
-        public string ToString(IFormatProvider fp, string format) { return String.Format(fp, format, Value, NewtonMeter.Symbol[0]); }
+        public override string ToString() { return ToString(NewtonMeter.Format, null); }
+        public string ToString(string format) { return ToString(format, null); }
+        public string ToString(IFormatProvider fp) { return ToString(NewtonMeter.Format, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        {
+            return String.Format(fp, format ?? NewtonMeter.Format, Value, NewtonMeter.Symbol[0]);
+        }
         #endregion
 
         #region Statics

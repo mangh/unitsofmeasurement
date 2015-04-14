@@ -13,7 +13,7 @@ using System;
 
 namespace $safeprojectname$
 {
-    public partial struct Joule : IQuantity<double>, IEquatable<Joule>, IComparable<Joule>
+    public partial struct Joule : IQuantity<double>, IEquatable<Joule>, IComparable<Joule>, IFormattable
     {
         #region Fields
         private readonly double m_value;
@@ -82,10 +82,13 @@ namespace $safeprojectname$
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(null, Joule.Format); }
-        public string ToString(string format) { return ToString(null, format); }
-        public string ToString(IFormatProvider fp) { return ToString(fp, Joule.Format); }
-        public string ToString(IFormatProvider fp, string format) { return String.Format(fp, format, Value, Joule.Symbol[0]); }
+        public override string ToString() { return ToString(Joule.Format, null); }
+        public string ToString(string format) { return ToString(format, null); }
+        public string ToString(IFormatProvider fp) { return ToString(Joule.Format, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        {
+            return String.Format(fp, format ?? Joule.Format, Value, Joule.Symbol[0]);
+        }
         #endregion
 
         #region Statics

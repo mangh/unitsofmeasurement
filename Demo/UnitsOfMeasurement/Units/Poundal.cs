@@ -13,7 +13,7 @@ using System;
 
 namespace Demo.UnitsOfMeasurement
 {
-    public partial struct Poundal : IQuantity<double>, IEquatable<Poundal>, IComparable<Poundal>
+    public partial struct Poundal : IQuantity<double>, IEquatable<Poundal>, IComparable<Poundal>, IFormattable
     {
         #region Fields
         private readonly double m_value;
@@ -83,10 +83,13 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(null, Poundal.Format); }
-        public string ToString(string format) { return ToString(null, format); }
-        public string ToString(IFormatProvider fp) { return ToString(fp, Poundal.Format); }
-        public string ToString(IFormatProvider fp, string format) { return String.Format(fp, format, Value, Poundal.Symbol[0]); }
+        public override string ToString() { return ToString(Poundal.Format, null); }
+        public string ToString(string format) { return ToString(format, null); }
+        public string ToString(IFormatProvider fp) { return ToString(Poundal.Format, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        {
+            return String.Format(fp, format ?? Poundal.Format, Value, Poundal.Symbol[0]);
+        }
         #endregion
 
         #region Statics

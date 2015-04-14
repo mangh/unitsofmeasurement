@@ -13,7 +13,7 @@ using System;
 
 namespace Demo.UnitsOfMeasurement
 {
-    public partial struct Joule_Kelvin_Kilogram : IQuantity<double>, IEquatable<Joule_Kelvin_Kilogram>, IComparable<Joule_Kelvin_Kilogram>
+    public partial struct Joule_Kelvin_Kilogram : IQuantity<double>, IEquatable<Joule_Kelvin_Kilogram>, IComparable<Joule_Kelvin_Kilogram>, IFormattable
     {
         #region Fields
         private readonly double m_value;
@@ -82,10 +82,13 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(null, Joule_Kelvin_Kilogram.Format); }
-        public string ToString(string format) { return ToString(null, format); }
-        public string ToString(IFormatProvider fp) { return ToString(fp, Joule_Kelvin_Kilogram.Format); }
-        public string ToString(IFormatProvider fp, string format) { return String.Format(fp, format, Value, Joule_Kelvin_Kilogram.Symbol[0]); }
+        public override string ToString() { return ToString(Joule_Kelvin_Kilogram.Format, null); }
+        public string ToString(string format) { return ToString(format, null); }
+        public string ToString(IFormatProvider fp) { return ToString(Joule_Kelvin_Kilogram.Format, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        {
+            return String.Format(fp, format ?? Joule_Kelvin_Kilogram.Format, Value, Joule_Kelvin_Kilogram.Symbol[0]);
+        }
         #endregion
 
         #region Statics

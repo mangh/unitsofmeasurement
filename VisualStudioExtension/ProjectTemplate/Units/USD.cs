@@ -13,7 +13,7 @@ using System;
 
 namespace $safeprojectname$
 {
-    public partial struct USD : IQuantity<decimal>, IEquatable<USD>, IComparable<USD>
+    public partial struct USD : IQuantity<decimal>, IEquatable<USD>, IComparable<USD>, IFormattable
     {
         #region Fields
         private readonly decimal m_value;
@@ -82,10 +82,13 @@ namespace $safeprojectname$
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(null, USD.Format); }
-        public string ToString(string format) { return ToString(null, format); }
-        public string ToString(IFormatProvider fp) { return ToString(fp, USD.Format); }
-        public string ToString(IFormatProvider fp, string format) { return String.Format(fp, format, Value, USD.Symbol[0]); }
+        public override string ToString() { return ToString(USD.Format, null); }
+        public string ToString(string format) { return ToString(format, null); }
+        public string ToString(IFormatProvider fp) { return ToString(USD.Format, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        {
+            return String.Format(fp, format ?? USD.Format, Value, USD.Symbol[0]);
+        }
         #endregion
 
         #region Statics
