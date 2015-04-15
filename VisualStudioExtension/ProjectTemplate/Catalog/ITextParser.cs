@@ -16,6 +16,6 @@ namespace $safeprojectname$
 {
     public interface ITextParser
     {
-        string[] TryParse(string input, IFormatProvider fp);
+        bool TryParse(string input, IFormatProvider fp, out string number, out string symbol);
     }
 }

@@ -100,7 +100,7 @@ namespace UnitOfMeasureTest
 
                 cycles = (Cycles)grads;
 
-                Assert.AreEqual((Radian)(2.0*Math.PI), radians, "Cycles-to-Radian conversion failed");
+                Assert.AreEqual((Radian)(2.0 * Math.PI), radians, "Cycles-to-Radian conversion failed");
                 Assert.AreEqual((Degree)360.0, degrees, "Radian-to-Degree conversion failed");
                 Assert.AreEqual((Grad)400.0, grads, "Degree-to-Grad conversion failed");
                 Assert.AreEqual((Cycles)1.0, cycles, "Grad-to-Cycles conversion failed");
@@ -183,11 +183,11 @@ namespace UnitOfMeasureTest
                 Newton forceFromTorque = torque / distance;
                 Assert.AreEqual(forceFromEnergy, forceFromTorque, "Forces from Energy and Torque are different");
 
-                UnitCatalog catalog = new UnitCatalog();
+                var catalog = new UnitCatalog<double>();
                 catalog.Add(typeof(Joule));
                 catalog.Add(typeof(NewtonMeter));
-                Assert.AreEqual(1, catalog.Units(Joule.Family).Count(), "Selection by Family failed");
-                Assert.AreEqual(2, catalog.Units(Joule.Sense).Count(), "Selection by Dimension failed");
+                Assert.AreEqual(1, catalog.Items(Joule.Family).Count(), "Selection by Family failed");
+                Assert.AreEqual(2, catalog.Items(Joule.Sense).Count(), "Selection by Dimension failed");
             }
 
             [TestMethod]
@@ -202,7 +202,7 @@ namespace UnitOfMeasureTest
 
                 // A typical motor vehicle has a 12 V battery.
                 Volt batteryVoltage = (Volt)12.0;
-                
+
                 // The various accessories that are powered by the battery might include:
 
                 // Instrument panel light (typically 2 W): 166 mA.
@@ -334,6 +334,18 @@ namespace UnitOfMeasureTest
 
                 meters /= 5.0;  // 2 meters
                 Assert.AreEqual((Meter)2.0, meters);
+            }
+        }
+
+        [TestClass]
+        public class UnitProxies
+        {
+            [TestMethod]
+            [ExpectedException(typeof(System.ArgumentException))]
+            public void UnitConstructorThrowsExceptionOnIncompatibleArgument()
+            {
+                // Unit<T> constructor requires: 1) value type argument 2) implementing IQuantity<T>, otherwise it throws exception.
+                var test = new Unit<double>(typeof(EUR));   // EUR implements IQuantity<decimal> (incompatible with Unit<double>)
             }
         }
     }

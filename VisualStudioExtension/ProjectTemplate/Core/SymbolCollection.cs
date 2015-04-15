@@ -13,13 +13,14 @@
 using System;
 using System.Collections.Generic;
 using System.Collections;   // IEnumerable.GetEnumerator()
+using System.Linq;
 
 namespace $safeprojectname$
 {
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class SymbolCollection
+    public class SymbolCollection : IEnumerable<string>
     {
         #region Fields
         private string[] m_collection;
@@ -33,18 +34,29 @@ namespace $safeprojectname$
         public SymbolCollection(params string[] symbols)
         {
             if ((symbols == null) || (symbols.Length < 1) || (Array.FindIndex(symbols, s => String.IsNullOrWhiteSpace(s)) >= 0))
-                throw new ArgumentException("Unit symbol collection cannot be empty/null or contain empty/null items.");
+                throw new ArgumentException("Symbol collection can neither be empty/null nor contain empty/null items.");
 
             m_collection = symbols;
         }
         #endregion
 
-        #region IEnumerator, Indexer
-        public IEnumerator GetEnumerator() { return m_collection.GetEnumerator(); }
-        public string this[int index] { get { return m_collection[index]; } }
-        public int Index(string symbol)
+        #region IEnumerable
+        public IEnumerator<string> GetEnumerator() { return m_collection.Cast<string>().GetEnumerator(); }
+        IEnumerator IEnumerable.GetEnumerator() { return m_collection.GetEnumerator(); }
+        #endregion
+
+        #region Indexer, Intersection
+        public string this[int index]
+        {
+            get { return m_collection[index]; }
+        }
+        public int IndexOf(string symbol)
         {
             return Array.FindIndex(m_collection, s => SymbolCollection.Comparer.Equals(s, symbol));
+        }
+        public bool Intersects(IEnumerable<string> symbols)
+        {
+            return symbols.Any(s => this.IndexOf(s) >= 0);
         }
         #endregion
 

@@ -13,24 +13,30 @@
 using System;
 using System.Globalization;
 
-namespace $safeprojectname$
+namespace Demo.UnitsOfMeasurement
 {
     public class TextParser : ITextParser
     {
         #region Methods
-        public string[] TryParse(string input, IFormatProvider fp)
-        {
-            int index = FindUnitSymbolIndex(input, fp);
-            return ((0 <= index) && (index < input.Length)) ?
-                new string[] { /* number */input.Substring(0, index), /* symbol */input.Substring(index).Trim() } : 
-                null;
-        }
-
-        private int FindUnitSymbolIndex(string input, IFormatProvider fp)
+        public bool TryParse(string input, IFormatProvider fp, out string number, out string symbol)
         {
             NumberFormatInfo nfi = fp.GetFormat(typeof(NumberFormatInfo)) as NumberFormatInfo;
-            if (nfi == null) throw new ArgumentException(String.Format("{0}.{1}: no NumberFormatInfo data required for parsing.", this.GetType().Namespace, this.GetType().Name));
+            if (nfi == null)
+                throw new ArgumentException(String.Format("{0}: missing NumberFormatInfo required for parsing.", fp.GetType().FullName));
 
+            int index = FindUnitSymbolIndex(input, nfi);
+            if ((0 <= index) && (index < input.Length))
+            {
+                number = /* number */ input.Substring(0, index);
+                symbol = /* symbol */ input.Substring(index).Trim();
+                return true;
+            }
+            number = symbol = null;
+            return false;
+        }
+
+        private int FindUnitSymbolIndex(string input, NumberFormatInfo nfi)
+        {
             if (input.StartsWith(nfi.NaNSymbol, StringComparison.OrdinalIgnoreCase)) return nfi.NaNSymbol.Length;
             if (input.StartsWith(nfi.PositiveInfinitySymbol, StringComparison.OrdinalIgnoreCase)) return nfi.PositiveInfinitySymbol.Length;
             if (input.StartsWith(nfi.NegativeInfinitySymbol, StringComparison.OrdinalIgnoreCase)) return nfi.NegativeInfinitySymbol.Length;

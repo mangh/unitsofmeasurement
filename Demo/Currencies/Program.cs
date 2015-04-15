@@ -30,13 +30,12 @@ namespace Currencies
 
             Console.WriteLine("\nUpdating exchange rates in currency units (demo application).\n");
 
-            UnitCatalog catalog = new UnitCatalog();
-            catalog.LoadFromAssembly(typeof(EUR).Assembly.Location);
+            var catalog = UnitCatalog<decimal>.LoadFromAssembly(typeof(EUR).Assembly);
 
             UpdateCurrencyRates(catalog, @"http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml");
         }
 
-        private static void UpdateCurrencyRates(UnitCatalog catalog, string url)
+        private static void UpdateCurrencyRates(UnitCatalog<decimal> catalog, string url)
         {
             Console.WriteLine("Connecting to {0} ...", url);
 
@@ -56,11 +55,11 @@ namespace Currencies
                         if ((attrCurrency != null) && (attrRate != null))
                         {
                             decimal rate;
-                            UnitProxy currencyUnit = catalog[attrCurrency.Value];
-                            if ((currencyUnit != null) && decimal.TryParse(attrRate.Value, NumberStyles.Number, CultureInfo.InvariantCulture, out rate))
+                            Unit<decimal> currency = catalog[attrCurrency.Value];
+                            if ((currency != null) && decimal.TryParse(attrRate.Value, NumberStyles.Number, CultureInfo.InvariantCulture, out rate))
                             {
-                                object oldrate = currencyUnit.Factor;
-                                currencyUnit.Factor = rate;
+                                decimal oldrate = currency.Factor;
+                                currency.Factor = rate;
                                 Console.WriteLine("{0} rate = {1} (previously {2})", attrCurrency.Value, rate, oldrate);
                             }
                         }
