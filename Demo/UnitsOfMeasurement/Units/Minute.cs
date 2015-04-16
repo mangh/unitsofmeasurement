@@ -20,17 +20,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return Minute.Sense; } }
-        public int UnitFamily { get { return Minute.Family; } }
-        public double UnitFactor { get { return Minute.Factor; } }
-        public string UnitFormat { get { return Minute.Format; } }
-        public SymbolCollection UnitSymbol { get { return Minute.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -46,8 +36,9 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Minute(Second q) { return new Minute((Minute.Factor / Second.Factor) * q.Value); }
         public static Minute From(IQuantity<double> q)
         {
-            if (q.UnitSense != Minute.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"Minute\"", q.GetType().Name));
-            return new Minute((Minute.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != Minute.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"Minute\"", q.GetType().Name));
+            return new Minute((Minute.Factor / source.Factor) * q.Value);
         }
         #endregion
 

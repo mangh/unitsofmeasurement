@@ -21,20 +21,12 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
-
         // instance properties
         public DegCelsius Level { get { return m_level; } }
-        public DegCelsius Extent { get { return (m_level - Celsius.Offset); } }
-
-        // scale properties
-        public DegCelsius ScaleOffset { get { return Celsius.Offset; } }
-        public string ScaleFormat { get { return Celsius.Format; } }
-
+        public DegCelsius NormalizedLevel { get { return (m_level - Celsius.Offset); } }
         // ILevel<double> properties
         IQuantity<double> ILevel<double>.Level { get { return Level; } }
-        IQuantity<double> ILevel<double>.Extent { get { return Extent; } }
-        IQuantity<double> ILevel<double>.ScaleOffset { get { return ScaleOffset; } }
-
+        IQuantity<double> ILevel<double>.NormalizedLevel { get { return NormalizedLevel; } }
         #endregion
 
         #region Constructor(s)
@@ -52,13 +44,21 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Celsius(double q) { return new Celsius(q); }
         public static explicit operator Celsius(DegCelsius q) { return new Celsius(q); }
 
-        public static explicit operator Celsius(Kelvin q) { return new Celsius((DegCelsius)(q.Extent) + Celsius.Offset); }
-        public static explicit operator Celsius(Fahrenheit q) { return new Celsius((DegCelsius)(q.Extent) + Celsius.Offset); }
-        public static explicit operator Celsius(Rankine q) { return new Celsius((DegCelsius)(q.Extent) + Celsius.Offset); }
+        public static explicit operator Celsius(Kelvin q) { return new Celsius((DegCelsius)(q.NormalizedLevel) + Celsius.Offset); }
+        public static explicit operator Celsius(Fahrenheit q) { return new Celsius((DegCelsius)(q.NormalizedLevel) + Celsius.Offset); }
+        public static explicit operator Celsius(Rankine q) { return new Celsius((DegCelsius)(q.NormalizedLevel) + Celsius.Offset); }
 
         public static Celsius From(ILevel<double> q)
         {
-            return new Celsius(DegCelsius.From(q.Extent) + Celsius.Offset);
+            /* The following 2 statements might be required if you have two (or more) scale families derived from the same units
+               but bound to different reference levels. E.g. two families of temperature scales: one with common reference level
+               set to absolute zero and the other one with common reference level set to water freeze point.
+               This is rather unlikely and the statements are commented out to avoid (likely) superfluous checks. */
+               
+            // Scale<double> source = new Scale<double>(q);
+            // if (source.Family != Celsius.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"Celsius\"", q.GetType().Name));
+
+            return new Celsius(DegCelsius.From(q.NormalizedLevel) + Celsius.Offset);
         }
         #endregion
 

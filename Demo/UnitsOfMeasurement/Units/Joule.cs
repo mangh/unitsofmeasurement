@@ -20,17 +20,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return Joule.Sense; } }
-        public int UnitFamily { get { return Joule.Family; } }
-        public double UnitFactor { get { return Joule.Factor; } }
-        public string UnitFormat { get { return Joule.Format; } }
-        public SymbolCollection UnitSymbol { get { return Joule.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -44,8 +34,9 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Joule(double q) { return new Joule(q); }
         public static Joule From(IQuantity<double> q)
         {
-            if (q.UnitSense != Joule.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"Joule\"", q.GetType().Name));
-            return new Joule((Joule.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != Joule.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"Joule\"", q.GetType().Name));
+            return new Joule((Joule.Factor / source.Factor) * q.Value);
         }
         #endregion
 

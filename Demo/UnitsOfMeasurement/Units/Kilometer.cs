@@ -20,17 +20,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return Kilometer.Sense; } }
-        public int UnitFamily { get { return Kilometer.Family; } }
-        public double UnitFactor { get { return Kilometer.Factor; } }
-        public string UnitFormat { get { return Kilometer.Format; } }
-        public SymbolCollection UnitSymbol { get { return Kilometer.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -51,8 +41,9 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Kilometer(Mile q) { return new Kilometer((Kilometer.Factor / Mile.Factor) * q.Value); }
         public static Kilometer From(IQuantity<double> q)
         {
-            if (q.UnitSense != Kilometer.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"Kilometer\"", q.GetType().Name));
-            return new Kilometer((Kilometer.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != Kilometer.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"Kilometer\"", q.GetType().Name));
+            return new Kilometer((Kilometer.Factor / source.Factor) * q.Value);
         }
         #endregion
 

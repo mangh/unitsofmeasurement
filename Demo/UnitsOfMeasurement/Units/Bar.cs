@@ -20,17 +20,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return Bar.Sense; } }
-        public int UnitFamily { get { return Bar.Family; } }
-        public double UnitFactor { get { return Bar.Factor; } }
-        public string UnitFormat { get { return Bar.Format; } }
-        public SymbolCollection UnitSymbol { get { return Bar.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -48,8 +38,9 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Bar(AtmTechnical q) { return new Bar((Bar.Factor / AtmTechnical.Factor) * q.Value); }
         public static Bar From(IQuantity<double> q)
         {
-            if (q.UnitSense != Bar.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"Bar\"", q.GetType().Name));
-            return new Bar((Bar.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != Bar.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"Bar\"", q.GetType().Name));
+            return new Bar((Bar.Factor / source.Factor) * q.Value);
         }
         #endregion
 

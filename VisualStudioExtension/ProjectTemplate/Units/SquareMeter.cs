@@ -20,17 +20,7 @@ namespace $safeprojectname$
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return SquareMeter.Sense; } }
-        public int UnitFamily { get { return SquareMeter.Family; } }
-        public double UnitFactor { get { return SquareMeter.Factor; } }
-        public string UnitFormat { get { return SquareMeter.Format; } }
-        public SymbolCollection UnitSymbol { get { return SquareMeter.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -44,8 +34,9 @@ namespace $safeprojectname$
         public static explicit operator SquareMeter(double q) { return new SquareMeter(q); }
         public static SquareMeter From(IQuantity<double> q)
         {
-            if (q.UnitSense != SquareMeter.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"SquareMeter\"", q.GetType().Name));
-            return new SquareMeter((SquareMeter.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != SquareMeter.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"SquareMeter\"", q.GetType().Name));
+            return new SquareMeter((SquareMeter.Factor / source.Factor) * q.Value);
         }
         #endregion
 

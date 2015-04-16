@@ -20,17 +20,7 @@ namespace $safeprojectname$
         #endregion
 
         #region Properties
-
-        // instance properties
         public decimal Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return EUR.Sense; } }
-        public int UnitFamily { get { return EUR.Family; } }
-        public decimal UnitFactor { get { return EUR.Factor; } }
-        public string UnitFormat { get { return EUR.Format; } }
-        public SymbolCollection UnitSymbol { get { return EUR.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -46,8 +36,9 @@ namespace $safeprojectname$
         public static explicit operator EUR(USD q) { return new EUR((EUR.Factor / USD.Factor) * q.Value); }
         public static EUR From(IQuantity<decimal> q)
         {
-            if (q.UnitSense != EUR.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"EUR\"", q.GetType().Name));
-            return new EUR((EUR.Factor / q.UnitFactor) * q.Value);
+            Unit<decimal> source = new Unit<decimal>(q);
+            if (source.Family != EUR.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"EUR\"", q.GetType().Name));
+            return new EUR((EUR.Factor / source.Factor) * q.Value);
         }
         #endregion
 

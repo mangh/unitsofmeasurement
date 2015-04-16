@@ -20,17 +20,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return Mole.Sense; } }
-        public int UnitFamily { get { return Mole.Family; } }
-        public double UnitFactor { get { return Mole.Factor; } }
-        public string UnitFormat { get { return Mole.Format; } }
-        public SymbolCollection UnitSymbol { get { return Mole.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -44,8 +34,9 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Mole(double q) { return new Mole(q); }
         public static Mole From(IQuantity<double> q)
         {
-            if (q.UnitSense != Mole.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"Mole\"", q.GetType().Name));
-            return new Mole((Mole.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != Mole.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"Mole\"", q.GetType().Name));
+            return new Mole((Mole.Factor / source.Factor) * q.Value);
         }
         #endregion
 

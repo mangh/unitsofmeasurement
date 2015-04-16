@@ -20,17 +20,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return Ohm.Sense; } }
-        public int UnitFamily { get { return Ohm.Family; } }
-        public double UnitFactor { get { return Ohm.Factor; } }
-        public string UnitFormat { get { return Ohm.Format; } }
-        public SymbolCollection UnitSymbol { get { return Ohm.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -44,8 +34,9 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Ohm(double q) { return new Ohm(q); }
         public static Ohm From(IQuantity<double> q)
         {
-            if (q.UnitSense != Ohm.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"Ohm\"", q.GetType().Name));
-            return new Ohm((Ohm.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != Ohm.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"Ohm\"", q.GetType().Name));
+            return new Ohm((Ohm.Factor / source.Factor) * q.Value);
         }
         #endregion
 

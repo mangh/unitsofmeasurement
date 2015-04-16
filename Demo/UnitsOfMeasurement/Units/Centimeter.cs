@@ -20,17 +20,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return Centimeter.Sense; } }
-        public int UnitFamily { get { return Centimeter.Family; } }
-        public double UnitFactor { get { return Centimeter.Factor; } }
-        public string UnitFormat { get { return Centimeter.Format; } }
-        public SymbolCollection UnitSymbol { get { return Centimeter.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -51,8 +41,9 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Centimeter(Millimeter q) { return new Centimeter((Centimeter.Factor / Millimeter.Factor) * q.Value); }
         public static Centimeter From(IQuantity<double> q)
         {
-            if (q.UnitSense != Centimeter.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"Centimeter\"", q.GetType().Name));
-            return new Centimeter((Centimeter.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != Centimeter.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"Centimeter\"", q.GetType().Name));
+            return new Centimeter((Centimeter.Factor / source.Factor) * q.Value);
         }
         #endregion
 

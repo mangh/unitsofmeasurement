@@ -20,17 +20,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return Poundal.Sense; } }
-        public int UnitFamily { get { return Poundal.Family; } }
-        public double UnitFactor { get { return Poundal.Factor; } }
-        public string UnitFormat { get { return Poundal.Format; } }
-        public SymbolCollection UnitSymbol { get { return Poundal.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -47,8 +37,9 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Poundal(Dyne q) { return new Poundal((Poundal.Factor / Dyne.Factor) * q.Value); }
         public static Poundal From(IQuantity<double> q)
         {
-            if (q.UnitSense != Poundal.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"Poundal\"", q.GetType().Name));
-            return new Poundal((Poundal.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != Poundal.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"Poundal\"", q.GetType().Name));
+            return new Poundal((Poundal.Factor / source.Factor) * q.Value);
         }
         #endregion
 

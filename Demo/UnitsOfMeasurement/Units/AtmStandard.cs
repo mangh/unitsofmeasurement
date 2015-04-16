@@ -20,17 +20,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return AtmStandard.Sense; } }
-        public int UnitFamily { get { return AtmStandard.Family; } }
-        public double UnitFactor { get { return AtmStandard.Factor; } }
-        public string UnitFormat { get { return AtmStandard.Format; } }
-        public SymbolCollection UnitSymbol { get { return AtmStandard.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -48,8 +38,9 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator AtmStandard(MillimeterHg q) { return new AtmStandard((AtmStandard.Factor / MillimeterHg.Factor) * q.Value); }
         public static AtmStandard From(IQuantity<double> q)
         {
-            if (q.UnitSense != AtmStandard.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"AtmStandard\"", q.GetType().Name));
-            return new AtmStandard((AtmStandard.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != AtmStandard.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"AtmStandard\"", q.GetType().Name));
+            return new AtmStandard((AtmStandard.Factor / source.Factor) * q.Value);
         }
         #endregion
 

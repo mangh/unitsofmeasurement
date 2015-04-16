@@ -29,7 +29,7 @@ namespace Demo.UnitsOfMeasurement
 
         // instance properties
         public const string LevelPropertyName = "Level";
-        public const string NormalizedLevelPropertyName = "Extent";
+        public const string NormalizedLevelPropertyName = "NormalizedLevel";
 
         // generic types
         public static readonly RuntimeTypeHandle GenericTypeHandle = typeof(Scale<>).TypeHandle;

@@ -23,6 +23,4 @@ TestResults/
 
 *.suo
 TODO.txt
-Local.testsettings
-TraceAndTestImpact.testsettings
-UnitsOfMeasurement.vsmdi
+

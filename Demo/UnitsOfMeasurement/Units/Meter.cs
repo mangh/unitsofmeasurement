@@ -20,17 +20,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return Meter.Sense; } }
-        public int UnitFamily { get { return Meter.Family; } }
-        public double UnitFactor { get { return Meter.Factor; } }
-        public string UnitFormat { get { return Meter.Format; } }
-        public SymbolCollection UnitSymbol { get { return Meter.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -51,8 +41,9 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Meter(Centimeter q) { return new Meter((Meter.Factor / Centimeter.Factor) * q.Value); }
         public static Meter From(IQuantity<double> q)
         {
-            if (q.UnitSense != Meter.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"Meter\"", q.GetType().Name));
-            return new Meter((Meter.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != Meter.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"Meter\"", q.GetType().Name));
+            return new Meter((Meter.Factor / source.Factor) * q.Value);
         }
         #endregion
 

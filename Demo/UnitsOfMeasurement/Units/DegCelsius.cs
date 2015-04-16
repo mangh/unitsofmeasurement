@@ -20,17 +20,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return DegCelsius.Sense; } }
-        public int UnitFamily { get { return DegCelsius.Family; } }
-        public double UnitFactor { get { return DegCelsius.Factor; } }
-        public string UnitFormat { get { return DegCelsius.Format; } }
-        public SymbolCollection UnitSymbol { get { return DegCelsius.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -47,8 +37,9 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator DegCelsius(DegRankine q) { return new DegCelsius((DegCelsius.Factor / DegRankine.Factor) * q.Value); }
         public static DegCelsius From(IQuantity<double> q)
         {
-            if (q.UnitSense != DegCelsius.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"DegCelsius\"", q.GetType().Name));
-            return new DegCelsius((DegCelsius.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != DegCelsius.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"DegCelsius\"", q.GetType().Name));
+            return new DegCelsius((DegCelsius.Factor / source.Factor) * q.Value);
         }
         #endregion
 

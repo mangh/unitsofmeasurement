@@ -20,17 +20,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return SquareFoot.Sense; } }
-        public int UnitFamily { get { return SquareFoot.Family; } }
-        public double UnitFactor { get { return SquareFoot.Factor; } }
-        public string UnitFormat { get { return SquareFoot.Format; } }
-        public SymbolCollection UnitSymbol { get { return SquareFoot.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -45,8 +35,9 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator SquareFoot(SquareMeter q) { return new SquareFoot((SquareFoot.Factor / SquareMeter.Factor) * q.Value); }
         public static SquareFoot From(IQuantity<double> q)
         {
-            if (q.UnitSense != SquareFoot.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"SquareFoot\"", q.GetType().Name));
-            return new SquareFoot((SquareFoot.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != SquareFoot.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"SquareFoot\"", q.GetType().Name));
+            return new SquareFoot((SquareFoot.Factor / source.Factor) * q.Value);
         }
         #endregion
 

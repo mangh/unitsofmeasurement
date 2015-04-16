@@ -20,17 +20,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return Pascal.Sense; } }
-        public int UnitFamily { get { return Pascal.Family; } }
-        public double UnitFactor { get { return Pascal.Factor; } }
-        public string UnitFormat { get { return Pascal.Format; } }
-        public SymbolCollection UnitSymbol { get { return Pascal.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -48,8 +38,9 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Pascal(Bar q) { return new Pascal((Pascal.Factor / Bar.Factor) * q.Value); }
         public static Pascal From(IQuantity<double> q)
         {
-            if (q.UnitSense != Pascal.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"Pascal\"", q.GetType().Name));
-            return new Pascal((Pascal.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != Pascal.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"Pascal\"", q.GetType().Name));
+            return new Pascal((Pascal.Factor / source.Factor) * q.Value);
         }
         #endregion
 

@@ -20,17 +20,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return Joule_Kelvin_Kilogram.Sense; } }
-        public int UnitFamily { get { return Joule_Kelvin_Kilogram.Family; } }
-        public double UnitFactor { get { return Joule_Kelvin_Kilogram.Factor; } }
-        public string UnitFormat { get { return Joule_Kelvin_Kilogram.Format; } }
-        public SymbolCollection UnitSymbol { get { return Joule_Kelvin_Kilogram.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -44,8 +34,9 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Joule_Kelvin_Kilogram(double q) { return new Joule_Kelvin_Kilogram(q); }
         public static Joule_Kelvin_Kilogram From(IQuantity<double> q)
         {
-            if (q.UnitSense != Joule_Kelvin_Kilogram.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"Joule_Kelvin_Kilogram\"", q.GetType().Name));
-            return new Joule_Kelvin_Kilogram((Joule_Kelvin_Kilogram.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != Joule_Kelvin_Kilogram.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"Joule_Kelvin_Kilogram\"", q.GetType().Name));
+            return new Joule_Kelvin_Kilogram((Joule_Kelvin_Kilogram.Factor / source.Factor) * q.Value);
         }
         #endregion
 

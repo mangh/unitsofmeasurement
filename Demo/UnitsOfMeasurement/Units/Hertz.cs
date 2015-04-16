@@ -20,17 +20,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return Hertz.Sense; } }
-        public int UnitFamily { get { return Hertz.Family; } }
-        public double UnitFactor { get { return Hertz.Factor; } }
-        public string UnitFormat { get { return Hertz.Format; } }
-        public SymbolCollection UnitSymbol { get { return Hertz.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -46,8 +36,9 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Hertz(RPM q) { return new Hertz((Hertz.Factor / RPM.Factor) * q.Value); }
         public static Hertz From(IQuantity<double> q)
         {
-            if (q.UnitSense != Hertz.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"Hertz\"", q.GetType().Name));
-            return new Hertz((Hertz.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != Hertz.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"Hertz\"", q.GetType().Name));
+            return new Hertz((Hertz.Factor / source.Factor) * q.Value);
         }
         #endregion
 

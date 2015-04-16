@@ -20,17 +20,7 @@ namespace $safeprojectname$
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return Degree.Sense; } }
-        public int UnitFamily { get { return Degree.Family; } }
-        public double UnitFactor { get { return Degree.Factor; } }
-        public string UnitFormat { get { return Degree.Format; } }
-        public SymbolCollection UnitSymbol { get { return Degree.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -46,8 +36,9 @@ namespace $safeprojectname$
         public static explicit operator Degree(Cycles q) { return new Degree((Degree.Factor / Cycles.Factor) * q.Value); }
         public static Degree From(IQuantity<double> q)
         {
-            if (q.UnitSense != Degree.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"Degree\"", q.GetType().Name));
-            return new Degree((Degree.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != Degree.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"Degree\"", q.GetType().Name));
+            return new Degree((Degree.Factor / source.Factor) * q.Value);
         }
         #endregion
 

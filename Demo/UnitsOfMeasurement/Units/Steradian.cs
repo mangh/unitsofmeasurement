@@ -20,17 +20,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return Steradian.Sense; } }
-        public int UnitFamily { get { return Steradian.Family; } }
-        public double UnitFactor { get { return Steradian.Factor; } }
-        public string UnitFormat { get { return Steradian.Format; } }
-        public SymbolCollection UnitSymbol { get { return Steradian.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -44,8 +34,9 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Steradian(double q) { return new Steradian(q); }
         public static Steradian From(IQuantity<double> q)
         {
-            if (q.UnitSense != Steradian.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"Steradian\"", q.GetType().Name));
-            return new Steradian((Steradian.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != Steradian.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"Steradian\"", q.GetType().Name));
+            return new Steradian((Steradian.Factor / source.Factor) * q.Value);
         }
         #endregion
 

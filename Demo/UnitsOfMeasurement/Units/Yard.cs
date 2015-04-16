@@ -20,17 +20,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return Yard.Sense; } }
-        public int UnitFamily { get { return Yard.Family; } }
-        public double UnitFactor { get { return Yard.Factor; } }
-        public string UnitFormat { get { return Yard.Format; } }
-        public SymbolCollection UnitSymbol { get { return Yard.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -51,8 +41,9 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Yard(Foot q) { return new Yard((Yard.Factor / Foot.Factor) * q.Value); }
         public static Yard From(IQuantity<double> q)
         {
-            if (q.UnitSense != Yard.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"Yard\"", q.GetType().Name));
-            return new Yard((Yard.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != Yard.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"Yard\"", q.GetType().Name));
+            return new Yard((Yard.Factor / source.Factor) * q.Value);
         }
         #endregion
 

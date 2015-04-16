@@ -20,17 +20,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return Joule_Kelvin.Sense; } }
-        public int UnitFamily { get { return Joule_Kelvin.Family; } }
-        public double UnitFactor { get { return Joule_Kelvin.Factor; } }
-        public string UnitFormat { get { return Joule_Kelvin.Format; } }
-        public SymbolCollection UnitSymbol { get { return Joule_Kelvin.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -44,8 +34,9 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Joule_Kelvin(double q) { return new Joule_Kelvin(q); }
         public static Joule_Kelvin From(IQuantity<double> q)
         {
-            if (q.UnitSense != Joule_Kelvin.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"Joule_Kelvin\"", q.GetType().Name));
-            return new Joule_Kelvin((Joule_Kelvin.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != Joule_Kelvin.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"Joule_Kelvin\"", q.GetType().Name));
+            return new Joule_Kelvin((Joule_Kelvin.Factor / source.Factor) * q.Value);
         }
         #endregion
 

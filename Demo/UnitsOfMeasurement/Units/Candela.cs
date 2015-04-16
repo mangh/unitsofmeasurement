@@ -20,17 +20,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return Candela.Sense; } }
-        public int UnitFamily { get { return Candela.Family; } }
-        public double UnitFactor { get { return Candela.Factor; } }
-        public string UnitFormat { get { return Candela.Format; } }
-        public SymbolCollection UnitSymbol { get { return Candela.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -44,8 +34,9 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Candela(double q) { return new Candela(q); }
         public static Candela From(IQuantity<double> q)
         {
-            if (q.UnitSense != Candela.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"Candela\"", q.GetType().Name));
-            return new Candela((Candela.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != Candela.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"Candela\"", q.GetType().Name));
+            return new Candela((Candela.Factor / source.Factor) * q.Value);
         }
         #endregion
 

@@ -20,17 +20,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return DegRankine.Sense; } }
-        public int UnitFamily { get { return DegRankine.Family; } }
-        public double UnitFactor { get { return DegRankine.Factor; } }
-        public string UnitFormat { get { return DegRankine.Format; } }
-        public SymbolCollection UnitSymbol { get { return DegRankine.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -47,8 +37,9 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator DegRankine(DegFahrenheit q) { return new DegRankine((DegRankine.Factor / DegFahrenheit.Factor) * q.Value); }
         public static DegRankine From(IQuantity<double> q)
         {
-            if (q.UnitSense != DegRankine.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"DegRankine\"", q.GetType().Name));
-            return new DegRankine((DegRankine.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != DegRankine.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"DegRankine\"", q.GetType().Name));
+            return new DegRankine((DegRankine.Factor / source.Factor) * q.Value);
         }
         #endregion
 

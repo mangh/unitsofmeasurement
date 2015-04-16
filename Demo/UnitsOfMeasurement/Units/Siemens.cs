@@ -20,17 +20,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return Siemens.Sense; } }
-        public int UnitFamily { get { return Siemens.Family; } }
-        public double UnitFactor { get { return Siemens.Factor; } }
-        public string UnitFormat { get { return Siemens.Format; } }
-        public SymbolCollection UnitSymbol { get { return Siemens.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -44,8 +34,9 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Siemens(double q) { return new Siemens(q); }
         public static Siemens From(IQuantity<double> q)
         {
-            if (q.UnitSense != Siemens.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"Siemens\"", q.GetType().Name));
-            return new Siemens((Siemens.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != Siemens.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"Siemens\"", q.GetType().Name));
+            return new Siemens((Siemens.Factor / source.Factor) * q.Value);
         }
         #endregion
 

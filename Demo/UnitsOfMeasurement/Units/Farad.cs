@@ -20,17 +20,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return Farad.Sense; } }
-        public int UnitFamily { get { return Farad.Family; } }
-        public double UnitFactor { get { return Farad.Factor; } }
-        public string UnitFormat { get { return Farad.Format; } }
-        public SymbolCollection UnitSymbol { get { return Farad.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -44,8 +34,9 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Farad(double q) { return new Farad(q); }
         public static Farad From(IQuantity<double> q)
         {
-            if (q.UnitSense != Farad.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"Farad\"", q.GetType().Name));
-            return new Farad((Farad.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != Farad.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"Farad\"", q.GetType().Name));
+            return new Farad((Farad.Factor / source.Factor) * q.Value);
         }
         #endregion
 

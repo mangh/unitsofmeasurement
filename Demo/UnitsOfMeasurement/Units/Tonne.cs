@@ -20,17 +20,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return Tonne.Sense; } }
-        public int UnitFamily { get { return Tonne.Family; } }
-        public double UnitFactor { get { return Tonne.Factor; } }
-        public string UnitFormat { get { return Tonne.Format; } }
-        public SymbolCollection UnitSymbol { get { return Tonne.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -48,8 +38,9 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Tonne(Ounce q) { return new Tonne((Tonne.Factor / Ounce.Factor) * q.Value); }
         public static Tonne From(IQuantity<double> q)
         {
-            if (q.UnitSense != Tonne.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"Tonne\"", q.GetType().Name));
-            return new Tonne((Tonne.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != Tonne.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"Tonne\"", q.GetType().Name));
+            return new Tonne((Tonne.Factor / source.Factor) * q.Value);
         }
         #endregion
 

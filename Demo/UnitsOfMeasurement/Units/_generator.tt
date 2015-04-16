@@ -250,17 +250,7 @@ namespace <#= Namespace #>
         #endregion
 
         #region Properties
-
-        // instance properties
         public <#= Value #> Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return <#= Unit #>.Sense; } }
-        public int UnitFamily { get { return <#= Unit #>.Family; } }
-        public <#= Value #> UnitFactor { get { return <#= Unit #>.Factor; } }
-        public string UnitFormat { get { return <#= Unit #>.Format; } }
-        public SymbolCollection UnitSymbol { get { return <#= Unit #>.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -283,8 +273,9 @@ namespace <#= Namespace #>
 #>
         public static <#= Unit #> From(IQuantity<<#= Value #>> q)
         {
-            if (q.UnitSense != <#= Unit #>.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"<#= Unit #>\"", q.GetType().Name));
-            return new <#= Unit #>((<#= Unit #>.Factor / q.UnitFactor) * q.Value);
+            Unit<<#= Value #>> source = new Unit<<#= Value #>>(q);
+            if (source.Family != <#= Unit #>.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"<#= Unit #>\"", q.GetType().Name));
+            return new <#= Unit #>((<#= Unit #>.Factor / source.Factor) * q.Value);
         }
         #endregion
 
@@ -412,20 +403,12 @@ namespace <#= Namespace #>
         #endregion
 
         #region Properties
-
         // instance properties
         public <#= Unit #> Level { get { return m_level; } }
-        public <#= Unit #> Extent { get { return (m_level - <#= Scale #>.Offset); } }
-
-        // scale properties
-        public <#= Unit #> ScaleOffset { get { return <#= Scale #>.Offset; } }
-        public string ScaleFormat { get { return <#= Scale #>.Format; } }
-
+        public <#= Unit #> NormalizedLevel { get { return (m_level - <#= Scale #>.Offset); } }
         // ILevel<<#= Value #>> properties
         IQuantity<<#= Value #>> ILevel<<#= Value #>>.Level { get { return Level; } }
-        IQuantity<<#= Value #>> ILevel<<#= Value #>>.Extent { get { return Extent; } }
-        IQuantity<<#= Value #>> ILevel<<#= Value #>>.ScaleOffset { get { return ScaleOffset; } }
-
+        IQuantity<<#= Value #>> ILevel<<#= Value #>>.NormalizedLevel { get { return NormalizedLevel; } }
         #endregion
 
         #region Constructor(s)
@@ -448,14 +431,22 @@ namespace <#= Namespace #>
         {
             string Relative = ((ScaleType)x).Name;
 #>
-        public static explicit operator <#= Scale #>(<#= Relative #> q) { return new <#= Scale #>((<#= Unit #>)(q.Extent) + <#= Scale #>.Offset); }
+        public static explicit operator <#= Scale #>(<#= Relative #> q) { return new <#= Scale #>((<#= Unit #>)(q.NormalizedLevel) + <#= Scale #>.Offset); }
 <#+
         }
 #>
 
         public static <#= Scale #> From(ILevel<<#= Value #>> q)
         {
-            return new <#= Scale #>(<#= Unit #>.From(q.Extent) + <#= Scale #>.Offset);
+            /* The following 2 statements might be required if you have two (or more) scale families derived from the same units
+               but bound to different reference levels. E.g. two families of temperature scales: one with common reference level
+               set to absolute zero and the other one with common reference level set to water freeze point.
+               This is rather unlikely and the statements are commented out to avoid (likely) superfluous checks. */
+               
+            // Scale<<#= Value #>> source = new Scale<<#= Value #>>(q);
+            // if (source.Family != <#= Scale #>.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"<#= Scale #>\"", q.GetType().Name));
+
+            return new <#= Scale #>(<#= Unit #>.From(q.NormalizedLevel) + <#= Scale #>.Offset);
         }
         #endregion
 

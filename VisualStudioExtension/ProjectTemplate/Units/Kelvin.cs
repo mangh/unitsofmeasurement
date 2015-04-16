@@ -21,20 +21,12 @@ namespace $safeprojectname$
         #endregion
 
         #region Properties
-
         // instance properties
         public DegKelvin Level { get { return m_level; } }
-        public DegKelvin Extent { get { return (m_level - Kelvin.Offset); } }
-
-        // scale properties
-        public DegKelvin ScaleOffset { get { return Kelvin.Offset; } }
-        public string ScaleFormat { get { return Kelvin.Format; } }
-
+        public DegKelvin NormalizedLevel { get { return (m_level - Kelvin.Offset); } }
         // ILevel<double> properties
         IQuantity<double> ILevel<double>.Level { get { return Level; } }
-        IQuantity<double> ILevel<double>.Extent { get { return Extent; } }
-        IQuantity<double> ILevel<double>.ScaleOffset { get { return ScaleOffset; } }
-
+        IQuantity<double> ILevel<double>.NormalizedLevel { get { return NormalizedLevel; } }
         #endregion
 
         #region Constructor(s)
@@ -52,13 +44,21 @@ namespace $safeprojectname$
         public static explicit operator Kelvin(double q) { return new Kelvin(q); }
         public static explicit operator Kelvin(DegKelvin q) { return new Kelvin(q); }
 
-        public static explicit operator Kelvin(Fahrenheit q) { return new Kelvin((DegKelvin)(q.Extent) + Kelvin.Offset); }
-        public static explicit operator Kelvin(Rankine q) { return new Kelvin((DegKelvin)(q.Extent) + Kelvin.Offset); }
-        public static explicit operator Kelvin(Celsius q) { return new Kelvin((DegKelvin)(q.Extent) + Kelvin.Offset); }
+        public static explicit operator Kelvin(Fahrenheit q) { return new Kelvin((DegKelvin)(q.NormalizedLevel) + Kelvin.Offset); }
+        public static explicit operator Kelvin(Rankine q) { return new Kelvin((DegKelvin)(q.NormalizedLevel) + Kelvin.Offset); }
+        public static explicit operator Kelvin(Celsius q) { return new Kelvin((DegKelvin)(q.NormalizedLevel) + Kelvin.Offset); }
 
         public static Kelvin From(ILevel<double> q)
         {
-            return new Kelvin(DegKelvin.From(q.Extent) + Kelvin.Offset);
+            /* The following 2 statements might be required if you have two (or more) scale families derived from the same units
+               but bound to different reference levels. E.g. two families of temperature scales: one with common reference level
+               set to absolute zero and the other one with common reference level set to water freeze point.
+               This is rather unlikely and the statements are commented out to avoid (likely) superfluous checks. */
+               
+            // Scale<double> source = new Scale<double>(q);
+            // if (source.Family != Kelvin.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"Kelvin\"", q.GetType().Name));
+
+            return new Kelvin(DegKelvin.From(q.NormalizedLevel) + Kelvin.Offset);
         }
         #endregion
 

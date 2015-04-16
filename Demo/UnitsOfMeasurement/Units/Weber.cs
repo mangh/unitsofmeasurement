@@ -20,17 +20,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return Weber.Sense; } }
-        public int UnitFamily { get { return Weber.Family; } }
-        public double UnitFactor { get { return Weber.Factor; } }
-        public string UnitFormat { get { return Weber.Format; } }
-        public SymbolCollection UnitSymbol { get { return Weber.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -44,8 +34,9 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Weber(double q) { return new Weber(q); }
         public static Weber From(IQuantity<double> q)
         {
-            if (q.UnitSense != Weber.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"Weber\"", q.GetType().Name));
-            return new Weber((Weber.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != Weber.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"Weber\"", q.GetType().Name));
+            return new Weber((Weber.Factor / source.Factor) * q.Value);
         }
         #endregion
 

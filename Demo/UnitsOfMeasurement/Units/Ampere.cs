@@ -20,17 +20,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return Ampere.Sense; } }
-        public int UnitFamily { get { return Ampere.Family; } }
-        public double UnitFactor { get { return Ampere.Factor; } }
-        public string UnitFormat { get { return Ampere.Format; } }
-        public SymbolCollection UnitSymbol { get { return Ampere.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -44,8 +34,9 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Ampere(double q) { return new Ampere(q); }
         public static Ampere From(IQuantity<double> q)
         {
-            if (q.UnitSense != Ampere.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"Ampere\"", q.GetType().Name));
-            return new Ampere((Ampere.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != Ampere.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"Ampere\"", q.GetType().Name));
+            return new Ampere((Ampere.Factor / source.Factor) * q.Value);
         }
         #endregion
 

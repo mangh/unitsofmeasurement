@@ -20,17 +20,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return Mile.Sense; } }
-        public int UnitFamily { get { return Mile.Family; } }
-        public double UnitFactor { get { return Mile.Factor; } }
-        public string UnitFormat { get { return Mile.Format; } }
-        public SymbolCollection UnitSymbol { get { return Mile.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -51,8 +41,9 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Mile(Yard q) { return new Mile((Mile.Factor / Yard.Factor) * q.Value); }
         public static Mile From(IQuantity<double> q)
         {
-            if (q.UnitSense != Mile.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"Mile\"", q.GetType().Name));
-            return new Mile((Mile.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != Mile.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"Mile\"", q.GetType().Name));
+            return new Mile((Mile.Factor / source.Factor) * q.Value);
         }
         #endregion
 

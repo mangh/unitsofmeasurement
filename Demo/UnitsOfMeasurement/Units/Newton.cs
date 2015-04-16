@@ -20,17 +20,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return Newton.Sense; } }
-        public int UnitFamily { get { return Newton.Family; } }
-        public double UnitFactor { get { return Newton.Factor; } }
-        public string UnitFormat { get { return Newton.Format; } }
-        public SymbolCollection UnitSymbol { get { return Newton.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -47,8 +37,9 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Newton(PoundForce q) { return new Newton((Newton.Factor / PoundForce.Factor) * q.Value); }
         public static Newton From(IQuantity<double> q)
         {
-            if (q.UnitSense != Newton.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"Newton\"", q.GetType().Name));
-            return new Newton((Newton.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != Newton.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"Newton\"", q.GetType().Name));
+            return new Newton((Newton.Factor / source.Factor) * q.Value);
         }
         #endregion
 

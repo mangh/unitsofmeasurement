@@ -20,17 +20,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return Kilometer_Hour.Sense; } }
-        public int UnitFamily { get { return Kilometer_Hour.Family; } }
-        public double UnitFactor { get { return Kilometer_Hour.Factor; } }
-        public string UnitFormat { get { return Kilometer_Hour.Format; } }
-        public SymbolCollection UnitSymbol { get { return Kilometer_Hour.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -46,8 +36,9 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Kilometer_Hour(MPH q) { return new Kilometer_Hour((Kilometer_Hour.Factor / MPH.Factor) * q.Value); }
         public static Kilometer_Hour From(IQuantity<double> q)
         {
-            if (q.UnitSense != Kilometer_Hour.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"Kilometer_Hour\"", q.GetType().Name));
-            return new Kilometer_Hour((Kilometer_Hour.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != Kilometer_Hour.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"Kilometer_Hour\"", q.GetType().Name));
+            return new Kilometer_Hour((Kilometer_Hour.Factor / source.Factor) * q.Value);
         }
         #endregion
 

@@ -20,17 +20,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return Millimeter.Sense; } }
-        public int UnitFamily { get { return Millimeter.Family; } }
-        public double UnitFactor { get { return Millimeter.Factor; } }
-        public string UnitFormat { get { return Millimeter.Format; } }
-        public SymbolCollection UnitSymbol { get { return Millimeter.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -51,8 +41,9 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Millimeter(Kilometer q) { return new Millimeter((Millimeter.Factor / Kilometer.Factor) * q.Value); }
         public static Millimeter From(IQuantity<double> q)
         {
-            if (q.UnitSense != Millimeter.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"Millimeter\"", q.GetType().Name));
-            return new Millimeter((Millimeter.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != Millimeter.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"Millimeter\"", q.GetType().Name));
+            return new Millimeter((Millimeter.Factor / source.Factor) * q.Value);
         }
         #endregion
 

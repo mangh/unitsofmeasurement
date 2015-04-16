@@ -20,17 +20,7 @@ namespace $safeprojectname$
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return Meter_Sec2.Sense; } }
-        public int UnitFamily { get { return Meter_Sec2.Family; } }
-        public double UnitFactor { get { return Meter_Sec2.Factor; } }
-        public string UnitFormat { get { return Meter_Sec2.Format; } }
-        public SymbolCollection UnitSymbol { get { return Meter_Sec2.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -44,8 +34,9 @@ namespace $safeprojectname$
         public static explicit operator Meter_Sec2(double q) { return new Meter_Sec2(q); }
         public static Meter_Sec2 From(IQuantity<double> q)
         {
-            if (q.UnitSense != Meter_Sec2.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"Meter_Sec2\"", q.GetType().Name));
-            return new Meter_Sec2((Meter_Sec2.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != Meter_Sec2.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"Meter_Sec2\"", q.GetType().Name));
+            return new Meter_Sec2((Meter_Sec2.Factor / source.Factor) * q.Value);
         }
         #endregion
 

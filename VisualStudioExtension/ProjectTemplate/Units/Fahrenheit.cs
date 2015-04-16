@@ -21,20 +21,12 @@ namespace $safeprojectname$
         #endregion
 
         #region Properties
-
         // instance properties
         public DegFahrenheit Level { get { return m_level; } }
-        public DegFahrenheit Extent { get { return (m_level - Fahrenheit.Offset); } }
-
-        // scale properties
-        public DegFahrenheit ScaleOffset { get { return Fahrenheit.Offset; } }
-        public string ScaleFormat { get { return Fahrenheit.Format; } }
-
+        public DegFahrenheit NormalizedLevel { get { return (m_level - Fahrenheit.Offset); } }
         // ILevel<double> properties
         IQuantity<double> ILevel<double>.Level { get { return Level; } }
-        IQuantity<double> ILevel<double>.Extent { get { return Extent; } }
-        IQuantity<double> ILevel<double>.ScaleOffset { get { return ScaleOffset; } }
-
+        IQuantity<double> ILevel<double>.NormalizedLevel { get { return NormalizedLevel; } }
         #endregion
 
         #region Constructor(s)
@@ -52,13 +44,21 @@ namespace $safeprojectname$
         public static explicit operator Fahrenheit(double q) { return new Fahrenheit(q); }
         public static explicit operator Fahrenheit(DegFahrenheit q) { return new Fahrenheit(q); }
 
-        public static explicit operator Fahrenheit(Rankine q) { return new Fahrenheit((DegFahrenheit)(q.Extent) + Fahrenheit.Offset); }
-        public static explicit operator Fahrenheit(Celsius q) { return new Fahrenheit((DegFahrenheit)(q.Extent) + Fahrenheit.Offset); }
-        public static explicit operator Fahrenheit(Kelvin q) { return new Fahrenheit((DegFahrenheit)(q.Extent) + Fahrenheit.Offset); }
+        public static explicit operator Fahrenheit(Rankine q) { return new Fahrenheit((DegFahrenheit)(q.NormalizedLevel) + Fahrenheit.Offset); }
+        public static explicit operator Fahrenheit(Celsius q) { return new Fahrenheit((DegFahrenheit)(q.NormalizedLevel) + Fahrenheit.Offset); }
+        public static explicit operator Fahrenheit(Kelvin q) { return new Fahrenheit((DegFahrenheit)(q.NormalizedLevel) + Fahrenheit.Offset); }
 
         public static Fahrenheit From(ILevel<double> q)
         {
-            return new Fahrenheit(DegFahrenheit.From(q.Extent) + Fahrenheit.Offset);
+            /* The following 2 statements might be required if you have two (or more) scale families derived from the same units
+               but bound to different reference levels. E.g. two families of temperature scales: one with common reference level
+               set to absolute zero and the other one with common reference level set to water freeze point.
+               This is rather unlikely and the statements are commented out to avoid (likely) superfluous checks. */
+               
+            // Scale<double> source = new Scale<double>(q);
+            // if (source.Family != Fahrenheit.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"Fahrenheit\"", q.GetType().Name));
+
+            return new Fahrenheit(DegFahrenheit.From(q.NormalizedLevel) + Fahrenheit.Offset);
         }
         #endregion
 

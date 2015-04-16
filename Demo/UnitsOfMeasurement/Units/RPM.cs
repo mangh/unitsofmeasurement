@@ -20,17 +20,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return RPM.Sense; } }
-        public int UnitFamily { get { return RPM.Family; } }
-        public double UnitFactor { get { return RPM.Factor; } }
-        public string UnitFormat { get { return RPM.Format; } }
-        public SymbolCollection UnitSymbol { get { return RPM.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -46,8 +36,9 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator RPM(Radian_Sec q) { return new RPM((RPM.Factor / Radian_Sec.Factor) * q.Value); }
         public static RPM From(IQuantity<double> q)
         {
-            if (q.UnitSense != RPM.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"RPM\"", q.GetType().Name));
-            return new RPM((RPM.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != RPM.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"RPM\"", q.GetType().Name));
+            return new RPM((RPM.Factor / source.Factor) * q.Value);
         }
         #endregion
 

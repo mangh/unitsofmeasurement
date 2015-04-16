@@ -20,17 +20,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return Grad.Sense; } }
-        public int UnitFamily { get { return Grad.Family; } }
-        public double UnitFactor { get { return Grad.Factor; } }
-        public string UnitFormat { get { return Grad.Format; } }
-        public SymbolCollection UnitSymbol { get { return Grad.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -47,8 +37,9 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Grad(Cycles q) { return new Grad((Grad.Factor / Cycles.Factor) * q.Value); }
         public static Grad From(IQuantity<double> q)
         {
-            if (q.UnitSense != Grad.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"Grad\"", q.GetType().Name));
-            return new Grad((Grad.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != Grad.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"Grad\"", q.GetType().Name));
+            return new Grad((Grad.Factor / source.Factor) * q.Value);
         }
         #endregion
 

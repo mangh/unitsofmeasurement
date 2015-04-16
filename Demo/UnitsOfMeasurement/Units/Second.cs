@@ -20,17 +20,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return Second.Sense; } }
-        public int UnitFamily { get { return Second.Family; } }
-        public double UnitFactor { get { return Second.Factor; } }
-        public string UnitFormat { get { return Second.Format; } }
-        public SymbolCollection UnitSymbol { get { return Second.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -46,8 +36,9 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Second(Hour q) { return new Second((Second.Factor / Hour.Factor) * q.Value); }
         public static Second From(IQuantity<double> q)
         {
-            if (q.UnitSense != Second.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"Second\"", q.GetType().Name));
-            return new Second((Second.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != Second.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"Second\"", q.GetType().Name));
+            return new Second((Second.Factor / source.Factor) * q.Value);
         }
         #endregion
 

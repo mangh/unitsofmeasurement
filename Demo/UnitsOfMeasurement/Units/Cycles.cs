@@ -20,17 +20,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return Cycles.Sense; } }
-        public int UnitFamily { get { return Cycles.Family; } }
-        public double UnitFactor { get { return Cycles.Factor; } }
-        public string UnitFormat { get { return Cycles.Format; } }
-        public SymbolCollection UnitSymbol { get { return Cycles.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -47,8 +37,9 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Cycles(Radian q) { return new Cycles((Cycles.Factor / Radian.Factor) * q.Value); }
         public static Cycles From(IQuantity<double> q)
         {
-            if (q.UnitSense != Cycles.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"Cycles\"", q.GetType().Name));
-            return new Cycles((Cycles.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != Cycles.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"Cycles\"", q.GetType().Name));
+            return new Cycles((Cycles.Factor / source.Factor) * q.Value);
         }
         #endregion
 

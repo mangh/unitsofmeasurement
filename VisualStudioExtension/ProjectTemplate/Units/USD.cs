@@ -20,17 +20,7 @@ namespace $safeprojectname$
         #endregion
 
         #region Properties
-
-        // instance properties
         public decimal Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return USD.Sense; } }
-        public int UnitFamily { get { return USD.Family; } }
-        public decimal UnitFactor { get { return USD.Factor; } }
-        public string UnitFormat { get { return USD.Format; } }
-        public SymbolCollection UnitSymbol { get { return USD.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -46,8 +36,9 @@ namespace $safeprojectname$
         public static explicit operator USD(PLN q) { return new USD((USD.Factor / PLN.Factor) * q.Value); }
         public static USD From(IQuantity<decimal> q)
         {
-            if (q.UnitSense != USD.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"USD\"", q.GetType().Name));
-            return new USD((USD.Factor / q.UnitFactor) * q.Value);
+            Unit<decimal> source = new Unit<decimal>(q);
+            if (source.Family != USD.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"USD\"", q.GetType().Name));
+            return new USD((USD.Factor / source.Factor) * q.Value);
         }
         #endregion
 

@@ -20,17 +20,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return Gram.Sense; } }
-        public int UnitFamily { get { return Gram.Family; } }
-        public double UnitFactor { get { return Gram.Factor; } }
-        public string UnitFormat { get { return Gram.Format; } }
-        public SymbolCollection UnitSymbol { get { return Gram.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -48,8 +38,9 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Gram(Tonne q) { return new Gram((Gram.Factor / Tonne.Factor) * q.Value); }
         public static Gram From(IQuantity<double> q)
         {
-            if (q.UnitSense != Gram.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"Gram\"", q.GetType().Name));
-            return new Gram((Gram.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != Gram.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"Gram\"", q.GetType().Name));
+            return new Gram((Gram.Factor / source.Factor) * q.Value);
         }
         #endregion
 

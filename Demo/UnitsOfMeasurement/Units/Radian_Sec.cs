@@ -20,17 +20,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return Radian_Sec.Sense; } }
-        public int UnitFamily { get { return Radian_Sec.Family; } }
-        public double UnitFactor { get { return Radian_Sec.Factor; } }
-        public string UnitFormat { get { return Radian_Sec.Format; } }
-        public SymbolCollection UnitSymbol { get { return Radian_Sec.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -46,8 +36,9 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Radian_Sec(Hertz q) { return new Radian_Sec((Radian_Sec.Factor / Hertz.Factor) * q.Value); }
         public static Radian_Sec From(IQuantity<double> q)
         {
-            if (q.UnitSense != Radian_Sec.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"Radian_Sec\"", q.GetType().Name));
-            return new Radian_Sec((Radian_Sec.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != Radian_Sec.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"Radian_Sec\"", q.GetType().Name));
+            return new Radian_Sec((Radian_Sec.Factor / source.Factor) * q.Value);
         }
         #endregion
 

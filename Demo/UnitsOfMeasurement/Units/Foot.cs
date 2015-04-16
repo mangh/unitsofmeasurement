@@ -20,17 +20,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return Foot.Sense; } }
-        public int UnitFamily { get { return Foot.Family; } }
-        public double UnitFactor { get { return Foot.Factor; } }
-        public string UnitFormat { get { return Foot.Format; } }
-        public SymbolCollection UnitSymbol { get { return Foot.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -51,8 +41,9 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Foot(Inch q) { return new Foot((Foot.Factor / Inch.Factor) * q.Value); }
         public static Foot From(IQuantity<double> q)
         {
-            if (q.UnitSense != Foot.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"Foot\"", q.GetType().Name));
-            return new Foot((Foot.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != Foot.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"Foot\"", q.GetType().Name));
+            return new Foot((Foot.Factor / source.Factor) * q.Value);
         }
         #endregion
 

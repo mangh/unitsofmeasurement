@@ -20,17 +20,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return Volt.Sense; } }
-        public int UnitFamily { get { return Volt.Family; } }
-        public double UnitFactor { get { return Volt.Factor; } }
-        public string UnitFormat { get { return Volt.Format; } }
-        public SymbolCollection UnitSymbol { get { return Volt.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -44,8 +34,9 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Volt(double q) { return new Volt(q); }
         public static Volt From(IQuantity<double> q)
         {
-            if (q.UnitSense != Volt.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"Volt\"", q.GetType().Name));
-            return new Volt((Volt.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != Volt.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"Volt\"", q.GetType().Name));
+            return new Volt((Volt.Factor / source.Factor) * q.Value);
         }
         #endregion
 

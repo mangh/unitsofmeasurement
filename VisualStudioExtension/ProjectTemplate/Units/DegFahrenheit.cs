@@ -20,17 +20,7 @@ namespace $safeprojectname$
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return DegFahrenheit.Sense; } }
-        public int UnitFamily { get { return DegFahrenheit.Family; } }
-        public double UnitFactor { get { return DegFahrenheit.Factor; } }
-        public string UnitFormat { get { return DegFahrenheit.Format; } }
-        public SymbolCollection UnitSymbol { get { return DegFahrenheit.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -47,8 +37,9 @@ namespace $safeprojectname$
         public static explicit operator DegFahrenheit(DegKelvin q) { return new DegFahrenheit((DegFahrenheit.Factor / DegKelvin.Factor) * q.Value); }
         public static DegFahrenheit From(IQuantity<double> q)
         {
-            if (q.UnitSense != DegFahrenheit.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"DegFahrenheit\"", q.GetType().Name));
-            return new DegFahrenheit((DegFahrenheit.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != DegFahrenheit.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"DegFahrenheit\"", q.GetType().Name));
+            return new DegFahrenheit((DegFahrenheit.Factor / source.Factor) * q.Value);
         }
         #endregion
 

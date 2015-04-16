@@ -20,17 +20,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return PoundForce.Sense; } }
-        public int UnitFamily { get { return PoundForce.Family; } }
-        public double UnitFactor { get { return PoundForce.Factor; } }
-        public string UnitFormat { get { return PoundForce.Format; } }
-        public SymbolCollection UnitSymbol { get { return PoundForce.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -47,8 +37,9 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator PoundForce(Poundal q) { return new PoundForce((PoundForce.Factor / Poundal.Factor) * q.Value); }
         public static PoundForce From(IQuantity<double> q)
         {
-            if (q.UnitSense != PoundForce.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"PoundForce\"", q.GetType().Name));
-            return new PoundForce((PoundForce.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != PoundForce.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"PoundForce\"", q.GetType().Name));
+            return new PoundForce((PoundForce.Factor / source.Factor) * q.Value);
         }
         #endregion
 

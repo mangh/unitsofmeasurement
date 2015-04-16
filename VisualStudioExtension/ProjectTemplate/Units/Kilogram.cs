@@ -20,17 +20,7 @@ namespace $safeprojectname$
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return Kilogram.Sense; } }
-        public int UnitFamily { get { return Kilogram.Family; } }
-        public double UnitFactor { get { return Kilogram.Factor; } }
-        public string UnitFormat { get { return Kilogram.Format; } }
-        public SymbolCollection UnitSymbol { get { return Kilogram.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -44,8 +34,9 @@ namespace $safeprojectname$
         public static explicit operator Kilogram(double q) { return new Kilogram(q); }
         public static Kilogram From(IQuantity<double> q)
         {
-            if (q.UnitSense != Kilogram.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"Kilogram\"", q.GetType().Name));
-            return new Kilogram((Kilogram.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != Kilogram.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"Kilogram\"", q.GetType().Name));
+            return new Kilogram((Kilogram.Factor / source.Factor) * q.Value);
         }
         #endregion
 

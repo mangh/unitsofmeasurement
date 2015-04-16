@@ -20,17 +20,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return MillimeterHg.Sense; } }
-        public int UnitFamily { get { return MillimeterHg.Family; } }
-        public double UnitFactor { get { return MillimeterHg.Factor; } }
-        public string UnitFormat { get { return MillimeterHg.Format; } }
-        public SymbolCollection UnitSymbol { get { return MillimeterHg.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -48,8 +38,9 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator MillimeterHg(Pascal q) { return new MillimeterHg((MillimeterHg.Factor / Pascal.Factor) * q.Value); }
         public static MillimeterHg From(IQuantity<double> q)
         {
-            if (q.UnitSense != MillimeterHg.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"MillimeterHg\"", q.GetType().Name));
-            return new MillimeterHg((MillimeterHg.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != MillimeterHg.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"MillimeterHg\"", q.GetType().Name));
+            return new MillimeterHg((MillimeterHg.Factor / source.Factor) * q.Value);
         }
         #endregion
 

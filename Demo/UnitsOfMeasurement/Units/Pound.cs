@@ -20,17 +20,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return Pound.Sense; } }
-        public int UnitFamily { get { return Pound.Family; } }
-        public double UnitFactor { get { return Pound.Factor; } }
-        public string UnitFormat { get { return Pound.Format; } }
-        public SymbolCollection UnitSymbol { get { return Pound.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -48,8 +38,9 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Pound(Kilogram q) { return new Pound((Pound.Factor / Kilogram.Factor) * q.Value); }
         public static Pound From(IQuantity<double> q)
         {
-            if (q.UnitSense != Pound.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"Pound\"", q.GetType().Name));
-            return new Pound((Pound.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != Pound.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"Pound\"", q.GetType().Name));
+            return new Pound((Pound.Factor / source.Factor) * q.Value);
         }
         #endregion
 

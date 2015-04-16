@@ -20,17 +20,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return MPH.Sense; } }
-        public int UnitFamily { get { return MPH.Family; } }
-        public double UnitFactor { get { return MPH.Factor; } }
-        public string UnitFormat { get { return MPH.Format; } }
-        public SymbolCollection UnitSymbol { get { return MPH.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -46,8 +36,9 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator MPH(Meter_Sec q) { return new MPH((MPH.Factor / Meter_Sec.Factor) * q.Value); }
         public static MPH From(IQuantity<double> q)
         {
-            if (q.UnitSense != MPH.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"MPH\"", q.GetType().Name));
-            return new MPH((MPH.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != MPH.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"MPH\"", q.GetType().Name));
+            return new MPH((MPH.Factor / source.Factor) * q.Value);
         }
         #endregion
 

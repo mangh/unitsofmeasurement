@@ -20,17 +20,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return Ounce.Sense; } }
-        public int UnitFamily { get { return Ounce.Family; } }
-        public double UnitFactor { get { return Ounce.Factor; } }
-        public string UnitFormat { get { return Ounce.Format; } }
-        public SymbolCollection UnitSymbol { get { return Ounce.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -48,8 +38,9 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Ounce(Pound q) { return new Ounce((Ounce.Factor / Pound.Factor) * q.Value); }
         public static Ounce From(IQuantity<double> q)
         {
-            if (q.UnitSense != Ounce.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"Ounce\"", q.GetType().Name));
-            return new Ounce((Ounce.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != Ounce.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"Ounce\"", q.GetType().Name));
+            return new Ounce((Ounce.Factor / source.Factor) * q.Value);
         }
         #endregion
 

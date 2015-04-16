@@ -20,17 +20,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
-
-        // instance properties
         public decimal Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return PLN.Sense; } }
-        public int UnitFamily { get { return PLN.Family; } }
-        public decimal UnitFactor { get { return PLN.Factor; } }
-        public string UnitFormat { get { return PLN.Format; } }
-        public SymbolCollection UnitSymbol { get { return PLN.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -47,8 +37,9 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator PLN(EUR q) { return new PLN((PLN.Factor / EUR.Factor) * q.Value); }
         public static PLN From(IQuantity<decimal> q)
         {
-            if (q.UnitSense != PLN.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"PLN\"", q.GetType().Name));
-            return new PLN((PLN.Factor / q.UnitFactor) * q.Value);
+            Unit<decimal> source = new Unit<decimal>(q);
+            if (source.Family != PLN.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"PLN\"", q.GetType().Name));
+            return new PLN((PLN.Factor / source.Factor) * q.Value);
         }
         #endregion
 

@@ -20,17 +20,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return CubicMeter.Sense; } }
-        public int UnitFamily { get { return CubicMeter.Family; } }
-        public double UnitFactor { get { return CubicMeter.Factor; } }
-        public string UnitFormat { get { return CubicMeter.Format; } }
-        public SymbolCollection UnitSymbol { get { return CubicMeter.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -44,8 +34,9 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator CubicMeter(double q) { return new CubicMeter(q); }
         public static CubicMeter From(IQuantity<double> q)
         {
-            if (q.UnitSense != CubicMeter.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"CubicMeter\"", q.GetType().Name));
-            return new CubicMeter((CubicMeter.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != CubicMeter.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"CubicMeter\"", q.GetType().Name));
+            return new CubicMeter((CubicMeter.Factor / source.Factor) * q.Value);
         }
         #endregion
 

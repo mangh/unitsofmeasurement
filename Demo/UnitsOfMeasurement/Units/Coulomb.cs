@@ -20,17 +20,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return Coulomb.Sense; } }
-        public int UnitFamily { get { return Coulomb.Family; } }
-        public double UnitFactor { get { return Coulomb.Factor; } }
-        public string UnitFormat { get { return Coulomb.Format; } }
-        public SymbolCollection UnitSymbol { get { return Coulomb.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -44,8 +34,9 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Coulomb(double q) { return new Coulomb(q); }
         public static Coulomb From(IQuantity<double> q)
         {
-            if (q.UnitSense != Coulomb.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"Coulomb\"", q.GetType().Name));
-            return new Coulomb((Coulomb.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != Coulomb.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"Coulomb\"", q.GetType().Name));
+            return new Coulomb((Coulomb.Factor / source.Factor) * q.Value);
         }
         #endregion
 

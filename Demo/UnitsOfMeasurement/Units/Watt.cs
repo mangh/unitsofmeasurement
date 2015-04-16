@@ -20,17 +20,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
-
-        // instance properties
         public double Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return Watt.Sense; } }
-        public int UnitFamily { get { return Watt.Family; } }
-        public double UnitFactor { get { return Watt.Factor; } }
-        public string UnitFormat { get { return Watt.Format; } }
-        public SymbolCollection UnitSymbol { get { return Watt.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -44,8 +34,9 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Watt(double q) { return new Watt(q); }
         public static Watt From(IQuantity<double> q)
         {
-            if (q.UnitSense != Watt.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"Watt\"", q.GetType().Name));
-            return new Watt((Watt.Factor / q.UnitFactor) * q.Value);
+            Unit<double> source = new Unit<double>(q);
+            if (source.Family != Watt.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"Watt\"", q.GetType().Name));
+            return new Watt((Watt.Factor / source.Factor) * q.Value);
         }
         #endregion
 

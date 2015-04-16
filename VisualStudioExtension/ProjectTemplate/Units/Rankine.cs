@@ -21,20 +21,12 @@ namespace $safeprojectname$
         #endregion
 
         #region Properties
-
         // instance properties
         public DegRankine Level { get { return m_level; } }
-        public DegRankine Extent { get { return (m_level - Rankine.Offset); } }
-
-        // scale properties
-        public DegRankine ScaleOffset { get { return Rankine.Offset; } }
-        public string ScaleFormat { get { return Rankine.Format; } }
-
+        public DegRankine NormalizedLevel { get { return (m_level - Rankine.Offset); } }
         // ILevel<double> properties
         IQuantity<double> ILevel<double>.Level { get { return Level; } }
-        IQuantity<double> ILevel<double>.Extent { get { return Extent; } }
-        IQuantity<double> ILevel<double>.ScaleOffset { get { return ScaleOffset; } }
-
+        IQuantity<double> ILevel<double>.NormalizedLevel { get { return NormalizedLevel; } }
         #endregion
 
         #region Constructor(s)
@@ -52,13 +44,21 @@ namespace $safeprojectname$
         public static explicit operator Rankine(double q) { return new Rankine(q); }
         public static explicit operator Rankine(DegRankine q) { return new Rankine(q); }
 
-        public static explicit operator Rankine(Celsius q) { return new Rankine((DegRankine)(q.Extent) + Rankine.Offset); }
-        public static explicit operator Rankine(Kelvin q) { return new Rankine((DegRankine)(q.Extent) + Rankine.Offset); }
-        public static explicit operator Rankine(Fahrenheit q) { return new Rankine((DegRankine)(q.Extent) + Rankine.Offset); }
+        public static explicit operator Rankine(Celsius q) { return new Rankine((DegRankine)(q.NormalizedLevel) + Rankine.Offset); }
+        public static explicit operator Rankine(Kelvin q) { return new Rankine((DegRankine)(q.NormalizedLevel) + Rankine.Offset); }
+        public static explicit operator Rankine(Fahrenheit q) { return new Rankine((DegRankine)(q.NormalizedLevel) + Rankine.Offset); }
 
         public static Rankine From(ILevel<double> q)
         {
-            return new Rankine(DegRankine.From(q.Extent) + Rankine.Offset);
+            /* The following 2 statements might be required if you have two (or more) scale families derived from the same units
+               but bound to different reference levels. E.g. two families of temperature scales: one with common reference level
+               set to absolute zero and the other one with common reference level set to water freeze point.
+               This is rather unlikely and the statements are commented out to avoid (likely) superfluous checks. */
+               
+            // Scale<double> source = new Scale<double>(q);
+            // if (source.Family != Rankine.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"Rankine\"", q.GetType().Name));
+
+            return new Rankine(DegRankine.From(q.NormalizedLevel) + Rankine.Offset);
         }
         #endregion
 

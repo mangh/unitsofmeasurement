@@ -20,17 +20,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Properties
-
-        // instance properties
         public decimal Value { get { return m_value; } }
-
-        // unit properties
-        public Dimension UnitSense { get { return GBP.Sense; } }
-        public int UnitFamily { get { return GBP.Family; } }
-        public decimal UnitFactor { get { return GBP.Factor; } }
-        public string UnitFormat { get { return GBP.Format; } }
-        public SymbolCollection UnitSymbol { get { return GBP.Symbol; } }
-
         #endregion
 
         #region Constructor(s)
@@ -47,8 +37,9 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator GBP(PLN q) { return new GBP((GBP.Factor / PLN.Factor) * q.Value); }
         public static GBP From(IQuantity<decimal> q)
         {
-            if (q.UnitSense != GBP.Sense) throw new InvalidOperationException(String.Format("Cannot convert type \"{0}\" to \"GBP\"", q.GetType().Name));
-            return new GBP((GBP.Factor / q.UnitFactor) * q.Value);
+            Unit<decimal> source = new Unit<decimal>(q);
+            if (source.Family != GBP.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"GBP\"", q.GetType().Name));
+            return new GBP((GBP.Factor / source.Factor) * q.Value);
         }
         #endregion
 
