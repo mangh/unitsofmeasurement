@@ -2,10 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-// General Information about an assembly is controlled through the following 
-// set of attributes. Change these attribute values to modify the information
-// associated with an assembly.
-[assembly: AssemblyTitle("Demo.Currencies")]
+[assembly: AssemblyTitle("Man.UnitsOfMeasurement.TemplateWizard")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyCulture("")]
 
@@ -15,4 +12,4 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("023c8b40-faf2-4050-ac33-02d319659b89")]
+[assembly: Guid("f8597b09-333c-4476-9309-450073d73ac2")]

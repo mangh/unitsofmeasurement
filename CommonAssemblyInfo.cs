@@ -1,7 +1,7 @@
 using System.Reflection;
 
 [assembly: AssemblyCompany("MAN")]
-[assembly: AssemblyProduct("Demo.UnitsOfMeasurement")]
+[assembly: AssemblyProduct("Man.UnitsOfMeasurement")]
 [assembly: AssemblyCopyright("Copyright © Marek Anio³a")]
 [assembly: AssemblyTrademark("MAN")]
 
@@ -11,5 +11,5 @@ using System.Reflection;
 [assembly: AssemblyConfiguration("Release")]
 #endif
  
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyInformationalVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.1.0.0")]
+[assembly: AssemblyInformationalVersion("1.1.0.0")]

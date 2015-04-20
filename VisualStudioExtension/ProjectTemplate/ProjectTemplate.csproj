@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Man.UnitsOfMeasurement.Parser">
+      <HintPath>$parserhintpath$\Man.UnitsOfMeasurement.Parser.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -48,12 +51,23 @@
     <Compile Include="Core\IQuantity.cs" />
     <Compile Include="Catalog\ITextParser.cs" />
     <Compile Include="Core\Measure.cs" />
+    <Compile Include="Core\MeasureFactory.cs" />
     <Compile Include="Core\Scale.cs" />
     <Compile Include="Core\ScaleReferencePointAttribute.cs" />
     <Compile Include="Core\SymbolCollection.cs" />
     <Compile Include="Catalog\TextParser.cs" />
     <Compile Include="Core\Unit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RuntimeLoader\Compiler.cs" />
+    <Compile Include="RuntimeLoader\Decompiler.cs" />
+    <Compile Include="RuntimeLoader\Generator.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RuntimeLoader\GeneratorExt.cs" />
+    <Compile Include="RuntimeLoader\Parser.cs" />
+    <Compile Include="RuntimeLoader\RuntimeLoader.cs" />
     <Compile Include="Units\Celsius.cs">
       <DependentUpon>_generator.tt</DependentUpon>
     </Compile>
@@ -127,7 +141,6 @@
       <DependentUpon>_generator.tt</DependentUpon>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="Units\_definitions.txt" />
     <Content Include="Units\_generator.txt">
@@ -137,6 +150,11 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <None Include="RuntimeLoader\Generator.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>Generator.cs</LastGenOutput>
+      <CustomToolNamespace>$safeprojectname$</CustomToolNamespace>
+    </None>
     <None Include="Units\_generator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>_generator.txt</LastGenOutput>

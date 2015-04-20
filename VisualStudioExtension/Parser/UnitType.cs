@@ -39,6 +39,12 @@ namespace Man.UnitsOfMeasurement
             Tags = new List<string>();
             OuterOperations = new List<BinaryOperation>();
         }
+        public UnitType(string name, SenseExpr sense, NumExpr factor) :
+            this(name)
+        {
+            Sense = sense;
+            Factor = factor;
+        }
         #endregion
 
         #region Methods

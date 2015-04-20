@@ -3,12 +3,12 @@
     <Identifier Id="UnitsOfMeasurementParser.MAN.940cf930-eb44-4dea-a4ee-7b47261810f6">
         <Name>Units of Measurement</Name>
         <Author>MAN</Author>
-        <Version>1.0</Version>
-        <Description xml:space="preserve">Project template and parser utility for creating Units of Measurement C# class libraries (.dll)</Description>
+        <Version>1.1</Version>
+        <Description xml:space="preserve">Project template for creating Units of Measurement C# class libraries (.dll)</Description>
         <Locale>1033</Locale>
-        <MoreInfoUrl>http://unitsofmeasurement.codeplex.com</MoreInfoUrl>
+        <MoreInfoUrl>https://github.com/mangh/unitsofmeasurement</MoreInfoUrl>
         <License>license.txt</License>
-        <GettingStartedGuide>http://unitsofmeasurement.codeplex.com</GettingStartedGuide>
+        <GettingStartedGuide>https://github.com/mangh/unitsofmeasurement/wiki</GettingStartedGuide>
         <Icon>templateIcon.ico</Icon>
         <SupportedProducts>
             <VisualStudio Version="10.0">
@@ -26,6 +26,7 @@
     <References />
     <Content>
         <CustomExtension Type="Assembly">|Parser|</CustomExtension>
+        <Assembly AssemblyName="|TemplateWizard;AssemblyName|">|TemplateWizard|</Assembly>
         <ProjectTemplate>ProjectTemplates</ProjectTemplate>
     </Content>
 </Vsix>

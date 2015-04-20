@@ -55,6 +55,13 @@ namespace Man.UnitsOfMeasurement
 
         #region Static methods
         public static void CompatibilityException(Number lhs, Number rhs) { throw new ArgumentException(String.Format("Incompatible numbers: \"{0}\" and \"{1}\"", lhs, rhs)); }
+        public static Number CreateFromObject(object value)
+        {
+            if (value is double) return new DoubleNumber((double)value);
+            if (value is decimal) return new DecimalNumber((decimal)value);
+            if (value is float) return new FloatNumber((float)value);
+            return null;
+        }
         #endregion
     }
     public class DoubleNumber : Number
