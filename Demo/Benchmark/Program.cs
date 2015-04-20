@@ -5,7 +5,7 @@
     Copyright (C) Marek Aniola
 
     This program is provided to you under the terms of the license
-    as published at http://unitsofmeasurement.codeplex.com/license
+    as published at https://github.com/mangh/unitsofmeasurement
 
 
 ********************************************************************************/
@@ -26,7 +26,7 @@ namespace Benchmark
             Console.WriteLine(
                 "Units of Measurement for C# applications. Copyright (©) Marek Anioła.\n" +
                 "This program is provided to you under the terms of the license\n" +
-                "as published at http://unitsofmeasurement.codeplex.com/license."
+                "as published at https://github.com/mangh/unitsofmeasurement."
             );
 
             Console.WriteLine("\n Unit vs. plain arithmetic benchmark (press Esc to quit, any other key to repeat).\n");
