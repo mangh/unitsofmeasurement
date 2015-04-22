@@ -16,74 +16,77 @@ using System.CodeDom.Compiler;  // CompilerErrorCollection
 
 namespace Demo.UnitsOfMeasurement
 {
-    public class Parser
+    public partial class RuntimeLoader
     {
-        #region Fields
-        private string m_filePath;
-        private List<Man.UnitsOfMeasurement.UnitType> m_units;
-        private List<Man.UnitsOfMeasurement.ScaleType> m_scales;
-        private CompilerErrorCollection m_errors;
-        #endregion
-
-        #region Properties
-        public CompilerErrorCollection Errors { get { return m_errors; } }
-        #endregion
-
-        #region Constructor(s)
-        public Parser(List<Man.UnitsOfMeasurement.UnitType> units, List<Man.UnitsOfMeasurement.ScaleType> scales)
+        private class Parser
         {
-            m_units = units;
-            m_scales = scales;
-            m_errors = new CompilerErrorCollection();
-        }
-        #endregion
+            #region Fields
+            private string m_filePath;
+            private List<Man.UnitsOfMeasurement.UnitType> m_units;
+            private List<Man.UnitsOfMeasurement.ScaleType> m_scales;
+            private CompilerErrorCollection m_errors;
+            #endregion
 
-        #region Methods
-        public bool ParseString(string definitions)
-        {
-            m_filePath = null;
-            StringReader input = new StringReader(definitions);
-            return Parse(input);
-        }
+            #region Properties
+            public CompilerErrorCollection Errors { get { return m_errors; } }
+            #endregion
 
-        public bool ParseFile(string filePath)
-        {
-            m_filePath = filePath;
-            StreamReader input = null;
-            bool done = false;
-            try
+            #region Constructor(s)
+            public Parser(List<Man.UnitsOfMeasurement.UnitType> units, List<Man.UnitsOfMeasurement.ScaleType> scales)
             {
-                input = File.OpenText(filePath);
-                done = Parse(input);
+                m_units = units;
+                m_scales = scales;
+                m_errors = new CompilerErrorCollection();
             }
-            catch (Exception e)
+            #endregion
+
+            #region Methods
+            public bool ParseString(string definitions)
             {
-                LogError(true, 0, 0, "parser exception", e.Message);
+                m_filePath = String.Empty;
+                StringReader input = new StringReader(definitions);
+                return Parse(input);
             }
-            finally
+
+            public bool ParseFile(string filePath)
             {
-                if (input != null) input.Close();
+                m_filePath = filePath;
+                StreamReader input = null;
+                bool done = false;
+                try
+                {
+                    input = File.OpenText(filePath);
+                    done = Parse(input);
+                }
+                catch (Exception e)
+                {
+                    LogError(true, 0, 0, "parser exception", e.Message);
+                }
+                finally
+                {
+                    if (input != null) input.Close();
+                }
+                return done;
             }
-            return done;
+
+            private bool Parse(TextReader input)
+            {
+                m_errors.Clear();
+
+                var lexer = new Man.UnitsOfMeasurement.Lexer(input, LogError);
+                var parser = new Man.UnitsOfMeasurement.Parser(lexer, m_units, m_scales);
+                parser.Parse();
+
+                return !m_errors.HasErrors;
+            }
+
+            private void LogError(bool isError, int line, int column, string token, string message)
+            {
+                var error = new CompilerError(m_filePath, line, column, token, message);
+                error.IsWarning = !isError;
+                m_errors.Add(error);
+            }
+            #endregion
         }
-
-        private bool Parse(TextReader input)
-        {
-            m_errors.Clear();
-
-            var lexer = new Man.UnitsOfMeasurement.Lexer(input, LogError);
-            var parser = new Man.UnitsOfMeasurement.Parser(lexer, m_units, m_scales);
-            parser.Parse();
-
-            return !m_errors.HasErrors;
-        }
-
-        private void LogError(bool isError, int line, int column, string token, string message)
-        {
-            var error = new CompilerError(m_filePath, line, column, token, message);
-            error.IsWarning = !isError;
-            m_errors.Add(error);
-        }
-        #endregion
     }
 }

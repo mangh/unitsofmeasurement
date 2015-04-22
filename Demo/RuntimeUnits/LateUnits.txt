@@ -1,0 +1,15 @@
+﻿////////////////////////////////////////////////////////////////////////////////
+//
+//      Length (maritime units)
+//      http://en.wikipedia.org/wiki/Conversion_of_units#Length
+//
+unit /* imperial */ Fathom "ftm" = Foot / 6;
+unit /* international */ Cable "cb" = Meter / 185.2;
+unit /* international */ NauticalMile "nmi" = Meter / 1852;
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//      Temperature
+//
+unit DegReaumur "°Ré" "°Re" "deg.Re" = (4 / 5) * DegKelvin;
+scale Reaumur AbsoluteZero = DegReaumur -273.15 * (4 / 5);

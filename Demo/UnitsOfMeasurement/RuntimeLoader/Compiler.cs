@@ -14,41 +14,49 @@ using System.Reflection;
 
 namespace Demo.UnitsOfMeasurement
 {
-    internal class Compiler
+    public partial class RuntimeLoader
     {
-        #region Fields
-        private CodeDomProvider m_provider;
-        private CompilerResults m_results;
-        #endregion
-
-        #region Properties
-        public CompilerErrorCollection Errors { get { return m_results == null ? null : m_results.Errors; } }
-        #endregion
-
-        #region Constructor(s)
-        public Compiler()
+        private class Compiler
         {
-            m_provider = new Microsoft.CSharp.CSharpCodeProvider();
-            m_results = null;
-        }
-        #endregion
+            #region Fields
+            private CodeDomProvider m_provider;
+            private CompilerResults m_results;
+            #endregion
 
-        #region Methods
-        public Assembly CompileFromSource(string source, string[] referencedAssemblies)
-        {
-            // Setup appropriate CodeDomProvider ///////////////////////////////////////////////////////
-            CompilerParameters parameters = new CompilerParameters(referencedAssemblies);
-            parameters.GenerateInMemory = true;
-            parameters.GenerateExecutable = false;
+            #region Properties
+            public CompilerErrorCollection Errors { get { return m_results == null ? null : m_results.Errors; } }
+            #endregion
 
-            // Compile the source code /////////////////////////////////////////////////////////////////
-            m_results = m_provider.CompileAssemblyFromSource(parameters, source);
-            return m_results.Errors.HasErrors ? null : m_results.CompiledAssembly;
+            #region Constructor(s)
+            public Compiler()
+            {
+                m_provider = new Microsoft.CSharp.CSharpCodeProvider();
+                m_results = null;
+            }
+            #endregion
+
+            #region Methods
+            public Assembly CompileFromSource(string source, string[] referencedAssemblies, string targetAssemblyPath)
+            {
+                // Setup compiler parameters
+                CompilerParameters parameters = new CompilerParameters(referencedAssemblies);
+                if (string.IsNullOrWhiteSpace(targetAssemblyPath))
+                {
+                    parameters.GenerateInMemory = true;
+                    parameters.GenerateExecutable = false;
+                }
+                else
+                {
+                    parameters.GenerateInMemory = false;
+                    parameters.GenerateExecutable = false;
+                    parameters.OutputAssembly = targetAssemblyPath;
+                }
+
+                // Compile the source code
+                m_results = m_provider.CompileAssemblyFromSource(parameters, source);
+                return m_results.Errors.HasErrors ? null : m_results.CompiledAssembly;
+            }
+            #endregion
         }
-        //private static Assembly ResolveAssemblyReference(object sender, ResolveEventArgs args)
-        //{
-        //    return Array.Find(AppDomain.CurrentDomain.GetAssemblies(), a => a.FullName == args.Name);
-        //}
-        #endregion
     }
 }
