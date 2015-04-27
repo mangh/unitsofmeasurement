@@ -5,15 +5,15 @@
 * RuntimeLoader functionality to load (late) units and scales from a definition text file at runtime.
 * RuntimeUnits sample application as a RuntimeLoader demo.
 
-###### VSIX for VS Express editions abandoned
+###### Abandoned VSIX for VS Express editions
 
 * As of VS Community edition it does not make sense to support VS Express editions.
 
 ###### IQuantity and ILevel interfaces simplified
 
 * Static properties of unit (Sense, Family, Factor, Format, Symbol) and scale (Offset, Format) are no longer dragged behind each of their instances (as properties of quantities and levels).
-* These properties are still available via proxy types: Unit\<T\> and Scale\<T\> i.e. via reflection, which is slow but this impacts only the performance of the "generic" conversion method "From".
-* You can safely restore previous functionality (by restoring the interfaces and properties in unit and scale templates).
+* These properties are still available via proxy types: Unit\<T\> and Scale\<T\> i.e. via reflection, which is slow but this impacts only performance of the "generic" conversion method "From".
+* You can safely restore previous functionality (by restoring the interfaces and properties in unit and scale templates as it was in Release 1.0).
 
 ###### Unit test settings restored
 
@@ -33,15 +33,15 @@
 * Scale definition syntax extended to distinguish scale families bound to different reference levels but derived from the same units. E.g. two temperature scale families: one bound to absolute zero level and the other one to water freeze point. The new syntax allows to specify the name (identifier) of the reference level, that is common to all members of the family.
 * Scales defined with this new syntax receive ScaleReferencePointAttribute specifying the name of the family common reference level.
 
-###### Unit and Scale types implement IFormattable.
+###### Unit and Scale types implement IFormattable
 
 * Units/scales ToString methods rearranged to conform to IFormattable interface.
 
-###### Family id initialized in T4 template. 
+###### Family id initialized in T4 template
 
 * Family is no longer initialized by the parser. That is set within \_generator.tt template (being under user control).
 
-###### More precise ToStrings().
+###### More precise ToStrings()
 
 * Number.ToString methods of precision greater than the default (15 digits for doubles)
 
