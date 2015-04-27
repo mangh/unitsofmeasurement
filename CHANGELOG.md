@@ -4,7 +4,6 @@
 
 * RuntimeLoader functionality to load (late) units and scales
   from a definition text file at runtime.
-
 * RuntimeUnits sample application as a RuntimeLoader demo.
 
 ###### VSIX for VS Express editions abandoned
@@ -17,11 +16,9 @@
 * Static properties of unit (Sense, Family, Factor, Format, Symbol) and
   scale (Offset, Format) are no longer dragged behind each of their
   instances (as properties of quantities and levels).
-
 * These properties are still available via proxy types: Unit<T> and
   Scale<T> i.e. via reflection, which is slow but this impacts only
   the performance of the "generic" conversion method "From".
-
 * You can safely restore previous functionality (by restoring the
   interfaces and properties in unit and scale templates).
 
@@ -32,14 +29,11 @@
 ###### Catalog redesigned
 
 * All catalog-related functionality moved to Catalog subfolder.
-
 * UnitProxy replaced by (abstract) Measure and its subclasses: either
   Unit<T> or Scale<T> types, representing (correspondingly) unit and
   scale proxy types (T=double|decimal|float).
-
 * UnitCatalog replaced by UnitCatalog<T> for cataloging Unit<T> proxies
   and parsing text input into IQuantity<T>.
-
 * Added ScaleCatalog<T> (as twin of UnitCatalog<T>) for cataloging
   Scale<T> proxies and parsing text input into ILevel<T>.
 
@@ -51,7 +45,6 @@
   the other one to water freeze point. The new syntax allows to specify
   the name (identifier) of the reference level, that is common to all
   members of the family.
-
 * Scales defined with this new syntax receive
   ScaleReferencePointAttribute specifying the name of the family
   common reference level.
