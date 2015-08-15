@@ -1,3 +1,9 @@
+### Release 1.1 Build 2015.08.14.1517
+
+###### Visual Studio 2015 supported
+
+* VSIX manifest (extension.vsixmanifest) extended to support VS 2015 and .NET Framework 4.6.
+
 ### Release 1.1 Build 2015.04.22.1652
 
 ###### RuntimeLoader created
