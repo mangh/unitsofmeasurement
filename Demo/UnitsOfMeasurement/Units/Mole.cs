@@ -42,7 +42,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region IObject / IEquatable<Mole>
         public override int GetHashCode() { return m_value.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Mole) && Equals((Mole)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is Mole) && Equals((Mole)obj); }
         public bool /* IEquatable<Mole> */ Equals(Mole other) { return this.Value == other.Value; }
         #endregion
 

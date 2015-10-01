@@ -42,7 +42,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region IObject / IEquatable<Farad>
         public override int GetHashCode() { return m_value.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Farad) && Equals((Farad)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is Farad) && Equals((Farad)obj); }
         public bool /* IEquatable<Farad> */ Equals(Farad other) { return this.Value == other.Value; }
         #endregion
 

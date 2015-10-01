@@ -44,7 +44,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region IObject / IEquatable<RPM>
         public override int GetHashCode() { return m_value.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is RPM) && Equals((RPM)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is RPM) && Equals((RPM)obj); }
         public bool /* IEquatable<RPM> */ Equals(RPM other) { return this.Value == other.Value; }
         #endregion
 

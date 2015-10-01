@@ -42,7 +42,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region IObject / IEquatable<Candela>
         public override int GetHashCode() { return m_value.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Candela) && Equals((Candela)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is Candela) && Equals((Candela)obj); }
         public bool /* IEquatable<Candela> */ Equals(Candela other) { return this.Value == other.Value; }
         #endregion
 

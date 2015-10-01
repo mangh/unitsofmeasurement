@@ -44,7 +44,7 @@ namespace $safeprojectname$
 
         #region IObject / IEquatable<Cycles>
         public override int GetHashCode() { return m_value.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Cycles) && Equals((Cycles)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is Cycles) && Equals((Cycles)obj); }
         public bool /* IEquatable<Cycles> */ Equals(Cycles other) { return this.Value == other.Value; }
         #endregion
 

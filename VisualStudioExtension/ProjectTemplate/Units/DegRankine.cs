@@ -45,7 +45,7 @@ namespace $safeprojectname$
 
         #region IObject / IEquatable<DegRankine>
         public override int GetHashCode() { return m_value.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is DegRankine) && Equals((DegRankine)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is DegRankine) && Equals((DegRankine)obj); }
         public bool /* IEquatable<DegRankine> */ Equals(DegRankine other) { return this.Value == other.Value; }
         #endregion
 

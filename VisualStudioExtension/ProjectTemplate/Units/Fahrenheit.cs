@@ -64,7 +64,7 @@ namespace $safeprojectname$
 
         #region IObject / IEquatable<Fahrenheit>
         public override int GetHashCode() { return m_level.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Fahrenheit) && Equals((Fahrenheit)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is Fahrenheit) && Equals((Fahrenheit)obj); }
         public bool /* IEquatable<Fahrenheit> */ Equals(Fahrenheit other) { return this.Level == other.Level; }
         #endregion
 

@@ -44,7 +44,7 @@ namespace $safeprojectname$
 
         #region IObject / IEquatable<Degree>
         public override int GetHashCode() { return m_value.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Degree) && Equals((Degree)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is Degree) && Equals((Degree)obj); }
         public bool /* IEquatable<Degree> */ Equals(Degree other) { return this.Value == other.Value; }
         #endregion
 

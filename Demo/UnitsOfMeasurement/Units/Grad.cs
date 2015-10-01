@@ -45,7 +45,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region IObject / IEquatable<Grad>
         public override int GetHashCode() { return m_value.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Grad) && Equals((Grad)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is Grad) && Equals((Grad)obj); }
         public bool /* IEquatable<Grad> */ Equals(Grad other) { return this.Value == other.Value; }
         #endregion
 

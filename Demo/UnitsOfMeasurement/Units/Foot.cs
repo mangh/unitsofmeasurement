@@ -49,7 +49,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region IObject / IEquatable<Foot>
         public override int GetHashCode() { return m_value.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Foot) && Equals((Foot)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is Foot) && Equals((Foot)obj); }
         public bool /* IEquatable<Foot> */ Equals(Foot other) { return this.Value == other.Value; }
         #endregion
 

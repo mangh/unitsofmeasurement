@@ -49,7 +49,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region IObject / IEquatable<Centimeter>
         public override int GetHashCode() { return m_value.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Centimeter) && Equals((Centimeter)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is Centimeter) && Equals((Centimeter)obj); }
         public bool /* IEquatable<Centimeter> */ Equals(Centimeter other) { return this.Value == other.Value; }
         #endregion
 

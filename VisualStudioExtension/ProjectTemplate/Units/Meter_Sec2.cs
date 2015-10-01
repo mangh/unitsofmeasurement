@@ -42,7 +42,7 @@ namespace $safeprojectname$
 
         #region IObject / IEquatable<Meter_Sec2>
         public override int GetHashCode() { return m_value.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Meter_Sec2) && Equals((Meter_Sec2)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is Meter_Sec2) && Equals((Meter_Sec2)obj); }
         public bool /* IEquatable<Meter_Sec2> */ Equals(Meter_Sec2 other) { return this.Value == other.Value; }
         #endregion
 

@@ -44,7 +44,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region IObject / IEquatable<Minute>
         public override int GetHashCode() { return m_value.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Minute) && Equals((Minute)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is Minute) && Equals((Minute)obj); }
         public bool /* IEquatable<Minute> */ Equals(Minute other) { return this.Value == other.Value; }
         #endregion
 

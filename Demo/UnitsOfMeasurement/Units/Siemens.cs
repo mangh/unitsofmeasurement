@@ -42,7 +42,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region IObject / IEquatable<Siemens>
         public override int GetHashCode() { return m_value.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Siemens) && Equals((Siemens)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is Siemens) && Equals((Siemens)obj); }
         public bool /* IEquatable<Siemens> */ Equals(Siemens other) { return this.Value == other.Value; }
         #endregion
 

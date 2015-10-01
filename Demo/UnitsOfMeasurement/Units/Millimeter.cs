@@ -49,7 +49,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region IObject / IEquatable<Millimeter>
         public override int GetHashCode() { return m_value.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Millimeter) && Equals((Millimeter)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is Millimeter) && Equals((Millimeter)obj); }
         public bool /* IEquatable<Millimeter> */ Equals(Millimeter other) { return this.Value == other.Value; }
         #endregion
 

@@ -42,7 +42,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region IObject / IEquatable<Steradian>
         public override int GetHashCode() { return m_value.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Steradian) && Equals((Steradian)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is Steradian) && Equals((Steradian)obj); }
         public bool /* IEquatable<Steradian> */ Equals(Steradian other) { return this.Value == other.Value; }
         #endregion
 

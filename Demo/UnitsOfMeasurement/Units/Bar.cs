@@ -46,7 +46,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region IObject / IEquatable<Bar>
         public override int GetHashCode() { return m_value.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Bar) && Equals((Bar)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is Bar) && Equals((Bar)obj); }
         public bool /* IEquatable<Bar> */ Equals(Bar other) { return this.Value == other.Value; }
         #endregion
 

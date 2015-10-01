@@ -44,7 +44,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region IObject / IEquatable<MPH>
         public override int GetHashCode() { return m_value.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is MPH) && Equals((MPH)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is MPH) && Equals((MPH)obj); }
         public bool /* IEquatable<MPH> */ Equals(MPH other) { return this.Value == other.Value; }
         #endregion
 

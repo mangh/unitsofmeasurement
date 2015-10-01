@@ -44,7 +44,7 @@ namespace $safeprojectname$
 
         #region IObject / IEquatable<USD>
         public override int GetHashCode() { return m_value.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is USD) && Equals((USD)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is USD) && Equals((USD)obj); }
         public bool /* IEquatable<USD> */ Equals(USD other) { return this.Value == other.Value; }
         #endregion
 

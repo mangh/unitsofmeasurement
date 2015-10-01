@@ -43,7 +43,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region IObject / IEquatable<SquareFoot>
         public override int GetHashCode() { return m_value.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is SquareFoot) && Equals((SquareFoot)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is SquareFoot) && Equals((SquareFoot)obj); }
         public bool /* IEquatable<SquareFoot> */ Equals(SquareFoot other) { return this.Value == other.Value; }
         #endregion
 

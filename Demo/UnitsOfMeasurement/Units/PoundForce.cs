@@ -45,7 +45,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region IObject / IEquatable<PoundForce>
         public override int GetHashCode() { return m_value.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is PoundForce) && Equals((PoundForce)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is PoundForce) && Equals((PoundForce)obj); }
         public bool /* IEquatable<PoundForce> */ Equals(PoundForce other) { return this.Value == other.Value; }
         #endregion
 

@@ -44,7 +44,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region IObject / IEquatable<Kilometer_Hour>
         public override int GetHashCode() { return m_value.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Kilometer_Hour) && Equals((Kilometer_Hour)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is Kilometer_Hour) && Equals((Kilometer_Hour)obj); }
         public bool /* IEquatable<Kilometer_Hour> */ Equals(Kilometer_Hour other) { return this.Value == other.Value; }
         #endregion
 

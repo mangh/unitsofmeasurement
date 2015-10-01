@@ -64,7 +64,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region IObject / IEquatable<Rankine>
         public override int GetHashCode() { return m_level.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Rankine) && Equals((Rankine)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is Rankine) && Equals((Rankine)obj); }
         public bool /* IEquatable<Rankine> */ Equals(Rankine other) { return this.Level == other.Level; }
         #endregion
 

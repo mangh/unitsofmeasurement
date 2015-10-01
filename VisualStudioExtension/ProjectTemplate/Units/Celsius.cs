@@ -64,7 +64,7 @@ namespace $safeprojectname$
 
         #region IObject / IEquatable<Celsius>
         public override int GetHashCode() { return m_level.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Celsius) && Equals((Celsius)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is Celsius) && Equals((Celsius)obj); }
         public bool /* IEquatable<Celsius> */ Equals(Celsius other) { return this.Level == other.Level; }
         #endregion
 

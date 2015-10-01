@@ -45,7 +45,7 @@ namespace $safeprojectname$
 
         #region IObject / IEquatable<DegCelsius>
         public override int GetHashCode() { return m_value.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is DegCelsius) && Equals((DegCelsius)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is DegCelsius) && Equals((DegCelsius)obj); }
         public bool /* IEquatable<DegCelsius> */ Equals(DegCelsius other) { return this.Value == other.Value; }
         #endregion
 

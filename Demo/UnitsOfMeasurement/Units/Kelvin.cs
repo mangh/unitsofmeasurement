@@ -64,7 +64,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region IObject / IEquatable<Kelvin>
         public override int GetHashCode() { return m_level.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Kelvin) && Equals((Kelvin)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is Kelvin) && Equals((Kelvin)obj); }
         public bool /* IEquatable<Kelvin> */ Equals(Kelvin other) { return this.Level == other.Level; }
         #endregion
 

@@ -42,7 +42,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region IObject / IEquatable<Weber>
         public override int GetHashCode() { return m_value.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Weber) && Equals((Weber)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is Weber) && Equals((Weber)obj); }
         public bool /* IEquatable<Weber> */ Equals(Weber other) { return this.Value == other.Value; }
         #endregion
 

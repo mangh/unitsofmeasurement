@@ -46,7 +46,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region IObject / IEquatable<Tonne>
         public override int GetHashCode() { return m_value.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Tonne) && Equals((Tonne)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is Tonne) && Equals((Tonne)obj); }
         public bool /* IEquatable<Tonne> */ Equals(Tonne other) { return this.Value == other.Value; }
         #endregion
 

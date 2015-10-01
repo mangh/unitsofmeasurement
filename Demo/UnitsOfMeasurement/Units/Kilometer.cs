@@ -49,7 +49,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region IObject / IEquatable<Kilometer>
         public override int GetHashCode() { return m_value.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Kilometer) && Equals((Kilometer)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is Kilometer) && Equals((Kilometer)obj); }
         public bool /* IEquatable<Kilometer> */ Equals(Kilometer other) { return this.Value == other.Value; }
         #endregion
 

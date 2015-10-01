@@ -46,7 +46,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region IObject / IEquatable<MillimeterHg>
         public override int GetHashCode() { return m_value.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is MillimeterHg) && Equals((MillimeterHg)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is MillimeterHg) && Equals((MillimeterHg)obj); }
         public bool /* IEquatable<MillimeterHg> */ Equals(MillimeterHg other) { return this.Value == other.Value; }
         #endregion
 

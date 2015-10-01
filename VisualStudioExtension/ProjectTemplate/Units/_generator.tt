@@ -7,7 +7,6 @@
 <#@ assembly name="Microsoft.VisualStudio.Shell.Interop" #>
 <#@ assembly name="Man.UnitsOfMeasurement.Parser.dll" #>
 <#@ import namespace="System.Collections.Generic" #>
-<#@ import namespace="System.Diagnostics" #>
 <#@ import namespace="System.IO" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Xml" #>
@@ -46,25 +45,34 @@
 
 <#+
     int __family = 0;
+
+    string __templateDirectory;
     string __inputFilePath;
     string __defaultNamespace;
     string __projectNamespace;
     string __toolNamespace;
+
+    EnvDTE.Project __dteProject;
+    EnvDTE.ProjectItem __templateProjectItem;
     CompilerErrorCollection __errorCollection;
 
     void Initialize(string inputFileName)
     {
-        __inputFilePath = Path.Combine(Path.GetDirectoryName(Host.TemplateFile), inputFileName);
+        __templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
 
-        EnvDTE.Project dteProject = __getTemplateProject();
-        __defaultNamespace = (string)dteProject.Properties.Item("DefaultNamespace").Value;
+        __inputFilePath = Path.Combine(__templateDirectory, inputFileName);
 
-        EnvDTE.ProjectItem templateProjectItem = __getTemplateProjectItem();
-        __toolNamespace = (string)templateProjectItem.Properties.Item("CustomToolNamespace").Value;
+        __dteProject = __getTemplateProject();
+        __defaultNamespace = (string)__dteProject.Properties.Item("DefaultNamespace").Value;
+
+        __templateProjectItem = __getTemplateProjectItem(__dteProject);
+        __toolNamespace = (string)__templateProjectItem.Properties.Item("CustomToolNamespace").Value;
 
         __projectNamespace = String.IsNullOrWhiteSpace(__toolNamespace) ? __defaultNamespace : __toolNamespace;
 
         __errorCollection = new CompilerErrorCollection();
+
+        __savedOutputs.Add(Path.GetFileNameWithoutExtension(Host.TemplateFile) + ".txt");
     }
 
     void LogParserError(bool isError, int line, int column, string token, string message)
@@ -73,59 +81,39 @@
     }
 #>
 <#+
-    // This code block has been copied from Oleg Sych article "How to
-    // generate multiple outputs from single T4 template", published at:
+    // This code block is a slightly modified version of what has been published in
+    // Oleg Sych article "How to generate multiple outputs from single T4 template", at:
     // http://www.olegsych.com/2008/03/how-to-generate-multiple-outputs-from-single-t4-template/
     // under the terms of Creative Commons License, published at:
     // http://creativecommons.org/licenses/by/2.5/
 
     List<string> __savedOutputs = new List<string>();
-    Engine __engine = new Engine();
 
     void DeleteOldOutputs()
     {
-        EnvDTE.ProjectItem templateProjectItem = __getTemplateProjectItem();
-        foreach (EnvDTE.ProjectItem childProjectItem in templateProjectItem.ProjectItems)
+        foreach (EnvDTE.ProjectItem childProjectItem in __templateProjectItem.ProjectItems)
         {
             if (!__savedOutputs.Contains(childProjectItem.Name))
                 childProjectItem.Delete();
         }
-    }
-
-    void ProcessTemplate(string templateFileName, string outputFileName)
-    {
-        string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
-        string outputFilePath = Path.Combine(templateDirectory, outputFileName);
-
-        string template = File.ReadAllText(Host.ResolvePath(templateFileName));
-        string output = __engine.ProcessTemplate(template, Host);
-        File.WriteAllText(outputFilePath, output);
-
-        EnvDTE.ProjectItem templateProjectItem = __getTemplateProjectItem();
-        templateProjectItem.ProjectItems.AddFromFile(outputFilePath);
-
-        __savedOutputs.Add(outputFileName);
+        __templateProjectItem.ExpandView();
     }
 
     void SaveOutput(string outputFileName)
     {
-        string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
-        string outputFilePath = Path.Combine(templateDirectory, outputFileName);
-
+        string outputFilePath = Path.Combine(__templateDirectory, outputFileName);
         File.WriteAllText(outputFilePath, this.GenerationEnvironment.ToString());
-        this.GenerationEnvironment = new StringBuilder();
 
-        EnvDTE.ProjectItem templateProjectItem = __getTemplateProjectItem();
-        templateProjectItem.ProjectItems.AddFromFile(outputFilePath);
+        this.GenerationEnvironment.Clear();
+
+        __templateProjectItem.ProjectItems.AddFromFile(outputFilePath);
 
         __savedOutputs.Add(outputFileName);
     }
 
-    EnvDTE.ProjectItem __getTemplateProjectItem()
+    EnvDTE.ProjectItem __getTemplateProjectItem(EnvDTE.Project project)
     {
-        EnvDTE.Project dteProject = __getTemplateProject();
-
-        IVsProject vsProject = __dteProjectToVsProject(dteProject);
+        IVsProject vsProject = __dteProjectToVsProject(project);
 
         int iFound = 0;
         uint itemId = 0;
@@ -147,7 +135,9 @@
     
         ServiceProvider itemContextService = new ServiceProvider(itemContext);
         EnvDTE.ProjectItem templateItem = (EnvDTE.ProjectItem)itemContextService.GetService(typeof(EnvDTE.ProjectItem));
-        Debug.Assert(templateItem != null, "itemContextService.GetService returned null");
+
+        if(templateItem == null)
+            throw new Exception("itemContextService.GetService returned null");
 
         return templateItem;
     }
@@ -175,9 +165,6 @@
 
     static IVsProject __dteProjectToVsProject(EnvDTE.Project project)
     {
-        if (project == null) 
-            throw new ArgumentNullException("project");
-            
         string projectGuid = null;        
 
         // DTE does not expose the project GUID that exists at in the msbuild project file.        
@@ -281,7 +268,7 @@ namespace <#= Namespace #>
 
         #region IObject / IEquatable<<#= Unit #>>
         public override int GetHashCode() { return m_value.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is <#= Unit #>) && Equals((<#= Unit #>)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is <#= Unit #>) && Equals((<#= Unit #>)obj); }
         public bool /* IEquatable<<#= Unit #>> */ Equals(<#= Unit #> other) { return this.Value == other.Value; }
         #endregion
 
@@ -452,7 +439,7 @@ namespace <#= Namespace #>
 
         #region IObject / IEquatable<<#= Scale #>>
         public override int GetHashCode() { return m_level.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is <#= Scale #>) && Equals((<#= Scale #>)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is <#= Scale #>) && Equals((<#= Scale #>)obj); }
         public bool /* IEquatable<<#= Scale #>> */ Equals(<#= Scale #> other) { return this.Level == other.Level; }
         #endregion
 

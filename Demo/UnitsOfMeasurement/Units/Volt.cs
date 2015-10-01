@@ -42,7 +42,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region IObject / IEquatable<Volt>
         public override int GetHashCode() { return m_value.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Volt) && Equals((Volt)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is Volt) && Equals((Volt)obj); }
         public bool /* IEquatable<Volt> */ Equals(Volt other) { return this.Value == other.Value; }
         #endregion
 

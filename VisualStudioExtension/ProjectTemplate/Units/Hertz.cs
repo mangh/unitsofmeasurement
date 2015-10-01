@@ -42,7 +42,7 @@ namespace $safeprojectname$
 
         #region IObject / IEquatable<Hertz>
         public override int GetHashCode() { return m_value.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Hertz) && Equals((Hertz)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is Hertz) && Equals((Hertz)obj); }
         public bool /* IEquatable<Hertz> */ Equals(Hertz other) { return this.Value == other.Value; }
         #endregion
 

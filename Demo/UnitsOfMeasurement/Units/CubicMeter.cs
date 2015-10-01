@@ -42,7 +42,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region IObject / IEquatable<CubicMeter>
         public override int GetHashCode() { return m_value.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is CubicMeter) && Equals((CubicMeter)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is CubicMeter) && Equals((CubicMeter)obj); }
         public bool /* IEquatable<CubicMeter> */ Equals(CubicMeter other) { return this.Value == other.Value; }
         #endregion
 

@@ -45,7 +45,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region IObject / IEquatable<Dyne>
         public override int GetHashCode() { return m_value.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Dyne) && Equals((Dyne)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is Dyne) && Equals((Dyne)obj); }
         public bool /* IEquatable<Dyne> */ Equals(Dyne other) { return this.Value == other.Value; }
         #endregion
 

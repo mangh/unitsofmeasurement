@@ -42,7 +42,7 @@ namespace $safeprojectname$
 
         #region IObject / IEquatable<Newton>
         public override int GetHashCode() { return m_value.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Newton) && Equals((Newton)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is Newton) && Equals((Newton)obj); }
         public bool /* IEquatable<Newton> */ Equals(Newton other) { return this.Value == other.Value; }
         #endregion
 

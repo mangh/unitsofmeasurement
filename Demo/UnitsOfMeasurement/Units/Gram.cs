@@ -46,7 +46,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region IObject / IEquatable<Gram>
         public override int GetHashCode() { return m_value.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Gram) && Equals((Gram)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is Gram) && Equals((Gram)obj); }
         public bool /* IEquatable<Gram> */ Equals(Gram other) { return this.Value == other.Value; }
         #endregion
 

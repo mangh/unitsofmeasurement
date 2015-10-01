@@ -46,7 +46,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region IObject / IEquatable<Pascal>
         public override int GetHashCode() { return m_value.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Pascal) && Equals((Pascal)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is Pascal) && Equals((Pascal)obj); }
         public bool /* IEquatable<Pascal> */ Equals(Pascal other) { return this.Value == other.Value; }
         #endregion
 

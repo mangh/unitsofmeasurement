@@ -45,7 +45,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region IObject / IEquatable<DegFahrenheit>
         public override int GetHashCode() { return m_value.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is DegFahrenheit) && Equals((DegFahrenheit)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is DegFahrenheit) && Equals((DegFahrenheit)obj); }
         public bool /* IEquatable<DegFahrenheit> */ Equals(DegFahrenheit other) { return this.Value == other.Value; }
         #endregion
 

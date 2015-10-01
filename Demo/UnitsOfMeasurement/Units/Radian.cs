@@ -45,7 +45,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region IObject / IEquatable<Radian>
         public override int GetHashCode() { return m_value.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Radian) && Equals((Radian)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is Radian) && Equals((Radian)obj); }
         public bool /* IEquatable<Radian> */ Equals(Radian other) { return this.Value == other.Value; }
         #endregion
 

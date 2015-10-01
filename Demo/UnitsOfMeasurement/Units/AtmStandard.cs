@@ -46,7 +46,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region IObject / IEquatable<AtmStandard>
         public override int GetHashCode() { return m_value.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is AtmStandard) && Equals((AtmStandard)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is AtmStandard) && Equals((AtmStandard)obj); }
         public bool /* IEquatable<AtmStandard> */ Equals(AtmStandard other) { return this.Value == other.Value; }
         #endregion
 

@@ -42,7 +42,7 @@ namespace $safeprojectname$
 
         #region IObject / IEquatable<Kilogram>
         public override int GetHashCode() { return m_value.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Kilogram) && Equals((Kilogram)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is Kilogram) && Equals((Kilogram)obj); }
         public bool /* IEquatable<Kilogram> */ Equals(Kilogram other) { return this.Value == other.Value; }
         #endregion
 

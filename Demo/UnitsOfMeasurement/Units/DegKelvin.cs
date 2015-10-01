@@ -45,7 +45,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region IObject / IEquatable<DegKelvin>
         public override int GetHashCode() { return m_value.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is DegKelvin) && Equals((DegKelvin)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is DegKelvin) && Equals((DegKelvin)obj); }
         public bool /* IEquatable<DegKelvin> */ Equals(DegKelvin other) { return this.Value == other.Value; }
         #endregion
 

@@ -45,7 +45,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region IObject / IEquatable<Poundal>
         public override int GetHashCode() { return m_value.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Poundal) && Equals((Poundal)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is Poundal) && Equals((Poundal)obj); }
         public bool /* IEquatable<Poundal> */ Equals(Poundal other) { return this.Value == other.Value; }
         #endregion
 

@@ -42,7 +42,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region IObject / IEquatable<Joule_Kelvin>
         public override int GetHashCode() { return m_value.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Joule_Kelvin) && Equals((Joule_Kelvin)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is Joule_Kelvin) && Equals((Joule_Kelvin)obj); }
         public bool /* IEquatable<Joule_Kelvin> */ Equals(Joule_Kelvin other) { return this.Value == other.Value; }
         #endregion
 

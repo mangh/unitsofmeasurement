@@ -42,7 +42,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region IObject / IEquatable<Watt>
         public override int GetHashCode() { return m_value.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Watt) && Equals((Watt)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is Watt) && Equals((Watt)obj); }
         public bool /* IEquatable<Watt> */ Equals(Watt other) { return this.Value == other.Value; }
         #endregion
 

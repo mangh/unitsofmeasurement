@@ -42,7 +42,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region IObject / IEquatable<Coulomb>
         public override int GetHashCode() { return m_value.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Coulomb) && Equals((Coulomb)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is Coulomb) && Equals((Coulomb)obj); }
         public bool /* IEquatable<Coulomb> */ Equals(Coulomb other) { return this.Value == other.Value; }
         #endregion
 

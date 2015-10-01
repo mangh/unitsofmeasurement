@@ -42,7 +42,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region IObject / IEquatable<Ohm>
         public override int GetHashCode() { return m_value.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Ohm) && Equals((Ohm)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is Ohm) && Equals((Ohm)obj); }
         public bool /* IEquatable<Ohm> */ Equals(Ohm other) { return this.Value == other.Value; }
         #endregion
 

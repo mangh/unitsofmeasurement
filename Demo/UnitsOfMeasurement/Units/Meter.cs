@@ -49,7 +49,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region IObject / IEquatable<Meter>
         public override int GetHashCode() { return m_value.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is Meter) && Equals((Meter)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is Meter) && Equals((Meter)obj); }
         public bool /* IEquatable<Meter> */ Equals(Meter other) { return this.Value == other.Value; }
         #endregion
 
