@@ -1,3 +1,8 @@
+### Release 1.2 Build 2015.10.01.1851
+
+* fix #1: CSharpCodeProvider not Disposed() in RuntimeLoader.Compiler.
+* fix #2: "Run Custom Tool" performing very slow under VS 2015.
+
 ### Release 1.1 Build 2015.08.14.1517
 
 ###### Visual Studio 2015 supported
