@@ -9,6 +9,7 @@
 
 
 ********************************************************************************/
+using System;
 using System.CodeDom.Compiler;
 using System.Reflection;
 
@@ -19,28 +20,25 @@ namespace $safeprojectname$
         private class Compiler
         {
             #region Fields
-            private CodeDomProvider m_provider;
             private CompilerResults m_results;
             #endregion
 
             #region Properties
-            public CompilerErrorCollection Errors { get { return m_results == null ? null : m_results.Errors; } }
+            public CompilerResults Results { get { return m_results; } }
             #endregion
 
             #region Constructor(s)
             public Compiler()
             {
-                m_provider = new Microsoft.CSharp.CSharpCodeProvider();
                 m_results = null;
             }
             #endregion
 
             #region Methods
-            public Assembly CompileFromSource(string source, string[] referencedAssemblies, string targetAssemblyPath)
+            public bool CompileFromSource(string source, string[] referencedAssemblies, string targetAssemblyPath)
             {
-                // Setup compiler parameters
                 CompilerParameters parameters = new CompilerParameters(referencedAssemblies);
-                if (string.IsNullOrWhiteSpace(targetAssemblyPath))
+                if(String.IsNullOrWhiteSpace(targetAssemblyPath))
                 {
                     parameters.GenerateInMemory = true;
                     parameters.GenerateExecutable = false;
@@ -53,8 +51,11 @@ namespace $safeprojectname$
                 }
 
                 // Compile the source code
-                m_results = m_provider.CompileAssemblyFromSource(parameters, source);
-                return m_results.Errors.HasErrors ? null : m_results.CompiledAssembly;
+                using(var m_provider = new Microsoft.CSharp.CSharpCodeProvider())
+                {
+                    m_results = m_provider.CompileAssemblyFromSource(parameters, source);
+                    return !m_results.Errors.HasErrors;
+                }
             }
             #endregion
         }

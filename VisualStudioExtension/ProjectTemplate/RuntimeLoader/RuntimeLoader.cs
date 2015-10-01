@@ -78,6 +78,9 @@ namespace $safeprojectname$
         /// <returns>assembly with supplementary (runtime) units/scales | null in case of errors</returns>
         private Assembly Load(string definitions, string[] compiledMeasures, Func<string, bool> parse, string outputAssemblyPath)
         {
+            // Switch error collection back to the parser
+            m_errors = m_parser.Errors;
+
             // Initialize m_units & m_scales lists with compile-time definitions:
             m_decompiler.Decompile(compiledMeasures);
 
@@ -85,18 +88,21 @@ namespace $safeprojectname$
             int scaleStartIndex = m_scales.Count;                   // start index for (possible) new scales
             int familyStartId = m_decompiler.MaxFamilyFound + 1;    // start id for (possible) new families
 
+            Assembly supplement = null;
+
             // Parse (append) new definitions into m_units & m_scales lists:
-            m_errors = m_parser.Errors;
-            if (!parse(definitions)) 
-                return null;
+            if(parse(definitions))
+            {
+                // Generate source code (for the new definitions only): 
+                Generator generator = new Generator(familyStartId, m_units, unitStartIndex, m_scales, scaleStartIndex);
+                string source = generator.TransformText();
 
-            // Generate source code (for the new definitions only): 
-            Generator generator = new Generator(familyStartId, m_units, unitStartIndex, m_scales, scaleStartIndex);
-            string source = generator.TransformText();
+                // Compile the generated source code:
+                if (m_compiler.CompileFromSource(source, compiledMeasures, outputAssemblyPath))
+                    supplement = m_compiler.Results.CompiledAssembly;
 
-            // Compile the generated source code:
-            Assembly supplement = m_compiler.CompileFromSource(source, compiledMeasures, outputAssemblyPath);
-            if (supplement == null) m_errors = m_compiler.Errors;
+                m_errors = m_compiler.Results.Errors;
+            }
             return supplement;
         }
 
