@@ -1,491 +1,496 @@
-﻿//////////////////////////////////////////////////////////
+Units and Scales generated on: 2015-10-14 11:45:56
+
+////////////////////////////////////////////////////////////////////////////////
 //
-//  U N I T S
+//  U N I T S                                  (63 units, families: 0 - 28)
 //
-//  (family) [dim] name : factor {tags}
-
-    (Meter) [L] Meter : 1 {"m"}
-
-        (Meter)Inch
-        (Meter)Foot
-        (Meter)Yard
-        (Meter)Mile
-        (Meter)Kilometer
-        (Meter)Millimeter
-        (Meter)Centimeter
-        SquareMeter = Meter * Meter
-        Meter_Sec = Meter / Second
-        Second = Meter / Meter_Sec
-
-    (Meter) [L] Centimeter : 100 {"cm"}
-
-        (Centimeter)Meter
-        (Centimeter)Inch
-        (Centimeter)Foot
-        (Centimeter)Yard
-        (Centimeter)Mile
-        (Centimeter)Kilometer
-        (Centimeter)Millimeter
-
-    (Meter) [L] Millimeter : 1000 {"mm"}
-
-        (Millimeter)Centimeter
-        (Millimeter)Meter
-        (Millimeter)Inch
-        (Millimeter)Foot
-        (Millimeter)Yard
-        (Millimeter)Mile
-        (Millimeter)Kilometer
-
-    (Meter) [L] Kilometer : 0.001 {"km"}
-
-        (Kilometer)Millimeter
-        (Kilometer)Centimeter
-        (Kilometer)Meter
-        (Kilometer)Inch
-        (Kilometer)Foot
-        (Kilometer)Yard
-        (Kilometer)Mile
-        Kilometer_Hour = Kilometer / Hour
-        Hour = Kilometer / Kilometer_Hour
-
-    (Meter) [L] Inch : 39.370078740157481 {"in"}
-
-        (Inch)Foot
-        (Inch)Yard
-        (Inch)Mile
-        (Inch)Kilometer
-        (Inch)Millimeter
-        (Inch)Centimeter
-        (Inch)Meter
-
-    (Meter) [L] Foot : 3.2808398950131235 {"ft"}
-
-        (Foot)Yard
-        (Foot)Mile
-        (Foot)Kilometer
-        (Foot)Millimeter
-        (Foot)Centimeter
-        (Foot)Meter
-        (Foot)Inch
-        SquareFoot = Foot * Foot
-
-    (Meter) [L] Yard : 1.0936132983377078 {"yd"}
-
-        (Yard)Mile
-        (Yard)Kilometer
-        (Yard)Millimeter
-        (Yard)Centimeter
-        (Yard)Meter
-        (Yard)Inch
-        (Yard)Foot
-
-    (Meter) [L] Mile : 0.000621371192237334 {"mil"}
+////////////////////////////////////////////////////////////////////////////////
+(family) [dim] name : factor {tags}
+
+(Meter) [L] Meter : 1 {"m"}
+
+    (Meter)Inch
+    (Meter)Foot
+    (Meter)Yard
+    (Meter)Mile
+    (Meter)Kilometer
+    (Meter)Millimeter
+    (Meter)Centimeter
+    SquareMeter = Meter * Meter
+    Meter_Sec = Meter / Second
+    Second = Meter / Meter_Sec
+
+(Meter) [L] Centimeter : 100 {"cm"}
+
+    (Centimeter)Meter
+    (Centimeter)Inch
+    (Centimeter)Foot
+    (Centimeter)Yard
+    (Centimeter)Mile
+    (Centimeter)Kilometer
+    (Centimeter)Millimeter
+
+(Meter) [L] Millimeter : 1000 {"mm"}
+
+    (Millimeter)Centimeter
+    (Millimeter)Meter
+    (Millimeter)Inch
+    (Millimeter)Foot
+    (Millimeter)Yard
+    (Millimeter)Mile
+    (Millimeter)Kilometer
+
+(Meter) [L] Kilometer : 0.001 {"km"}
+
+    (Kilometer)Millimeter
+    (Kilometer)Centimeter
+    (Kilometer)Meter
+    (Kilometer)Inch
+    (Kilometer)Foot
+    (Kilometer)Yard
+    (Kilometer)Mile
+    Kilometer_Hour = Kilometer / Hour
+    Hour = Kilometer / Kilometer_Hour
+
+(Meter) [L] Inch : 39.370078740157481 {"in"}
+
+    (Inch)Foot
+    (Inch)Yard
+    (Inch)Mile
+    (Inch)Kilometer
+    (Inch)Millimeter
+    (Inch)Centimeter
+    (Inch)Meter
+
+(Meter) [L] Foot : 3.2808398950131235 {"ft"}
+
+    (Foot)Yard
+    (Foot)Mile
+    (Foot)Kilometer
+    (Foot)Millimeter
+    (Foot)Centimeter
+    (Foot)Meter
+    (Foot)Inch
+    SquareFoot = Foot * Foot
+
+(Meter) [L] Yard : 1.0936132983377078 {"yd"}
+
+    (Yard)Mile
+    (Yard)Kilometer
+    (Yard)Millimeter
+    (Yard)Centimeter
+    (Yard)Meter
+    (Yard)Inch
+    (Yard)Foot
+
+(Meter) [L] Mile : 0.000621371192237334 {"mil"}
 
-        (Mile)Kilometer
-        (Mile)Millimeter
-        (Mile)Centimeter
-        (Mile)Meter
-        (Mile)Inch
-        (Mile)Foot
-        (Mile)Yard
-        MPH = Mile / Hour
-        Hour = Mile / MPH
+    (Mile)Kilometer
+    (Mile)Millimeter
+    (Mile)Centimeter
+    (Mile)Meter
+    (Mile)Inch
+    (Mile)Foot
+    (Mile)Yard
+    MPH = Mile / Hour
+    Hour = Mile / MPH
 
-    (Second) [T] Second : 1 {"s"}
+(Second) [T] Second : 1 {"s"}
 
-        (Second)Minute
-        (Second)Hour
-        Farad = Second / Ohm
-        Ohm = Second / Farad
+    (Second)Minute
+    (Second)Hour
+    Farad = Second / Ohm
+    Ohm = Second / Farad
 
-    (Second) [T] Minute : 0.016666666666666666 {"min"}
+(Second) [T] Minute : 0.016666666666666666 {"min"}
 
-        (Minute)Hour
-        (Minute)Second
+    (Minute)Hour
+    (Minute)Second
 
-    (Second) [T] Hour : 0.00027777777777777778 {"h"}
+(Second) [T] Hour : 0.00027777777777777778 {"h"}
 
-        (Hour)Second
-        (Hour)Minute
+    (Hour)Second
+    (Hour)Minute
 
-    (Kilogram) [M] Kilogram : 1 {"kg"}
+(Kilogram) [M] Kilogram : 1 {"kg"}
 
-        (Kilogram)Pound
-        (Kilogram)Ounce
-        (Kilogram)Tonne
-        (Kilogram)Gram
-        Newton = Kilogram * Meter_Sec2
-        Newton = Meter_Sec2 * Kilogram
+    (Kilogram)Pound
+    (Kilogram)Ounce
+    (Kilogram)Tonne
+    (Kilogram)Gram
+    Newton = Kilogram * Meter_Sec2
+    Newton = Meter_Sec2 * Kilogram
 
-    (Kilogram) [M] Gram : 1000 {"g"}
+(Kilogram) [M] Gram : 1000 {"g"}
 
-        (Gram)Kilogram
-        (Gram)Pound
-        (Gram)Ounce
-        (Gram)Tonne
+    (Gram)Kilogram
+    (Gram)Pound
+    (Gram)Ounce
+    (Gram)Tonne
 
-    (Kilogram) [M] Tonne : 0.001 {"t"}
+(Kilogram) [M] Tonne : 0.001 {"t"}
 
-        (Tonne)Gram
-        (Tonne)Kilogram
-        (Tonne)Pound
-        (Tonne)Ounce
+    (Tonne)Gram
+    (Tonne)Kilogram
+    (Tonne)Pound
+    (Tonne)Ounce
 
-    (Kilogram) [M] Pound : 2.2046226218487757 {"lb"}
+(Kilogram) [M] Pound : 2.2046226218487757 {"lb"}
 
-        (Pound)Ounce
-        (Pound)Tonne
-        (Pound)Gram
-        (Pound)Kilogram
+    (Pound)Ounce
+    (Pound)Tonne
+    (Pound)Gram
+    (Pound)Kilogram
 
-    (Kilogram) [M] Ounce : 35.273961949580411 {"ou"}
+(Kilogram) [M] Ounce : 35.273961949580411 {"ou"}
 
-        (Ounce)Tonne
-        (Ounce)Gram
-        (Ounce)Kilogram
-        (Ounce)Pound
+    (Ounce)Tonne
+    (Ounce)Gram
+    (Ounce)Kilogram
+    (Ounce)Pound
 
-    (DegKelvin) [ϴ] DegKelvin : 1 {"K", "deg.K"}
+(DegKelvin) [ϴ] DegKelvin : 1 {"K", "deg.K"}
 
-        (DegKelvin)DegFahrenheit
-        (DegKelvin)DegRankine
-        (DegKelvin)DegCelsius
+    (DegKelvin)DegFahrenheit
+    (DegKelvin)DegRankine
+    (DegKelvin)DegCelsius
 
-    (DegKelvin) [ϴ] DegCelsius : 1 {"\u00B0C", "deg.C"}
+(DegKelvin) [ϴ] DegCelsius : 1 {"\u00B0C", "deg.C"}
 
-        (DegCelsius)DegKelvin
-        (DegCelsius)DegFahrenheit
-        (DegCelsius)DegRankine
+    (DegCelsius)DegKelvin
+    (DegCelsius)DegFahrenheit
+    (DegCelsius)DegRankine
 
-    (DegKelvin) [ϴ] DegRankine : 1.8 {"\u00B0R", "deg.R"}
+(DegKelvin) [ϴ] DegRankine : 1.8 {"\u00B0R", "deg.R"}
 
-        (DegRankine)DegCelsius
-        (DegRankine)DegKelvin
-        (DegRankine)DegFahrenheit
+    (DegRankine)DegCelsius
+    (DegRankine)DegKelvin
+    (DegRankine)DegFahrenheit
 
-    (DegKelvin) [ϴ] DegFahrenheit : 1.8 {"\u00B0F", "deg.F"}
+(DegKelvin) [ϴ] DegFahrenheit : 1.8 {"\u00B0F", "deg.F"}
 
-        (DegFahrenheit)DegRankine
-        (DegFahrenheit)DegCelsius
-        (DegFahrenheit)DegKelvin
+    (DegFahrenheit)DegRankine
+    (DegFahrenheit)DegCelsius
+    (DegFahrenheit)DegKelvin
 
-    (Ampere) [I] Ampere : 1 {"A"}
+(Ampere) [I] Ampere : 1 {"A"}
 
-        Coulomb = Ampere * Second
-        Coulomb = Second * Ampere
-        Siemens = Ampere / Volt
-        Volt = Ampere / Siemens
+    Coulomb = Ampere * Second
+    Coulomb = Second * Ampere
+    Siemens = Ampere / Volt
+    Volt = Ampere / Siemens
 
-    (Mole) [N] Mole : 1 {"mol"}
+(Mole) [N] Mole : 1 {"mol"}
 
 
-    (Candela) [J] Candela : 1 {"cd"}
+(Candela) [J] Candela : 1 {"cd"}
 
 
-    (EUR) [¤] EUR : 1 {"EUR"}
+(EUR) [¤] EUR : 1 {"EUR"}
 
-        (EUR)PLN
-        (EUR)GBP
-        (EUR)USD
+    (EUR)PLN
+    (EUR)GBP
+    (EUR)USD
 
-    (EUR) [¤] USD : 1.3433 {"USD"}
+(EUR) [¤] USD : 1.3433 {"USD"}
 
-        (USD)EUR
-        (USD)PLN
-        (USD)GBP
+    (USD)EUR
+    (USD)PLN
+    (USD)GBP
 
-    (EUR) [¤] GBP : 0.79055 {"GBP"}
+(EUR) [¤] GBP : 0.79055 {"GBP"}
 
-        (GBP)USD
-        (GBP)EUR
-        (GBP)PLN
+    (GBP)USD
+    (GBP)EUR
+    (GBP)PLN
 
-    (EUR) [¤] PLN : 4.1437 {"PLN"}
+(EUR) [¤] PLN : 4.1437 {"PLN"}
 
-        (PLN)GBP
-        (PLN)USD
-        (PLN)EUR
+    (PLN)GBP
+    (PLN)USD
+    (PLN)EUR
 
-    (Radian) [1] Radian : 1 {"rad"}
+(Radian) [1] Radian : 1 {"rad"}
 
-        (Radian)Cycles
-        (Radian)Grad
-        (Radian)Degree
-        Radian_Sec = Radian / Second
-        Second = Radian / Radian_Sec
+    (Radian)Cycles
+    (Radian)Grad
+    (Radian)Degree
+    Radian_Sec = Radian / Second
+    Second = Radian / Radian_Sec
 
-    (Radian) [1] Degree : (180d / Math.PI) * Radian.Factor {"\u00B0", "deg"}
+(Radian) [1] Degree : (180d / Math.PI) * Radian.Factor {"\u00B0", "deg"}
 
-        (Degree)Radian
-        (Degree)Cycles
-        (Degree)Grad
+    (Degree)Radian
+    (Degree)Cycles
+    (Degree)Grad
 
-    (Radian) [1] Grad : (200d / Math.PI) * Radian.Factor {"grad"}
+(Radian) [1] Grad : (200d / Math.PI) * Radian.Factor {"grad"}
 
-        (Grad)Degree
-        (Grad)Radian
-        (Grad)Cycles
+    (Grad)Degree
+    (Grad)Radian
+    (Grad)Cycles
 
-    (Radian) [1] Cycles : Radian.Factor / (2d * Math.PI) {"c"}
+(Radian) [1] Cycles : Radian.Factor / (2d * Math.PI) {"c"}
 
-        (Cycles)Grad
-        (Cycles)Degree
-        (Cycles)Radian
-        Hertz = Cycles / Second
-        Second = Cycles / Hertz
-        RPM = Cycles / Minute
-        Minute = Cycles / RPM
+    (Cycles)Grad
+    (Cycles)Degree
+    (Cycles)Radian
+    Hertz = Cycles / Second
+    Second = Cycles / Hertz
+    RPM = Cycles / Minute
+    Minute = Cycles / RPM
 
-    (Steradian) [1] Steradian : 1 {"sr"}
+(Steradian) [1] Steradian : 1 {"sr"}
 
 
-    (Hertz) [T-1] Hertz : Cycles.Factor / Second.Factor {"Hz"}
+(Hertz) [T-1] Hertz : Cycles.Factor / Second.Factor {"Hz"}
 
-        (Hertz)Radian_Sec
-        (Hertz)RPM
-        Cycles = Hertz * Second
-        Cycles = Second * Hertz
+    (Hertz)Radian_Sec
+    (Hertz)RPM
+    Cycles = Hertz * Second
+    Cycles = Second * Hertz
 
-    (Hertz) [T-1] Radian_Sec : 1 {"rad/s"}
+(Hertz) [T-1] Radian_Sec : 1 {"rad/s"}
 
-        (Radian_Sec)RPM
-        (Radian_Sec)Hertz
-        Radian = Radian_Sec * Second
-        Radian = Second * Radian_Sec
+    (Radian_Sec)RPM
+    (Radian_Sec)Hertz
+    Radian = Radian_Sec * Second
+    Radian = Second * Radian_Sec
 
-    (Hertz) [T-1] RPM : Cycles.Factor / Minute.Factor {"rpm"}
+(Hertz) [T-1] RPM : Cycles.Factor / Minute.Factor {"rpm"}
 
-        (RPM)Hertz
-        (RPM)Radian_Sec
-        Cycles = RPM * Minute
-        Cycles = Minute * RPM
+    (RPM)Hertz
+    (RPM)Radian_Sec
+    Cycles = RPM * Minute
+    Cycles = Minute * RPM
 
-    (SquareMeter) [L2] SquareMeter : 1 {"m\u00B2", "m2"}
+(SquareMeter) [L2] SquareMeter : 1 {"m\u00B2", "m2"}
 
-        (SquareMeter)SquareFoot
-        Meter = SquareMeter / Meter
-        CubicMeter = SquareMeter * Meter
-        CubicMeter = Meter * SquareMeter
+    (SquareMeter)SquareFoot
+    Meter = SquareMeter / Meter
+    CubicMeter = SquareMeter * Meter
+    CubicMeter = Meter * SquareMeter
 
-    (SquareMeter) [L2] SquareFoot : 10.763910416709724 {"ft\u00B2", "sq ft"}
+(SquareMeter) [L2] SquareFoot : 10.763910416709724 {"ft\u00B2", "sq ft"}
 
-        (SquareFoot)SquareMeter
-        Foot = SquareFoot / Foot
+    (SquareFoot)SquareMeter
+    Foot = SquareFoot / Foot
 
-    (CubicMeter) [L3] CubicMeter : 1 {"m\u00B3", "m3"}
+(CubicMeter) [L3] CubicMeter : 1 {"m\u00B3", "m3"}
 
-        Meter = CubicMeter / SquareMeter
-        SquareMeter = CubicMeter / Meter
+    Meter = CubicMeter / SquareMeter
+    SquareMeter = CubicMeter / Meter
 
-    (Meter_Sec) [LT-1] Meter_Sec : 1 {"m/s"}
+(Meter_Sec) [LT-1] Meter_Sec : 1 {"m/s"}
 
-        (Meter_Sec)MPH
-        (Meter_Sec)Kilometer_Hour
-        Meter = Meter_Sec * Second
-        Meter = Second * Meter_Sec
-        Meter_Sec2 = Meter_Sec / Second
-        Second = Meter_Sec / Meter_Sec2
-        Meter2_Sec2 = Meter_Sec * Meter_Sec
+    (Meter_Sec)MPH
+    (Meter_Sec)Kilometer_Hour
+    Meter = Meter_Sec * Second
+    Meter = Second * Meter_Sec
+    Meter_Sec2 = Meter_Sec / Second
+    Second = Meter_Sec / Meter_Sec2
+    Meter2_Sec2 = Meter_Sec * Meter_Sec
 
-    (Meter_Sec) [LT-1] Kilometer_Hour : 3.6 {"km/h"}
+(Meter_Sec) [LT-1] Kilometer_Hour : 3.6 {"km/h"}
 
-        (Kilometer_Hour)Meter_Sec
-        (Kilometer_Hour)MPH
-        Kilometer = Kilometer_Hour * Hour
-        Kilometer = Hour * Kilometer_Hour
+    (Kilometer_Hour)Meter_Sec
+    (Kilometer_Hour)MPH
+    Kilometer = Kilometer_Hour * Hour
+    Kilometer = Hour * Kilometer_Hour
 
-    (Meter_Sec) [LT-1] MPH : 2.2369362920544025 {"mph", "mi/h"}
+(Meter_Sec) [LT-1] MPH : 2.2369362920544025 {"mph", "mi/h"}
 
-        (MPH)Kilometer_Hour
-        (MPH)Meter_Sec
-        Mile = MPH * Hour
-        Mile = Hour * MPH
+    (MPH)Kilometer_Hour
+    (MPH)Meter_Sec
+    Mile = MPH * Hour
+    Mile = Hour * MPH
 
-    (Meter_Sec2) [LT-2] Meter_Sec2 : 1 {"m/s2"}
+(Meter_Sec2) [LT-2] Meter_Sec2 : 1 {"m/s2"}
 
-        Meter_Sec = Meter_Sec2 * Second
-        Meter_Sec = Second * Meter_Sec2
-        Meter2_Sec2 = Meter_Sec2 * Meter
-        Meter2_Sec2 = Meter * Meter_Sec2
+    Meter_Sec = Meter_Sec2 * Second
+    Meter_Sec = Second * Meter_Sec2
+    Meter2_Sec2 = Meter_Sec2 * Meter
+    Meter2_Sec2 = Meter * Meter_Sec2
 
-    (Newton) [LT-2M] Newton : 1 {"N"}
+(Newton) [LT-2M] Newton : 1 {"N"}
 
-        (Newton)Dyne
-        (Newton)Poundal
-        (Newton)PoundForce
-        Meter_Sec2 = Newton / Kilogram
-        Kilogram = Newton / Meter_Sec2
-        Joule = Newton * Meter
-        Joule = Meter * Newton
-        Pascal = Newton / SquareMeter
-        SquareMeter = Newton / Pascal
+    (Newton)Dyne
+    (Newton)Poundal
+    (Newton)PoundForce
+    Meter_Sec2 = Newton / Kilogram
+    Kilogram = Newton / Meter_Sec2
+    Joule = Newton * Meter
+    Joule = Meter * Newton
+    Pascal = Newton / SquareMeter
+    SquareMeter = Newton / Pascal
 
-    (Newton) [LT-2M] PoundForce : 0.2248089430997105 {"lbf"}
+(Newton) [LT-2M] PoundForce : 0.2248089430997105 {"lbf"}
 
-        (PoundForce)Newton
-        (PoundForce)Dyne
-        (PoundForce)Poundal
+    (PoundForce)Newton
+    (PoundForce)Dyne
+    (PoundForce)Poundal
 
-    (Newton) [LT-2M] Poundal : 7.2330138512098943 {"pdl"}
+(Newton) [LT-2M] Poundal : 7.2330138512098943 {"pdl"}
 
-        (Poundal)PoundForce
-        (Poundal)Newton
-        (Poundal)Dyne
+    (Poundal)PoundForce
+    (Poundal)Newton
+    (Poundal)Dyne
 
-    (Newton) [LT-2M] Dyne : 100000 {"dyn"}
+(Newton) [LT-2M] Dyne : 100000 {"dyn"}
 
-        (Dyne)Poundal
-        (Dyne)PoundForce
-        (Dyne)Newton
+    (Dyne)Poundal
+    (Dyne)PoundForce
+    (Dyne)Newton
 
-    (Joule) [L2T-2M] Joule : 1 {"J"}
+(Joule) [L2T-2M] Joule : 1 {"J"}
 
-        Meter = Joule / Newton
-        Newton = Joule / Meter
-        Watt = Joule / Second
-        Second = Joule / Watt
-        Joule_Kelvin = Joule / DegKelvin
-        DegKelvin = Joule / Joule_Kelvin
-        Volt = Joule / Coulomb
-        Coulomb = Joule / Volt
-        Weber = Joule / Ampere
-        Ampere = Joule / Weber
+    Meter = Joule / Newton
+    Newton = Joule / Meter
+    Watt = Joule / Second
+    Second = Joule / Watt
+    Joule_Kelvin = Joule / DegKelvin
+    DegKelvin = Joule / Joule_Kelvin
+    Volt = Joule / Coulomb
+    Coulomb = Joule / Volt
+    Weber = Joule / Ampere
+    Ampere = Joule / Weber
 
-    (Watt) [L2T-3M] Watt : 1 {"W"}
+(Watt) [L2T-3M] Watt : 1 {"W"}
 
-        Joule = Watt * Second
-        Joule = Second * Watt
-        Volt = Watt / Ampere
-        Ampere = Watt / Volt
+    Joule = Watt * Second
+    Joule = Second * Watt
+    Volt = Watt / Ampere
+    Ampere = Watt / Volt
 
-    (NewtonMeter) [L2T-2M] NewtonMeter : 1 {"N\u00B7m", "N*m"}
+(NewtonMeter) [L2T-2M] NewtonMeter : 1 {"N\u00B7m", "N*m"}
 
 
-    (Joule_Kelvin) [L2T-2Mϴ-1] Joule_Kelvin : 1 {"J/K"}
+(Joule_Kelvin) [L2T-2Mϴ-1] Joule_Kelvin : 1 {"J/K"}
 
-        Joule = Joule_Kelvin * DegKelvin
-        Joule = DegKelvin * Joule_Kelvin
-        Joule_Kelvin_Kilogram = Joule_Kelvin / Kilogram
-        Kilogram = Joule_Kelvin / Joule_Kelvin_Kilogram
+    Joule = Joule_Kelvin * DegKelvin
+    Joule = DegKelvin * Joule_Kelvin
+    Joule_Kelvin_Kilogram = Joule_Kelvin / Kilogram
+    Kilogram = Joule_Kelvin / Joule_Kelvin_Kilogram
 
-    (Joule_Kelvin_Kilogram) [L2T-2ϴ-1] Joule_Kelvin_Kilogram : 1 {"J/kg/K"}
+(Joule_Kelvin_Kilogram) [L2T-2ϴ-1] Joule_Kelvin_Kilogram : 1 {"J/kg/K"}
 
-        Joule_Kelvin = Joule_Kelvin_Kilogram * Kilogram
-        Joule_Kelvin = Kilogram * Joule_Kelvin_Kilogram
+    Joule_Kelvin = Joule_Kelvin_Kilogram * Kilogram
+    Joule_Kelvin = Kilogram * Joule_Kelvin_Kilogram
 
-    (Pascal) [L-1T-2M] Pascal : 1 {"Pa"}
+(Pascal) [L-1T-2M] Pascal : 1 {"Pa"}
 
-        (Pascal)MillimeterHg
-        (Pascal)AtmStandard
-        (Pascal)AtmTechnical
-        (Pascal)Bar
-        Newton = Pascal * SquareMeter
-        Newton = SquareMeter * Pascal
+    (Pascal)MillimeterHg
+    (Pascal)AtmStandard
+    (Pascal)AtmTechnical
+    (Pascal)Bar
+    Newton = Pascal * SquareMeter
+    Newton = SquareMeter * Pascal
 
-    (Pascal) [L-1T-2M] Bar : 1E-05 {"bar"}
+(Pascal) [L-1T-2M] Bar : 1E-05 {"bar"}
 
-        (Bar)Pascal
-        (Bar)MillimeterHg
-        (Bar)AtmStandard
-        (Bar)AtmTechnical
+    (Bar)Pascal
+    (Bar)MillimeterHg
+    (Bar)AtmStandard
+    (Bar)AtmTechnical
 
-    (Pascal) [L-1T-2M] AtmTechnical : 1.0197162129779282E-05 {"at"}
+(Pascal) [L-1T-2M] AtmTechnical : 1.0197162129779282E-05 {"at"}
 
-        (AtmTechnical)Bar
-        (AtmTechnical)Pascal
-        (AtmTechnical)MillimeterHg
-        (AtmTechnical)AtmStandard
+    (AtmTechnical)Bar
+    (AtmTechnical)Pascal
+    (AtmTechnical)MillimeterHg
+    (AtmTechnical)AtmStandard
 
-    (Pascal) [L-1T-2M] AtmStandard : 9.8692326671601285E-06 {"atm"}
+(Pascal) [L-1T-2M] AtmStandard : 9.8692326671601285E-06 {"atm"}
 
-        (AtmStandard)AtmTechnical
-        (AtmStandard)Bar
-        (AtmStandard)Pascal
-        (AtmStandard)MillimeterHg
+    (AtmStandard)AtmTechnical
+    (AtmStandard)Bar
+    (AtmStandard)Pascal
+    (AtmStandard)MillimeterHg
 
-    (Pascal) [L-1T-2M] MillimeterHg : 133.322387415 {"mmHg"}
+(Pascal) [L-1T-2M] MillimeterHg : 133.322387415 {"mmHg"}
 
-        (MillimeterHg)AtmStandard
-        (MillimeterHg)AtmTechnical
-        (MillimeterHg)Bar
-        (MillimeterHg)Pascal
+    (MillimeterHg)AtmStandard
+    (MillimeterHg)AtmTechnical
+    (MillimeterHg)Bar
+    (MillimeterHg)Pascal
 
-    (Coulomb) [TI] Coulomb : 1 {"C"}
+(Coulomb) [TI] Coulomb : 1 {"C"}
 
-        Second = Coulomb / Ampere
-        Ampere = Coulomb / Second
-        Farad = Coulomb / Volt
-        Volt = Coulomb / Farad
+    Second = Coulomb / Ampere
+    Ampere = Coulomb / Second
+    Farad = Coulomb / Volt
+    Volt = Coulomb / Farad
 
-    (Volt) [L2T-3MI-1] Volt : 1 {"V"}
+(Volt) [L2T-3MI-1] Volt : 1 {"V"}
 
-        Joule = Volt * Coulomb
-        Joule = Coulomb * Volt
-        Watt = Volt * Ampere
-        Watt = Ampere * Volt
-        Ohm = Volt / Ampere
-        Ampere = Volt / Ohm
-        Weber = Volt * Second
-        Weber = Second * Volt
+    Joule = Volt * Coulomb
+    Joule = Coulomb * Volt
+    Watt = Volt * Ampere
+    Watt = Ampere * Volt
+    Ohm = Volt / Ampere
+    Ampere = Volt / Ohm
+    Weber = Volt * Second
+    Weber = Second * Volt
 
-    (Ohm) [L2T-3MI-2] Ohm : 1 {"\u03A9", "ohm"}
+(Ohm) [L2T-3MI-2] Ohm : 1 {"\u03A9", "ohm"}
 
-        Volt = Ohm * Ampere
-        Volt = Ampere * Ohm
+    Volt = Ohm * Ampere
+    Volt = Ampere * Ohm
 
-    (Siemens) [L-2T3M-1I2] Siemens : 1 {"S"}
+(Siemens) [L-2T3M-1I2] Siemens : 1 {"S"}
 
-        Ampere = Siemens * Volt
-        Ampere = Volt * Siemens
+    Ampere = Siemens * Volt
+    Ampere = Volt * Siemens
 
-    (Farad) [L-2T4M-1I2] Farad : 1 {"F"}
+(Farad) [L-2T4M-1I2] Farad : 1 {"F"}
 
-        Coulomb = Farad * Volt
-        Coulomb = Volt * Farad
-        Second = Farad * Ohm
-        Second = Ohm * Farad
+    Coulomb = Farad * Volt
+    Coulomb = Volt * Farad
+    Second = Farad * Ohm
+    Second = Ohm * Farad
 
-    (Weber) [L2T-2MI-1] Weber : 1 {"Wb"}
+(Weber) [L2T-2MI-1] Weber : 1 {"Wb"}
 
-        Joule = Weber * Ampere
-        Joule = Ampere * Weber
-        Second = Weber / Volt
-        Volt = Weber / Second
+    Joule = Weber * Ampere
+    Joule = Ampere * Weber
+    Second = Weber / Volt
+    Volt = Weber / Second
 
-    (Meter2_Sec2) [L2T-2] Meter2_Sec2 : 1 {"m2/s2"}
+(Meter2_Sec2) [L2T-2] Meter2_Sec2 : 1 {"m2/s2"}
 
-        Meter_Sec = Meter2_Sec2 / Meter_Sec
-        Meter = Meter2_Sec2 / Meter_Sec2
-        Meter_Sec2 = Meter2_Sec2 / Meter
+    Meter_Sec = Meter2_Sec2 / Meter_Sec
+    Meter = Meter2_Sec2 / Meter_Sec2
+    Meter_Sec2 = Meter2_Sec2 / Meter
 
-//////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 //
-//  S C A L E S
+//  S C A L E S                               (4 scales, families: 29 - 29)
 //
-//  (family) [dim] name : refpoint = unit offset
+////////////////////////////////////////////////////////////////////////////////
+(family) [dim] name : refpoint = unit offset
 
-    (Kelvin) [ϴ] Kelvin : AbsoluteZero = DegKelvin 0
+Kelvin [ϴ] Kelvin : AbsoluteZero = DegKelvin 0
 
-        (Kelvin)Fahrenheit
-        (Kelvin)Rankine
-        (Kelvin)Celsius
+    (Kelvin)Fahrenheit
+    (Kelvin)Rankine
+    (Kelvin)Celsius
 
-    (Kelvin) [ϴ] Celsius : AbsoluteZero = DegCelsius -273.15
+Kelvin [ϴ] Celsius : AbsoluteZero = DegCelsius -273.15
 
-        (Celsius)Kelvin
-        (Celsius)Fahrenheit
-        (Celsius)Rankine
+    (Celsius)Kelvin
+    (Celsius)Fahrenheit
+    (Celsius)Rankine
 
-    (Kelvin) [ϴ] Rankine : AbsoluteZero = DegRankine 0
+Kelvin [ϴ] Rankine : AbsoluteZero = DegRankine 0
 
-        (Rankine)Celsius
-        (Rankine)Kelvin
-        (Rankine)Fahrenheit
+    (Rankine)Celsius
+    (Rankine)Kelvin
+    (Rankine)Fahrenheit
 
-    (Kelvin) [ϴ] Fahrenheit : AbsoluteZero = DegFahrenheit -459.66999999999996
+Kelvin [ϴ] Fahrenheit : AbsoluteZero = DegFahrenheit -459.66999999999996
 
-        (Fahrenheit)Rankine
-        (Fahrenheit)Celsius
-        (Fahrenheit)Kelvin
+    (Fahrenheit)Rankine
+    (Fahrenheit)Celsius
+    (Fahrenheit)Kelvin
 
+// End of report ///////////////////////////////////////////////////////////////

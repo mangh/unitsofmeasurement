@@ -68,84 +68,15 @@
     <Compile Include="RuntimeLoader\GeneratorExt.cs" />
     <Compile Include="RuntimeLoader\Parser.cs" />
     <Compile Include="RuntimeLoader\RuntimeLoader.cs" />
-    <Compile Include="Units\Celsius.cs">
-      <DependentUpon>_generator.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Units\Cycles.cs">
-      <DependentUpon>_generator.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Units\DegCelsius.cs">
-      <DependentUpon>_generator.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Units\DegFahrenheit.cs">
-      <DependentUpon>_generator.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Units\DegKelvin.cs">
-      <DependentUpon>_generator.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Units\DegRankine.cs">
-      <DependentUpon>_generator.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Units\Degree.cs">
-      <DependentUpon>_generator.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Units\EUR.cs">
-      <DependentUpon>_generator.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Units\Fahrenheit.cs">
-      <DependentUpon>_generator.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Units\Hertz.cs">
-      <DependentUpon>_generator.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Units\Joule.cs">
-      <DependentUpon>_generator.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Units\Kelvin.cs">
-      <DependentUpon>_generator.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Units\Kilogram.cs">
-      <DependentUpon>_generator.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Units\Meter.cs">
-      <DependentUpon>_generator.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Units\Meter_Sec.cs">
-      <DependentUpon>_generator.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Units\Meter_Sec2.cs">
-      <DependentUpon>_generator.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Units\Newton.cs">
-      <DependentUpon>_generator.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Units\NewtonMeter.cs">
-      <DependentUpon>_generator.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Units\PLN.cs">
-      <DependentUpon>_generator.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Units\Radian.cs">
-      <DependentUpon>_generator.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Units\Rankine.cs">
-      <DependentUpon>_generator.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Units\Second.cs">
-      <DependentUpon>_generator.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Units\SquareMeter.cs">
-      <DependentUpon>_generator.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Units\USD.cs">
+    <Compile Include="Units\_generator.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
       <DependentUpon>_generator.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Units\_definitions.txt" />
     <Content Include="Units\_generator.txt">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>_generator.tt</DependentUpon>
     </Content>
   </ItemGroup>
@@ -157,7 +88,7 @@
     </None>
     <None Include="Units\_generator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>_generator.txt</LastGenOutput>
+      <LastGenOutput>_generator.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>

@@ -1,17 +1,10 @@
-﻿<#@ template debug="false" hostspecific="true" language="C#" #>
-<#@ output extension=".txt" #>
-<#@ assembly name="System.Xml" #>
+<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ output extension=".cs" #>
 <#@ assembly name="EnvDTE" #>
-<#@ assembly name="Microsoft.VisualStudio.OLE.Interop" #>
-<#@ assembly name="Microsoft.VisualStudio.Shell" #>
-<#@ assembly name="Microsoft.VisualStudio.Shell.Interop" #>
 <#@ assembly name="Man.UnitsOfMeasurement.Parser.dll" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.IO" #>
 <#@ import namespace="System.Text" #>
-<#@ import namespace="System.Xml" #>
-<#@ import namespace="Microsoft.VisualStudio.Shell" #>
-<#@ import namespace="Microsoft.VisualStudio.Shell.Interop" #>
 <#@ import namespace="Microsoft.VisualStudio.TextTemplating" #>
 <#@ import namespace="System.CodeDom.Compiler" #>
 <#@ import namespace="Man.UnitsOfMeasurement" #>
@@ -27,193 +20,6 @@
         Parser parser = new Parser(lexer, units, scales);
         parser.Parse();
     }
-
-    foreach (UnitType u in units)
-    {
-        ProcessUnit(u);
-    }
-    foreach (ScaleType s in scales)
-    {
-        ProcessScale(s);
-    }
-
-    Summarize(units, scales);
-
-    DeleteOldOutputs();
-    Host.LogErrors(__errorCollection);
-#>
-
-<#+
-    int __family = 0;
-
-    string __templateDirectory;
-    string __inputFilePath;
-    string __defaultNamespace;
-    string __projectNamespace;
-    string __toolNamespace;
-
-    EnvDTE.Project __dteProject;
-    EnvDTE.ProjectItem __templateProjectItem;
-    CompilerErrorCollection __errorCollection;
-
-    void Initialize(string inputFileName)
-    {
-        __templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
-
-        __inputFilePath = Path.Combine(__templateDirectory, inputFileName);
-
-        __dteProject = __getTemplateProject();
-        __defaultNamespace = (string)__dteProject.Properties.Item("DefaultNamespace").Value;
-
-        __templateProjectItem = __getTemplateProjectItem(__dteProject);
-        __toolNamespace = (string)__templateProjectItem.Properties.Item("CustomToolNamespace").Value;
-
-        __projectNamespace = String.IsNullOrWhiteSpace(__toolNamespace) ? __defaultNamespace : __toolNamespace;
-
-        __errorCollection = new CompilerErrorCollection();
-
-        __savedOutputs.Add(Path.GetFileNameWithoutExtension(Host.TemplateFile) + ".txt");
-    }
-
-    void LogParserError(bool isError, int line, int column, string token, string message)
-    {
-        __errorCollection.Add( new CompilerError(__inputFilePath, line, column, token, message));
-    }
-#>
-<#+
-    // This code block is a slightly modified version of what has been published in
-    // Oleg Sych article "How to generate multiple outputs from single T4 template", at:
-    // http://www.olegsych.com/2008/03/how-to-generate-multiple-outputs-from-single-t4-template/
-    // under the terms of Creative Commons License, published at:
-    // http://creativecommons.org/licenses/by/2.5/
-
-    List<string> __savedOutputs = new List<string>();
-
-    void DeleteOldOutputs()
-    {
-        foreach (EnvDTE.ProjectItem childProjectItem in __templateProjectItem.ProjectItems)
-        {
-            if (!__savedOutputs.Contains(childProjectItem.Name))
-                childProjectItem.Delete();
-        }
-        __templateProjectItem.ExpandView();
-    }
-
-    void SaveOutput(string outputFileName)
-    {
-        string outputFilePath = Path.Combine(__templateDirectory, outputFileName);
-        File.WriteAllText(outputFilePath, this.GenerationEnvironment.ToString());
-
-        this.GenerationEnvironment.Clear();
-
-        __templateProjectItem.ProjectItems.AddFromFile(outputFilePath);
-
-        __savedOutputs.Add(outputFileName);
-    }
-
-    EnvDTE.ProjectItem __getTemplateProjectItem(EnvDTE.Project project)
-    {
-        IVsProject vsProject = __dteProjectToVsProject(project);
-
-        int iFound = 0;
-        uint itemId = 0;
-        VSDOCUMENTPRIORITY[] pdwPriority = new VSDOCUMENTPRIORITY[1];
-        int result = vsProject.IsDocumentInProject(Host.TemplateFile, out iFound, pdwPriority, out itemId);
-        if (result != VSConstants.S_OK)
-            throw new Exception("Unexpected error calling IVsProject.IsDocumentInProject");
-        if (iFound == 0)
-            throw new Exception("Cannot retrieve ProjectItem for template file");
-        if (itemId == 0)
-            throw new Exception("Cannot retrieve ProjectItem for template file");
-
-        Microsoft.VisualStudio.OLE.Interop.IServiceProvider itemContext = null;
-        result = vsProject.GetItemContext(itemId, out itemContext);
-        if (result != VSConstants.S_OK)
-            throw new Exception("Unexpected error calling IVsProject.GetItemContext");
-        if (itemContext == null)
-            throw new Exception("IVsProject.GetItemContext returned null");
-    
-        ServiceProvider itemContextService = new ServiceProvider(itemContext);
-        EnvDTE.ProjectItem templateItem = (EnvDTE.ProjectItem)itemContextService.GetService(typeof(EnvDTE.ProjectItem));
-
-        if(templateItem == null)
-            throw new Exception("itemContextService.GetService returned null");
-
-        return templateItem;
-    }
-
-    EnvDTE.Project __getTemplateProject()
-    {
-        IServiceProvider hostServiceProvider = (IServiceProvider)Host;
-        if (hostServiceProvider == null)
-            throw new Exception("Host property returned unexpected value (null)");
-
-        EnvDTE.DTE dte = (EnvDTE.DTE)hostServiceProvider.GetService(typeof(EnvDTE.DTE));
-        if (dte == null)
-            throw new Exception("Unable to retrieve EnvDTE.DTE");
-
-        Array activeSolutionProjects = (Array)dte.ActiveSolutionProjects;
-        if (activeSolutionProjects == null)
-            throw new Exception("DTE.ActiveSolutionProjects returned null");
-
-        EnvDTE.Project dteProject = (EnvDTE.Project)activeSolutionProjects.GetValue(0);
-        if (dteProject == null)
-            throw new Exception("DTE.ActiveSolutionProjects[0] returned null");
-
-        return dteProject;
-    }
-
-    static IVsProject __dteProjectToVsProject(EnvDTE.Project project)
-    {
-        string projectGuid = null;        
-
-        // DTE does not expose the project GUID that exists at in the msbuild project file.        
-        // Cannot use MSBuild object model because it uses a static instance of the Engine,         
-        // and using the Project will cause it to be unloaded from the engine when the         
-        // GC collects the variable that we declare.       
-        using (XmlReader projectReader = XmlReader.Create(project.FileName))
-        {
-            projectReader.MoveToContent();
-            object nodeName = projectReader.NameTable.Add("ProjectGuid");
-            while (projectReader.Read())
-            {
-                if (Object.Equals(projectReader.LocalName, nodeName))
-                {
-                    projectGuid = (string)projectReader.ReadElementContentAsString(); 
-                    break;
-                }
-            }
-        }
-        if (string.IsNullOrEmpty(projectGuid))
-            throw new Exception("Unable to find ProjectGuid element in the project file");
-
-        Microsoft.VisualStudio.OLE.Interop.IServiceProvider dteServiceProvider = 
-            (Microsoft.VisualStudio.OLE.Interop.IServiceProvider)project.DTE;
-        IServiceProvider serviceProvider = new ServiceProvider(dteServiceProvider); 
-        IVsHierarchy vsHierarchy = VsShellUtilities.GetHierarchy(serviceProvider, new Guid(projectGuid));
-            
-        IVsProject vsProject = (IVsProject)vsHierarchy;
-        if (vsProject == null)
-            throw new ArgumentException("Project is not a VS project.");
-        return vsProject;
-    }
-#>
-
-<#+
-    void ProcessUnit(UnitType u)
-    {
-        string Namespace = __projectNamespace;
-        
-        string Unit = u.Name;
-        string Sense = u.Sense.Code;
-        string Family = (u.Prime == null) ? (__family++).ToString() : String.Format("{0}.Family", u.FamilyPrime().Name);
-        string Format = u.Format;
-        string Tags = String.Format("\"{0}\"", String.Join("\", \"", u.Tags));
-        
-        string Factor = u.Factor.Code;
-        string Value = u.Factor.Value.Type.Name;
-        string One = u.Factor.Value.Type.One.CSString();
-        string Zero = u.Factor.Value.Type.Zero.CSString();
 #>
 /*******************************************************************************
 
@@ -228,8 +34,111 @@
 ********************************************************************************/
 using System;
 
-namespace <#= Namespace #>
+namespace <#= __targetNamespace #>
 {
+<#
+    __family = 0;
+    foreach (UnitType u in units)
+    {
+        ProcessUnit(u);
+    }
+
+    __scalestartfamily = __family;
+    foreach (ScaleType s in scales)
+    {
+        ProcessScale(s);
+    }
+
+    Summarize(units, scales, __templateName + ".txt");
+    DeleteObsoleteItems();
+#>
+}
+
+<#+
+    int __family;
+    int __scalestartfamily;
+
+    string __templateFolder;
+    string __templateName;
+    string __inputFilePath;
+    string __targetNamespace;
+
+    EnvDTE.Project __project;               // project containing this template
+    EnvDTE.ProjectItem __template;          // this template
+
+    void Initialize(string inputFileName)
+    {
+        __templateFolder = Path.GetDirectoryName(Host.TemplateFile);
+        __templateName = Path.GetFileNameWithoutExtension(Host.TemplateFile);
+        __inputFilePath = Path.Combine(__templateFolder, inputFileName);
+        __project = GetTemplateProject();
+        __template = GetTemplateItem(__project.ProjectItems);
+
+        __targetNamespace = (string)__template.Properties.Item("CustomToolNamespace").Value;
+        if (String.IsNullOrWhiteSpace(__targetNamespace))
+            __targetNamespace = (string)__project.Properties.Item("DefaultNamespace").Value;
+    }
+
+    EnvDTE.Project GetTemplateProject()
+    {
+        IServiceProvider serviceProvider = (IServiceProvider)this.Host;
+        EnvDTE.DTE dte = (EnvDTE.DTE)serviceProvider.GetService(typeof(EnvDTE.DTE));    // = (EnvDTE.DTE)serviceProvider.GetCOMService(typeof(EnvDTE.DTE)) for VS2012+;
+        Array projects = (Array)dte.ActiveSolutionProjects;
+        return (EnvDTE.Project)projects.GetValue(0);
+    }
+
+    EnvDTE.ProjectItem GetTemplateItem(EnvDTE.ProjectItems items)
+    {
+        if (items != null)
+        {
+            foreach(EnvDTE.ProjectItem item in items)
+            {
+                EnvDTE.Property itempath = item.Properties.Item("FullPath");
+                if ((itempath != null) && Host.TemplateFile.Equals((string)itempath.Value, StringComparison.OrdinalIgnoreCase))
+                    return item;
+
+                EnvDTE.ProjectItem subitem = GetTemplateItem(item.ProjectItems);
+                if (subitem != null)
+                    return subitem;
+            }
+        }
+        return null;
+    }
+
+    void DeleteObsoleteItems()
+    {
+        string summaryItemName = __templateName + ".txt";
+        string codeItemName = __templateName + ".cs";
+        foreach (EnvDTE.ProjectItem item in __template.ProjectItems)
+        {
+            if (!item.Name.Equals(summaryItemName, StringComparison.OrdinalIgnoreCase) &&
+                !item.Name.Equals(codeItemName, StringComparison.OrdinalIgnoreCase))
+                item.Delete();
+        }
+    }
+
+    void LogParserError(bool isError, int line, int column, string token, string message)
+    {
+        var error = new CompilerError(__inputFilePath, line, column, token, message);
+        error.IsWarning = !isError;
+        this.Errors.Add(error);
+    }
+#>
+
+<#+
+    void ProcessUnit(UnitType u)
+    {
+        string Unit = u.Name;
+        string Sense = u.Sense.Code;
+        string Family = (u.Prime == null) ? (__family++).ToString() : String.Format("{0}.Family", u.FamilyPrime().Name);
+        string Format = u.Format;
+        string Tags = String.Format("\"{0}\"", String.Join("\", \"", u.Tags));
+        
+        string Factor = u.Factor.Code;
+        string Value = u.Factor.Value.Type.Name;
+        string One = u.Factor.Value.Type.One.CSString();
+        string Zero = u.Factor.Value.Type.Zero.CSString();
+#>
     public partial struct <#= Unit #> : IQuantity<<#= Value #>>, IEquatable<<#= Unit #>>, IComparable<<#= Unit #>>, IFormattable
     {
         #region Fields
@@ -339,17 +248,14 @@ namespace <#= Namespace #>
         public static <#= Unit #> Zero { get { return s_zero; } }
         #endregion
     }
-}
+
 <#+
-        SaveOutput(Unit + ".cs");
     }
 #>
 
 <#+
     void ProcessScale(ScaleType s)
     {
-        string Namespace = __projectNamespace;
-
         string Scale = s.Name;
         string Unit = s.Unit.Name;
         string Offset = s.Offset.Code;
@@ -360,21 +266,6 @@ namespace <#= Namespace #>
         string One = s.Unit.Factor.Value.Type.One.CSString();
         string Zero = s.Unit.Factor.Value.Type.Zero.CSString();
 #>
-/*******************************************************************************
-
-    Units of Measurement for C# applications
-
-    Copyright (C) Marek Aniola
-
-    This program is provided to you under the terms of the license
-    as published at https://github.com/mangh/unitsofmeasurement
-
-
-********************************************************************************/
-using System;
-
-namespace <#= Namespace #>
-{
 <#+
         if (!String.IsNullOrWhiteSpace(s.RefPoint))
         {
@@ -485,66 +376,70 @@ namespace <#= Namespace #>
         public static <#= Scale #> Zero { get { return s_zero; } }
         #endregion
     }
-}
+
 <#+
-        SaveOutput(Scale + ".cs");
     }
 #>
 
 <#+
-    void Summarize(List<UnitType> units, List<ScaleType> scales)
+    void Summarize(List<UnitType> units, List<ScaleType> scales, string fileName)
     {
-#>
-//////////////////////////////////////////////////////////
+        StringBuilder sb = new StringBuilder(8192);
+
+        sb.AppendFormat("Units and Scales generated on: {0}", DateTime.Now).AppendLine().AppendLine();
+
+        sb.AppendFormat(
+@"////////////////////////////////////////////////////////////////////////////////
 //
-//  U N I T S
+//  U N I T S                                  ({0} units, families: {1} - {2})
 //
-//  (family) [dim] name : factor {tags}
-<#+
+////////////////////////////////////////////////////////////////////////////////
+(family) [dim] name : factor {{tags}}", units.Count, 0, __scalestartfamily - 1).AppendLine();
+
         foreach (UnitType u in units)
         {
-#>
+            sb.AppendLine()
+              .AppendFormat("({0}) {1}", u.FamilyPrime().Name, u.ToString())
+              .AppendLine()
+              .AppendLine();
 
-    (<#= u.FamilyPrime().Name #>) <#= u.ToString() #>
-
-<#+
             foreach (MeasureType s in u.Relatives())
             {
-                string Relative = ((UnitType)s).Name;
-#>
-        (<#= u.Name #>)<#= Relative #>
-<#+
+                sb.AppendFormat("    ({0}){1}", u.Name, ((UnitType)s).Name).AppendLine();
             }
             foreach (BinaryOperation o in u.OuterOperations)
             {
-#>
-        <#= o.Result.Name #> = <#= o.Lhs.Name #> <#= o.Operation #> <#= o.Rhs.Name #>
-<#+
+                sb.AppendFormat("    {0} = {1} {2} {3}", o.Result.Name, o.Lhs.Name, o.Operation, o.Rhs.Name).AppendLine();
             }
         }
-#>
 
-//////////////////////////////////////////////////////////
+        sb.AppendLine();
+        sb.AppendFormat(
+@"////////////////////////////////////////////////////////////////////////////////
 //
-//  S C A L E S
+//  S C A L E S                               ({0} scales, families: {1} - {2})
 //
-//  (family) [dim] name : refpoint = unit offset
-<#+
+////////////////////////////////////////////////////////////////////////////////
+(family) [dim] name : refpoint = unit offset", scales.Count, __scalestartfamily, __family - 1).AppendLine();
+
         foreach (ScaleType s in scales)
         {
-            UnitType u = s.Unit;
-#>
+            sb.AppendLine()
+              .AppendFormat("{0} {1}", s.FamilyPrime().Name, s.ToString())
+              .AppendLine()
+              .AppendLine();
 
-    (<#= s.FamilyPrime().Name #>) <#= s.ToString() #>
-
-<#+
             foreach (MeasureType x in s.Relatives())
             {
-                string Relative = ((ScaleType)x).Name;
-#>
-        (<#= s.Name #>)<#= Relative #>
-<#+
+                sb.AppendFormat("    ({0}){1}", s.Name, ((ScaleType)x).Name).AppendLine();
             }
         }
+
+        sb.AppendLine();
+        sb.AppendLine("// End of report ///////////////////////////////////////////////////////////////");
+
+        string filePath = Path.Combine(__templateFolder, fileName);
+        File.WriteAllText(filePath, sb.ToString());
+        __template.ProjectItems.AddFromFile(filePath);
     }
 #>
