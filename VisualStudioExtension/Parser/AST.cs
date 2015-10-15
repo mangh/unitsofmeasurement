@@ -179,22 +179,6 @@ namespace Man.UnitsOfMeasurement
         }
 
         public override void Accept(IASTEncoder encoder) { Expr.Accept(encoder); encoder.Encode(this); }
-
-        public override ASTNode TryNormalize()
-        {
-            ASTNode normalized = Expr.TryNormalize();
-            return (normalized != null) ? new ASTUnary(Plus, normalized) : null;
-        }
-        public override ASTNode TryMultiply(ASTNode number)
-        {
-            ASTNode normalized = Expr.TryMultiply(number);
-            return (normalized != null) ? new ASTUnary(Plus, normalized) : null;
-        }
-        public override ASTNode TryDivide(ASTNode number)
-        {
-            ASTNode normalized = Expr.TryDivide(number);
-            return (normalized != null) ? new ASTUnary(Plus, normalized) : null;
-        }
     }
 
     internal class ASTParenthesized : ASTNode
@@ -228,6 +212,8 @@ namespace Man.UnitsOfMeasurement
             ASTNode normalized = Expr.TryDivide(number);
             return (normalized != null) ? new ASTParenthesized(normalized) : null;
         }
+
+        public override void Bind(UnitType result) { Expr.Bind(result); }
     }
 
     internal class ASTProduct : ASTNode
@@ -377,7 +363,7 @@ namespace Man.UnitsOfMeasurement
             if (Rhs.IsNumeric)
             {
                 // [Lhs / Rhs] / number --> Lhs / [Rhs * number]
-                ASTNode product = new ASTProduct(Rhs, number);
+                ASTNode product = new ASTParenthesized( new ASTProduct(Rhs, number));
                 ASTNode normalized = Lhs.TryDivide(product);
                 return (normalized != null) ? normalized : new ASTQuotient(Lhs, product);
             }
