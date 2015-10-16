@@ -1,4 +1,4 @@
-Units of Measurement for C# applications Release 1.2
+Units of Measurement for C# applications Release 1.3
 
 Copyright (C) Marek Aniola
 

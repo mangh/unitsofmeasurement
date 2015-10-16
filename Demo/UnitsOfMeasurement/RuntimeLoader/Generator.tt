@@ -80,7 +80,7 @@ namespace <#= __projectNamespace #>
 
         #region IObject / IEquatable<<#= Unit #>>
         public override int GetHashCode() { return m_value.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is <#= Unit #>) && Equals((<#= Unit #>)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is <#= Unit #>) && Equals((<#= Unit #>)obj); }
         public bool /* IEquatable<<#= Unit #>> */ Equals(<#= Unit #> other) { return this.Value == other.Value; }
         #endregion
 
@@ -231,7 +231,7 @@ namespace <#= __projectNamespace #>
 
         #region IObject / IEquatable<<#= Scale #>>
         public override int GetHashCode() { return m_level.GetHashCode(); }
-        public override bool /* IObject */ Equals(object obj) { return (obj != null) && (obj is <#= Scale #>) && Equals((<#= Scale #>)obj); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is <#= Scale #>) && Equals((<#= Scale #>)obj); }
         public bool /* IEquatable<<#= Scale #>> */ Equals(<#= Scale #> other) { return this.Level == other.Level; }
         #endregion
 

@@ -466,8 +466,7 @@ this.Write(this.ToStringHelper.ToStringWithCulture(Unit));
         
         #line 81 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(">\r\n        public override int GetHashCode() { return m_value.GetHashCode(); }\r\n " +
-        "       public override bool /* IObject */ Equals(object obj) { return (obj != nu" +
-        "ll) && (obj is ");
+        "       public override bool /* IObject */ Equals(object obj) { return (obj is ");
 
         
         #line default
@@ -2254,8 +2253,7 @@ this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
         
         #line 232 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(">\r\n        public override int GetHashCode() { return m_level.GetHashCode(); }\r\n " +
-        "       public override bool /* IObject */ Equals(object obj) { return (obj != nu" +
-        "ll) && (obj is ");
+        "       public override bool /* IObject */ Equals(object obj) { return (obj is ");
 
         
         #line default

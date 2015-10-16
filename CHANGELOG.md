@@ -1,3 +1,9 @@
+### Release 1.3 Build 2015.10.16.1742
+
+* fix #3: Unit family not recognized due to parenthesized dimensional
+  expressions.
+* fix #2 (again): "Run Custom Tool" performing very slow on ```_generator.tt``` under VS 2015. The generator has been modified to generate all units and scales in a single .cs file (instead of separate .cs files, one for each unit/scale). Under VS2015, it is somehow easier to recreate class-view subitems attached to a single .cs file than recreate the same class-views attached to many separate .cs files. You can restore previous functionality by replacing  ```_generator.tt``` with ```_generator-multiplefiles.tt``` from the archive   ```_alternative_generators_readme.zip``` that you can find attached to newly created projects.
+
 ### Release 1.2 Build 2015.10.01.1851
 
 * fix #1: CSharpCodeProvider not Disposed() in RuntimeLoader.Compiler.

@@ -86,6 +86,7 @@
       <LastGenOutput>Generator.cs</LastGenOutput>
       <CustomToolNamespace>$safeprojectname$</CustomToolNamespace>
     </None>
+    <None Include="Units\_alternative_generators_readme.zip" />
     <None Include="Units\_generator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>_generator.cs</LastGenOutput>
