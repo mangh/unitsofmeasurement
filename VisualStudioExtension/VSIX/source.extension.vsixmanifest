@@ -9,7 +9,8 @@
         <MoreInfoUrl>https://github.com/mangh/unitsofmeasurement</MoreInfoUrl>
         <License>license.txt</License>
         <GettingStartedGuide>https://github.com/mangh/unitsofmeasurement/wiki</GettingStartedGuide>
-        <Icon>templateIcon.ico</Icon>
+        <Icon>Icon.png</Icon>
+        <PreviewImage>Preview.PNG</PreviewImage>
         <SupportedProducts>
             <VisualStudio Version="10.0">
                 <Edition>Pro</Edition>
