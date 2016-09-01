@@ -1,8 +1,8 @@
-Units and Scales generated on: 2015-10-14 12:11:34
+﻿Units and Scales generated on 2016-09-01 17:49:26
 
 ////////////////////////////////////////////////////////////////////////////////
 //
-//  U N I T S                                  (20 units, families: 0 - 12)
+//  U N I T S                              | 20 units | 13 families (id: 0 - 12)
 //
 ////////////////////////////////////////////////////////////////////////////////
 (family) [dim] name : factor {tags}
@@ -115,33 +115,34 @@ Units and Scales generated on: 2015-10-14 12:11:34
 
 ////////////////////////////////////////////////////////////////////////////////
 //
-//  S C A L E S                               (4 scales, families: 13 - 13)
+//  S C A L E S                            | 4 scales | 1 families (id: 13 - 13)
 //
 ////////////////////////////////////////////////////////////////////////////////
 (family) [dim] name : refpoint = unit offset
 
-Kelvin [ϴ] Kelvin : AbsoluteZero = DegKelvin 0
+(Kelvin) [ϴ] Kelvin : AbsoluteZero = DegKelvin 0
 
     (Kelvin)Fahrenheit
     (Kelvin)Rankine
     (Kelvin)Celsius
 
-Kelvin [ϴ] Celsius : AbsoluteZero = DegCelsius -273.15
+(Kelvin) [ϴ] Celsius : AbsoluteZero = DegCelsius -273.15
 
     (Celsius)Kelvin
     (Celsius)Fahrenheit
     (Celsius)Rankine
 
-Kelvin [ϴ] Rankine : AbsoluteZero = DegRankine 0
+(Kelvin) [ϴ] Rankine : AbsoluteZero = DegRankine 0
 
     (Rankine)Celsius
     (Rankine)Kelvin
     (Rankine)Fahrenheit
 
-Kelvin [ϴ] Fahrenheit : AbsoluteZero = DegFahrenheit -459.66999999999996
+(Kelvin) [ϴ] Fahrenheit : AbsoluteZero = DegFahrenheit -459.66999999999996
 
     (Fahrenheit)Rankine
     (Fahrenheit)Celsius
     (Fahrenheit)Kelvin
 
 // End of report ///////////////////////////////////////////////////////////////
+

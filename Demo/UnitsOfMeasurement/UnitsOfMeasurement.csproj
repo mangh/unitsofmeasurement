@@ -72,8 +72,6 @@
     <Compile Include="Units\NewtonEx.cs" />
     <Compile Include="Units\NewtonMeterEx.cs" />
     <Compile Include="Units\_generator.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>_generator.tt</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -85,7 +83,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Units\_definitions.txt" />
+    <Content Include="Units\_generator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>_generator.txt</LastGenOutput>
+    </Content>
     <Content Include="Units\_generator.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
       <DependentUpon>_generator.tt</DependentUpon>
     </Content>
   </ItemGroup>
@@ -94,10 +98,6 @@
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>Generator.cs</LastGenOutput>
       <CustomToolNamespace>Demo.UnitsOfMeasurement</CustomToolNamespace>
-    </None>
-    <None Include="Units\_generator.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>_generator.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>

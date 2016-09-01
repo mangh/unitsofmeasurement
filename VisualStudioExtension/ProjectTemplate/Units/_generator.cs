@@ -103,7 +103,6 @@ namespace $safeprojectname$
         public static Meter Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Second : IQuantity<double>, IEquatable<Second>, IComparable<Second>, IFormattable
     {
         #region Fields
@@ -191,7 +190,6 @@ namespace $safeprojectname$
         public static Second Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Kilogram : IQuantity<double>, IEquatable<Kilogram>, IComparable<Kilogram>, IFormattable
     {
         #region Fields
@@ -281,7 +279,6 @@ namespace $safeprojectname$
         public static Kilogram Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct DegKelvin : IQuantity<double>, IEquatable<DegKelvin>, IComparable<DegKelvin>, IFormattable
     {
         #region Fields
@@ -372,7 +369,6 @@ namespace $safeprojectname$
         public static DegKelvin Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct DegCelsius : IQuantity<double>, IEquatable<DegCelsius>, IComparable<DegCelsius>, IFormattable
     {
         #region Fields
@@ -463,7 +459,6 @@ namespace $safeprojectname$
         public static DegCelsius Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct DegRankine : IQuantity<double>, IEquatable<DegRankine>, IComparable<DegRankine>, IFormattable
     {
         #region Fields
@@ -554,7 +549,6 @@ namespace $safeprojectname$
         public static DegRankine Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct DegFahrenheit : IQuantity<double>, IEquatable<DegFahrenheit>, IComparable<DegFahrenheit>, IFormattable
     {
         #region Fields
@@ -645,7 +639,6 @@ namespace $safeprojectname$
         public static DegFahrenheit Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct EUR : IQuantity<decimal>, IEquatable<EUR>, IComparable<EUR>, IFormattable
     {
         #region Fields
@@ -735,7 +728,6 @@ namespace $safeprojectname$
         public static EUR Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct USD : IQuantity<decimal>, IEquatable<USD>, IComparable<USD>, IFormattable
     {
         #region Fields
@@ -825,7 +817,6 @@ namespace $safeprojectname$
         public static USD Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct PLN : IQuantity<decimal>, IEquatable<PLN>, IComparable<PLN>, IFormattable
     {
         #region Fields
@@ -915,7 +906,6 @@ namespace $safeprojectname$
         public static PLN Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Radian : IQuantity<double>, IEquatable<Radian>, IComparable<Radian>, IFormattable
     {
         #region Fields
@@ -1005,7 +995,6 @@ namespace $safeprojectname$
         public static Radian Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Degree : IQuantity<double>, IEquatable<Degree>, IComparable<Degree>, IFormattable
     {
         #region Fields
@@ -1095,7 +1084,6 @@ namespace $safeprojectname$
         public static Degree Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Cycles : IQuantity<double>, IEquatable<Cycles>, IComparable<Cycles>, IFormattable
     {
         #region Fields
@@ -1187,7 +1175,6 @@ namespace $safeprojectname$
         public static Cycles Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Hertz : IQuantity<double>, IEquatable<Hertz>, IComparable<Hertz>, IFormattable
     {
         #region Fields
@@ -1277,7 +1264,6 @@ namespace $safeprojectname$
         public static Hertz Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct SquareMeter : IQuantity<double>, IEquatable<SquareMeter>, IComparable<SquareMeter>, IFormattable
     {
         #region Fields
@@ -1366,7 +1352,6 @@ namespace $safeprojectname$
         public static SquareMeter Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Meter_Sec : IQuantity<double>, IEquatable<Meter_Sec>, IComparable<Meter_Sec>, IFormattable
     {
         #region Fields
@@ -1458,7 +1443,6 @@ namespace $safeprojectname$
         public static Meter_Sec Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Meter_Sec2 : IQuantity<double>, IEquatable<Meter_Sec2>, IComparable<Meter_Sec2>, IFormattable
     {
         #region Fields
@@ -1548,7 +1532,6 @@ namespace $safeprojectname$
         public static Meter_Sec2 Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Newton : IQuantity<double>, IEquatable<Newton>, IComparable<Newton>, IFormattable
     {
         #region Fields
@@ -1640,7 +1623,6 @@ namespace $safeprojectname$
         public static Newton Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Joule : IQuantity<double>, IEquatable<Joule>, IComparable<Joule>, IFormattable
     {
         #region Fields
@@ -1730,7 +1712,6 @@ namespace $safeprojectname$
         public static Joule Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct NewtonMeter : IQuantity<double>, IEquatable<NewtonMeter>, IComparable<NewtonMeter>, IFormattable
     {
         #region Fields
@@ -1818,7 +1799,6 @@ namespace $safeprojectname$
         public static NewtonMeter Zero { get { return s_zero; } }
         #endregion
     }
-
     [ScaleReferencePoint("AbsoluteZero")]
     public partial struct Kelvin : ILevel<double>, IEquatable<Kelvin>, IComparable<Kelvin>, IFormattable
     {
@@ -1916,7 +1896,6 @@ namespace $safeprojectname$
         public static Kelvin Zero { get { return s_zero; } }
         #endregion
     }
-
     [ScaleReferencePoint("AbsoluteZero")]
     public partial struct Celsius : ILevel<double>, IEquatable<Celsius>, IComparable<Celsius>, IFormattable
     {
@@ -2014,7 +1993,6 @@ namespace $safeprojectname$
         public static Celsius Zero { get { return s_zero; } }
         #endregion
     }
-
     [ScaleReferencePoint("AbsoluteZero")]
     public partial struct Rankine : ILevel<double>, IEquatable<Rankine>, IComparable<Rankine>, IFormattable
     {
@@ -2112,7 +2090,6 @@ namespace $safeprojectname$
         public static Rankine Zero { get { return s_zero; } }
         #endregion
     }
-
     [ScaleReferencePoint("AbsoluteZero")]
     public partial struct Fahrenheit : ILevel<double>, IEquatable<Fahrenheit>, IComparable<Fahrenheit>, IFormattable
     {
@@ -2210,6 +2187,4 @@ namespace $safeprojectname$
         public static Fahrenheit Zero { get { return s_zero; } }
         #endregion
     }
-
 }
-

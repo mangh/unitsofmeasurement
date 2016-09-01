@@ -110,7 +110,6 @@ namespace Demo.UnitsOfMeasurement
         public static Meter Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Centimeter : IQuantity<double>, IEquatable<Centimeter>, IComparable<Centimeter>, IFormattable
     {
         #region Fields
@@ -205,7 +204,6 @@ namespace Demo.UnitsOfMeasurement
         public static Centimeter Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Millimeter : IQuantity<double>, IEquatable<Millimeter>, IComparable<Millimeter>, IFormattable
     {
         #region Fields
@@ -300,7 +298,6 @@ namespace Demo.UnitsOfMeasurement
         public static Millimeter Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Kilometer : IQuantity<double>, IEquatable<Kilometer>, IComparable<Kilometer>, IFormattable
     {
         #region Fields
@@ -397,7 +394,6 @@ namespace Demo.UnitsOfMeasurement
         public static Kilometer Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Inch : IQuantity<double>, IEquatable<Inch>, IComparable<Inch>, IFormattable
     {
         #region Fields
@@ -492,7 +488,6 @@ namespace Demo.UnitsOfMeasurement
         public static Inch Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Foot : IQuantity<double>, IEquatable<Foot>, IComparable<Foot>, IFormattable
     {
         #region Fields
@@ -588,7 +583,6 @@ namespace Demo.UnitsOfMeasurement
         public static Foot Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Yard : IQuantity<double>, IEquatable<Yard>, IComparable<Yard>, IFormattable
     {
         #region Fields
@@ -683,7 +677,6 @@ namespace Demo.UnitsOfMeasurement
         public static Yard Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Mile : IQuantity<double>, IEquatable<Mile>, IComparable<Mile>, IFormattable
     {
         #region Fields
@@ -780,7 +773,6 @@ namespace Demo.UnitsOfMeasurement
         public static Mile Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Second : IQuantity<double>, IEquatable<Second>, IComparable<Second>, IFormattable
     {
         #region Fields
@@ -872,7 +864,6 @@ namespace Demo.UnitsOfMeasurement
         public static Second Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Minute : IQuantity<double>, IEquatable<Minute>, IComparable<Minute>, IFormattable
     {
         #region Fields
@@ -962,7 +953,6 @@ namespace Demo.UnitsOfMeasurement
         public static Minute Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Hour : IQuantity<double>, IEquatable<Hour>, IComparable<Hour>, IFormattable
     {
         #region Fields
@@ -1052,7 +1042,6 @@ namespace Demo.UnitsOfMeasurement
         public static Hour Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Kilogram : IQuantity<double>, IEquatable<Kilogram>, IComparable<Kilogram>, IFormattable
     {
         #region Fields
@@ -1146,7 +1135,6 @@ namespace Demo.UnitsOfMeasurement
         public static Kilogram Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Gram : IQuantity<double>, IEquatable<Gram>, IComparable<Gram>, IFormattable
     {
         #region Fields
@@ -1238,7 +1226,6 @@ namespace Demo.UnitsOfMeasurement
         public static Gram Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Tonne : IQuantity<double>, IEquatable<Tonne>, IComparable<Tonne>, IFormattable
     {
         #region Fields
@@ -1330,7 +1317,6 @@ namespace Demo.UnitsOfMeasurement
         public static Tonne Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Pound : IQuantity<double>, IEquatable<Pound>, IComparable<Pound>, IFormattable
     {
         #region Fields
@@ -1422,7 +1408,6 @@ namespace Demo.UnitsOfMeasurement
         public static Pound Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Ounce : IQuantity<double>, IEquatable<Ounce>, IComparable<Ounce>, IFormattable
     {
         #region Fields
@@ -1514,7 +1499,6 @@ namespace Demo.UnitsOfMeasurement
         public static Ounce Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct DegKelvin : IQuantity<double>, IEquatable<DegKelvin>, IComparable<DegKelvin>, IFormattable
     {
         #region Fields
@@ -1605,7 +1589,6 @@ namespace Demo.UnitsOfMeasurement
         public static DegKelvin Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct DegCelsius : IQuantity<double>, IEquatable<DegCelsius>, IComparable<DegCelsius>, IFormattable
     {
         #region Fields
@@ -1696,7 +1679,6 @@ namespace Demo.UnitsOfMeasurement
         public static DegCelsius Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct DegRankine : IQuantity<double>, IEquatable<DegRankine>, IComparable<DegRankine>, IFormattable
     {
         #region Fields
@@ -1787,7 +1769,6 @@ namespace Demo.UnitsOfMeasurement
         public static DegRankine Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct DegFahrenheit : IQuantity<double>, IEquatable<DegFahrenheit>, IComparable<DegFahrenheit>, IFormattable
     {
         #region Fields
@@ -1878,7 +1859,6 @@ namespace Demo.UnitsOfMeasurement
         public static DegFahrenheit Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Ampere : IQuantity<double>, IEquatable<Ampere>, IComparable<Ampere>, IFormattable
     {
         #region Fields
@@ -1970,7 +1950,6 @@ namespace Demo.UnitsOfMeasurement
         public static Ampere Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Mole : IQuantity<double>, IEquatable<Mole>, IComparable<Mole>, IFormattable
     {
         #region Fields
@@ -2058,7 +2037,6 @@ namespace Demo.UnitsOfMeasurement
         public static Mole Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Candela : IQuantity<double>, IEquatable<Candela>, IComparable<Candela>, IFormattable
     {
         #region Fields
@@ -2146,7 +2124,6 @@ namespace Demo.UnitsOfMeasurement
         public static Candela Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct EUR : IQuantity<decimal>, IEquatable<EUR>, IComparable<EUR>, IFormattable
     {
         #region Fields
@@ -2237,7 +2214,6 @@ namespace Demo.UnitsOfMeasurement
         public static EUR Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct USD : IQuantity<decimal>, IEquatable<USD>, IComparable<USD>, IFormattable
     {
         #region Fields
@@ -2328,7 +2304,6 @@ namespace Demo.UnitsOfMeasurement
         public static USD Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct GBP : IQuantity<decimal>, IEquatable<GBP>, IComparable<GBP>, IFormattable
     {
         #region Fields
@@ -2419,7 +2394,6 @@ namespace Demo.UnitsOfMeasurement
         public static GBP Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct PLN : IQuantity<decimal>, IEquatable<PLN>, IComparable<PLN>, IFormattable
     {
         #region Fields
@@ -2510,7 +2484,6 @@ namespace Demo.UnitsOfMeasurement
         public static PLN Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Radian : IQuantity<double>, IEquatable<Radian>, IComparable<Radian>, IFormattable
     {
         #region Fields
@@ -2603,7 +2576,6 @@ namespace Demo.UnitsOfMeasurement
         public static Radian Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Degree : IQuantity<double>, IEquatable<Degree>, IComparable<Degree>, IFormattable
     {
         #region Fields
@@ -2694,7 +2666,6 @@ namespace Demo.UnitsOfMeasurement
         public static Degree Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Grad : IQuantity<double>, IEquatable<Grad>, IComparable<Grad>, IFormattable
     {
         #region Fields
@@ -2785,7 +2756,6 @@ namespace Demo.UnitsOfMeasurement
         public static Grad Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Cycles : IQuantity<double>, IEquatable<Cycles>, IComparable<Cycles>, IFormattable
     {
         #region Fields
@@ -2880,7 +2850,6 @@ namespace Demo.UnitsOfMeasurement
         public static Cycles Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Steradian : IQuantity<double>, IEquatable<Steradian>, IComparable<Steradian>, IFormattable
     {
         #region Fields
@@ -2968,7 +2937,6 @@ namespace Demo.UnitsOfMeasurement
         public static Steradian Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Hertz : IQuantity<double>, IEquatable<Hertz>, IComparable<Hertz>, IFormattable
     {
         #region Fields
@@ -3060,7 +3028,6 @@ namespace Demo.UnitsOfMeasurement
         public static Hertz Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Radian_Sec : IQuantity<double>, IEquatable<Radian_Sec>, IComparable<Radian_Sec>, IFormattable
     {
         #region Fields
@@ -3152,7 +3119,6 @@ namespace Demo.UnitsOfMeasurement
         public static Radian_Sec Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct RPM : IQuantity<double>, IEquatable<RPM>, IComparable<RPM>, IFormattable
     {
         #region Fields
@@ -3244,7 +3210,6 @@ namespace Demo.UnitsOfMeasurement
         public static RPM Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct SquareMeter : IQuantity<double>, IEquatable<SquareMeter>, IComparable<SquareMeter>, IFormattable
     {
         #region Fields
@@ -3336,7 +3301,6 @@ namespace Demo.UnitsOfMeasurement
         public static SquareMeter Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct SquareFoot : IQuantity<double>, IEquatable<SquareFoot>, IComparable<SquareFoot>, IFormattable
     {
         #region Fields
@@ -3426,7 +3390,6 @@ namespace Demo.UnitsOfMeasurement
         public static SquareFoot Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct CubicMeter : IQuantity<double>, IEquatable<CubicMeter>, IComparable<CubicMeter>, IFormattable
     {
         #region Fields
@@ -3516,7 +3479,6 @@ namespace Demo.UnitsOfMeasurement
         public static CubicMeter Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Meter_Sec : IQuantity<double>, IEquatable<Meter_Sec>, IComparable<Meter_Sec>, IFormattable
     {
         #region Fields
@@ -3611,7 +3573,6 @@ namespace Demo.UnitsOfMeasurement
         public static Meter_Sec Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Kilometer_Hour : IQuantity<double>, IEquatable<Kilometer_Hour>, IComparable<Kilometer_Hour>, IFormattable
     {
         #region Fields
@@ -3703,7 +3664,6 @@ namespace Demo.UnitsOfMeasurement
         public static Kilometer_Hour Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct MPH : IQuantity<double>, IEquatable<MPH>, IComparable<MPH>, IFormattable
     {
         #region Fields
@@ -3795,7 +3755,6 @@ namespace Demo.UnitsOfMeasurement
         public static MPH Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Meter_Sec2 : IQuantity<double>, IEquatable<Meter_Sec2>, IComparable<Meter_Sec2>, IFormattable
     {
         #region Fields
@@ -3887,7 +3846,6 @@ namespace Demo.UnitsOfMeasurement
         public static Meter_Sec2 Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Newton : IQuantity<double>, IEquatable<Newton>, IComparable<Newton>, IFormattable
     {
         #region Fields
@@ -3984,7 +3942,6 @@ namespace Demo.UnitsOfMeasurement
         public static Newton Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct PoundForce : IQuantity<double>, IEquatable<PoundForce>, IComparable<PoundForce>, IFormattable
     {
         #region Fields
@@ -4075,7 +4032,6 @@ namespace Demo.UnitsOfMeasurement
         public static PoundForce Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Poundal : IQuantity<double>, IEquatable<Poundal>, IComparable<Poundal>, IFormattable
     {
         #region Fields
@@ -4166,7 +4122,6 @@ namespace Demo.UnitsOfMeasurement
         public static Poundal Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Dyne : IQuantity<double>, IEquatable<Dyne>, IComparable<Dyne>, IFormattable
     {
         #region Fields
@@ -4257,7 +4212,6 @@ namespace Demo.UnitsOfMeasurement
         public static Dyne Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Joule : IQuantity<double>, IEquatable<Joule>, IComparable<Joule>, IFormattable
     {
         #region Fields
@@ -4355,7 +4309,6 @@ namespace Demo.UnitsOfMeasurement
         public static Joule Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Watt : IQuantity<double>, IEquatable<Watt>, IComparable<Watt>, IFormattable
     {
         #region Fields
@@ -4447,7 +4400,6 @@ namespace Demo.UnitsOfMeasurement
         public static Watt Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct NewtonMeter : IQuantity<double>, IEquatable<NewtonMeter>, IComparable<NewtonMeter>, IFormattable
     {
         #region Fields
@@ -4535,7 +4487,6 @@ namespace Demo.UnitsOfMeasurement
         public static NewtonMeter Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Joule_Kelvin : IQuantity<double>, IEquatable<Joule_Kelvin>, IComparable<Joule_Kelvin>, IFormattable
     {
         #region Fields
@@ -4627,7 +4578,6 @@ namespace Demo.UnitsOfMeasurement
         public static Joule_Kelvin Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Joule_Kelvin_Kilogram : IQuantity<double>, IEquatable<Joule_Kelvin_Kilogram>, IComparable<Joule_Kelvin_Kilogram>, IFormattable
     {
         #region Fields
@@ -4717,7 +4667,6 @@ namespace Demo.UnitsOfMeasurement
         public static Joule_Kelvin_Kilogram Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Pascal : IQuantity<double>, IEquatable<Pascal>, IComparable<Pascal>, IFormattable
     {
         #region Fields
@@ -4811,7 +4760,6 @@ namespace Demo.UnitsOfMeasurement
         public static Pascal Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Bar : IQuantity<double>, IEquatable<Bar>, IComparable<Bar>, IFormattable
     {
         #region Fields
@@ -4903,7 +4851,6 @@ namespace Demo.UnitsOfMeasurement
         public static Bar Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct AtmTechnical : IQuantity<double>, IEquatable<AtmTechnical>, IComparable<AtmTechnical>, IFormattable
     {
         #region Fields
@@ -4995,7 +4942,6 @@ namespace Demo.UnitsOfMeasurement
         public static AtmTechnical Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct AtmStandard : IQuantity<double>, IEquatable<AtmStandard>, IComparable<AtmStandard>, IFormattable
     {
         #region Fields
@@ -5087,7 +5033,6 @@ namespace Demo.UnitsOfMeasurement
         public static AtmStandard Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct MillimeterHg : IQuantity<double>, IEquatable<MillimeterHg>, IComparable<MillimeterHg>, IFormattable
     {
         #region Fields
@@ -5179,7 +5124,6 @@ namespace Demo.UnitsOfMeasurement
         public static MillimeterHg Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Coulomb : IQuantity<double>, IEquatable<Coulomb>, IComparable<Coulomb>, IFormattable
     {
         #region Fields
@@ -5271,7 +5215,6 @@ namespace Demo.UnitsOfMeasurement
         public static Coulomb Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Volt : IQuantity<double>, IEquatable<Volt>, IComparable<Volt>, IFormattable
     {
         #region Fields
@@ -5367,7 +5310,6 @@ namespace Demo.UnitsOfMeasurement
         public static Volt Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Ohm : IQuantity<double>, IEquatable<Ohm>, IComparable<Ohm>, IFormattable
     {
         #region Fields
@@ -5457,7 +5399,6 @@ namespace Demo.UnitsOfMeasurement
         public static Ohm Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Siemens : IQuantity<double>, IEquatable<Siemens>, IComparable<Siemens>, IFormattable
     {
         #region Fields
@@ -5547,7 +5488,6 @@ namespace Demo.UnitsOfMeasurement
         public static Siemens Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Farad : IQuantity<double>, IEquatable<Farad>, IComparable<Farad>, IFormattable
     {
         #region Fields
@@ -5639,7 +5579,6 @@ namespace Demo.UnitsOfMeasurement
         public static Farad Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Weber : IQuantity<double>, IEquatable<Weber>, IComparable<Weber>, IFormattable
     {
         #region Fields
@@ -5731,7 +5670,6 @@ namespace Demo.UnitsOfMeasurement
         public static Weber Zero { get { return s_zero; } }
         #endregion
     }
-
     public partial struct Meter2_Sec2 : IQuantity<double>, IEquatable<Meter2_Sec2>, IComparable<Meter2_Sec2>, IFormattable
     {
         #region Fields
@@ -5822,7 +5760,6 @@ namespace Demo.UnitsOfMeasurement
         public static Meter2_Sec2 Zero { get { return s_zero; } }
         #endregion
     }
-
     [ScaleReferencePoint("AbsoluteZero")]
     public partial struct Kelvin : ILevel<double>, IEquatable<Kelvin>, IComparable<Kelvin>, IFormattable
     {
@@ -5920,7 +5857,6 @@ namespace Demo.UnitsOfMeasurement
         public static Kelvin Zero { get { return s_zero; } }
         #endregion
     }
-
     [ScaleReferencePoint("AbsoluteZero")]
     public partial struct Celsius : ILevel<double>, IEquatable<Celsius>, IComparable<Celsius>, IFormattable
     {
@@ -6018,7 +5954,6 @@ namespace Demo.UnitsOfMeasurement
         public static Celsius Zero { get { return s_zero; } }
         #endregion
     }
-
     [ScaleReferencePoint("AbsoluteZero")]
     public partial struct Rankine : ILevel<double>, IEquatable<Rankine>, IComparable<Rankine>, IFormattable
     {
@@ -6116,7 +6051,6 @@ namespace Demo.UnitsOfMeasurement
         public static Rankine Zero { get { return s_zero; } }
         #endregion
     }
-
     [ScaleReferencePoint("AbsoluteZero")]
     public partial struct Fahrenheit : ILevel<double>, IEquatable<Fahrenheit>, IComparable<Fahrenheit>, IFormattable
     {
@@ -6214,6 +6148,4 @@ namespace Demo.UnitsOfMeasurement
         public static Fahrenheit Zero { get { return s_zero; } }
         #endregion
     }
-
 }
-

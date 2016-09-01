@@ -69,14 +69,18 @@
     <Compile Include="RuntimeLoader\Parser.cs" />
     <Compile Include="RuntimeLoader\RuntimeLoader.cs" />
     <Compile Include="Units\_generator.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>_generator.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Units\_definitions.txt" />
+    <Content Include="Units\_generator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>_generator.txt</LastGenOutput>
+    </Content>
     <Content Include="Units\_generator.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
       <DependentUpon>_generator.tt</DependentUpon>
     </Content>
   </ItemGroup>
@@ -85,11 +89,6 @@
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>Generator.cs</LastGenOutput>
       <CustomToolNamespace>$safeprojectname$</CustomToolNamespace>
-    </None>
-    <None Include="Units\_alternative_generators_readme.zip" />
-    <None Include="Units\_generator.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>_generator.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>

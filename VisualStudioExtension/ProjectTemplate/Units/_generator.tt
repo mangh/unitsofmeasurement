@@ -1,5 +1,5 @@
 <#@ template debug="false" hostspecific="true" language="C#" #>
-<#@ output extension=".cs" #>
+<#@ output extension=".txt" encoding="utf-8" #>
 <#@ assembly name="EnvDTE" #>
 <#@ assembly name="Man.UnitsOfMeasurement.Parser.dll" #>
 <#@ import namespace="System.Collections.Generic" #>
@@ -13,48 +13,56 @@
 
     List<UnitType> units = new List<UnitType>();
     List<ScaleType> scales = new List<ScaleType>();
-
     using (StreamReader input = File.OpenText(__inputFilePath))
     {
         Lexer lexer = new Lexer(input, LogParserError);
         Parser parser = new Parser(lexer, units, scales);
         parser.Parse();
     }
-#>
-/*******************************************************************************
 
-    Units of Measurement for C# applications
-
-    Copyright (C) Marek Aniola
-
-    This program is provided to you under the terms of the license
-    as published at https://github.com/mangh/unitsofmeasurement
-
-
-********************************************************************************/
-using System;
-
-namespace <#= __targetNamespace #>
-{
-<#
     __family = 0;
-    foreach (UnitType u in units)
+    if (__one_cs_file)
     {
-        ProcessUnit(u);
+        StartNamespace();
+        foreach (UnitType u in units)
+        {
+            ProcessUnit(u);
+        }
+        __scalestartfamily = __family;
+        foreach (ScaleType s in scales)
+        {
+            ProcessScale(s);
+        }
+        EndNamespace();
+        SaveItem(__templateName + ".cs");
+    }
+    else
+    {
+        foreach (UnitType u in units)
+        {
+            StartNamespace();
+            ProcessUnit(u);
+            EndNamespace();
+            SaveItem(u.Name + ".cs");
+        }
+        __scalestartfamily = __family;
+        foreach (ScaleType s in scales)
+        {
+            StartNamespace();
+            ProcessScale(s);
+            EndNamespace();
+            SaveItem(s.Name + ".cs");
+        }
     }
 
-    __scalestartfamily = __family;
-    foreach (ScaleType s in scales)
-    {
-        ProcessScale(s);
-    }
-
-    Summarize(units, scales, __templateName + ".txt");
+    Summarize(units, scales);
     DeleteObsoleteItems();
+    if (!__one_cs_file) __template.ExpandView();
 #>
-}
 
 <#+
+    bool __one_cs_file = true;  // set this to "true" to generate all units & scales in a single .cs file
+
     int __family;
     int __scalestartfamily;
 
@@ -63,8 +71,10 @@ namespace <#= __targetNamespace #>
     string __inputFilePath;
     string __targetNamespace;
 
-    EnvDTE.Project __project;               // project containing this template
-    EnvDTE.ProjectItem __template;          // this template
+    EnvDTE.Project __project;       // project containing this template
+    EnvDTE.ProjectItem __template;  // this template
+
+    List<string> __savedItems;
 
     void Initialize(string inputFileName)
     {
@@ -73,6 +83,7 @@ namespace <#= __targetNamespace #>
         __inputFilePath = Path.Combine(__templateFolder, inputFileName);
         __project = GetTemplateProject();
         __template = GetTemplateItem(__project.ProjectItems);
+        __savedItems = new List<string>();
 
         __targetNamespace = (string)__template.Properties.Item("CustomToolNamespace").Value;
         if (String.IsNullOrWhiteSpace(__targetNamespace))
@@ -105,23 +116,109 @@ namespace <#= __targetNamespace #>
         return null;
     }
 
-    void DeleteObsoleteItems()
-    {
-        string summaryItemName = __templateName + ".txt";
-        string codeItemName = __templateName + ".cs";
-        foreach (EnvDTE.ProjectItem item in __template.ProjectItems)
-        {
-            if (!item.Name.Equals(summaryItemName, StringComparison.OrdinalIgnoreCase) &&
-                !item.Name.Equals(codeItemName, StringComparison.OrdinalIgnoreCase))
-                item.Delete();
-        }
-    }
-
     void LogParserError(bool isError, int line, int column, string token, string message)
     {
         var error = new CompilerError(__inputFilePath, line, column, token, message);
         error.IsWarning = !isError;
         this.Errors.Add(error);
+    }
+
+    void StartNamespace()
+    {
+        WriteLine(
+@"/*******************************************************************************
+
+    Units of Measurement for C# applications
+
+    Copyright (C) Marek Aniola
+
+    This program is provided to you under the terms of the license
+    as published at https://github.com/mangh/unitsofmeasurement
+
+
+********************************************************************************/
+using System;
+
+namespace {0}
+{{", __targetNamespace);
+    }
+
+    void EndNamespace()
+    {
+        WriteLine(@"}");
+    }
+
+    void SaveItem(string fileName)
+    {
+        string filePath = Path.Combine(__templateFolder, fileName);
+        File.WriteAllText(filePath, this.GenerationEnvironment.ToString());
+        this.GenerationEnvironment.Clear();
+        __template.ProjectItems.AddFromFile(filePath);
+        __savedItems.Add(fileName);
+    }
+
+    void DeleteObsoleteItems()
+    {
+        string summaryItemName = __templateName + ".txt";
+        foreach (EnvDTE.ProjectItem item in __template.ProjectItems)
+        {
+            if (!item.Name.Equals(summaryItemName, StringComparison.OrdinalIgnoreCase) && !__savedItems.Contains(item.Name))
+                item.Delete();
+        }
+    }
+
+    void Summarize(List<UnitType> units, List<ScaleType> scales)
+    {
+        WriteLine("Units and Scales generated on {0}", DateTime.Now);
+        WriteLine(String.Empty);
+
+        WriteLine(
+@"////////////////////////////////////////////////////////////////////////////////
+//
+//  U N I T S                              | {0} units | {1} families (id: {2} - {3})
+//
+////////////////////////////////////////////////////////////////////////////////
+(family) [dim] name : factor {{tags}}", units.Count, __scalestartfamily, 0, __scalestartfamily - 1);
+
+        foreach (UnitType u in units)
+        {
+            WriteLine(String.Empty);
+            WriteLine("({0}) {1}", u.FamilyPrime().Name, u.ToString());
+            WriteLine(String.Empty);
+
+            foreach (MeasureType s in u.Relatives())
+            {
+                WriteLine("    ({0}){1}", u.Name, ((UnitType)s).Name);
+            }
+            foreach (BinaryOperation o in u.OuterOperations)
+            {
+                WriteLine("    {0} = {1} {2} {3}", o.Result.Name, o.Lhs.Name, o.Operation, o.Rhs.Name);
+            }
+        }
+
+        WriteLine(String.Empty);
+        WriteLine(
+@"////////////////////////////////////////////////////////////////////////////////
+//
+//  S C A L E S                            | {0} scales | {1} families (id: {2} - {3})
+//
+////////////////////////////////////////////////////////////////////////////////
+(family) [dim] name : refpoint = unit offset", scales.Count, __family - __scalestartfamily, __scalestartfamily, __family - 1);
+
+        foreach (ScaleType s in scales)
+        {
+            WriteLine(String.Empty);
+            WriteLine("({0}) {1}", s.FamilyPrime().Name, s.ToString());
+            WriteLine(String.Empty);
+
+            foreach (MeasureType x in s.Relatives())
+            {
+                WriteLine("    ({0}){1}", s.Name, ((ScaleType)x).Name);
+            }
+        }
+
+        WriteLine(String.Empty);
+        WriteLine("// End of report ///////////////////////////////////////////////////////////////");
     }
 #>
 
@@ -248,7 +345,6 @@ namespace <#= __targetNamespace #>
         public static <#= Unit #> Zero { get { return s_zero; } }
         #endregion
     }
-
 <#+
     }
 #>
@@ -265,8 +361,7 @@ namespace <#= __targetNamespace #>
         string Value = s.Unit.Factor.Value.Type.Name;
         string One = s.Unit.Factor.Value.Type.One.CSString();
         string Zero = s.Unit.Factor.Value.Type.Zero.CSString();
-#>
-<#+
+
         if (!String.IsNullOrWhiteSpace(s.RefPoint))
         {
 #>
@@ -376,70 +471,6 @@ namespace <#= __targetNamespace #>
         public static <#= Scale #> Zero { get { return s_zero; } }
         #endregion
     }
-
 <#+
-    }
-#>
-
-<#+
-    void Summarize(List<UnitType> units, List<ScaleType> scales, string fileName)
-    {
-        StringBuilder sb = new StringBuilder(8192);
-
-        sb.AppendFormat("Units and Scales generated on: {0}", DateTime.Now).AppendLine().AppendLine();
-
-        sb.AppendFormat(
-@"////////////////////////////////////////////////////////////////////////////////
-//
-//  U N I T S                                  ({0} units, families: {1} - {2})
-//
-////////////////////////////////////////////////////////////////////////////////
-(family) [dim] name : factor {{tags}}", units.Count, 0, __scalestartfamily - 1).AppendLine();
-
-        foreach (UnitType u in units)
-        {
-            sb.AppendLine()
-              .AppendFormat("({0}) {1}", u.FamilyPrime().Name, u.ToString())
-              .AppendLine()
-              .AppendLine();
-
-            foreach (MeasureType s in u.Relatives())
-            {
-                sb.AppendFormat("    ({0}){1}", u.Name, ((UnitType)s).Name).AppendLine();
-            }
-            foreach (BinaryOperation o in u.OuterOperations)
-            {
-                sb.AppendFormat("    {0} = {1} {2} {3}", o.Result.Name, o.Lhs.Name, o.Operation, o.Rhs.Name).AppendLine();
-            }
-        }
-
-        sb.AppendLine();
-        sb.AppendFormat(
-@"////////////////////////////////////////////////////////////////////////////////
-//
-//  S C A L E S                               ({0} scales, families: {1} - {2})
-//
-////////////////////////////////////////////////////////////////////////////////
-(family) [dim] name : refpoint = unit offset", scales.Count, __scalestartfamily, __family - 1).AppendLine();
-
-        foreach (ScaleType s in scales)
-        {
-            sb.AppendLine()
-              .AppendFormat("{0} {1}", s.FamilyPrime().Name, s.ToString())
-              .AppendLine()
-              .AppendLine();
-
-            foreach (MeasureType x in s.Relatives())
-            {
-                sb.AppendFormat("    ({0}){1}", s.Name, ((ScaleType)x).Name).AppendLine();
-            }
-        }
-
-        sb.AppendLine();
-        sb.AppendLine("// End of report ///////////////////////////////////////////////////////////////");
-
-        string filePath = Path.Combine(__templateFolder, fileName);
-        File.WriteAllText(filePath, sb.ToString());
-        __template.ProjectItems.AddFromFile(filePath);
     }
 #>
