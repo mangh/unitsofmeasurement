@@ -239,7 +239,7 @@ namespace {0}
     public partial struct <#= Unit #> : IQuantity<<#= Value #>>, IEquatable<<#= Unit #>>, IComparable<<#= Unit #>>, IFormattable
     {
         #region Fields
-        private readonly <#= Value #> m_value;
+        internal readonly <#= Value #> m_value;
         #endregion
 
         #region Properties
@@ -260,7 +260,7 @@ namespace {0}
         {
             string Relative = ((UnitType)s).Name;
 #>
-        public static explicit operator <#= Unit #>(<#= Relative #> q) { return new <#= Unit #>((<#= Unit #>.Factor / <#= Relative #>.Factor) * q.Value); }
+        public static explicit operator <#= Unit #>(<#= Relative #> q) { return new <#= Unit #>((<#= Unit #>.Factor / <#= Relative #>.Factor) * q.m_value); }
 <#+
         }
 #>
@@ -275,36 +275,36 @@ namespace {0}
         #region IObject / IEquatable<<#= Unit #>>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj is <#= Unit #>) && Equals((<#= Unit #>)obj); }
-        public bool /* IEquatable<<#= Unit #>> */ Equals(<#= Unit #> other) { return this.Value == other.Value; }
+        public bool /* IEquatable<<#= Unit #>> */ Equals(<#= Unit #> other) { return this.m_value == other.m_value; }
         #endregion
 
         #region Comparison / IComparable<<#= Unit #>>
-        public static bool operator ==(<#= Unit #> lhs, <#= Unit #> rhs) { return lhs.Value == rhs.Value; }
-        public static bool operator !=(<#= Unit #> lhs, <#= Unit #> rhs) { return lhs.Value != rhs.Value; }
-        public static bool operator <(<#= Unit #> lhs, <#= Unit #> rhs) { return lhs.Value < rhs.Value; }
-        public static bool operator >(<#= Unit #> lhs, <#= Unit #> rhs) { return lhs.Value > rhs.Value; }
-        public static bool operator <=(<#= Unit #> lhs, <#= Unit #> rhs) { return lhs.Value <= rhs.Value; }
-        public static bool operator >=(<#= Unit #> lhs, <#= Unit #> rhs) { return lhs.Value >= rhs.Value; }
-        public int /* IComparable<<#= Unit #>> */ CompareTo(<#= Unit #> other) { return this.Value.CompareTo(other.Value); }
+        public static bool operator ==(<#= Unit #> lhs, <#= Unit #> rhs) { return lhs.m_value == rhs.m_value; }
+        public static bool operator !=(<#= Unit #> lhs, <#= Unit #> rhs) { return lhs.m_value != rhs.m_value; }
+        public static bool operator <(<#= Unit #> lhs, <#= Unit #> rhs) { return lhs.m_value < rhs.m_value; }
+        public static bool operator >(<#= Unit #> lhs, <#= Unit #> rhs) { return lhs.m_value > rhs.m_value; }
+        public static bool operator <=(<#= Unit #> lhs, <#= Unit #> rhs) { return lhs.m_value <= rhs.m_value; }
+        public static bool operator >=(<#= Unit #> lhs, <#= Unit #> rhs) { return lhs.m_value >= rhs.m_value; }
+        public int /* IComparable<<#= Unit #>> */ CompareTo(<#= Unit #> other) { return this.m_value.CompareTo(other.m_value); }
         #endregion
 
         #region Arithmetic
         // Inner:
-        public static <#= Unit #> operator +(<#= Unit #> lhs, <#= Unit #> rhs) { return new <#= Unit #>(lhs.Value + rhs.Value); }
-        public static <#= Unit #> operator -(<#= Unit #> lhs, <#= Unit #> rhs) { return new <#= Unit #>(lhs.Value - rhs.Value); }
-        public static <#= Unit #> operator ++(<#= Unit #> q) { return new <#= Unit #>(q.Value + <#= One #>); }
-        public static <#= Unit #> operator --(<#= Unit #> q) { return new <#= Unit #>(q.Value - <#= One #>); }
-        public static <#= Unit #> operator -(<#= Unit #> q) { return new <#= Unit #>(-q.Value); }
-        public static <#= Unit #> operator *(<#= Value #> lhs, <#= Unit #> rhs) { return new <#= Unit #>(lhs * rhs.Value); }
-        public static <#= Unit #> operator *(<#= Unit #> lhs, <#= Value #> rhs) { return new <#= Unit #>(lhs.Value * rhs); }
-        public static <#= Unit #> operator /(<#= Unit #> lhs, <#= Value #> rhs) { return new <#= Unit #>(lhs.Value / rhs); }
-        public static <#= Value #> operator /(<#= Unit #> lhs, <#= Unit #> rhs) { return lhs.Value / rhs.Value; }
+        public static <#= Unit #> operator +(<#= Unit #> lhs, <#= Unit #> rhs) { return new <#= Unit #>(lhs.m_value + rhs.m_value); }
+        public static <#= Unit #> operator -(<#= Unit #> lhs, <#= Unit #> rhs) { return new <#= Unit #>(lhs.m_value - rhs.m_value); }
+        public static <#= Unit #> operator ++(<#= Unit #> q) { return new <#= Unit #>(q.m_value + <#= One #>); }
+        public static <#= Unit #> operator --(<#= Unit #> q) { return new <#= Unit #>(q.m_value - <#= One #>); }
+        public static <#= Unit #> operator -(<#= Unit #> q) { return new <#= Unit #>(-q.m_value); }
+        public static <#= Unit #> operator *(<#= Value #> lhs, <#= Unit #> rhs) { return new <#= Unit #>(lhs * rhs.m_value); }
+        public static <#= Unit #> operator *(<#= Unit #> lhs, <#= Value #> rhs) { return new <#= Unit #>(lhs.m_value * rhs); }
+        public static <#= Unit #> operator /(<#= Unit #> lhs, <#= Value #> rhs) { return new <#= Unit #>(lhs.m_value / rhs); }
+        public static <#= Value #> operator /(<#= Unit #> lhs, <#= Unit #> rhs) { return lhs.m_value / rhs.m_value; }
         // Outer:
 <#+
         foreach (BinaryOperation o in u.OuterOperations)
         {
-            string lhsValue = (o.Lhs.IsPredefined) ? "lhs" : "lhs.Value";
-            string rhsValue = (o.Rhs.IsPredefined) ? "rhs" : "rhs.Value";
+            string lhsValue = (o.Lhs.IsPredefined) ? "lhs" : "lhs.m_value";
+            string rhsValue = (o.Rhs.IsPredefined) ? "rhs" : "rhs.m_value";
             string retValue = (o.Result.IsPredefined) ? 
                 String.Format("{0} {1} {2}", lhsValue, o.Operation, rhsValue) :
                 String.Format("new {0}({1} {2} {3})", o.Result.Name, lhsValue, o.Operation, rhsValue);
@@ -321,7 +321,7 @@ namespace {0}
         public string ToString(IFormatProvider fp) { return ToString(<#= Unit #>.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return String.Format(fp, format ?? <#= Unit #>.Format, Value, <#= Unit #>.Symbol[0]);
+            return String.Format(fp, format ?? <#= Unit #>.Format, m_value, <#= Unit #>.Symbol[0]);
         }
         #endregion
 
@@ -372,7 +372,7 @@ namespace {0}
     public partial struct <#= Scale #> : ILevel<<#= Value #>>, IEquatable<<#= Scale #>>, IComparable<<#= Scale #>>, IFormattable
     {
         #region Fields
-        private readonly <#= Unit #> m_level;
+        internal readonly <#= Unit #> m_level;
         #endregion
 
         #region Properties
@@ -426,25 +426,25 @@ namespace {0}
         #region IObject / IEquatable<<#= Scale #>>
         public override int GetHashCode() { return m_level.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj is <#= Scale #>) && Equals((<#= Scale #>)obj); }
-        public bool /* IEquatable<<#= Scale #>> */ Equals(<#= Scale #> other) { return this.Level == other.Level; }
+        public bool /* IEquatable<<#= Scale #>> */ Equals(<#= Scale #> other) { return this.m_level == other.m_level; }
         #endregion
 
         #region Comparison / IComparable<<#= Scale #>>
-        public static bool operator ==(<#= Scale #> lhs, <#= Scale #> rhs) { return lhs.Level == rhs.Level; }
-        public static bool operator !=(<#= Scale #> lhs, <#= Scale #> rhs) { return lhs.Level != rhs.Level; }
-        public static bool operator <(<#= Scale #> lhs, <#= Scale #> rhs) { return lhs.Level < rhs.Level; }
-        public static bool operator >(<#= Scale #> lhs, <#= Scale #> rhs) { return lhs.Level > rhs.Level; }
-        public static bool operator <=(<#= Scale #> lhs, <#= Scale #> rhs) { return lhs.Level <= rhs.Level; }
-        public static bool operator >=(<#= Scale #> lhs, <#= Scale #> rhs) { return lhs.Level >= rhs.Level; }
-        public int /* IComparable<<#= Scale #>> */ CompareTo(<#= Scale #> other) { return this.Level.CompareTo(other.Level); }
+        public static bool operator ==(<#= Scale #> lhs, <#= Scale #> rhs) { return lhs.m_level == rhs.m_level; }
+        public static bool operator !=(<#= Scale #> lhs, <#= Scale #> rhs) { return lhs.m_level != rhs.m_level; }
+        public static bool operator <(<#= Scale #> lhs, <#= Scale #> rhs) { return lhs.m_level < rhs.m_level; }
+        public static bool operator >(<#= Scale #> lhs, <#= Scale #> rhs) { return lhs.m_level > rhs.m_level; }
+        public static bool operator <=(<#= Scale #> lhs, <#= Scale #> rhs) { return lhs.m_level <= rhs.m_level; }
+        public static bool operator >=(<#= Scale #> lhs, <#= Scale #> rhs) { return lhs.m_level >= rhs.m_level; }
+        public int /* IComparable<<#= Scale #>> */ CompareTo(<#= Scale #> other) { return this.m_level.CompareTo(other.m_level); }
         #endregion
 
         #region Arithmetic
-        public static <#= Scale #> operator +(<#= Scale #> lhs, <#= Unit #> rhs) { return new <#= Scale #>(lhs.Level + rhs); }
-        public static <#= Scale #> operator +(<#= Unit #> lhs, <#= Scale #> rhs) { return new <#= Scale #>(lhs + rhs.Level); }
-        public static <#= Scale #> operator -(<#= Scale #> lhs, <#= Unit #> rhs) { return new <#= Scale #>(lhs.Level - rhs); }
-        public static <#= Unit #> operator -(<#= Scale #> lhs, <#= Scale #> rhs) { return (lhs.Level - rhs.Level); }
-        public static <#= Scale #> operator -(<#= Scale #> q) { return new <#= Scale #>(-q.Level); }
+        public static <#= Scale #> operator +(<#= Scale #> lhs, <#= Unit #> rhs) { return new <#= Scale #>(lhs.m_level + rhs); }
+        public static <#= Scale #> operator +(<#= Unit #> lhs, <#= Scale #> rhs) { return new <#= Scale #>(lhs + rhs.m_level); }
+        public static <#= Scale #> operator -(<#= Scale #> lhs, <#= Unit #> rhs) { return new <#= Scale #>(lhs.m_level - rhs); }
+        public static <#= Unit #> operator -(<#= Scale #> lhs, <#= Scale #> rhs) { return (lhs.m_level - rhs.m_level); }
+        public static <#= Scale #> operator -(<#= Scale #> q) { return new <#= Scale #>(-q.m_level); }
         public static <#= Scale #> operator ++(<#= Scale #> q) { return q + <#= Unit #>.One; }
         public static <#= Scale #> operator --(<#= Scale #> q) { return q - <#= Unit #>.One; }
         #endregion

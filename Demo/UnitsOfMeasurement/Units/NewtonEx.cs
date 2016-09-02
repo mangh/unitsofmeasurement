@@ -14,7 +14,7 @@ namespace Demo.UnitsOfMeasurement
 {
     public partial struct Newton
     {
-        public static NewtonMeter operator ^(Newton lhs, Meter rhs) { return new NewtonMeter(lhs.Value * rhs.Value); }
-        public static NewtonMeter operator ^(Meter lhs, Newton rhs) { return new NewtonMeter(lhs.Value * rhs.Value); }
+        public static NewtonMeter operator ^(Newton lhs, Meter rhs) { return new NewtonMeter(lhs.m_value * rhs.m_value); }
+        public static NewtonMeter operator ^(Meter lhs, Newton rhs) { return new NewtonMeter(lhs.m_value * rhs.m_value); }
     }
 }

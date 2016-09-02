@@ -16,7 +16,7 @@ namespace $safeprojectname$
     public partial struct Meter : IQuantity<double>, IEquatable<Meter>, IComparable<Meter>, IFormattable
     {
         #region Fields
-        private readonly double m_value;
+        internal readonly double m_value;
         #endregion
 
         #region Properties
@@ -43,34 +43,34 @@ namespace $safeprojectname$
         #region IObject / IEquatable<Meter>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj is Meter) && Equals((Meter)obj); }
-        public bool /* IEquatable<Meter> */ Equals(Meter other) { return this.Value == other.Value; }
+        public bool /* IEquatable<Meter> */ Equals(Meter other) { return this.m_value == other.m_value; }
         #endregion
 
         #region Comparison / IComparable<Meter>
-        public static bool operator ==(Meter lhs, Meter rhs) { return lhs.Value == rhs.Value; }
-        public static bool operator !=(Meter lhs, Meter rhs) { return lhs.Value != rhs.Value; }
-        public static bool operator <(Meter lhs, Meter rhs) { return lhs.Value < rhs.Value; }
-        public static bool operator >(Meter lhs, Meter rhs) { return lhs.Value > rhs.Value; }
-        public static bool operator <=(Meter lhs, Meter rhs) { return lhs.Value <= rhs.Value; }
-        public static bool operator >=(Meter lhs, Meter rhs) { return lhs.Value >= rhs.Value; }
-        public int /* IComparable<Meter> */ CompareTo(Meter other) { return this.Value.CompareTo(other.Value); }
+        public static bool operator ==(Meter lhs, Meter rhs) { return lhs.m_value == rhs.m_value; }
+        public static bool operator !=(Meter lhs, Meter rhs) { return lhs.m_value != rhs.m_value; }
+        public static bool operator <(Meter lhs, Meter rhs) { return lhs.m_value < rhs.m_value; }
+        public static bool operator >(Meter lhs, Meter rhs) { return lhs.m_value > rhs.m_value; }
+        public static bool operator <=(Meter lhs, Meter rhs) { return lhs.m_value <= rhs.m_value; }
+        public static bool operator >=(Meter lhs, Meter rhs) { return lhs.m_value >= rhs.m_value; }
+        public int /* IComparable<Meter> */ CompareTo(Meter other) { return this.m_value.CompareTo(other.m_value); }
         #endregion
 
         #region Arithmetic
         // Inner:
-        public static Meter operator +(Meter lhs, Meter rhs) { return new Meter(lhs.Value + rhs.Value); }
-        public static Meter operator -(Meter lhs, Meter rhs) { return new Meter(lhs.Value - rhs.Value); }
-        public static Meter operator ++(Meter q) { return new Meter(q.Value + 1d); }
-        public static Meter operator --(Meter q) { return new Meter(q.Value - 1d); }
-        public static Meter operator -(Meter q) { return new Meter(-q.Value); }
-        public static Meter operator *(double lhs, Meter rhs) { return new Meter(lhs * rhs.Value); }
-        public static Meter operator *(Meter lhs, double rhs) { return new Meter(lhs.Value * rhs); }
-        public static Meter operator /(Meter lhs, double rhs) { return new Meter(lhs.Value / rhs); }
-        public static double operator /(Meter lhs, Meter rhs) { return lhs.Value / rhs.Value; }
+        public static Meter operator +(Meter lhs, Meter rhs) { return new Meter(lhs.m_value + rhs.m_value); }
+        public static Meter operator -(Meter lhs, Meter rhs) { return new Meter(lhs.m_value - rhs.m_value); }
+        public static Meter operator ++(Meter q) { return new Meter(q.m_value + 1d); }
+        public static Meter operator --(Meter q) { return new Meter(q.m_value - 1d); }
+        public static Meter operator -(Meter q) { return new Meter(-q.m_value); }
+        public static Meter operator *(double lhs, Meter rhs) { return new Meter(lhs * rhs.m_value); }
+        public static Meter operator *(Meter lhs, double rhs) { return new Meter(lhs.m_value * rhs); }
+        public static Meter operator /(Meter lhs, double rhs) { return new Meter(lhs.m_value / rhs); }
+        public static double operator /(Meter lhs, Meter rhs) { return lhs.m_value / rhs.m_value; }
         // Outer:
-        public static SquareMeter operator *(Meter lhs, Meter rhs) { return new SquareMeter(lhs.Value * rhs.Value); }
-        public static Meter_Sec operator /(Meter lhs, Second rhs) { return new Meter_Sec(lhs.Value / rhs.Value); }
-        public static Second operator /(Meter lhs, Meter_Sec rhs) { return new Second(lhs.Value / rhs.Value); }
+        public static SquareMeter operator *(Meter lhs, Meter rhs) { return new SquareMeter(lhs.m_value * rhs.m_value); }
+        public static Meter_Sec operator /(Meter lhs, Second rhs) { return new Meter_Sec(lhs.m_value / rhs.m_value); }
+        public static Second operator /(Meter lhs, Meter_Sec rhs) { return new Second(lhs.m_value / rhs.m_value); }
         #endregion
 
         #region Formatting
@@ -79,7 +79,7 @@ namespace $safeprojectname$
         public string ToString(IFormatProvider fp) { return ToString(Meter.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return String.Format(fp, format ?? Meter.Format, Value, Meter.Symbol[0]);
+            return String.Format(fp, format ?? Meter.Format, m_value, Meter.Symbol[0]);
         }
         #endregion
 
@@ -106,7 +106,7 @@ namespace $safeprojectname$
     public partial struct Second : IQuantity<double>, IEquatable<Second>, IComparable<Second>, IFormattable
     {
         #region Fields
-        private readonly double m_value;
+        internal readonly double m_value;
         #endregion
 
         #region Properties
@@ -133,30 +133,30 @@ namespace $safeprojectname$
         #region IObject / IEquatable<Second>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj is Second) && Equals((Second)obj); }
-        public bool /* IEquatable<Second> */ Equals(Second other) { return this.Value == other.Value; }
+        public bool /* IEquatable<Second> */ Equals(Second other) { return this.m_value == other.m_value; }
         #endregion
 
         #region Comparison / IComparable<Second>
-        public static bool operator ==(Second lhs, Second rhs) { return lhs.Value == rhs.Value; }
-        public static bool operator !=(Second lhs, Second rhs) { return lhs.Value != rhs.Value; }
-        public static bool operator <(Second lhs, Second rhs) { return lhs.Value < rhs.Value; }
-        public static bool operator >(Second lhs, Second rhs) { return lhs.Value > rhs.Value; }
-        public static bool operator <=(Second lhs, Second rhs) { return lhs.Value <= rhs.Value; }
-        public static bool operator >=(Second lhs, Second rhs) { return lhs.Value >= rhs.Value; }
-        public int /* IComparable<Second> */ CompareTo(Second other) { return this.Value.CompareTo(other.Value); }
+        public static bool operator ==(Second lhs, Second rhs) { return lhs.m_value == rhs.m_value; }
+        public static bool operator !=(Second lhs, Second rhs) { return lhs.m_value != rhs.m_value; }
+        public static bool operator <(Second lhs, Second rhs) { return lhs.m_value < rhs.m_value; }
+        public static bool operator >(Second lhs, Second rhs) { return lhs.m_value > rhs.m_value; }
+        public static bool operator <=(Second lhs, Second rhs) { return lhs.m_value <= rhs.m_value; }
+        public static bool operator >=(Second lhs, Second rhs) { return lhs.m_value >= rhs.m_value; }
+        public int /* IComparable<Second> */ CompareTo(Second other) { return this.m_value.CompareTo(other.m_value); }
         #endregion
 
         #region Arithmetic
         // Inner:
-        public static Second operator +(Second lhs, Second rhs) { return new Second(lhs.Value + rhs.Value); }
-        public static Second operator -(Second lhs, Second rhs) { return new Second(lhs.Value - rhs.Value); }
-        public static Second operator ++(Second q) { return new Second(q.Value + 1d); }
-        public static Second operator --(Second q) { return new Second(q.Value - 1d); }
-        public static Second operator -(Second q) { return new Second(-q.Value); }
-        public static Second operator *(double lhs, Second rhs) { return new Second(lhs * rhs.Value); }
-        public static Second operator *(Second lhs, double rhs) { return new Second(lhs.Value * rhs); }
-        public static Second operator /(Second lhs, double rhs) { return new Second(lhs.Value / rhs); }
-        public static double operator /(Second lhs, Second rhs) { return lhs.Value / rhs.Value; }
+        public static Second operator +(Second lhs, Second rhs) { return new Second(lhs.m_value + rhs.m_value); }
+        public static Second operator -(Second lhs, Second rhs) { return new Second(lhs.m_value - rhs.m_value); }
+        public static Second operator ++(Second q) { return new Second(q.m_value + 1d); }
+        public static Second operator --(Second q) { return new Second(q.m_value - 1d); }
+        public static Second operator -(Second q) { return new Second(-q.m_value); }
+        public static Second operator *(double lhs, Second rhs) { return new Second(lhs * rhs.m_value); }
+        public static Second operator *(Second lhs, double rhs) { return new Second(lhs.m_value * rhs); }
+        public static Second operator /(Second lhs, double rhs) { return new Second(lhs.m_value / rhs); }
+        public static double operator /(Second lhs, Second rhs) { return lhs.m_value / rhs.m_value; }
         // Outer:
         #endregion
 
@@ -166,7 +166,7 @@ namespace $safeprojectname$
         public string ToString(IFormatProvider fp) { return ToString(Second.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return String.Format(fp, format ?? Second.Format, Value, Second.Symbol[0]);
+            return String.Format(fp, format ?? Second.Format, m_value, Second.Symbol[0]);
         }
         #endregion
 
@@ -193,7 +193,7 @@ namespace $safeprojectname$
     public partial struct Kilogram : IQuantity<double>, IEquatable<Kilogram>, IComparable<Kilogram>, IFormattable
     {
         #region Fields
-        private readonly double m_value;
+        internal readonly double m_value;
         #endregion
 
         #region Properties
@@ -220,33 +220,33 @@ namespace $safeprojectname$
         #region IObject / IEquatable<Kilogram>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj is Kilogram) && Equals((Kilogram)obj); }
-        public bool /* IEquatable<Kilogram> */ Equals(Kilogram other) { return this.Value == other.Value; }
+        public bool /* IEquatable<Kilogram> */ Equals(Kilogram other) { return this.m_value == other.m_value; }
         #endregion
 
         #region Comparison / IComparable<Kilogram>
-        public static bool operator ==(Kilogram lhs, Kilogram rhs) { return lhs.Value == rhs.Value; }
-        public static bool operator !=(Kilogram lhs, Kilogram rhs) { return lhs.Value != rhs.Value; }
-        public static bool operator <(Kilogram lhs, Kilogram rhs) { return lhs.Value < rhs.Value; }
-        public static bool operator >(Kilogram lhs, Kilogram rhs) { return lhs.Value > rhs.Value; }
-        public static bool operator <=(Kilogram lhs, Kilogram rhs) { return lhs.Value <= rhs.Value; }
-        public static bool operator >=(Kilogram lhs, Kilogram rhs) { return lhs.Value >= rhs.Value; }
-        public int /* IComparable<Kilogram> */ CompareTo(Kilogram other) { return this.Value.CompareTo(other.Value); }
+        public static bool operator ==(Kilogram lhs, Kilogram rhs) { return lhs.m_value == rhs.m_value; }
+        public static bool operator !=(Kilogram lhs, Kilogram rhs) { return lhs.m_value != rhs.m_value; }
+        public static bool operator <(Kilogram lhs, Kilogram rhs) { return lhs.m_value < rhs.m_value; }
+        public static bool operator >(Kilogram lhs, Kilogram rhs) { return lhs.m_value > rhs.m_value; }
+        public static bool operator <=(Kilogram lhs, Kilogram rhs) { return lhs.m_value <= rhs.m_value; }
+        public static bool operator >=(Kilogram lhs, Kilogram rhs) { return lhs.m_value >= rhs.m_value; }
+        public int /* IComparable<Kilogram> */ CompareTo(Kilogram other) { return this.m_value.CompareTo(other.m_value); }
         #endregion
 
         #region Arithmetic
         // Inner:
-        public static Kilogram operator +(Kilogram lhs, Kilogram rhs) { return new Kilogram(lhs.Value + rhs.Value); }
-        public static Kilogram operator -(Kilogram lhs, Kilogram rhs) { return new Kilogram(lhs.Value - rhs.Value); }
-        public static Kilogram operator ++(Kilogram q) { return new Kilogram(q.Value + 1d); }
-        public static Kilogram operator --(Kilogram q) { return new Kilogram(q.Value - 1d); }
-        public static Kilogram operator -(Kilogram q) { return new Kilogram(-q.Value); }
-        public static Kilogram operator *(double lhs, Kilogram rhs) { return new Kilogram(lhs * rhs.Value); }
-        public static Kilogram operator *(Kilogram lhs, double rhs) { return new Kilogram(lhs.Value * rhs); }
-        public static Kilogram operator /(Kilogram lhs, double rhs) { return new Kilogram(lhs.Value / rhs); }
-        public static double operator /(Kilogram lhs, Kilogram rhs) { return lhs.Value / rhs.Value; }
+        public static Kilogram operator +(Kilogram lhs, Kilogram rhs) { return new Kilogram(lhs.m_value + rhs.m_value); }
+        public static Kilogram operator -(Kilogram lhs, Kilogram rhs) { return new Kilogram(lhs.m_value - rhs.m_value); }
+        public static Kilogram operator ++(Kilogram q) { return new Kilogram(q.m_value + 1d); }
+        public static Kilogram operator --(Kilogram q) { return new Kilogram(q.m_value - 1d); }
+        public static Kilogram operator -(Kilogram q) { return new Kilogram(-q.m_value); }
+        public static Kilogram operator *(double lhs, Kilogram rhs) { return new Kilogram(lhs * rhs.m_value); }
+        public static Kilogram operator *(Kilogram lhs, double rhs) { return new Kilogram(lhs.m_value * rhs); }
+        public static Kilogram operator /(Kilogram lhs, double rhs) { return new Kilogram(lhs.m_value / rhs); }
+        public static double operator /(Kilogram lhs, Kilogram rhs) { return lhs.m_value / rhs.m_value; }
         // Outer:
-        public static Newton operator *(Kilogram lhs, Meter_Sec2 rhs) { return new Newton(lhs.Value * rhs.Value); }
-        public static Newton operator *(Meter_Sec2 lhs, Kilogram rhs) { return new Newton(lhs.Value * rhs.Value); }
+        public static Newton operator *(Kilogram lhs, Meter_Sec2 rhs) { return new Newton(lhs.m_value * rhs.m_value); }
+        public static Newton operator *(Meter_Sec2 lhs, Kilogram rhs) { return new Newton(lhs.m_value * rhs.m_value); }
         #endregion
 
         #region Formatting
@@ -255,7 +255,7 @@ namespace $safeprojectname$
         public string ToString(IFormatProvider fp) { return ToString(Kilogram.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return String.Format(fp, format ?? Kilogram.Format, Value, Kilogram.Symbol[0]);
+            return String.Format(fp, format ?? Kilogram.Format, m_value, Kilogram.Symbol[0]);
         }
         #endregion
 
@@ -282,7 +282,7 @@ namespace $safeprojectname$
     public partial struct DegKelvin : IQuantity<double>, IEquatable<DegKelvin>, IComparable<DegKelvin>, IFormattable
     {
         #region Fields
-        private readonly double m_value;
+        internal readonly double m_value;
         #endregion
 
         #region Properties
@@ -298,9 +298,9 @@ namespace $safeprojectname$
 
         #region Conversions
         public static explicit operator DegKelvin(double q) { return new DegKelvin(q); }
-        public static explicit operator DegKelvin(DegFahrenheit q) { return new DegKelvin((DegKelvin.Factor / DegFahrenheit.Factor) * q.Value); }
-        public static explicit operator DegKelvin(DegRankine q) { return new DegKelvin((DegKelvin.Factor / DegRankine.Factor) * q.Value); }
-        public static explicit operator DegKelvin(DegCelsius q) { return new DegKelvin((DegKelvin.Factor / DegCelsius.Factor) * q.Value); }
+        public static explicit operator DegKelvin(DegFahrenheit q) { return new DegKelvin((DegKelvin.Factor / DegFahrenheit.Factor) * q.m_value); }
+        public static explicit operator DegKelvin(DegRankine q) { return new DegKelvin((DegKelvin.Factor / DegRankine.Factor) * q.m_value); }
+        public static explicit operator DegKelvin(DegCelsius q) { return new DegKelvin((DegKelvin.Factor / DegCelsius.Factor) * q.m_value); }
         public static DegKelvin From(IQuantity<double> q)
         {
             Unit<double> source = new Unit<double>(q);
@@ -312,30 +312,30 @@ namespace $safeprojectname$
         #region IObject / IEquatable<DegKelvin>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj is DegKelvin) && Equals((DegKelvin)obj); }
-        public bool /* IEquatable<DegKelvin> */ Equals(DegKelvin other) { return this.Value == other.Value; }
+        public bool /* IEquatable<DegKelvin> */ Equals(DegKelvin other) { return this.m_value == other.m_value; }
         #endregion
 
         #region Comparison / IComparable<DegKelvin>
-        public static bool operator ==(DegKelvin lhs, DegKelvin rhs) { return lhs.Value == rhs.Value; }
-        public static bool operator !=(DegKelvin lhs, DegKelvin rhs) { return lhs.Value != rhs.Value; }
-        public static bool operator <(DegKelvin lhs, DegKelvin rhs) { return lhs.Value < rhs.Value; }
-        public static bool operator >(DegKelvin lhs, DegKelvin rhs) { return lhs.Value > rhs.Value; }
-        public static bool operator <=(DegKelvin lhs, DegKelvin rhs) { return lhs.Value <= rhs.Value; }
-        public static bool operator >=(DegKelvin lhs, DegKelvin rhs) { return lhs.Value >= rhs.Value; }
-        public int /* IComparable<DegKelvin> */ CompareTo(DegKelvin other) { return this.Value.CompareTo(other.Value); }
+        public static bool operator ==(DegKelvin lhs, DegKelvin rhs) { return lhs.m_value == rhs.m_value; }
+        public static bool operator !=(DegKelvin lhs, DegKelvin rhs) { return lhs.m_value != rhs.m_value; }
+        public static bool operator <(DegKelvin lhs, DegKelvin rhs) { return lhs.m_value < rhs.m_value; }
+        public static bool operator >(DegKelvin lhs, DegKelvin rhs) { return lhs.m_value > rhs.m_value; }
+        public static bool operator <=(DegKelvin lhs, DegKelvin rhs) { return lhs.m_value <= rhs.m_value; }
+        public static bool operator >=(DegKelvin lhs, DegKelvin rhs) { return lhs.m_value >= rhs.m_value; }
+        public int /* IComparable<DegKelvin> */ CompareTo(DegKelvin other) { return this.m_value.CompareTo(other.m_value); }
         #endregion
 
         #region Arithmetic
         // Inner:
-        public static DegKelvin operator +(DegKelvin lhs, DegKelvin rhs) { return new DegKelvin(lhs.Value + rhs.Value); }
-        public static DegKelvin operator -(DegKelvin lhs, DegKelvin rhs) { return new DegKelvin(lhs.Value - rhs.Value); }
-        public static DegKelvin operator ++(DegKelvin q) { return new DegKelvin(q.Value + 1d); }
-        public static DegKelvin operator --(DegKelvin q) { return new DegKelvin(q.Value - 1d); }
-        public static DegKelvin operator -(DegKelvin q) { return new DegKelvin(-q.Value); }
-        public static DegKelvin operator *(double lhs, DegKelvin rhs) { return new DegKelvin(lhs * rhs.Value); }
-        public static DegKelvin operator *(DegKelvin lhs, double rhs) { return new DegKelvin(lhs.Value * rhs); }
-        public static DegKelvin operator /(DegKelvin lhs, double rhs) { return new DegKelvin(lhs.Value / rhs); }
-        public static double operator /(DegKelvin lhs, DegKelvin rhs) { return lhs.Value / rhs.Value; }
+        public static DegKelvin operator +(DegKelvin lhs, DegKelvin rhs) { return new DegKelvin(lhs.m_value + rhs.m_value); }
+        public static DegKelvin operator -(DegKelvin lhs, DegKelvin rhs) { return new DegKelvin(lhs.m_value - rhs.m_value); }
+        public static DegKelvin operator ++(DegKelvin q) { return new DegKelvin(q.m_value + 1d); }
+        public static DegKelvin operator --(DegKelvin q) { return new DegKelvin(q.m_value - 1d); }
+        public static DegKelvin operator -(DegKelvin q) { return new DegKelvin(-q.m_value); }
+        public static DegKelvin operator *(double lhs, DegKelvin rhs) { return new DegKelvin(lhs * rhs.m_value); }
+        public static DegKelvin operator *(DegKelvin lhs, double rhs) { return new DegKelvin(lhs.m_value * rhs); }
+        public static DegKelvin operator /(DegKelvin lhs, double rhs) { return new DegKelvin(lhs.m_value / rhs); }
+        public static double operator /(DegKelvin lhs, DegKelvin rhs) { return lhs.m_value / rhs.m_value; }
         // Outer:
         #endregion
 
@@ -345,7 +345,7 @@ namespace $safeprojectname$
         public string ToString(IFormatProvider fp) { return ToString(DegKelvin.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return String.Format(fp, format ?? DegKelvin.Format, Value, DegKelvin.Symbol[0]);
+            return String.Format(fp, format ?? DegKelvin.Format, m_value, DegKelvin.Symbol[0]);
         }
         #endregion
 
@@ -372,7 +372,7 @@ namespace $safeprojectname$
     public partial struct DegCelsius : IQuantity<double>, IEquatable<DegCelsius>, IComparable<DegCelsius>, IFormattable
     {
         #region Fields
-        private readonly double m_value;
+        internal readonly double m_value;
         #endregion
 
         #region Properties
@@ -388,9 +388,9 @@ namespace $safeprojectname$
 
         #region Conversions
         public static explicit operator DegCelsius(double q) { return new DegCelsius(q); }
-        public static explicit operator DegCelsius(DegKelvin q) { return new DegCelsius((DegCelsius.Factor / DegKelvin.Factor) * q.Value); }
-        public static explicit operator DegCelsius(DegFahrenheit q) { return new DegCelsius((DegCelsius.Factor / DegFahrenheit.Factor) * q.Value); }
-        public static explicit operator DegCelsius(DegRankine q) { return new DegCelsius((DegCelsius.Factor / DegRankine.Factor) * q.Value); }
+        public static explicit operator DegCelsius(DegKelvin q) { return new DegCelsius((DegCelsius.Factor / DegKelvin.Factor) * q.m_value); }
+        public static explicit operator DegCelsius(DegFahrenheit q) { return new DegCelsius((DegCelsius.Factor / DegFahrenheit.Factor) * q.m_value); }
+        public static explicit operator DegCelsius(DegRankine q) { return new DegCelsius((DegCelsius.Factor / DegRankine.Factor) * q.m_value); }
         public static DegCelsius From(IQuantity<double> q)
         {
             Unit<double> source = new Unit<double>(q);
@@ -402,30 +402,30 @@ namespace $safeprojectname$
         #region IObject / IEquatable<DegCelsius>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj is DegCelsius) && Equals((DegCelsius)obj); }
-        public bool /* IEquatable<DegCelsius> */ Equals(DegCelsius other) { return this.Value == other.Value; }
+        public bool /* IEquatable<DegCelsius> */ Equals(DegCelsius other) { return this.m_value == other.m_value; }
         #endregion
 
         #region Comparison / IComparable<DegCelsius>
-        public static bool operator ==(DegCelsius lhs, DegCelsius rhs) { return lhs.Value == rhs.Value; }
-        public static bool operator !=(DegCelsius lhs, DegCelsius rhs) { return lhs.Value != rhs.Value; }
-        public static bool operator <(DegCelsius lhs, DegCelsius rhs) { return lhs.Value < rhs.Value; }
-        public static bool operator >(DegCelsius lhs, DegCelsius rhs) { return lhs.Value > rhs.Value; }
-        public static bool operator <=(DegCelsius lhs, DegCelsius rhs) { return lhs.Value <= rhs.Value; }
-        public static bool operator >=(DegCelsius lhs, DegCelsius rhs) { return lhs.Value >= rhs.Value; }
-        public int /* IComparable<DegCelsius> */ CompareTo(DegCelsius other) { return this.Value.CompareTo(other.Value); }
+        public static bool operator ==(DegCelsius lhs, DegCelsius rhs) { return lhs.m_value == rhs.m_value; }
+        public static bool operator !=(DegCelsius lhs, DegCelsius rhs) { return lhs.m_value != rhs.m_value; }
+        public static bool operator <(DegCelsius lhs, DegCelsius rhs) { return lhs.m_value < rhs.m_value; }
+        public static bool operator >(DegCelsius lhs, DegCelsius rhs) { return lhs.m_value > rhs.m_value; }
+        public static bool operator <=(DegCelsius lhs, DegCelsius rhs) { return lhs.m_value <= rhs.m_value; }
+        public static bool operator >=(DegCelsius lhs, DegCelsius rhs) { return lhs.m_value >= rhs.m_value; }
+        public int /* IComparable<DegCelsius> */ CompareTo(DegCelsius other) { return this.m_value.CompareTo(other.m_value); }
         #endregion
 
         #region Arithmetic
         // Inner:
-        public static DegCelsius operator +(DegCelsius lhs, DegCelsius rhs) { return new DegCelsius(lhs.Value + rhs.Value); }
-        public static DegCelsius operator -(DegCelsius lhs, DegCelsius rhs) { return new DegCelsius(lhs.Value - rhs.Value); }
-        public static DegCelsius operator ++(DegCelsius q) { return new DegCelsius(q.Value + 1d); }
-        public static DegCelsius operator --(DegCelsius q) { return new DegCelsius(q.Value - 1d); }
-        public static DegCelsius operator -(DegCelsius q) { return new DegCelsius(-q.Value); }
-        public static DegCelsius operator *(double lhs, DegCelsius rhs) { return new DegCelsius(lhs * rhs.Value); }
-        public static DegCelsius operator *(DegCelsius lhs, double rhs) { return new DegCelsius(lhs.Value * rhs); }
-        public static DegCelsius operator /(DegCelsius lhs, double rhs) { return new DegCelsius(lhs.Value / rhs); }
-        public static double operator /(DegCelsius lhs, DegCelsius rhs) { return lhs.Value / rhs.Value; }
+        public static DegCelsius operator +(DegCelsius lhs, DegCelsius rhs) { return new DegCelsius(lhs.m_value + rhs.m_value); }
+        public static DegCelsius operator -(DegCelsius lhs, DegCelsius rhs) { return new DegCelsius(lhs.m_value - rhs.m_value); }
+        public static DegCelsius operator ++(DegCelsius q) { return new DegCelsius(q.m_value + 1d); }
+        public static DegCelsius operator --(DegCelsius q) { return new DegCelsius(q.m_value - 1d); }
+        public static DegCelsius operator -(DegCelsius q) { return new DegCelsius(-q.m_value); }
+        public static DegCelsius operator *(double lhs, DegCelsius rhs) { return new DegCelsius(lhs * rhs.m_value); }
+        public static DegCelsius operator *(DegCelsius lhs, double rhs) { return new DegCelsius(lhs.m_value * rhs); }
+        public static DegCelsius operator /(DegCelsius lhs, double rhs) { return new DegCelsius(lhs.m_value / rhs); }
+        public static double operator /(DegCelsius lhs, DegCelsius rhs) { return lhs.m_value / rhs.m_value; }
         // Outer:
         #endregion
 
@@ -435,7 +435,7 @@ namespace $safeprojectname$
         public string ToString(IFormatProvider fp) { return ToString(DegCelsius.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return String.Format(fp, format ?? DegCelsius.Format, Value, DegCelsius.Symbol[0]);
+            return String.Format(fp, format ?? DegCelsius.Format, m_value, DegCelsius.Symbol[0]);
         }
         #endregion
 
@@ -462,7 +462,7 @@ namespace $safeprojectname$
     public partial struct DegRankine : IQuantity<double>, IEquatable<DegRankine>, IComparable<DegRankine>, IFormattable
     {
         #region Fields
-        private readonly double m_value;
+        internal readonly double m_value;
         #endregion
 
         #region Properties
@@ -478,9 +478,9 @@ namespace $safeprojectname$
 
         #region Conversions
         public static explicit operator DegRankine(double q) { return new DegRankine(q); }
-        public static explicit operator DegRankine(DegCelsius q) { return new DegRankine((DegRankine.Factor / DegCelsius.Factor) * q.Value); }
-        public static explicit operator DegRankine(DegKelvin q) { return new DegRankine((DegRankine.Factor / DegKelvin.Factor) * q.Value); }
-        public static explicit operator DegRankine(DegFahrenheit q) { return new DegRankine((DegRankine.Factor / DegFahrenheit.Factor) * q.Value); }
+        public static explicit operator DegRankine(DegCelsius q) { return new DegRankine((DegRankine.Factor / DegCelsius.Factor) * q.m_value); }
+        public static explicit operator DegRankine(DegKelvin q) { return new DegRankine((DegRankine.Factor / DegKelvin.Factor) * q.m_value); }
+        public static explicit operator DegRankine(DegFahrenheit q) { return new DegRankine((DegRankine.Factor / DegFahrenheit.Factor) * q.m_value); }
         public static DegRankine From(IQuantity<double> q)
         {
             Unit<double> source = new Unit<double>(q);
@@ -492,30 +492,30 @@ namespace $safeprojectname$
         #region IObject / IEquatable<DegRankine>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj is DegRankine) && Equals((DegRankine)obj); }
-        public bool /* IEquatable<DegRankine> */ Equals(DegRankine other) { return this.Value == other.Value; }
+        public bool /* IEquatable<DegRankine> */ Equals(DegRankine other) { return this.m_value == other.m_value; }
         #endregion
 
         #region Comparison / IComparable<DegRankine>
-        public static bool operator ==(DegRankine lhs, DegRankine rhs) { return lhs.Value == rhs.Value; }
-        public static bool operator !=(DegRankine lhs, DegRankine rhs) { return lhs.Value != rhs.Value; }
-        public static bool operator <(DegRankine lhs, DegRankine rhs) { return lhs.Value < rhs.Value; }
-        public static bool operator >(DegRankine lhs, DegRankine rhs) { return lhs.Value > rhs.Value; }
-        public static bool operator <=(DegRankine lhs, DegRankine rhs) { return lhs.Value <= rhs.Value; }
-        public static bool operator >=(DegRankine lhs, DegRankine rhs) { return lhs.Value >= rhs.Value; }
-        public int /* IComparable<DegRankine> */ CompareTo(DegRankine other) { return this.Value.CompareTo(other.Value); }
+        public static bool operator ==(DegRankine lhs, DegRankine rhs) { return lhs.m_value == rhs.m_value; }
+        public static bool operator !=(DegRankine lhs, DegRankine rhs) { return lhs.m_value != rhs.m_value; }
+        public static bool operator <(DegRankine lhs, DegRankine rhs) { return lhs.m_value < rhs.m_value; }
+        public static bool operator >(DegRankine lhs, DegRankine rhs) { return lhs.m_value > rhs.m_value; }
+        public static bool operator <=(DegRankine lhs, DegRankine rhs) { return lhs.m_value <= rhs.m_value; }
+        public static bool operator >=(DegRankine lhs, DegRankine rhs) { return lhs.m_value >= rhs.m_value; }
+        public int /* IComparable<DegRankine> */ CompareTo(DegRankine other) { return this.m_value.CompareTo(other.m_value); }
         #endregion
 
         #region Arithmetic
         // Inner:
-        public static DegRankine operator +(DegRankine lhs, DegRankine rhs) { return new DegRankine(lhs.Value + rhs.Value); }
-        public static DegRankine operator -(DegRankine lhs, DegRankine rhs) { return new DegRankine(lhs.Value - rhs.Value); }
-        public static DegRankine operator ++(DegRankine q) { return new DegRankine(q.Value + 1d); }
-        public static DegRankine operator --(DegRankine q) { return new DegRankine(q.Value - 1d); }
-        public static DegRankine operator -(DegRankine q) { return new DegRankine(-q.Value); }
-        public static DegRankine operator *(double lhs, DegRankine rhs) { return new DegRankine(lhs * rhs.Value); }
-        public static DegRankine operator *(DegRankine lhs, double rhs) { return new DegRankine(lhs.Value * rhs); }
-        public static DegRankine operator /(DegRankine lhs, double rhs) { return new DegRankine(lhs.Value / rhs); }
-        public static double operator /(DegRankine lhs, DegRankine rhs) { return lhs.Value / rhs.Value; }
+        public static DegRankine operator +(DegRankine lhs, DegRankine rhs) { return new DegRankine(lhs.m_value + rhs.m_value); }
+        public static DegRankine operator -(DegRankine lhs, DegRankine rhs) { return new DegRankine(lhs.m_value - rhs.m_value); }
+        public static DegRankine operator ++(DegRankine q) { return new DegRankine(q.m_value + 1d); }
+        public static DegRankine operator --(DegRankine q) { return new DegRankine(q.m_value - 1d); }
+        public static DegRankine operator -(DegRankine q) { return new DegRankine(-q.m_value); }
+        public static DegRankine operator *(double lhs, DegRankine rhs) { return new DegRankine(lhs * rhs.m_value); }
+        public static DegRankine operator *(DegRankine lhs, double rhs) { return new DegRankine(lhs.m_value * rhs); }
+        public static DegRankine operator /(DegRankine lhs, double rhs) { return new DegRankine(lhs.m_value / rhs); }
+        public static double operator /(DegRankine lhs, DegRankine rhs) { return lhs.m_value / rhs.m_value; }
         // Outer:
         #endregion
 
@@ -525,7 +525,7 @@ namespace $safeprojectname$
         public string ToString(IFormatProvider fp) { return ToString(DegRankine.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return String.Format(fp, format ?? DegRankine.Format, Value, DegRankine.Symbol[0]);
+            return String.Format(fp, format ?? DegRankine.Format, m_value, DegRankine.Symbol[0]);
         }
         #endregion
 
@@ -552,7 +552,7 @@ namespace $safeprojectname$
     public partial struct DegFahrenheit : IQuantity<double>, IEquatable<DegFahrenheit>, IComparable<DegFahrenheit>, IFormattable
     {
         #region Fields
-        private readonly double m_value;
+        internal readonly double m_value;
         #endregion
 
         #region Properties
@@ -568,9 +568,9 @@ namespace $safeprojectname$
 
         #region Conversions
         public static explicit operator DegFahrenheit(double q) { return new DegFahrenheit(q); }
-        public static explicit operator DegFahrenheit(DegRankine q) { return new DegFahrenheit((DegFahrenheit.Factor / DegRankine.Factor) * q.Value); }
-        public static explicit operator DegFahrenheit(DegCelsius q) { return new DegFahrenheit((DegFahrenheit.Factor / DegCelsius.Factor) * q.Value); }
-        public static explicit operator DegFahrenheit(DegKelvin q) { return new DegFahrenheit((DegFahrenheit.Factor / DegKelvin.Factor) * q.Value); }
+        public static explicit operator DegFahrenheit(DegRankine q) { return new DegFahrenheit((DegFahrenheit.Factor / DegRankine.Factor) * q.m_value); }
+        public static explicit operator DegFahrenheit(DegCelsius q) { return new DegFahrenheit((DegFahrenheit.Factor / DegCelsius.Factor) * q.m_value); }
+        public static explicit operator DegFahrenheit(DegKelvin q) { return new DegFahrenheit((DegFahrenheit.Factor / DegKelvin.Factor) * q.m_value); }
         public static DegFahrenheit From(IQuantity<double> q)
         {
             Unit<double> source = new Unit<double>(q);
@@ -582,30 +582,30 @@ namespace $safeprojectname$
         #region IObject / IEquatable<DegFahrenheit>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj is DegFahrenheit) && Equals((DegFahrenheit)obj); }
-        public bool /* IEquatable<DegFahrenheit> */ Equals(DegFahrenheit other) { return this.Value == other.Value; }
+        public bool /* IEquatable<DegFahrenheit> */ Equals(DegFahrenheit other) { return this.m_value == other.m_value; }
         #endregion
 
         #region Comparison / IComparable<DegFahrenheit>
-        public static bool operator ==(DegFahrenheit lhs, DegFahrenheit rhs) { return lhs.Value == rhs.Value; }
-        public static bool operator !=(DegFahrenheit lhs, DegFahrenheit rhs) { return lhs.Value != rhs.Value; }
-        public static bool operator <(DegFahrenheit lhs, DegFahrenheit rhs) { return lhs.Value < rhs.Value; }
-        public static bool operator >(DegFahrenheit lhs, DegFahrenheit rhs) { return lhs.Value > rhs.Value; }
-        public static bool operator <=(DegFahrenheit lhs, DegFahrenheit rhs) { return lhs.Value <= rhs.Value; }
-        public static bool operator >=(DegFahrenheit lhs, DegFahrenheit rhs) { return lhs.Value >= rhs.Value; }
-        public int /* IComparable<DegFahrenheit> */ CompareTo(DegFahrenheit other) { return this.Value.CompareTo(other.Value); }
+        public static bool operator ==(DegFahrenheit lhs, DegFahrenheit rhs) { return lhs.m_value == rhs.m_value; }
+        public static bool operator !=(DegFahrenheit lhs, DegFahrenheit rhs) { return lhs.m_value != rhs.m_value; }
+        public static bool operator <(DegFahrenheit lhs, DegFahrenheit rhs) { return lhs.m_value < rhs.m_value; }
+        public static bool operator >(DegFahrenheit lhs, DegFahrenheit rhs) { return lhs.m_value > rhs.m_value; }
+        public static bool operator <=(DegFahrenheit lhs, DegFahrenheit rhs) { return lhs.m_value <= rhs.m_value; }
+        public static bool operator >=(DegFahrenheit lhs, DegFahrenheit rhs) { return lhs.m_value >= rhs.m_value; }
+        public int /* IComparable<DegFahrenheit> */ CompareTo(DegFahrenheit other) { return this.m_value.CompareTo(other.m_value); }
         #endregion
 
         #region Arithmetic
         // Inner:
-        public static DegFahrenheit operator +(DegFahrenheit lhs, DegFahrenheit rhs) { return new DegFahrenheit(lhs.Value + rhs.Value); }
-        public static DegFahrenheit operator -(DegFahrenheit lhs, DegFahrenheit rhs) { return new DegFahrenheit(lhs.Value - rhs.Value); }
-        public static DegFahrenheit operator ++(DegFahrenheit q) { return new DegFahrenheit(q.Value + 1d); }
-        public static DegFahrenheit operator --(DegFahrenheit q) { return new DegFahrenheit(q.Value - 1d); }
-        public static DegFahrenheit operator -(DegFahrenheit q) { return new DegFahrenheit(-q.Value); }
-        public static DegFahrenheit operator *(double lhs, DegFahrenheit rhs) { return new DegFahrenheit(lhs * rhs.Value); }
-        public static DegFahrenheit operator *(DegFahrenheit lhs, double rhs) { return new DegFahrenheit(lhs.Value * rhs); }
-        public static DegFahrenheit operator /(DegFahrenheit lhs, double rhs) { return new DegFahrenheit(lhs.Value / rhs); }
-        public static double operator /(DegFahrenheit lhs, DegFahrenheit rhs) { return lhs.Value / rhs.Value; }
+        public static DegFahrenheit operator +(DegFahrenheit lhs, DegFahrenheit rhs) { return new DegFahrenheit(lhs.m_value + rhs.m_value); }
+        public static DegFahrenheit operator -(DegFahrenheit lhs, DegFahrenheit rhs) { return new DegFahrenheit(lhs.m_value - rhs.m_value); }
+        public static DegFahrenheit operator ++(DegFahrenheit q) { return new DegFahrenheit(q.m_value + 1d); }
+        public static DegFahrenheit operator --(DegFahrenheit q) { return new DegFahrenheit(q.m_value - 1d); }
+        public static DegFahrenheit operator -(DegFahrenheit q) { return new DegFahrenheit(-q.m_value); }
+        public static DegFahrenheit operator *(double lhs, DegFahrenheit rhs) { return new DegFahrenheit(lhs * rhs.m_value); }
+        public static DegFahrenheit operator *(DegFahrenheit lhs, double rhs) { return new DegFahrenheit(lhs.m_value * rhs); }
+        public static DegFahrenheit operator /(DegFahrenheit lhs, double rhs) { return new DegFahrenheit(lhs.m_value / rhs); }
+        public static double operator /(DegFahrenheit lhs, DegFahrenheit rhs) { return lhs.m_value / rhs.m_value; }
         // Outer:
         #endregion
 
@@ -615,7 +615,7 @@ namespace $safeprojectname$
         public string ToString(IFormatProvider fp) { return ToString(DegFahrenheit.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return String.Format(fp, format ?? DegFahrenheit.Format, Value, DegFahrenheit.Symbol[0]);
+            return String.Format(fp, format ?? DegFahrenheit.Format, m_value, DegFahrenheit.Symbol[0]);
         }
         #endregion
 
@@ -642,7 +642,7 @@ namespace $safeprojectname$
     public partial struct EUR : IQuantity<decimal>, IEquatable<EUR>, IComparable<EUR>, IFormattable
     {
         #region Fields
-        private readonly decimal m_value;
+        internal readonly decimal m_value;
         #endregion
 
         #region Properties
@@ -658,8 +658,8 @@ namespace $safeprojectname$
 
         #region Conversions
         public static explicit operator EUR(decimal q) { return new EUR(q); }
-        public static explicit operator EUR(PLN q) { return new EUR((EUR.Factor / PLN.Factor) * q.Value); }
-        public static explicit operator EUR(USD q) { return new EUR((EUR.Factor / USD.Factor) * q.Value); }
+        public static explicit operator EUR(PLN q) { return new EUR((EUR.Factor / PLN.Factor) * q.m_value); }
+        public static explicit operator EUR(USD q) { return new EUR((EUR.Factor / USD.Factor) * q.m_value); }
         public static EUR From(IQuantity<decimal> q)
         {
             Unit<decimal> source = new Unit<decimal>(q);
@@ -671,30 +671,30 @@ namespace $safeprojectname$
         #region IObject / IEquatable<EUR>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj is EUR) && Equals((EUR)obj); }
-        public bool /* IEquatable<EUR> */ Equals(EUR other) { return this.Value == other.Value; }
+        public bool /* IEquatable<EUR> */ Equals(EUR other) { return this.m_value == other.m_value; }
         #endregion
 
         #region Comparison / IComparable<EUR>
-        public static bool operator ==(EUR lhs, EUR rhs) { return lhs.Value == rhs.Value; }
-        public static bool operator !=(EUR lhs, EUR rhs) { return lhs.Value != rhs.Value; }
-        public static bool operator <(EUR lhs, EUR rhs) { return lhs.Value < rhs.Value; }
-        public static bool operator >(EUR lhs, EUR rhs) { return lhs.Value > rhs.Value; }
-        public static bool operator <=(EUR lhs, EUR rhs) { return lhs.Value <= rhs.Value; }
-        public static bool operator >=(EUR lhs, EUR rhs) { return lhs.Value >= rhs.Value; }
-        public int /* IComparable<EUR> */ CompareTo(EUR other) { return this.Value.CompareTo(other.Value); }
+        public static bool operator ==(EUR lhs, EUR rhs) { return lhs.m_value == rhs.m_value; }
+        public static bool operator !=(EUR lhs, EUR rhs) { return lhs.m_value != rhs.m_value; }
+        public static bool operator <(EUR lhs, EUR rhs) { return lhs.m_value < rhs.m_value; }
+        public static bool operator >(EUR lhs, EUR rhs) { return lhs.m_value > rhs.m_value; }
+        public static bool operator <=(EUR lhs, EUR rhs) { return lhs.m_value <= rhs.m_value; }
+        public static bool operator >=(EUR lhs, EUR rhs) { return lhs.m_value >= rhs.m_value; }
+        public int /* IComparable<EUR> */ CompareTo(EUR other) { return this.m_value.CompareTo(other.m_value); }
         #endregion
 
         #region Arithmetic
         // Inner:
-        public static EUR operator +(EUR lhs, EUR rhs) { return new EUR(lhs.Value + rhs.Value); }
-        public static EUR operator -(EUR lhs, EUR rhs) { return new EUR(lhs.Value - rhs.Value); }
-        public static EUR operator ++(EUR q) { return new EUR(q.Value + decimal.One); }
-        public static EUR operator --(EUR q) { return new EUR(q.Value - decimal.One); }
-        public static EUR operator -(EUR q) { return new EUR(-q.Value); }
-        public static EUR operator *(decimal lhs, EUR rhs) { return new EUR(lhs * rhs.Value); }
-        public static EUR operator *(EUR lhs, decimal rhs) { return new EUR(lhs.Value * rhs); }
-        public static EUR operator /(EUR lhs, decimal rhs) { return new EUR(lhs.Value / rhs); }
-        public static decimal operator /(EUR lhs, EUR rhs) { return lhs.Value / rhs.Value; }
+        public static EUR operator +(EUR lhs, EUR rhs) { return new EUR(lhs.m_value + rhs.m_value); }
+        public static EUR operator -(EUR lhs, EUR rhs) { return new EUR(lhs.m_value - rhs.m_value); }
+        public static EUR operator ++(EUR q) { return new EUR(q.m_value + decimal.One); }
+        public static EUR operator --(EUR q) { return new EUR(q.m_value - decimal.One); }
+        public static EUR operator -(EUR q) { return new EUR(-q.m_value); }
+        public static EUR operator *(decimal lhs, EUR rhs) { return new EUR(lhs * rhs.m_value); }
+        public static EUR operator *(EUR lhs, decimal rhs) { return new EUR(lhs.m_value * rhs); }
+        public static EUR operator /(EUR lhs, decimal rhs) { return new EUR(lhs.m_value / rhs); }
+        public static decimal operator /(EUR lhs, EUR rhs) { return lhs.m_value / rhs.m_value; }
         // Outer:
         #endregion
 
@@ -704,7 +704,7 @@ namespace $safeprojectname$
         public string ToString(IFormatProvider fp) { return ToString(EUR.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return String.Format(fp, format ?? EUR.Format, Value, EUR.Symbol[0]);
+            return String.Format(fp, format ?? EUR.Format, m_value, EUR.Symbol[0]);
         }
         #endregion
 
@@ -731,7 +731,7 @@ namespace $safeprojectname$
     public partial struct USD : IQuantity<decimal>, IEquatable<USD>, IComparable<USD>, IFormattable
     {
         #region Fields
-        private readonly decimal m_value;
+        internal readonly decimal m_value;
         #endregion
 
         #region Properties
@@ -747,8 +747,8 @@ namespace $safeprojectname$
 
         #region Conversions
         public static explicit operator USD(decimal q) { return new USD(q); }
-        public static explicit operator USD(EUR q) { return new USD((USD.Factor / EUR.Factor) * q.Value); }
-        public static explicit operator USD(PLN q) { return new USD((USD.Factor / PLN.Factor) * q.Value); }
+        public static explicit operator USD(EUR q) { return new USD((USD.Factor / EUR.Factor) * q.m_value); }
+        public static explicit operator USD(PLN q) { return new USD((USD.Factor / PLN.Factor) * q.m_value); }
         public static USD From(IQuantity<decimal> q)
         {
             Unit<decimal> source = new Unit<decimal>(q);
@@ -760,30 +760,30 @@ namespace $safeprojectname$
         #region IObject / IEquatable<USD>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj is USD) && Equals((USD)obj); }
-        public bool /* IEquatable<USD> */ Equals(USD other) { return this.Value == other.Value; }
+        public bool /* IEquatable<USD> */ Equals(USD other) { return this.m_value == other.m_value; }
         #endregion
 
         #region Comparison / IComparable<USD>
-        public static bool operator ==(USD lhs, USD rhs) { return lhs.Value == rhs.Value; }
-        public static bool operator !=(USD lhs, USD rhs) { return lhs.Value != rhs.Value; }
-        public static bool operator <(USD lhs, USD rhs) { return lhs.Value < rhs.Value; }
-        public static bool operator >(USD lhs, USD rhs) { return lhs.Value > rhs.Value; }
-        public static bool operator <=(USD lhs, USD rhs) { return lhs.Value <= rhs.Value; }
-        public static bool operator >=(USD lhs, USD rhs) { return lhs.Value >= rhs.Value; }
-        public int /* IComparable<USD> */ CompareTo(USD other) { return this.Value.CompareTo(other.Value); }
+        public static bool operator ==(USD lhs, USD rhs) { return lhs.m_value == rhs.m_value; }
+        public static bool operator !=(USD lhs, USD rhs) { return lhs.m_value != rhs.m_value; }
+        public static bool operator <(USD lhs, USD rhs) { return lhs.m_value < rhs.m_value; }
+        public static bool operator >(USD lhs, USD rhs) { return lhs.m_value > rhs.m_value; }
+        public static bool operator <=(USD lhs, USD rhs) { return lhs.m_value <= rhs.m_value; }
+        public static bool operator >=(USD lhs, USD rhs) { return lhs.m_value >= rhs.m_value; }
+        public int /* IComparable<USD> */ CompareTo(USD other) { return this.m_value.CompareTo(other.m_value); }
         #endregion
 
         #region Arithmetic
         // Inner:
-        public static USD operator +(USD lhs, USD rhs) { return new USD(lhs.Value + rhs.Value); }
-        public static USD operator -(USD lhs, USD rhs) { return new USD(lhs.Value - rhs.Value); }
-        public static USD operator ++(USD q) { return new USD(q.Value + decimal.One); }
-        public static USD operator --(USD q) { return new USD(q.Value - decimal.One); }
-        public static USD operator -(USD q) { return new USD(-q.Value); }
-        public static USD operator *(decimal lhs, USD rhs) { return new USD(lhs * rhs.Value); }
-        public static USD operator *(USD lhs, decimal rhs) { return new USD(lhs.Value * rhs); }
-        public static USD operator /(USD lhs, decimal rhs) { return new USD(lhs.Value / rhs); }
-        public static decimal operator /(USD lhs, USD rhs) { return lhs.Value / rhs.Value; }
+        public static USD operator +(USD lhs, USD rhs) { return new USD(lhs.m_value + rhs.m_value); }
+        public static USD operator -(USD lhs, USD rhs) { return new USD(lhs.m_value - rhs.m_value); }
+        public static USD operator ++(USD q) { return new USD(q.m_value + decimal.One); }
+        public static USD operator --(USD q) { return new USD(q.m_value - decimal.One); }
+        public static USD operator -(USD q) { return new USD(-q.m_value); }
+        public static USD operator *(decimal lhs, USD rhs) { return new USD(lhs * rhs.m_value); }
+        public static USD operator *(USD lhs, decimal rhs) { return new USD(lhs.m_value * rhs); }
+        public static USD operator /(USD lhs, decimal rhs) { return new USD(lhs.m_value / rhs); }
+        public static decimal operator /(USD lhs, USD rhs) { return lhs.m_value / rhs.m_value; }
         // Outer:
         #endregion
 
@@ -793,7 +793,7 @@ namespace $safeprojectname$
         public string ToString(IFormatProvider fp) { return ToString(USD.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return String.Format(fp, format ?? USD.Format, Value, USD.Symbol[0]);
+            return String.Format(fp, format ?? USD.Format, m_value, USD.Symbol[0]);
         }
         #endregion
 
@@ -820,7 +820,7 @@ namespace $safeprojectname$
     public partial struct PLN : IQuantity<decimal>, IEquatable<PLN>, IComparable<PLN>, IFormattable
     {
         #region Fields
-        private readonly decimal m_value;
+        internal readonly decimal m_value;
         #endregion
 
         #region Properties
@@ -836,8 +836,8 @@ namespace $safeprojectname$
 
         #region Conversions
         public static explicit operator PLN(decimal q) { return new PLN(q); }
-        public static explicit operator PLN(USD q) { return new PLN((PLN.Factor / USD.Factor) * q.Value); }
-        public static explicit operator PLN(EUR q) { return new PLN((PLN.Factor / EUR.Factor) * q.Value); }
+        public static explicit operator PLN(USD q) { return new PLN((PLN.Factor / USD.Factor) * q.m_value); }
+        public static explicit operator PLN(EUR q) { return new PLN((PLN.Factor / EUR.Factor) * q.m_value); }
         public static PLN From(IQuantity<decimal> q)
         {
             Unit<decimal> source = new Unit<decimal>(q);
@@ -849,30 +849,30 @@ namespace $safeprojectname$
         #region IObject / IEquatable<PLN>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj is PLN) && Equals((PLN)obj); }
-        public bool /* IEquatable<PLN> */ Equals(PLN other) { return this.Value == other.Value; }
+        public bool /* IEquatable<PLN> */ Equals(PLN other) { return this.m_value == other.m_value; }
         #endregion
 
         #region Comparison / IComparable<PLN>
-        public static bool operator ==(PLN lhs, PLN rhs) { return lhs.Value == rhs.Value; }
-        public static bool operator !=(PLN lhs, PLN rhs) { return lhs.Value != rhs.Value; }
-        public static bool operator <(PLN lhs, PLN rhs) { return lhs.Value < rhs.Value; }
-        public static bool operator >(PLN lhs, PLN rhs) { return lhs.Value > rhs.Value; }
-        public static bool operator <=(PLN lhs, PLN rhs) { return lhs.Value <= rhs.Value; }
-        public static bool operator >=(PLN lhs, PLN rhs) { return lhs.Value >= rhs.Value; }
-        public int /* IComparable<PLN> */ CompareTo(PLN other) { return this.Value.CompareTo(other.Value); }
+        public static bool operator ==(PLN lhs, PLN rhs) { return lhs.m_value == rhs.m_value; }
+        public static bool operator !=(PLN lhs, PLN rhs) { return lhs.m_value != rhs.m_value; }
+        public static bool operator <(PLN lhs, PLN rhs) { return lhs.m_value < rhs.m_value; }
+        public static bool operator >(PLN lhs, PLN rhs) { return lhs.m_value > rhs.m_value; }
+        public static bool operator <=(PLN lhs, PLN rhs) { return lhs.m_value <= rhs.m_value; }
+        public static bool operator >=(PLN lhs, PLN rhs) { return lhs.m_value >= rhs.m_value; }
+        public int /* IComparable<PLN> */ CompareTo(PLN other) { return this.m_value.CompareTo(other.m_value); }
         #endregion
 
         #region Arithmetic
         // Inner:
-        public static PLN operator +(PLN lhs, PLN rhs) { return new PLN(lhs.Value + rhs.Value); }
-        public static PLN operator -(PLN lhs, PLN rhs) { return new PLN(lhs.Value - rhs.Value); }
-        public static PLN operator ++(PLN q) { return new PLN(q.Value + decimal.One); }
-        public static PLN operator --(PLN q) { return new PLN(q.Value - decimal.One); }
-        public static PLN operator -(PLN q) { return new PLN(-q.Value); }
-        public static PLN operator *(decimal lhs, PLN rhs) { return new PLN(lhs * rhs.Value); }
-        public static PLN operator *(PLN lhs, decimal rhs) { return new PLN(lhs.Value * rhs); }
-        public static PLN operator /(PLN lhs, decimal rhs) { return new PLN(lhs.Value / rhs); }
-        public static decimal operator /(PLN lhs, PLN rhs) { return lhs.Value / rhs.Value; }
+        public static PLN operator +(PLN lhs, PLN rhs) { return new PLN(lhs.m_value + rhs.m_value); }
+        public static PLN operator -(PLN lhs, PLN rhs) { return new PLN(lhs.m_value - rhs.m_value); }
+        public static PLN operator ++(PLN q) { return new PLN(q.m_value + decimal.One); }
+        public static PLN operator --(PLN q) { return new PLN(q.m_value - decimal.One); }
+        public static PLN operator -(PLN q) { return new PLN(-q.m_value); }
+        public static PLN operator *(decimal lhs, PLN rhs) { return new PLN(lhs * rhs.m_value); }
+        public static PLN operator *(PLN lhs, decimal rhs) { return new PLN(lhs.m_value * rhs); }
+        public static PLN operator /(PLN lhs, decimal rhs) { return new PLN(lhs.m_value / rhs); }
+        public static decimal operator /(PLN lhs, PLN rhs) { return lhs.m_value / rhs.m_value; }
         // Outer:
         #endregion
 
@@ -882,7 +882,7 @@ namespace $safeprojectname$
         public string ToString(IFormatProvider fp) { return ToString(PLN.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return String.Format(fp, format ?? PLN.Format, Value, PLN.Symbol[0]);
+            return String.Format(fp, format ?? PLN.Format, m_value, PLN.Symbol[0]);
         }
         #endregion
 
@@ -909,7 +909,7 @@ namespace $safeprojectname$
     public partial struct Radian : IQuantity<double>, IEquatable<Radian>, IComparable<Radian>, IFormattable
     {
         #region Fields
-        private readonly double m_value;
+        internal readonly double m_value;
         #endregion
 
         #region Properties
@@ -925,8 +925,8 @@ namespace $safeprojectname$
 
         #region Conversions
         public static explicit operator Radian(double q) { return new Radian(q); }
-        public static explicit operator Radian(Cycles q) { return new Radian((Radian.Factor / Cycles.Factor) * q.Value); }
-        public static explicit operator Radian(Degree q) { return new Radian((Radian.Factor / Degree.Factor) * q.Value); }
+        public static explicit operator Radian(Cycles q) { return new Radian((Radian.Factor / Cycles.Factor) * q.m_value); }
+        public static explicit operator Radian(Degree q) { return new Radian((Radian.Factor / Degree.Factor) * q.m_value); }
         public static Radian From(IQuantity<double> q)
         {
             Unit<double> source = new Unit<double>(q);
@@ -938,30 +938,30 @@ namespace $safeprojectname$
         #region IObject / IEquatable<Radian>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj is Radian) && Equals((Radian)obj); }
-        public bool /* IEquatable<Radian> */ Equals(Radian other) { return this.Value == other.Value; }
+        public bool /* IEquatable<Radian> */ Equals(Radian other) { return this.m_value == other.m_value; }
         #endregion
 
         #region Comparison / IComparable<Radian>
-        public static bool operator ==(Radian lhs, Radian rhs) { return lhs.Value == rhs.Value; }
-        public static bool operator !=(Radian lhs, Radian rhs) { return lhs.Value != rhs.Value; }
-        public static bool operator <(Radian lhs, Radian rhs) { return lhs.Value < rhs.Value; }
-        public static bool operator >(Radian lhs, Radian rhs) { return lhs.Value > rhs.Value; }
-        public static bool operator <=(Radian lhs, Radian rhs) { return lhs.Value <= rhs.Value; }
-        public static bool operator >=(Radian lhs, Radian rhs) { return lhs.Value >= rhs.Value; }
-        public int /* IComparable<Radian> */ CompareTo(Radian other) { return this.Value.CompareTo(other.Value); }
+        public static bool operator ==(Radian lhs, Radian rhs) { return lhs.m_value == rhs.m_value; }
+        public static bool operator !=(Radian lhs, Radian rhs) { return lhs.m_value != rhs.m_value; }
+        public static bool operator <(Radian lhs, Radian rhs) { return lhs.m_value < rhs.m_value; }
+        public static bool operator >(Radian lhs, Radian rhs) { return lhs.m_value > rhs.m_value; }
+        public static bool operator <=(Radian lhs, Radian rhs) { return lhs.m_value <= rhs.m_value; }
+        public static bool operator >=(Radian lhs, Radian rhs) { return lhs.m_value >= rhs.m_value; }
+        public int /* IComparable<Radian> */ CompareTo(Radian other) { return this.m_value.CompareTo(other.m_value); }
         #endregion
 
         #region Arithmetic
         // Inner:
-        public static Radian operator +(Radian lhs, Radian rhs) { return new Radian(lhs.Value + rhs.Value); }
-        public static Radian operator -(Radian lhs, Radian rhs) { return new Radian(lhs.Value - rhs.Value); }
-        public static Radian operator ++(Radian q) { return new Radian(q.Value + 1d); }
-        public static Radian operator --(Radian q) { return new Radian(q.Value - 1d); }
-        public static Radian operator -(Radian q) { return new Radian(-q.Value); }
-        public static Radian operator *(double lhs, Radian rhs) { return new Radian(lhs * rhs.Value); }
-        public static Radian operator *(Radian lhs, double rhs) { return new Radian(lhs.Value * rhs); }
-        public static Radian operator /(Radian lhs, double rhs) { return new Radian(lhs.Value / rhs); }
-        public static double operator /(Radian lhs, Radian rhs) { return lhs.Value / rhs.Value; }
+        public static Radian operator +(Radian lhs, Radian rhs) { return new Radian(lhs.m_value + rhs.m_value); }
+        public static Radian operator -(Radian lhs, Radian rhs) { return new Radian(lhs.m_value - rhs.m_value); }
+        public static Radian operator ++(Radian q) { return new Radian(q.m_value + 1d); }
+        public static Radian operator --(Radian q) { return new Radian(q.m_value - 1d); }
+        public static Radian operator -(Radian q) { return new Radian(-q.m_value); }
+        public static Radian operator *(double lhs, Radian rhs) { return new Radian(lhs * rhs.m_value); }
+        public static Radian operator *(Radian lhs, double rhs) { return new Radian(lhs.m_value * rhs); }
+        public static Radian operator /(Radian lhs, double rhs) { return new Radian(lhs.m_value / rhs); }
+        public static double operator /(Radian lhs, Radian rhs) { return lhs.m_value / rhs.m_value; }
         // Outer:
         #endregion
 
@@ -971,7 +971,7 @@ namespace $safeprojectname$
         public string ToString(IFormatProvider fp) { return ToString(Radian.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return String.Format(fp, format ?? Radian.Format, Value, Radian.Symbol[0]);
+            return String.Format(fp, format ?? Radian.Format, m_value, Radian.Symbol[0]);
         }
         #endregion
 
@@ -998,7 +998,7 @@ namespace $safeprojectname$
     public partial struct Degree : IQuantity<double>, IEquatable<Degree>, IComparable<Degree>, IFormattable
     {
         #region Fields
-        private readonly double m_value;
+        internal readonly double m_value;
         #endregion
 
         #region Properties
@@ -1014,8 +1014,8 @@ namespace $safeprojectname$
 
         #region Conversions
         public static explicit operator Degree(double q) { return new Degree(q); }
-        public static explicit operator Degree(Radian q) { return new Degree((Degree.Factor / Radian.Factor) * q.Value); }
-        public static explicit operator Degree(Cycles q) { return new Degree((Degree.Factor / Cycles.Factor) * q.Value); }
+        public static explicit operator Degree(Radian q) { return new Degree((Degree.Factor / Radian.Factor) * q.m_value); }
+        public static explicit operator Degree(Cycles q) { return new Degree((Degree.Factor / Cycles.Factor) * q.m_value); }
         public static Degree From(IQuantity<double> q)
         {
             Unit<double> source = new Unit<double>(q);
@@ -1027,30 +1027,30 @@ namespace $safeprojectname$
         #region IObject / IEquatable<Degree>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj is Degree) && Equals((Degree)obj); }
-        public bool /* IEquatable<Degree> */ Equals(Degree other) { return this.Value == other.Value; }
+        public bool /* IEquatable<Degree> */ Equals(Degree other) { return this.m_value == other.m_value; }
         #endregion
 
         #region Comparison / IComparable<Degree>
-        public static bool operator ==(Degree lhs, Degree rhs) { return lhs.Value == rhs.Value; }
-        public static bool operator !=(Degree lhs, Degree rhs) { return lhs.Value != rhs.Value; }
-        public static bool operator <(Degree lhs, Degree rhs) { return lhs.Value < rhs.Value; }
-        public static bool operator >(Degree lhs, Degree rhs) { return lhs.Value > rhs.Value; }
-        public static bool operator <=(Degree lhs, Degree rhs) { return lhs.Value <= rhs.Value; }
-        public static bool operator >=(Degree lhs, Degree rhs) { return lhs.Value >= rhs.Value; }
-        public int /* IComparable<Degree> */ CompareTo(Degree other) { return this.Value.CompareTo(other.Value); }
+        public static bool operator ==(Degree lhs, Degree rhs) { return lhs.m_value == rhs.m_value; }
+        public static bool operator !=(Degree lhs, Degree rhs) { return lhs.m_value != rhs.m_value; }
+        public static bool operator <(Degree lhs, Degree rhs) { return lhs.m_value < rhs.m_value; }
+        public static bool operator >(Degree lhs, Degree rhs) { return lhs.m_value > rhs.m_value; }
+        public static bool operator <=(Degree lhs, Degree rhs) { return lhs.m_value <= rhs.m_value; }
+        public static bool operator >=(Degree lhs, Degree rhs) { return lhs.m_value >= rhs.m_value; }
+        public int /* IComparable<Degree> */ CompareTo(Degree other) { return this.m_value.CompareTo(other.m_value); }
         #endregion
 
         #region Arithmetic
         // Inner:
-        public static Degree operator +(Degree lhs, Degree rhs) { return new Degree(lhs.Value + rhs.Value); }
-        public static Degree operator -(Degree lhs, Degree rhs) { return new Degree(lhs.Value - rhs.Value); }
-        public static Degree operator ++(Degree q) { return new Degree(q.Value + 1d); }
-        public static Degree operator --(Degree q) { return new Degree(q.Value - 1d); }
-        public static Degree operator -(Degree q) { return new Degree(-q.Value); }
-        public static Degree operator *(double lhs, Degree rhs) { return new Degree(lhs * rhs.Value); }
-        public static Degree operator *(Degree lhs, double rhs) { return new Degree(lhs.Value * rhs); }
-        public static Degree operator /(Degree lhs, double rhs) { return new Degree(lhs.Value / rhs); }
-        public static double operator /(Degree lhs, Degree rhs) { return lhs.Value / rhs.Value; }
+        public static Degree operator +(Degree lhs, Degree rhs) { return new Degree(lhs.m_value + rhs.m_value); }
+        public static Degree operator -(Degree lhs, Degree rhs) { return new Degree(lhs.m_value - rhs.m_value); }
+        public static Degree operator ++(Degree q) { return new Degree(q.m_value + 1d); }
+        public static Degree operator --(Degree q) { return new Degree(q.m_value - 1d); }
+        public static Degree operator -(Degree q) { return new Degree(-q.m_value); }
+        public static Degree operator *(double lhs, Degree rhs) { return new Degree(lhs * rhs.m_value); }
+        public static Degree operator *(Degree lhs, double rhs) { return new Degree(lhs.m_value * rhs); }
+        public static Degree operator /(Degree lhs, double rhs) { return new Degree(lhs.m_value / rhs); }
+        public static double operator /(Degree lhs, Degree rhs) { return lhs.m_value / rhs.m_value; }
         // Outer:
         #endregion
 
@@ -1060,7 +1060,7 @@ namespace $safeprojectname$
         public string ToString(IFormatProvider fp) { return ToString(Degree.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return String.Format(fp, format ?? Degree.Format, Value, Degree.Symbol[0]);
+            return String.Format(fp, format ?? Degree.Format, m_value, Degree.Symbol[0]);
         }
         #endregion
 
@@ -1087,7 +1087,7 @@ namespace $safeprojectname$
     public partial struct Cycles : IQuantity<double>, IEquatable<Cycles>, IComparable<Cycles>, IFormattable
     {
         #region Fields
-        private readonly double m_value;
+        internal readonly double m_value;
         #endregion
 
         #region Properties
@@ -1103,8 +1103,8 @@ namespace $safeprojectname$
 
         #region Conversions
         public static explicit operator Cycles(double q) { return new Cycles(q); }
-        public static explicit operator Cycles(Degree q) { return new Cycles((Cycles.Factor / Degree.Factor) * q.Value); }
-        public static explicit operator Cycles(Radian q) { return new Cycles((Cycles.Factor / Radian.Factor) * q.Value); }
+        public static explicit operator Cycles(Degree q) { return new Cycles((Cycles.Factor / Degree.Factor) * q.m_value); }
+        public static explicit operator Cycles(Radian q) { return new Cycles((Cycles.Factor / Radian.Factor) * q.m_value); }
         public static Cycles From(IQuantity<double> q)
         {
             Unit<double> source = new Unit<double>(q);
@@ -1116,33 +1116,33 @@ namespace $safeprojectname$
         #region IObject / IEquatable<Cycles>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj is Cycles) && Equals((Cycles)obj); }
-        public bool /* IEquatable<Cycles> */ Equals(Cycles other) { return this.Value == other.Value; }
+        public bool /* IEquatable<Cycles> */ Equals(Cycles other) { return this.m_value == other.m_value; }
         #endregion
 
         #region Comparison / IComparable<Cycles>
-        public static bool operator ==(Cycles lhs, Cycles rhs) { return lhs.Value == rhs.Value; }
-        public static bool operator !=(Cycles lhs, Cycles rhs) { return lhs.Value != rhs.Value; }
-        public static bool operator <(Cycles lhs, Cycles rhs) { return lhs.Value < rhs.Value; }
-        public static bool operator >(Cycles lhs, Cycles rhs) { return lhs.Value > rhs.Value; }
-        public static bool operator <=(Cycles lhs, Cycles rhs) { return lhs.Value <= rhs.Value; }
-        public static bool operator >=(Cycles lhs, Cycles rhs) { return lhs.Value >= rhs.Value; }
-        public int /* IComparable<Cycles> */ CompareTo(Cycles other) { return this.Value.CompareTo(other.Value); }
+        public static bool operator ==(Cycles lhs, Cycles rhs) { return lhs.m_value == rhs.m_value; }
+        public static bool operator !=(Cycles lhs, Cycles rhs) { return lhs.m_value != rhs.m_value; }
+        public static bool operator <(Cycles lhs, Cycles rhs) { return lhs.m_value < rhs.m_value; }
+        public static bool operator >(Cycles lhs, Cycles rhs) { return lhs.m_value > rhs.m_value; }
+        public static bool operator <=(Cycles lhs, Cycles rhs) { return lhs.m_value <= rhs.m_value; }
+        public static bool operator >=(Cycles lhs, Cycles rhs) { return lhs.m_value >= rhs.m_value; }
+        public int /* IComparable<Cycles> */ CompareTo(Cycles other) { return this.m_value.CompareTo(other.m_value); }
         #endregion
 
         #region Arithmetic
         // Inner:
-        public static Cycles operator +(Cycles lhs, Cycles rhs) { return new Cycles(lhs.Value + rhs.Value); }
-        public static Cycles operator -(Cycles lhs, Cycles rhs) { return new Cycles(lhs.Value - rhs.Value); }
-        public static Cycles operator ++(Cycles q) { return new Cycles(q.Value + 1d); }
-        public static Cycles operator --(Cycles q) { return new Cycles(q.Value - 1d); }
-        public static Cycles operator -(Cycles q) { return new Cycles(-q.Value); }
-        public static Cycles operator *(double lhs, Cycles rhs) { return new Cycles(lhs * rhs.Value); }
-        public static Cycles operator *(Cycles lhs, double rhs) { return new Cycles(lhs.Value * rhs); }
-        public static Cycles operator /(Cycles lhs, double rhs) { return new Cycles(lhs.Value / rhs); }
-        public static double operator /(Cycles lhs, Cycles rhs) { return lhs.Value / rhs.Value; }
+        public static Cycles operator +(Cycles lhs, Cycles rhs) { return new Cycles(lhs.m_value + rhs.m_value); }
+        public static Cycles operator -(Cycles lhs, Cycles rhs) { return new Cycles(lhs.m_value - rhs.m_value); }
+        public static Cycles operator ++(Cycles q) { return new Cycles(q.m_value + 1d); }
+        public static Cycles operator --(Cycles q) { return new Cycles(q.m_value - 1d); }
+        public static Cycles operator -(Cycles q) { return new Cycles(-q.m_value); }
+        public static Cycles operator *(double lhs, Cycles rhs) { return new Cycles(lhs * rhs.m_value); }
+        public static Cycles operator *(Cycles lhs, double rhs) { return new Cycles(lhs.m_value * rhs); }
+        public static Cycles operator /(Cycles lhs, double rhs) { return new Cycles(lhs.m_value / rhs); }
+        public static double operator /(Cycles lhs, Cycles rhs) { return lhs.m_value / rhs.m_value; }
         // Outer:
-        public static Hertz operator /(Cycles lhs, Second rhs) { return new Hertz(lhs.Value / rhs.Value); }
-        public static Second operator /(Cycles lhs, Hertz rhs) { return new Second(lhs.Value / rhs.Value); }
+        public static Hertz operator /(Cycles lhs, Second rhs) { return new Hertz(lhs.m_value / rhs.m_value); }
+        public static Second operator /(Cycles lhs, Hertz rhs) { return new Second(lhs.m_value / rhs.m_value); }
         #endregion
 
         #region Formatting
@@ -1151,7 +1151,7 @@ namespace $safeprojectname$
         public string ToString(IFormatProvider fp) { return ToString(Cycles.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return String.Format(fp, format ?? Cycles.Format, Value, Cycles.Symbol[0]);
+            return String.Format(fp, format ?? Cycles.Format, m_value, Cycles.Symbol[0]);
         }
         #endregion
 
@@ -1178,7 +1178,7 @@ namespace $safeprojectname$
     public partial struct Hertz : IQuantity<double>, IEquatable<Hertz>, IComparable<Hertz>, IFormattable
     {
         #region Fields
-        private readonly double m_value;
+        internal readonly double m_value;
         #endregion
 
         #region Properties
@@ -1205,33 +1205,33 @@ namespace $safeprojectname$
         #region IObject / IEquatable<Hertz>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj is Hertz) && Equals((Hertz)obj); }
-        public bool /* IEquatable<Hertz> */ Equals(Hertz other) { return this.Value == other.Value; }
+        public bool /* IEquatable<Hertz> */ Equals(Hertz other) { return this.m_value == other.m_value; }
         #endregion
 
         #region Comparison / IComparable<Hertz>
-        public static bool operator ==(Hertz lhs, Hertz rhs) { return lhs.Value == rhs.Value; }
-        public static bool operator !=(Hertz lhs, Hertz rhs) { return lhs.Value != rhs.Value; }
-        public static bool operator <(Hertz lhs, Hertz rhs) { return lhs.Value < rhs.Value; }
-        public static bool operator >(Hertz lhs, Hertz rhs) { return lhs.Value > rhs.Value; }
-        public static bool operator <=(Hertz lhs, Hertz rhs) { return lhs.Value <= rhs.Value; }
-        public static bool operator >=(Hertz lhs, Hertz rhs) { return lhs.Value >= rhs.Value; }
-        public int /* IComparable<Hertz> */ CompareTo(Hertz other) { return this.Value.CompareTo(other.Value); }
+        public static bool operator ==(Hertz lhs, Hertz rhs) { return lhs.m_value == rhs.m_value; }
+        public static bool operator !=(Hertz lhs, Hertz rhs) { return lhs.m_value != rhs.m_value; }
+        public static bool operator <(Hertz lhs, Hertz rhs) { return lhs.m_value < rhs.m_value; }
+        public static bool operator >(Hertz lhs, Hertz rhs) { return lhs.m_value > rhs.m_value; }
+        public static bool operator <=(Hertz lhs, Hertz rhs) { return lhs.m_value <= rhs.m_value; }
+        public static bool operator >=(Hertz lhs, Hertz rhs) { return lhs.m_value >= rhs.m_value; }
+        public int /* IComparable<Hertz> */ CompareTo(Hertz other) { return this.m_value.CompareTo(other.m_value); }
         #endregion
 
         #region Arithmetic
         // Inner:
-        public static Hertz operator +(Hertz lhs, Hertz rhs) { return new Hertz(lhs.Value + rhs.Value); }
-        public static Hertz operator -(Hertz lhs, Hertz rhs) { return new Hertz(lhs.Value - rhs.Value); }
-        public static Hertz operator ++(Hertz q) { return new Hertz(q.Value + 1d); }
-        public static Hertz operator --(Hertz q) { return new Hertz(q.Value - 1d); }
-        public static Hertz operator -(Hertz q) { return new Hertz(-q.Value); }
-        public static Hertz operator *(double lhs, Hertz rhs) { return new Hertz(lhs * rhs.Value); }
-        public static Hertz operator *(Hertz lhs, double rhs) { return new Hertz(lhs.Value * rhs); }
-        public static Hertz operator /(Hertz lhs, double rhs) { return new Hertz(lhs.Value / rhs); }
-        public static double operator /(Hertz lhs, Hertz rhs) { return lhs.Value / rhs.Value; }
+        public static Hertz operator +(Hertz lhs, Hertz rhs) { return new Hertz(lhs.m_value + rhs.m_value); }
+        public static Hertz operator -(Hertz lhs, Hertz rhs) { return new Hertz(lhs.m_value - rhs.m_value); }
+        public static Hertz operator ++(Hertz q) { return new Hertz(q.m_value + 1d); }
+        public static Hertz operator --(Hertz q) { return new Hertz(q.m_value - 1d); }
+        public static Hertz operator -(Hertz q) { return new Hertz(-q.m_value); }
+        public static Hertz operator *(double lhs, Hertz rhs) { return new Hertz(lhs * rhs.m_value); }
+        public static Hertz operator *(Hertz lhs, double rhs) { return new Hertz(lhs.m_value * rhs); }
+        public static Hertz operator /(Hertz lhs, double rhs) { return new Hertz(lhs.m_value / rhs); }
+        public static double operator /(Hertz lhs, Hertz rhs) { return lhs.m_value / rhs.m_value; }
         // Outer:
-        public static Cycles operator *(Hertz lhs, Second rhs) { return new Cycles(lhs.Value * rhs.Value); }
-        public static Cycles operator *(Second lhs, Hertz rhs) { return new Cycles(lhs.Value * rhs.Value); }
+        public static Cycles operator *(Hertz lhs, Second rhs) { return new Cycles(lhs.m_value * rhs.m_value); }
+        public static Cycles operator *(Second lhs, Hertz rhs) { return new Cycles(lhs.m_value * rhs.m_value); }
         #endregion
 
         #region Formatting
@@ -1240,7 +1240,7 @@ namespace $safeprojectname$
         public string ToString(IFormatProvider fp) { return ToString(Hertz.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return String.Format(fp, format ?? Hertz.Format, Value, Hertz.Symbol[0]);
+            return String.Format(fp, format ?? Hertz.Format, m_value, Hertz.Symbol[0]);
         }
         #endregion
 
@@ -1267,7 +1267,7 @@ namespace $safeprojectname$
     public partial struct SquareMeter : IQuantity<double>, IEquatable<SquareMeter>, IComparable<SquareMeter>, IFormattable
     {
         #region Fields
-        private readonly double m_value;
+        internal readonly double m_value;
         #endregion
 
         #region Properties
@@ -1294,32 +1294,32 @@ namespace $safeprojectname$
         #region IObject / IEquatable<SquareMeter>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj is SquareMeter) && Equals((SquareMeter)obj); }
-        public bool /* IEquatable<SquareMeter> */ Equals(SquareMeter other) { return this.Value == other.Value; }
+        public bool /* IEquatable<SquareMeter> */ Equals(SquareMeter other) { return this.m_value == other.m_value; }
         #endregion
 
         #region Comparison / IComparable<SquareMeter>
-        public static bool operator ==(SquareMeter lhs, SquareMeter rhs) { return lhs.Value == rhs.Value; }
-        public static bool operator !=(SquareMeter lhs, SquareMeter rhs) { return lhs.Value != rhs.Value; }
-        public static bool operator <(SquareMeter lhs, SquareMeter rhs) { return lhs.Value < rhs.Value; }
-        public static bool operator >(SquareMeter lhs, SquareMeter rhs) { return lhs.Value > rhs.Value; }
-        public static bool operator <=(SquareMeter lhs, SquareMeter rhs) { return lhs.Value <= rhs.Value; }
-        public static bool operator >=(SquareMeter lhs, SquareMeter rhs) { return lhs.Value >= rhs.Value; }
-        public int /* IComparable<SquareMeter> */ CompareTo(SquareMeter other) { return this.Value.CompareTo(other.Value); }
+        public static bool operator ==(SquareMeter lhs, SquareMeter rhs) { return lhs.m_value == rhs.m_value; }
+        public static bool operator !=(SquareMeter lhs, SquareMeter rhs) { return lhs.m_value != rhs.m_value; }
+        public static bool operator <(SquareMeter lhs, SquareMeter rhs) { return lhs.m_value < rhs.m_value; }
+        public static bool operator >(SquareMeter lhs, SquareMeter rhs) { return lhs.m_value > rhs.m_value; }
+        public static bool operator <=(SquareMeter lhs, SquareMeter rhs) { return lhs.m_value <= rhs.m_value; }
+        public static bool operator >=(SquareMeter lhs, SquareMeter rhs) { return lhs.m_value >= rhs.m_value; }
+        public int /* IComparable<SquareMeter> */ CompareTo(SquareMeter other) { return this.m_value.CompareTo(other.m_value); }
         #endregion
 
         #region Arithmetic
         // Inner:
-        public static SquareMeter operator +(SquareMeter lhs, SquareMeter rhs) { return new SquareMeter(lhs.Value + rhs.Value); }
-        public static SquareMeter operator -(SquareMeter lhs, SquareMeter rhs) { return new SquareMeter(lhs.Value - rhs.Value); }
-        public static SquareMeter operator ++(SquareMeter q) { return new SquareMeter(q.Value + 1d); }
-        public static SquareMeter operator --(SquareMeter q) { return new SquareMeter(q.Value - 1d); }
-        public static SquareMeter operator -(SquareMeter q) { return new SquareMeter(-q.Value); }
-        public static SquareMeter operator *(double lhs, SquareMeter rhs) { return new SquareMeter(lhs * rhs.Value); }
-        public static SquareMeter operator *(SquareMeter lhs, double rhs) { return new SquareMeter(lhs.Value * rhs); }
-        public static SquareMeter operator /(SquareMeter lhs, double rhs) { return new SquareMeter(lhs.Value / rhs); }
-        public static double operator /(SquareMeter lhs, SquareMeter rhs) { return lhs.Value / rhs.Value; }
+        public static SquareMeter operator +(SquareMeter lhs, SquareMeter rhs) { return new SquareMeter(lhs.m_value + rhs.m_value); }
+        public static SquareMeter operator -(SquareMeter lhs, SquareMeter rhs) { return new SquareMeter(lhs.m_value - rhs.m_value); }
+        public static SquareMeter operator ++(SquareMeter q) { return new SquareMeter(q.m_value + 1d); }
+        public static SquareMeter operator --(SquareMeter q) { return new SquareMeter(q.m_value - 1d); }
+        public static SquareMeter operator -(SquareMeter q) { return new SquareMeter(-q.m_value); }
+        public static SquareMeter operator *(double lhs, SquareMeter rhs) { return new SquareMeter(lhs * rhs.m_value); }
+        public static SquareMeter operator *(SquareMeter lhs, double rhs) { return new SquareMeter(lhs.m_value * rhs); }
+        public static SquareMeter operator /(SquareMeter lhs, double rhs) { return new SquareMeter(lhs.m_value / rhs); }
+        public static double operator /(SquareMeter lhs, SquareMeter rhs) { return lhs.m_value / rhs.m_value; }
         // Outer:
-        public static Meter operator /(SquareMeter lhs, Meter rhs) { return new Meter(lhs.Value / rhs.Value); }
+        public static Meter operator /(SquareMeter lhs, Meter rhs) { return new Meter(lhs.m_value / rhs.m_value); }
         #endregion
 
         #region Formatting
@@ -1328,7 +1328,7 @@ namespace $safeprojectname$
         public string ToString(IFormatProvider fp) { return ToString(SquareMeter.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return String.Format(fp, format ?? SquareMeter.Format, Value, SquareMeter.Symbol[0]);
+            return String.Format(fp, format ?? SquareMeter.Format, m_value, SquareMeter.Symbol[0]);
         }
         #endregion
 
@@ -1355,7 +1355,7 @@ namespace $safeprojectname$
     public partial struct Meter_Sec : IQuantity<double>, IEquatable<Meter_Sec>, IComparable<Meter_Sec>, IFormattable
     {
         #region Fields
-        private readonly double m_value;
+        internal readonly double m_value;
         #endregion
 
         #region Properties
@@ -1382,35 +1382,35 @@ namespace $safeprojectname$
         #region IObject / IEquatable<Meter_Sec>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj is Meter_Sec) && Equals((Meter_Sec)obj); }
-        public bool /* IEquatable<Meter_Sec> */ Equals(Meter_Sec other) { return this.Value == other.Value; }
+        public bool /* IEquatable<Meter_Sec> */ Equals(Meter_Sec other) { return this.m_value == other.m_value; }
         #endregion
 
         #region Comparison / IComparable<Meter_Sec>
-        public static bool operator ==(Meter_Sec lhs, Meter_Sec rhs) { return lhs.Value == rhs.Value; }
-        public static bool operator !=(Meter_Sec lhs, Meter_Sec rhs) { return lhs.Value != rhs.Value; }
-        public static bool operator <(Meter_Sec lhs, Meter_Sec rhs) { return lhs.Value < rhs.Value; }
-        public static bool operator >(Meter_Sec lhs, Meter_Sec rhs) { return lhs.Value > rhs.Value; }
-        public static bool operator <=(Meter_Sec lhs, Meter_Sec rhs) { return lhs.Value <= rhs.Value; }
-        public static bool operator >=(Meter_Sec lhs, Meter_Sec rhs) { return lhs.Value >= rhs.Value; }
-        public int /* IComparable<Meter_Sec> */ CompareTo(Meter_Sec other) { return this.Value.CompareTo(other.Value); }
+        public static bool operator ==(Meter_Sec lhs, Meter_Sec rhs) { return lhs.m_value == rhs.m_value; }
+        public static bool operator !=(Meter_Sec lhs, Meter_Sec rhs) { return lhs.m_value != rhs.m_value; }
+        public static bool operator <(Meter_Sec lhs, Meter_Sec rhs) { return lhs.m_value < rhs.m_value; }
+        public static bool operator >(Meter_Sec lhs, Meter_Sec rhs) { return lhs.m_value > rhs.m_value; }
+        public static bool operator <=(Meter_Sec lhs, Meter_Sec rhs) { return lhs.m_value <= rhs.m_value; }
+        public static bool operator >=(Meter_Sec lhs, Meter_Sec rhs) { return lhs.m_value >= rhs.m_value; }
+        public int /* IComparable<Meter_Sec> */ CompareTo(Meter_Sec other) { return this.m_value.CompareTo(other.m_value); }
         #endregion
 
         #region Arithmetic
         // Inner:
-        public static Meter_Sec operator +(Meter_Sec lhs, Meter_Sec rhs) { return new Meter_Sec(lhs.Value + rhs.Value); }
-        public static Meter_Sec operator -(Meter_Sec lhs, Meter_Sec rhs) { return new Meter_Sec(lhs.Value - rhs.Value); }
-        public static Meter_Sec operator ++(Meter_Sec q) { return new Meter_Sec(q.Value + 1d); }
-        public static Meter_Sec operator --(Meter_Sec q) { return new Meter_Sec(q.Value - 1d); }
-        public static Meter_Sec operator -(Meter_Sec q) { return new Meter_Sec(-q.Value); }
-        public static Meter_Sec operator *(double lhs, Meter_Sec rhs) { return new Meter_Sec(lhs * rhs.Value); }
-        public static Meter_Sec operator *(Meter_Sec lhs, double rhs) { return new Meter_Sec(lhs.Value * rhs); }
-        public static Meter_Sec operator /(Meter_Sec lhs, double rhs) { return new Meter_Sec(lhs.Value / rhs); }
-        public static double operator /(Meter_Sec lhs, Meter_Sec rhs) { return lhs.Value / rhs.Value; }
+        public static Meter_Sec operator +(Meter_Sec lhs, Meter_Sec rhs) { return new Meter_Sec(lhs.m_value + rhs.m_value); }
+        public static Meter_Sec operator -(Meter_Sec lhs, Meter_Sec rhs) { return new Meter_Sec(lhs.m_value - rhs.m_value); }
+        public static Meter_Sec operator ++(Meter_Sec q) { return new Meter_Sec(q.m_value + 1d); }
+        public static Meter_Sec operator --(Meter_Sec q) { return new Meter_Sec(q.m_value - 1d); }
+        public static Meter_Sec operator -(Meter_Sec q) { return new Meter_Sec(-q.m_value); }
+        public static Meter_Sec operator *(double lhs, Meter_Sec rhs) { return new Meter_Sec(lhs * rhs.m_value); }
+        public static Meter_Sec operator *(Meter_Sec lhs, double rhs) { return new Meter_Sec(lhs.m_value * rhs); }
+        public static Meter_Sec operator /(Meter_Sec lhs, double rhs) { return new Meter_Sec(lhs.m_value / rhs); }
+        public static double operator /(Meter_Sec lhs, Meter_Sec rhs) { return lhs.m_value / rhs.m_value; }
         // Outer:
-        public static Meter operator *(Meter_Sec lhs, Second rhs) { return new Meter(lhs.Value * rhs.Value); }
-        public static Meter operator *(Second lhs, Meter_Sec rhs) { return new Meter(lhs.Value * rhs.Value); }
-        public static Meter_Sec2 operator /(Meter_Sec lhs, Second rhs) { return new Meter_Sec2(lhs.Value / rhs.Value); }
-        public static Second operator /(Meter_Sec lhs, Meter_Sec2 rhs) { return new Second(lhs.Value / rhs.Value); }
+        public static Meter operator *(Meter_Sec lhs, Second rhs) { return new Meter(lhs.m_value * rhs.m_value); }
+        public static Meter operator *(Second lhs, Meter_Sec rhs) { return new Meter(lhs.m_value * rhs.m_value); }
+        public static Meter_Sec2 operator /(Meter_Sec lhs, Second rhs) { return new Meter_Sec2(lhs.m_value / rhs.m_value); }
+        public static Second operator /(Meter_Sec lhs, Meter_Sec2 rhs) { return new Second(lhs.m_value / rhs.m_value); }
         #endregion
 
         #region Formatting
@@ -1419,7 +1419,7 @@ namespace $safeprojectname$
         public string ToString(IFormatProvider fp) { return ToString(Meter_Sec.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return String.Format(fp, format ?? Meter_Sec.Format, Value, Meter_Sec.Symbol[0]);
+            return String.Format(fp, format ?? Meter_Sec.Format, m_value, Meter_Sec.Symbol[0]);
         }
         #endregion
 
@@ -1446,7 +1446,7 @@ namespace $safeprojectname$
     public partial struct Meter_Sec2 : IQuantity<double>, IEquatable<Meter_Sec2>, IComparable<Meter_Sec2>, IFormattable
     {
         #region Fields
-        private readonly double m_value;
+        internal readonly double m_value;
         #endregion
 
         #region Properties
@@ -1473,33 +1473,33 @@ namespace $safeprojectname$
         #region IObject / IEquatable<Meter_Sec2>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj is Meter_Sec2) && Equals((Meter_Sec2)obj); }
-        public bool /* IEquatable<Meter_Sec2> */ Equals(Meter_Sec2 other) { return this.Value == other.Value; }
+        public bool /* IEquatable<Meter_Sec2> */ Equals(Meter_Sec2 other) { return this.m_value == other.m_value; }
         #endregion
 
         #region Comparison / IComparable<Meter_Sec2>
-        public static bool operator ==(Meter_Sec2 lhs, Meter_Sec2 rhs) { return lhs.Value == rhs.Value; }
-        public static bool operator !=(Meter_Sec2 lhs, Meter_Sec2 rhs) { return lhs.Value != rhs.Value; }
-        public static bool operator <(Meter_Sec2 lhs, Meter_Sec2 rhs) { return lhs.Value < rhs.Value; }
-        public static bool operator >(Meter_Sec2 lhs, Meter_Sec2 rhs) { return lhs.Value > rhs.Value; }
-        public static bool operator <=(Meter_Sec2 lhs, Meter_Sec2 rhs) { return lhs.Value <= rhs.Value; }
-        public static bool operator >=(Meter_Sec2 lhs, Meter_Sec2 rhs) { return lhs.Value >= rhs.Value; }
-        public int /* IComparable<Meter_Sec2> */ CompareTo(Meter_Sec2 other) { return this.Value.CompareTo(other.Value); }
+        public static bool operator ==(Meter_Sec2 lhs, Meter_Sec2 rhs) { return lhs.m_value == rhs.m_value; }
+        public static bool operator !=(Meter_Sec2 lhs, Meter_Sec2 rhs) { return lhs.m_value != rhs.m_value; }
+        public static bool operator <(Meter_Sec2 lhs, Meter_Sec2 rhs) { return lhs.m_value < rhs.m_value; }
+        public static bool operator >(Meter_Sec2 lhs, Meter_Sec2 rhs) { return lhs.m_value > rhs.m_value; }
+        public static bool operator <=(Meter_Sec2 lhs, Meter_Sec2 rhs) { return lhs.m_value <= rhs.m_value; }
+        public static bool operator >=(Meter_Sec2 lhs, Meter_Sec2 rhs) { return lhs.m_value >= rhs.m_value; }
+        public int /* IComparable<Meter_Sec2> */ CompareTo(Meter_Sec2 other) { return this.m_value.CompareTo(other.m_value); }
         #endregion
 
         #region Arithmetic
         // Inner:
-        public static Meter_Sec2 operator +(Meter_Sec2 lhs, Meter_Sec2 rhs) { return new Meter_Sec2(lhs.Value + rhs.Value); }
-        public static Meter_Sec2 operator -(Meter_Sec2 lhs, Meter_Sec2 rhs) { return new Meter_Sec2(lhs.Value - rhs.Value); }
-        public static Meter_Sec2 operator ++(Meter_Sec2 q) { return new Meter_Sec2(q.Value + 1d); }
-        public static Meter_Sec2 operator --(Meter_Sec2 q) { return new Meter_Sec2(q.Value - 1d); }
-        public static Meter_Sec2 operator -(Meter_Sec2 q) { return new Meter_Sec2(-q.Value); }
-        public static Meter_Sec2 operator *(double lhs, Meter_Sec2 rhs) { return new Meter_Sec2(lhs * rhs.Value); }
-        public static Meter_Sec2 operator *(Meter_Sec2 lhs, double rhs) { return new Meter_Sec2(lhs.Value * rhs); }
-        public static Meter_Sec2 operator /(Meter_Sec2 lhs, double rhs) { return new Meter_Sec2(lhs.Value / rhs); }
-        public static double operator /(Meter_Sec2 lhs, Meter_Sec2 rhs) { return lhs.Value / rhs.Value; }
+        public static Meter_Sec2 operator +(Meter_Sec2 lhs, Meter_Sec2 rhs) { return new Meter_Sec2(lhs.m_value + rhs.m_value); }
+        public static Meter_Sec2 operator -(Meter_Sec2 lhs, Meter_Sec2 rhs) { return new Meter_Sec2(lhs.m_value - rhs.m_value); }
+        public static Meter_Sec2 operator ++(Meter_Sec2 q) { return new Meter_Sec2(q.m_value + 1d); }
+        public static Meter_Sec2 operator --(Meter_Sec2 q) { return new Meter_Sec2(q.m_value - 1d); }
+        public static Meter_Sec2 operator -(Meter_Sec2 q) { return new Meter_Sec2(-q.m_value); }
+        public static Meter_Sec2 operator *(double lhs, Meter_Sec2 rhs) { return new Meter_Sec2(lhs * rhs.m_value); }
+        public static Meter_Sec2 operator *(Meter_Sec2 lhs, double rhs) { return new Meter_Sec2(lhs.m_value * rhs); }
+        public static Meter_Sec2 operator /(Meter_Sec2 lhs, double rhs) { return new Meter_Sec2(lhs.m_value / rhs); }
+        public static double operator /(Meter_Sec2 lhs, Meter_Sec2 rhs) { return lhs.m_value / rhs.m_value; }
         // Outer:
-        public static Meter_Sec operator *(Meter_Sec2 lhs, Second rhs) { return new Meter_Sec(lhs.Value * rhs.Value); }
-        public static Meter_Sec operator *(Second lhs, Meter_Sec2 rhs) { return new Meter_Sec(lhs.Value * rhs.Value); }
+        public static Meter_Sec operator *(Meter_Sec2 lhs, Second rhs) { return new Meter_Sec(lhs.m_value * rhs.m_value); }
+        public static Meter_Sec operator *(Second lhs, Meter_Sec2 rhs) { return new Meter_Sec(lhs.m_value * rhs.m_value); }
         #endregion
 
         #region Formatting
@@ -1508,7 +1508,7 @@ namespace $safeprojectname$
         public string ToString(IFormatProvider fp) { return ToString(Meter_Sec2.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return String.Format(fp, format ?? Meter_Sec2.Format, Value, Meter_Sec2.Symbol[0]);
+            return String.Format(fp, format ?? Meter_Sec2.Format, m_value, Meter_Sec2.Symbol[0]);
         }
         #endregion
 
@@ -1535,7 +1535,7 @@ namespace $safeprojectname$
     public partial struct Newton : IQuantity<double>, IEquatable<Newton>, IComparable<Newton>, IFormattable
     {
         #region Fields
-        private readonly double m_value;
+        internal readonly double m_value;
         #endregion
 
         #region Properties
@@ -1562,35 +1562,35 @@ namespace $safeprojectname$
         #region IObject / IEquatable<Newton>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj is Newton) && Equals((Newton)obj); }
-        public bool /* IEquatable<Newton> */ Equals(Newton other) { return this.Value == other.Value; }
+        public bool /* IEquatable<Newton> */ Equals(Newton other) { return this.m_value == other.m_value; }
         #endregion
 
         #region Comparison / IComparable<Newton>
-        public static bool operator ==(Newton lhs, Newton rhs) { return lhs.Value == rhs.Value; }
-        public static bool operator !=(Newton lhs, Newton rhs) { return lhs.Value != rhs.Value; }
-        public static bool operator <(Newton lhs, Newton rhs) { return lhs.Value < rhs.Value; }
-        public static bool operator >(Newton lhs, Newton rhs) { return lhs.Value > rhs.Value; }
-        public static bool operator <=(Newton lhs, Newton rhs) { return lhs.Value <= rhs.Value; }
-        public static bool operator >=(Newton lhs, Newton rhs) { return lhs.Value >= rhs.Value; }
-        public int /* IComparable<Newton> */ CompareTo(Newton other) { return this.Value.CompareTo(other.Value); }
+        public static bool operator ==(Newton lhs, Newton rhs) { return lhs.m_value == rhs.m_value; }
+        public static bool operator !=(Newton lhs, Newton rhs) { return lhs.m_value != rhs.m_value; }
+        public static bool operator <(Newton lhs, Newton rhs) { return lhs.m_value < rhs.m_value; }
+        public static bool operator >(Newton lhs, Newton rhs) { return lhs.m_value > rhs.m_value; }
+        public static bool operator <=(Newton lhs, Newton rhs) { return lhs.m_value <= rhs.m_value; }
+        public static bool operator >=(Newton lhs, Newton rhs) { return lhs.m_value >= rhs.m_value; }
+        public int /* IComparable<Newton> */ CompareTo(Newton other) { return this.m_value.CompareTo(other.m_value); }
         #endregion
 
         #region Arithmetic
         // Inner:
-        public static Newton operator +(Newton lhs, Newton rhs) { return new Newton(lhs.Value + rhs.Value); }
-        public static Newton operator -(Newton lhs, Newton rhs) { return new Newton(lhs.Value - rhs.Value); }
-        public static Newton operator ++(Newton q) { return new Newton(q.Value + 1d); }
-        public static Newton operator --(Newton q) { return new Newton(q.Value - 1d); }
-        public static Newton operator -(Newton q) { return new Newton(-q.Value); }
-        public static Newton operator *(double lhs, Newton rhs) { return new Newton(lhs * rhs.Value); }
-        public static Newton operator *(Newton lhs, double rhs) { return new Newton(lhs.Value * rhs); }
-        public static Newton operator /(Newton lhs, double rhs) { return new Newton(lhs.Value / rhs); }
-        public static double operator /(Newton lhs, Newton rhs) { return lhs.Value / rhs.Value; }
+        public static Newton operator +(Newton lhs, Newton rhs) { return new Newton(lhs.m_value + rhs.m_value); }
+        public static Newton operator -(Newton lhs, Newton rhs) { return new Newton(lhs.m_value - rhs.m_value); }
+        public static Newton operator ++(Newton q) { return new Newton(q.m_value + 1d); }
+        public static Newton operator --(Newton q) { return new Newton(q.m_value - 1d); }
+        public static Newton operator -(Newton q) { return new Newton(-q.m_value); }
+        public static Newton operator *(double lhs, Newton rhs) { return new Newton(lhs * rhs.m_value); }
+        public static Newton operator *(Newton lhs, double rhs) { return new Newton(lhs.m_value * rhs); }
+        public static Newton operator /(Newton lhs, double rhs) { return new Newton(lhs.m_value / rhs); }
+        public static double operator /(Newton lhs, Newton rhs) { return lhs.m_value / rhs.m_value; }
         // Outer:
-        public static Meter_Sec2 operator /(Newton lhs, Kilogram rhs) { return new Meter_Sec2(lhs.Value / rhs.Value); }
-        public static Kilogram operator /(Newton lhs, Meter_Sec2 rhs) { return new Kilogram(lhs.Value / rhs.Value); }
-        public static Joule operator *(Newton lhs, Meter rhs) { return new Joule(lhs.Value * rhs.Value); }
-        public static Joule operator *(Meter lhs, Newton rhs) { return new Joule(lhs.Value * rhs.Value); }
+        public static Meter_Sec2 operator /(Newton lhs, Kilogram rhs) { return new Meter_Sec2(lhs.m_value / rhs.m_value); }
+        public static Kilogram operator /(Newton lhs, Meter_Sec2 rhs) { return new Kilogram(lhs.m_value / rhs.m_value); }
+        public static Joule operator *(Newton lhs, Meter rhs) { return new Joule(lhs.m_value * rhs.m_value); }
+        public static Joule operator *(Meter lhs, Newton rhs) { return new Joule(lhs.m_value * rhs.m_value); }
         #endregion
 
         #region Formatting
@@ -1599,7 +1599,7 @@ namespace $safeprojectname$
         public string ToString(IFormatProvider fp) { return ToString(Newton.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return String.Format(fp, format ?? Newton.Format, Value, Newton.Symbol[0]);
+            return String.Format(fp, format ?? Newton.Format, m_value, Newton.Symbol[0]);
         }
         #endregion
 
@@ -1626,7 +1626,7 @@ namespace $safeprojectname$
     public partial struct Joule : IQuantity<double>, IEquatable<Joule>, IComparable<Joule>, IFormattable
     {
         #region Fields
-        private readonly double m_value;
+        internal readonly double m_value;
         #endregion
 
         #region Properties
@@ -1653,33 +1653,33 @@ namespace $safeprojectname$
         #region IObject / IEquatable<Joule>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj is Joule) && Equals((Joule)obj); }
-        public bool /* IEquatable<Joule> */ Equals(Joule other) { return this.Value == other.Value; }
+        public bool /* IEquatable<Joule> */ Equals(Joule other) { return this.m_value == other.m_value; }
         #endregion
 
         #region Comparison / IComparable<Joule>
-        public static bool operator ==(Joule lhs, Joule rhs) { return lhs.Value == rhs.Value; }
-        public static bool operator !=(Joule lhs, Joule rhs) { return lhs.Value != rhs.Value; }
-        public static bool operator <(Joule lhs, Joule rhs) { return lhs.Value < rhs.Value; }
-        public static bool operator >(Joule lhs, Joule rhs) { return lhs.Value > rhs.Value; }
-        public static bool operator <=(Joule lhs, Joule rhs) { return lhs.Value <= rhs.Value; }
-        public static bool operator >=(Joule lhs, Joule rhs) { return lhs.Value >= rhs.Value; }
-        public int /* IComparable<Joule> */ CompareTo(Joule other) { return this.Value.CompareTo(other.Value); }
+        public static bool operator ==(Joule lhs, Joule rhs) { return lhs.m_value == rhs.m_value; }
+        public static bool operator !=(Joule lhs, Joule rhs) { return lhs.m_value != rhs.m_value; }
+        public static bool operator <(Joule lhs, Joule rhs) { return lhs.m_value < rhs.m_value; }
+        public static bool operator >(Joule lhs, Joule rhs) { return lhs.m_value > rhs.m_value; }
+        public static bool operator <=(Joule lhs, Joule rhs) { return lhs.m_value <= rhs.m_value; }
+        public static bool operator >=(Joule lhs, Joule rhs) { return lhs.m_value >= rhs.m_value; }
+        public int /* IComparable<Joule> */ CompareTo(Joule other) { return this.m_value.CompareTo(other.m_value); }
         #endregion
 
         #region Arithmetic
         // Inner:
-        public static Joule operator +(Joule lhs, Joule rhs) { return new Joule(lhs.Value + rhs.Value); }
-        public static Joule operator -(Joule lhs, Joule rhs) { return new Joule(lhs.Value - rhs.Value); }
-        public static Joule operator ++(Joule q) { return new Joule(q.Value + 1d); }
-        public static Joule operator --(Joule q) { return new Joule(q.Value - 1d); }
-        public static Joule operator -(Joule q) { return new Joule(-q.Value); }
-        public static Joule operator *(double lhs, Joule rhs) { return new Joule(lhs * rhs.Value); }
-        public static Joule operator *(Joule lhs, double rhs) { return new Joule(lhs.Value * rhs); }
-        public static Joule operator /(Joule lhs, double rhs) { return new Joule(lhs.Value / rhs); }
-        public static double operator /(Joule lhs, Joule rhs) { return lhs.Value / rhs.Value; }
+        public static Joule operator +(Joule lhs, Joule rhs) { return new Joule(lhs.m_value + rhs.m_value); }
+        public static Joule operator -(Joule lhs, Joule rhs) { return new Joule(lhs.m_value - rhs.m_value); }
+        public static Joule operator ++(Joule q) { return new Joule(q.m_value + 1d); }
+        public static Joule operator --(Joule q) { return new Joule(q.m_value - 1d); }
+        public static Joule operator -(Joule q) { return new Joule(-q.m_value); }
+        public static Joule operator *(double lhs, Joule rhs) { return new Joule(lhs * rhs.m_value); }
+        public static Joule operator *(Joule lhs, double rhs) { return new Joule(lhs.m_value * rhs); }
+        public static Joule operator /(Joule lhs, double rhs) { return new Joule(lhs.m_value / rhs); }
+        public static double operator /(Joule lhs, Joule rhs) { return lhs.m_value / rhs.m_value; }
         // Outer:
-        public static Meter operator /(Joule lhs, Newton rhs) { return new Meter(lhs.Value / rhs.Value); }
-        public static Newton operator /(Joule lhs, Meter rhs) { return new Newton(lhs.Value / rhs.Value); }
+        public static Meter operator /(Joule lhs, Newton rhs) { return new Meter(lhs.m_value / rhs.m_value); }
+        public static Newton operator /(Joule lhs, Meter rhs) { return new Newton(lhs.m_value / rhs.m_value); }
         #endregion
 
         #region Formatting
@@ -1688,7 +1688,7 @@ namespace $safeprojectname$
         public string ToString(IFormatProvider fp) { return ToString(Joule.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return String.Format(fp, format ?? Joule.Format, Value, Joule.Symbol[0]);
+            return String.Format(fp, format ?? Joule.Format, m_value, Joule.Symbol[0]);
         }
         #endregion
 
@@ -1715,7 +1715,7 @@ namespace $safeprojectname$
     public partial struct NewtonMeter : IQuantity<double>, IEquatable<NewtonMeter>, IComparable<NewtonMeter>, IFormattable
     {
         #region Fields
-        private readonly double m_value;
+        internal readonly double m_value;
         #endregion
 
         #region Properties
@@ -1742,30 +1742,30 @@ namespace $safeprojectname$
         #region IObject / IEquatable<NewtonMeter>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj is NewtonMeter) && Equals((NewtonMeter)obj); }
-        public bool /* IEquatable<NewtonMeter> */ Equals(NewtonMeter other) { return this.Value == other.Value; }
+        public bool /* IEquatable<NewtonMeter> */ Equals(NewtonMeter other) { return this.m_value == other.m_value; }
         #endregion
 
         #region Comparison / IComparable<NewtonMeter>
-        public static bool operator ==(NewtonMeter lhs, NewtonMeter rhs) { return lhs.Value == rhs.Value; }
-        public static bool operator !=(NewtonMeter lhs, NewtonMeter rhs) { return lhs.Value != rhs.Value; }
-        public static bool operator <(NewtonMeter lhs, NewtonMeter rhs) { return lhs.Value < rhs.Value; }
-        public static bool operator >(NewtonMeter lhs, NewtonMeter rhs) { return lhs.Value > rhs.Value; }
-        public static bool operator <=(NewtonMeter lhs, NewtonMeter rhs) { return lhs.Value <= rhs.Value; }
-        public static bool operator >=(NewtonMeter lhs, NewtonMeter rhs) { return lhs.Value >= rhs.Value; }
-        public int /* IComparable<NewtonMeter> */ CompareTo(NewtonMeter other) { return this.Value.CompareTo(other.Value); }
+        public static bool operator ==(NewtonMeter lhs, NewtonMeter rhs) { return lhs.m_value == rhs.m_value; }
+        public static bool operator !=(NewtonMeter lhs, NewtonMeter rhs) { return lhs.m_value != rhs.m_value; }
+        public static bool operator <(NewtonMeter lhs, NewtonMeter rhs) { return lhs.m_value < rhs.m_value; }
+        public static bool operator >(NewtonMeter lhs, NewtonMeter rhs) { return lhs.m_value > rhs.m_value; }
+        public static bool operator <=(NewtonMeter lhs, NewtonMeter rhs) { return lhs.m_value <= rhs.m_value; }
+        public static bool operator >=(NewtonMeter lhs, NewtonMeter rhs) { return lhs.m_value >= rhs.m_value; }
+        public int /* IComparable<NewtonMeter> */ CompareTo(NewtonMeter other) { return this.m_value.CompareTo(other.m_value); }
         #endregion
 
         #region Arithmetic
         // Inner:
-        public static NewtonMeter operator +(NewtonMeter lhs, NewtonMeter rhs) { return new NewtonMeter(lhs.Value + rhs.Value); }
-        public static NewtonMeter operator -(NewtonMeter lhs, NewtonMeter rhs) { return new NewtonMeter(lhs.Value - rhs.Value); }
-        public static NewtonMeter operator ++(NewtonMeter q) { return new NewtonMeter(q.Value + 1d); }
-        public static NewtonMeter operator --(NewtonMeter q) { return new NewtonMeter(q.Value - 1d); }
-        public static NewtonMeter operator -(NewtonMeter q) { return new NewtonMeter(-q.Value); }
-        public static NewtonMeter operator *(double lhs, NewtonMeter rhs) { return new NewtonMeter(lhs * rhs.Value); }
-        public static NewtonMeter operator *(NewtonMeter lhs, double rhs) { return new NewtonMeter(lhs.Value * rhs); }
-        public static NewtonMeter operator /(NewtonMeter lhs, double rhs) { return new NewtonMeter(lhs.Value / rhs); }
-        public static double operator /(NewtonMeter lhs, NewtonMeter rhs) { return lhs.Value / rhs.Value; }
+        public static NewtonMeter operator +(NewtonMeter lhs, NewtonMeter rhs) { return new NewtonMeter(lhs.m_value + rhs.m_value); }
+        public static NewtonMeter operator -(NewtonMeter lhs, NewtonMeter rhs) { return new NewtonMeter(lhs.m_value - rhs.m_value); }
+        public static NewtonMeter operator ++(NewtonMeter q) { return new NewtonMeter(q.m_value + 1d); }
+        public static NewtonMeter operator --(NewtonMeter q) { return new NewtonMeter(q.m_value - 1d); }
+        public static NewtonMeter operator -(NewtonMeter q) { return new NewtonMeter(-q.m_value); }
+        public static NewtonMeter operator *(double lhs, NewtonMeter rhs) { return new NewtonMeter(lhs * rhs.m_value); }
+        public static NewtonMeter operator *(NewtonMeter lhs, double rhs) { return new NewtonMeter(lhs.m_value * rhs); }
+        public static NewtonMeter operator /(NewtonMeter lhs, double rhs) { return new NewtonMeter(lhs.m_value / rhs); }
+        public static double operator /(NewtonMeter lhs, NewtonMeter rhs) { return lhs.m_value / rhs.m_value; }
         // Outer:
         #endregion
 
@@ -1775,7 +1775,7 @@ namespace $safeprojectname$
         public string ToString(IFormatProvider fp) { return ToString(NewtonMeter.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return String.Format(fp, format ?? NewtonMeter.Format, Value, NewtonMeter.Symbol[0]);
+            return String.Format(fp, format ?? NewtonMeter.Format, m_value, NewtonMeter.Symbol[0]);
         }
         #endregion
 
@@ -1803,7 +1803,7 @@ namespace $safeprojectname$
     public partial struct Kelvin : ILevel<double>, IEquatable<Kelvin>, IComparable<Kelvin>, IFormattable
     {
         #region Fields
-        private readonly DegKelvin m_level;
+        internal readonly DegKelvin m_level;
         #endregion
 
         #region Properties
@@ -1851,25 +1851,25 @@ namespace $safeprojectname$
         #region IObject / IEquatable<Kelvin>
         public override int GetHashCode() { return m_level.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj is Kelvin) && Equals((Kelvin)obj); }
-        public bool /* IEquatable<Kelvin> */ Equals(Kelvin other) { return this.Level == other.Level; }
+        public bool /* IEquatable<Kelvin> */ Equals(Kelvin other) { return this.m_level == other.m_level; }
         #endregion
 
         #region Comparison / IComparable<Kelvin>
-        public static bool operator ==(Kelvin lhs, Kelvin rhs) { return lhs.Level == rhs.Level; }
-        public static bool operator !=(Kelvin lhs, Kelvin rhs) { return lhs.Level != rhs.Level; }
-        public static bool operator <(Kelvin lhs, Kelvin rhs) { return lhs.Level < rhs.Level; }
-        public static bool operator >(Kelvin lhs, Kelvin rhs) { return lhs.Level > rhs.Level; }
-        public static bool operator <=(Kelvin lhs, Kelvin rhs) { return lhs.Level <= rhs.Level; }
-        public static bool operator >=(Kelvin lhs, Kelvin rhs) { return lhs.Level >= rhs.Level; }
-        public int /* IComparable<Kelvin> */ CompareTo(Kelvin other) { return this.Level.CompareTo(other.Level); }
+        public static bool operator ==(Kelvin lhs, Kelvin rhs) { return lhs.m_level == rhs.m_level; }
+        public static bool operator !=(Kelvin lhs, Kelvin rhs) { return lhs.m_level != rhs.m_level; }
+        public static bool operator <(Kelvin lhs, Kelvin rhs) { return lhs.m_level < rhs.m_level; }
+        public static bool operator >(Kelvin lhs, Kelvin rhs) { return lhs.m_level > rhs.m_level; }
+        public static bool operator <=(Kelvin lhs, Kelvin rhs) { return lhs.m_level <= rhs.m_level; }
+        public static bool operator >=(Kelvin lhs, Kelvin rhs) { return lhs.m_level >= rhs.m_level; }
+        public int /* IComparable<Kelvin> */ CompareTo(Kelvin other) { return this.m_level.CompareTo(other.m_level); }
         #endregion
 
         #region Arithmetic
-        public static Kelvin operator +(Kelvin lhs, DegKelvin rhs) { return new Kelvin(lhs.Level + rhs); }
-        public static Kelvin operator +(DegKelvin lhs, Kelvin rhs) { return new Kelvin(lhs + rhs.Level); }
-        public static Kelvin operator -(Kelvin lhs, DegKelvin rhs) { return new Kelvin(lhs.Level - rhs); }
-        public static DegKelvin operator -(Kelvin lhs, Kelvin rhs) { return (lhs.Level - rhs.Level); }
-        public static Kelvin operator -(Kelvin q) { return new Kelvin(-q.Level); }
+        public static Kelvin operator +(Kelvin lhs, DegKelvin rhs) { return new Kelvin(lhs.m_level + rhs); }
+        public static Kelvin operator +(DegKelvin lhs, Kelvin rhs) { return new Kelvin(lhs + rhs.m_level); }
+        public static Kelvin operator -(Kelvin lhs, DegKelvin rhs) { return new Kelvin(lhs.m_level - rhs); }
+        public static DegKelvin operator -(Kelvin lhs, Kelvin rhs) { return (lhs.m_level - rhs.m_level); }
+        public static Kelvin operator -(Kelvin q) { return new Kelvin(-q.m_level); }
         public static Kelvin operator ++(Kelvin q) { return q + DegKelvin.One; }
         public static Kelvin operator --(Kelvin q) { return q - DegKelvin.One; }
         #endregion
@@ -1900,7 +1900,7 @@ namespace $safeprojectname$
     public partial struct Celsius : ILevel<double>, IEquatable<Celsius>, IComparable<Celsius>, IFormattable
     {
         #region Fields
-        private readonly DegCelsius m_level;
+        internal readonly DegCelsius m_level;
         #endregion
 
         #region Properties
@@ -1948,25 +1948,25 @@ namespace $safeprojectname$
         #region IObject / IEquatable<Celsius>
         public override int GetHashCode() { return m_level.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj is Celsius) && Equals((Celsius)obj); }
-        public bool /* IEquatable<Celsius> */ Equals(Celsius other) { return this.Level == other.Level; }
+        public bool /* IEquatable<Celsius> */ Equals(Celsius other) { return this.m_level == other.m_level; }
         #endregion
 
         #region Comparison / IComparable<Celsius>
-        public static bool operator ==(Celsius lhs, Celsius rhs) { return lhs.Level == rhs.Level; }
-        public static bool operator !=(Celsius lhs, Celsius rhs) { return lhs.Level != rhs.Level; }
-        public static bool operator <(Celsius lhs, Celsius rhs) { return lhs.Level < rhs.Level; }
-        public static bool operator >(Celsius lhs, Celsius rhs) { return lhs.Level > rhs.Level; }
-        public static bool operator <=(Celsius lhs, Celsius rhs) { return lhs.Level <= rhs.Level; }
-        public static bool operator >=(Celsius lhs, Celsius rhs) { return lhs.Level >= rhs.Level; }
-        public int /* IComparable<Celsius> */ CompareTo(Celsius other) { return this.Level.CompareTo(other.Level); }
+        public static bool operator ==(Celsius lhs, Celsius rhs) { return lhs.m_level == rhs.m_level; }
+        public static bool operator !=(Celsius lhs, Celsius rhs) { return lhs.m_level != rhs.m_level; }
+        public static bool operator <(Celsius lhs, Celsius rhs) { return lhs.m_level < rhs.m_level; }
+        public static bool operator >(Celsius lhs, Celsius rhs) { return lhs.m_level > rhs.m_level; }
+        public static bool operator <=(Celsius lhs, Celsius rhs) { return lhs.m_level <= rhs.m_level; }
+        public static bool operator >=(Celsius lhs, Celsius rhs) { return lhs.m_level >= rhs.m_level; }
+        public int /* IComparable<Celsius> */ CompareTo(Celsius other) { return this.m_level.CompareTo(other.m_level); }
         #endregion
 
         #region Arithmetic
-        public static Celsius operator +(Celsius lhs, DegCelsius rhs) { return new Celsius(lhs.Level + rhs); }
-        public static Celsius operator +(DegCelsius lhs, Celsius rhs) { return new Celsius(lhs + rhs.Level); }
-        public static Celsius operator -(Celsius lhs, DegCelsius rhs) { return new Celsius(lhs.Level - rhs); }
-        public static DegCelsius operator -(Celsius lhs, Celsius rhs) { return (lhs.Level - rhs.Level); }
-        public static Celsius operator -(Celsius q) { return new Celsius(-q.Level); }
+        public static Celsius operator +(Celsius lhs, DegCelsius rhs) { return new Celsius(lhs.m_level + rhs); }
+        public static Celsius operator +(DegCelsius lhs, Celsius rhs) { return new Celsius(lhs + rhs.m_level); }
+        public static Celsius operator -(Celsius lhs, DegCelsius rhs) { return new Celsius(lhs.m_level - rhs); }
+        public static DegCelsius operator -(Celsius lhs, Celsius rhs) { return (lhs.m_level - rhs.m_level); }
+        public static Celsius operator -(Celsius q) { return new Celsius(-q.m_level); }
         public static Celsius operator ++(Celsius q) { return q + DegCelsius.One; }
         public static Celsius operator --(Celsius q) { return q - DegCelsius.One; }
         #endregion
@@ -1997,7 +1997,7 @@ namespace $safeprojectname$
     public partial struct Rankine : ILevel<double>, IEquatable<Rankine>, IComparable<Rankine>, IFormattable
     {
         #region Fields
-        private readonly DegRankine m_level;
+        internal readonly DegRankine m_level;
         #endregion
 
         #region Properties
@@ -2045,25 +2045,25 @@ namespace $safeprojectname$
         #region IObject / IEquatable<Rankine>
         public override int GetHashCode() { return m_level.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj is Rankine) && Equals((Rankine)obj); }
-        public bool /* IEquatable<Rankine> */ Equals(Rankine other) { return this.Level == other.Level; }
+        public bool /* IEquatable<Rankine> */ Equals(Rankine other) { return this.m_level == other.m_level; }
         #endregion
 
         #region Comparison / IComparable<Rankine>
-        public static bool operator ==(Rankine lhs, Rankine rhs) { return lhs.Level == rhs.Level; }
-        public static bool operator !=(Rankine lhs, Rankine rhs) { return lhs.Level != rhs.Level; }
-        public static bool operator <(Rankine lhs, Rankine rhs) { return lhs.Level < rhs.Level; }
-        public static bool operator >(Rankine lhs, Rankine rhs) { return lhs.Level > rhs.Level; }
-        public static bool operator <=(Rankine lhs, Rankine rhs) { return lhs.Level <= rhs.Level; }
-        public static bool operator >=(Rankine lhs, Rankine rhs) { return lhs.Level >= rhs.Level; }
-        public int /* IComparable<Rankine> */ CompareTo(Rankine other) { return this.Level.CompareTo(other.Level); }
+        public static bool operator ==(Rankine lhs, Rankine rhs) { return lhs.m_level == rhs.m_level; }
+        public static bool operator !=(Rankine lhs, Rankine rhs) { return lhs.m_level != rhs.m_level; }
+        public static bool operator <(Rankine lhs, Rankine rhs) { return lhs.m_level < rhs.m_level; }
+        public static bool operator >(Rankine lhs, Rankine rhs) { return lhs.m_level > rhs.m_level; }
+        public static bool operator <=(Rankine lhs, Rankine rhs) { return lhs.m_level <= rhs.m_level; }
+        public static bool operator >=(Rankine lhs, Rankine rhs) { return lhs.m_level >= rhs.m_level; }
+        public int /* IComparable<Rankine> */ CompareTo(Rankine other) { return this.m_level.CompareTo(other.m_level); }
         #endregion
 
         #region Arithmetic
-        public static Rankine operator +(Rankine lhs, DegRankine rhs) { return new Rankine(lhs.Level + rhs); }
-        public static Rankine operator +(DegRankine lhs, Rankine rhs) { return new Rankine(lhs + rhs.Level); }
-        public static Rankine operator -(Rankine lhs, DegRankine rhs) { return new Rankine(lhs.Level - rhs); }
-        public static DegRankine operator -(Rankine lhs, Rankine rhs) { return (lhs.Level - rhs.Level); }
-        public static Rankine operator -(Rankine q) { return new Rankine(-q.Level); }
+        public static Rankine operator +(Rankine lhs, DegRankine rhs) { return new Rankine(lhs.m_level + rhs); }
+        public static Rankine operator +(DegRankine lhs, Rankine rhs) { return new Rankine(lhs + rhs.m_level); }
+        public static Rankine operator -(Rankine lhs, DegRankine rhs) { return new Rankine(lhs.m_level - rhs); }
+        public static DegRankine operator -(Rankine lhs, Rankine rhs) { return (lhs.m_level - rhs.m_level); }
+        public static Rankine operator -(Rankine q) { return new Rankine(-q.m_level); }
         public static Rankine operator ++(Rankine q) { return q + DegRankine.One; }
         public static Rankine operator --(Rankine q) { return q - DegRankine.One; }
         #endregion
@@ -2094,7 +2094,7 @@ namespace $safeprojectname$
     public partial struct Fahrenheit : ILevel<double>, IEquatable<Fahrenheit>, IComparable<Fahrenheit>, IFormattable
     {
         #region Fields
-        private readonly DegFahrenheit m_level;
+        internal readonly DegFahrenheit m_level;
         #endregion
 
         #region Properties
@@ -2142,25 +2142,25 @@ namespace $safeprojectname$
         #region IObject / IEquatable<Fahrenheit>
         public override int GetHashCode() { return m_level.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj is Fahrenheit) && Equals((Fahrenheit)obj); }
-        public bool /* IEquatable<Fahrenheit> */ Equals(Fahrenheit other) { return this.Level == other.Level; }
+        public bool /* IEquatable<Fahrenheit> */ Equals(Fahrenheit other) { return this.m_level == other.m_level; }
         #endregion
 
         #region Comparison / IComparable<Fahrenheit>
-        public static bool operator ==(Fahrenheit lhs, Fahrenheit rhs) { return lhs.Level == rhs.Level; }
-        public static bool operator !=(Fahrenheit lhs, Fahrenheit rhs) { return lhs.Level != rhs.Level; }
-        public static bool operator <(Fahrenheit lhs, Fahrenheit rhs) { return lhs.Level < rhs.Level; }
-        public static bool operator >(Fahrenheit lhs, Fahrenheit rhs) { return lhs.Level > rhs.Level; }
-        public static bool operator <=(Fahrenheit lhs, Fahrenheit rhs) { return lhs.Level <= rhs.Level; }
-        public static bool operator >=(Fahrenheit lhs, Fahrenheit rhs) { return lhs.Level >= rhs.Level; }
-        public int /* IComparable<Fahrenheit> */ CompareTo(Fahrenheit other) { return this.Level.CompareTo(other.Level); }
+        public static bool operator ==(Fahrenheit lhs, Fahrenheit rhs) { return lhs.m_level == rhs.m_level; }
+        public static bool operator !=(Fahrenheit lhs, Fahrenheit rhs) { return lhs.m_level != rhs.m_level; }
+        public static bool operator <(Fahrenheit lhs, Fahrenheit rhs) { return lhs.m_level < rhs.m_level; }
+        public static bool operator >(Fahrenheit lhs, Fahrenheit rhs) { return lhs.m_level > rhs.m_level; }
+        public static bool operator <=(Fahrenheit lhs, Fahrenheit rhs) { return lhs.m_level <= rhs.m_level; }
+        public static bool operator >=(Fahrenheit lhs, Fahrenheit rhs) { return lhs.m_level >= rhs.m_level; }
+        public int /* IComparable<Fahrenheit> */ CompareTo(Fahrenheit other) { return this.m_level.CompareTo(other.m_level); }
         #endregion
 
         #region Arithmetic
-        public static Fahrenheit operator +(Fahrenheit lhs, DegFahrenheit rhs) { return new Fahrenheit(lhs.Level + rhs); }
-        public static Fahrenheit operator +(DegFahrenheit lhs, Fahrenheit rhs) { return new Fahrenheit(lhs + rhs.Level); }
-        public static Fahrenheit operator -(Fahrenheit lhs, DegFahrenheit rhs) { return new Fahrenheit(lhs.Level - rhs); }
-        public static DegFahrenheit operator -(Fahrenheit lhs, Fahrenheit rhs) { return (lhs.Level - rhs.Level); }
-        public static Fahrenheit operator -(Fahrenheit q) { return new Fahrenheit(-q.Level); }
+        public static Fahrenheit operator +(Fahrenheit lhs, DegFahrenheit rhs) { return new Fahrenheit(lhs.m_level + rhs); }
+        public static Fahrenheit operator +(DegFahrenheit lhs, Fahrenheit rhs) { return new Fahrenheit(lhs + rhs.m_level); }
+        public static Fahrenheit operator -(Fahrenheit lhs, DegFahrenheit rhs) { return new Fahrenheit(lhs.m_level - rhs); }
+        public static DegFahrenheit operator -(Fahrenheit lhs, Fahrenheit rhs) { return (lhs.m_level - rhs.m_level); }
+        public static Fahrenheit operator -(Fahrenheit q) { return new Fahrenheit(-q.m_level); }
         public static Fahrenheit operator ++(Fahrenheit q) { return q + DegFahrenheit.One; }
         public static Fahrenheit operator --(Fahrenheit q) { return q - DegFahrenheit.One; }
         #endregion
