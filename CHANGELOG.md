@@ -1,3 +1,11 @@
+### Release 1.4 Build 2016.09.05.1130
+
+* ```internal``` access for ```m_value``` & ```m_level``` fields in unit & scale structs. Access modifier for ```m_value``` & ```m_level``` fields changed from ```private``` to ```internal```. This allows to access these fields directly (not via ```Value``` & ```Level``` properties), and consequently, results in faster quantity arithmethic. ```Demo/Benchmark``` shows (under VS2010) that unit/plain arithmetic performance ratio decreased to about 1.3 versus 1.6 in previous version, with private fields.
+* One (unified) ```_generator.tt``` template that can generate units both in a single .cs file as well as in multiple .cs files (one for each unit). Output mode depends on boolean variable ```__one_cs_file``` (declared within _generator.tt). Set: ```__one_cs_file = true;``` to generate all units in a single file (default), or: ```__one_cs_file = false;``` to generate units in separate files.
+* Replaced icon & preview images for the project template & VSIX.
+* Removed VSIX constraint on the ```MaxVersion``` of the .NET Framework that can be used with the library.
+* ```AssemblyFileVersion``` for internal subprojects changes only when source files change (and not with every build).
+
 ### Release 1.3 Build 2015.10.16.1742
 
 * fix #3: Unit family not recognized due to parenthesized dimensional
