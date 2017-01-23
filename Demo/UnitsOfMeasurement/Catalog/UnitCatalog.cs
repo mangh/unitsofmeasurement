@@ -61,7 +61,7 @@ namespace Demo.UnitsOfMeasurement
         {
             if (this.Intersects(proxy.Symbol))
             {
-                throw new ArgumentException(String.Format("{0}: duplicate item. All item symbols must be unique across the catalog.", proxy));
+                throw new ArgumentException(String.Format("{0}: duplicate unit. All unit symbols must be unique across the catalog.", proxy));
             }
             m_catalog.Add(proxy);
         }
@@ -85,9 +85,13 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Indexer(s)
-        public Unit<T> this[string symbol] { get { return m_catalog.Find(proxy => proxy.Symbol.IndexOf(symbol) >= 0); } }
         public Unit<T> this[int index] { get { return m_catalog[index]; } }
+        public Unit<T> this[string symbol] { get { return m_catalog.Find(proxy => proxy.Symbol.IndexOf(symbol) >= 0); } }
+        public Unit<T> this[IQuantity<T> q] { get { return this[q.GetType()]; } }
+        public Unit<T> this[Type u] { get { return m_catalog.Find(proxy => proxy.Handle.Equals(u.TypeHandle)); } }
         public int IndexOf(string symbol) { return m_catalog.FindIndex(proxy => proxy.Symbol.IndexOf(symbol) >= 0); }
+        public int IndexOf(IQuantity<T> q) { return IndexOf(q.GetType()); }
+        public int IndexOf(Type unit) { return m_catalog.FindIndex(proxy => proxy.Handle.Equals(unit.TypeHandle)); }
         #endregion
 
         #region IEnumerable(s)
@@ -116,7 +120,7 @@ namespace Demo.UnitsOfMeasurement
                 if ((m_lastParsedMeasure = this[m_lastParsedSymbol]) != null)
                 {
                     T value;
-                    if (UnitCatalog<T>.TryParseNumber(m_lastParsedNumber, style, fp, out value))
+                    if(TryParseNumber(m_lastParsedNumber, style, fp, out value))
                     {
                         result = m_lastParsedMeasure.CreateQuantity(value);
                         return true;

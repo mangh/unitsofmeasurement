@@ -61,7 +61,7 @@ namespace Demo.UnitsOfMeasurement
         {
             if (this.Intersects(proxy.Symbol))
             {
-                throw new ArgumentException(String.Format("{0}: duplicate item. All item symbols must be unique across the catalog.", proxy));
+                throw new ArgumentException(String.Format("{0}: duplicate scale. All scale symbols must be unique across the catalog.", proxy));
             }
             m_catalog.Add(proxy);
         }
@@ -85,9 +85,13 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Indexer(s)
-        public Scale<T> this[string symbol] { get { return m_catalog.Find(proxy => proxy.Symbol.IndexOf(symbol) >= 0); } }
         public Scale<T> this[int index] { get { return m_catalog[index]; } }
+        public Scale<T> this[string symbol] { get { return m_catalog.Find(proxy => proxy.Symbol.IndexOf(symbol) >= 0); } }
+        public Scale<T> this[ILevel<T> q] { get { return this[q.GetType()]; } }
+        public Scale<T> this[Type s] { get { return m_catalog.Find(proxy => proxy.Handle.Equals(s.TypeHandle)); } }
         public int IndexOf(string symbol) { return m_catalog.FindIndex(proxy => proxy.Symbol.IndexOf(symbol) >= 0); }
+        public int IndexOf(ILevel<T> q) { return IndexOf(q.GetType()); }
+        public int IndexOf(Type s) { return m_catalog.FindIndex(proxy => proxy.Handle.Equals(s.TypeHandle)); }
         #endregion
 
         #region IEnumerable(s)
@@ -116,7 +120,7 @@ namespace Demo.UnitsOfMeasurement
                 if ((m_lastParsedMeasure = this[m_lastParsedSymbol]) != null)
                 {
                     T value;
-                    if (ScaleCatalog<T>.TryParseNumber(m_lastParsedNumber, style, fp, out value))
+                    if(TryParseNumber(m_lastParsedNumber, style, fp, out value))
                     {
                         result = m_lastParsedMeasure.CreateLevel(value);
                         return true;
