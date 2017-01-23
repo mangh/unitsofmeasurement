@@ -127,7 +127,7 @@ namespace Demo.UnitsOfMeasurement
                 else
                     m_families.Add(family, measureType);
             }
-            private Man.UnitsOfMeasurement.Dimension TranslateDimension(Demo.UnitsOfMeasurement.Dimension sense)
+            private Man.UnitsOfMeasurement.Dimension TranslateDimension(Dimension sense)
             {
                 return new Man.UnitsOfMeasurement.Dimension(
                     sense[Magnitude.Length],
