@@ -17,7 +17,12 @@ namespace Demo.UnitsOfMeasurement
     /// </summary>
     public interface ILevel<T> where T : struct
     {
+        // Level (instance) properties
         IQuantity<T> Level { get; }             // Level relative to scale zero level
         IQuantity<T> NormalizedLevel { get; }   // Level relative to family (common) reference point
+
+        // Scale (class) properties
+        int Family { get; }
+        SymbolCollection Symbol { get; }
     }
 }

@@ -33,9 +33,9 @@ namespace <#= __projectNamespace #>
     {
         string Unit = u.Name;
         string Sense = u.Sense.Code;
-        string Family = (u.Prime == null) ? (__family++).ToString() : String.Format("{0}.Family", u.FamilyPrime().Name);
+        string Family = (u.Prime == null) ? (__family++).ToString() : string.Format("{0}.Family", u.FamilyPrime().Name);
         string Format = u.Format;
-        string Tags = String.Format("\"{0}\"", String.Join("\", \"", u.Tags));
+        string Tags = string.Format("\"{0}\"", string.Join("\", \"", u.Tags));
         
         string Factor = u.Factor.Code;
         string Value = u.Factor.Value.Type.Name;
@@ -45,17 +45,24 @@ namespace <#= __projectNamespace #>
     public partial struct <#= Unit #> : IQuantity<<#= Value #>>, IEquatable<<#= Unit #>>, IComparable<<#= Unit #>>, IFormattable
     {
         #region Fields
-        private readonly <#= Value #> m_value;
+        internal readonly <#= Value #> m_value;
         #endregion
 
         #region Properties
-        public <#= Value #> Value { get { return m_value; } }
+        public <#= Value #> Value                       { get { return m_value; } }
+        int IQuantity<<#= Value #>>.Family              { get { return <#= Unit #>.Family; } }
+        <#= Value #> IQuantity<<#= Value #>>.Factor     { get { return <#= Unit #>.Factor; } }
+        SymbolCollection IQuantity<<#= Value #>>.Symbol { get { return <#= Unit #>.Symbol; } }
         #endregion
 
         #region Constructor(s)
         public <#= Unit #>(<#= Value #> value)
         {
             m_value = value;
+        }
+        public static IQuantity<<#= Value #>> Create(<#= Value #> value)
+        {
+            return new <#= Unit #>(value);
         }
         #endregion
 
@@ -72,39 +79,42 @@ namespace <#= __projectNamespace #>
 #>
         public static <#= Unit #> From(IQuantity<<#= Value #>> q)
         {
-            Unit<<#= Value #>> source = new Unit<<#= Value #>>(q);
-            if (source.Family != <#= Unit #>.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"<#= Unit #>\"", q.GetType().Name));
-            return new <#= Unit #>((<#= Unit #>.Factor / source.Factor) * q.Value);
+            if (q.Family != <#= Unit #>.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"<#= Unit #>\"", q.GetType().Name));
+            return new <#= Unit #>((<#= Unit #>.Factor / q.Factor) * q.Value);
+        }
+        public static IQuantity<<#= Value #>> Convert(IQuantity<<#= Value #>> q)
+        {
+            return From(q);
         }
         #endregion
 
         #region IObject / IEquatable<<#= Unit #>>
         public override int GetHashCode() { return m_value.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj is <#= Unit #>) && Equals((<#= Unit #>)obj); }
-        public bool /* IEquatable<<#= Unit #>> */ Equals(<#= Unit #> other) { return this.Value == other.Value; }
+        public bool /* IEquatable<<#= Unit #>> */ Equals(<#= Unit #> other) { return this.m_value == other.m_value; }
         #endregion
 
         #region Comparison / IComparable<<#= Unit #>>
-        public static bool operator ==(<#= Unit #> lhs, <#= Unit #> rhs) { return lhs.Value == rhs.Value; }
-        public static bool operator !=(<#= Unit #> lhs, <#= Unit #> rhs) { return lhs.Value != rhs.Value; }
-        public static bool operator <(<#= Unit #> lhs, <#= Unit #> rhs) { return lhs.Value < rhs.Value; }
-        public static bool operator >(<#= Unit #> lhs, <#= Unit #> rhs) { return lhs.Value > rhs.Value; }
-        public static bool operator <=(<#= Unit #> lhs, <#= Unit #> rhs) { return lhs.Value <= rhs.Value; }
-        public static bool operator >=(<#= Unit #> lhs, <#= Unit #> rhs) { return lhs.Value >= rhs.Value; }
-        public int /* IComparable<<#= Unit #>> */ CompareTo(<#= Unit #> other) { return this.Value.CompareTo(other.Value); }
+        public static bool operator ==(<#= Unit #> lhs, <#= Unit #> rhs) { return lhs.m_value == rhs.m_value; }
+        public static bool operator !=(<#= Unit #> lhs, <#= Unit #> rhs) { return lhs.m_value != rhs.m_value; }
+        public static bool operator <(<#= Unit #> lhs, <#= Unit #> rhs) { return lhs.m_value < rhs.m_value; }
+        public static bool operator >(<#= Unit #> lhs, <#= Unit #> rhs) { return lhs.m_value > rhs.m_value; }
+        public static bool operator <=(<#= Unit #> lhs, <#= Unit #> rhs) { return lhs.m_value <= rhs.m_value; }
+        public static bool operator >=(<#= Unit #> lhs, <#= Unit #> rhs) { return lhs.m_value >= rhs.m_value; }
+        public int /* IComparable<<#= Unit #>> */ CompareTo(<#= Unit #> other) { return this.m_value.CompareTo(other.m_value); }
         #endregion
 
         #region Arithmetic
         // Inner:
-        public static <#= Unit #> operator +(<#= Unit #> lhs, <#= Unit #> rhs) { return new <#= Unit #>(lhs.Value + rhs.Value); }
-        public static <#= Unit #> operator -(<#= Unit #> lhs, <#= Unit #> rhs) { return new <#= Unit #>(lhs.Value - rhs.Value); }
-        public static <#= Unit #> operator ++(<#= Unit #> q) { return new <#= Unit #>(q.Value + <#= One #>); }
-        public static <#= Unit #> operator --(<#= Unit #> q) { return new <#= Unit #>(q.Value - <#= One #>); }
-        public static <#= Unit #> operator -(<#= Unit #> q) { return new <#= Unit #>(-q.Value); }
-        public static <#= Unit #> operator *(<#= Value #> lhs, <#= Unit #> rhs) { return new <#= Unit #>(lhs * rhs.Value); }
-        public static <#= Unit #> operator *(<#= Unit #> lhs, <#= Value #> rhs) { return new <#= Unit #>(lhs.Value * rhs); }
-        public static <#= Unit #> operator /(<#= Unit #> lhs, <#= Value #> rhs) { return new <#= Unit #>(lhs.Value / rhs); }
-        public static <#= Value #> operator /(<#= Unit #> lhs, <#= Unit #> rhs) { return lhs.Value / rhs.Value; }
+        public static <#= Unit #> operator +(<#= Unit #> lhs, <#= Unit #> rhs) { return new <#= Unit #>(lhs.m_value + rhs.m_value); }
+        public static <#= Unit #> operator -(<#= Unit #> lhs, <#= Unit #> rhs) { return new <#= Unit #>(lhs.m_value - rhs.m_value); }
+        public static <#= Unit #> operator ++(<#= Unit #> q) { return new <#= Unit #>(q.m_value + <#= One #>); }
+        public static <#= Unit #> operator --(<#= Unit #> q) { return new <#= Unit #>(q.m_value - <#= One #>); }
+        public static <#= Unit #> operator -(<#= Unit #> q) { return new <#= Unit #>(-q.m_value); }
+        public static <#= Unit #> operator *(<#= Value #> lhs, <#= Unit #> rhs) { return new <#= Unit #>(lhs * rhs.m_value); }
+        public static <#= Unit #> operator *(<#= Unit #> lhs, <#= Value #> rhs) { return new <#= Unit #>(lhs.m_value * rhs); }
+        public static <#= Unit #> operator /(<#= Unit #> lhs, <#= Value #> rhs) { return new <#= Unit #>(lhs.m_value / rhs); }
+        public static <#= Value #> operator /(<#= Unit #> lhs, <#= Unit #> rhs) { return lhs.m_value / rhs.m_value; }
         // Outer:
 <#+
         foreach (BinaryOperation o in u.OuterOperations)
@@ -112,8 +122,8 @@ namespace <#= __projectNamespace #>
             string lhsValue = (o.Lhs.IsPredefined) ? "lhs" : "lhs.Value";
             string rhsValue = (o.Rhs.IsPredefined) ? "rhs" : "rhs.Value";
             string retValue = (o.Result.IsPredefined) ? 
-                String.Format("{0} {1} {2}", lhsValue, o.Operation, rhsValue) :
-                String.Format("new {0}({1} {2} {3})", o.Result.Name, lhsValue, o.Operation, rhsValue);
+                string.Format("{0} {1} {2}", lhsValue, o.Operation, rhsValue) :
+                string.Format("new {0}({1} {2} {3})", o.Result.Name, lhsValue, o.Operation, rhsValue);
 #>
         public static <#= o.Result.Name #> operator <#= o.Operation #>(<#= o.Lhs.Name #> lhs, <#= o.Rhs.Name #> rhs) { return <#= retValue #>; }
 <#+
@@ -127,28 +137,27 @@ namespace <#= __projectNamespace #>
         public string ToString(IFormatProvider fp) { return ToString(<#= Unit #>.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return String.Format(fp, format ?? <#= Unit #>.Format, Value, <#= Unit #>.Symbol[0]);
+            return string.Format(fp, format ?? <#= Unit #>.Format, Value, <#= Unit #>.Symbol[0]);
         }
         #endregion
 
         #region Statics
-        private static readonly Dimension s_sense = <#= Sense #>;
-        private static readonly int s_family = <#= Family #>;
-        private static <#= Value #> s_factor = <#= Factor #>;
-        private static string s_format = "<#= Format #>";
-        private static readonly SymbolCollection s_symbol = new SymbolCollection(<#= Tags #>);
+        private static readonly Dimension s_sense           = <#= Sense #>;
+        private static readonly int s_family                = <#= Family #>;
+        private static /*mutable*/ <#= Value #> s_factor    = <#= Factor #>;
+        private static /*mutable*/ string s_format          = "<#= Format #>";
+        private static readonly SymbolCollection s_symbol   = new SymbolCollection(<#= Tags #>);
 
-        private static readonly <#= Unit #> s_one = new <#= Unit #>(<#= One #>);
-        private static readonly <#= Unit #> s_zero = new <#= Unit #>(<#= Zero #>);
+        private static readonly <#= Unit #> s_one           = new <#= Unit #>(<#= One #>);
+        private static readonly <#= Unit #> s_zero          = new <#= Unit #>(<#= Zero #>);
         
-        public static Dimension Sense { get { return s_sense; } }
-        public static int Family { get { return s_family; } }
-        public static <#= Value #> Factor { get { return s_factor; } set { s_factor = value; } }
-        public static string Format { get { return s_format; } set { s_format = value; } }
-        public static SymbolCollection Symbol { get { return s_symbol; } }
-
-        public static <#= Unit #> One { get { return s_one; } }
-        public static <#= Unit #> Zero { get { return s_zero; } }
+        public static Dimension Sense           { get { return s_sense; } }
+        public static int Family                { get { return s_family; } }
+        public static <#= Value #> Factor       { get { return s_factor; } set { s_factor = value; } }
+        public static string Format             { get { return s_format; } set { s_format = value; } }
+        public static SymbolCollection Symbol   { get { return s_symbol; } }
+        public static <#= Unit #> One           { get { return s_one; } }
+        public static <#= Unit #> Zero          { get { return s_zero; } }
         #endregion
     }
 <#+
@@ -161,14 +170,14 @@ namespace <#= __projectNamespace #>
         string Scale = s.Name;
         string Unit = s.Unit.Name;
         string Offset = s.Offset.Code;
-        string Family = (s.Prime == null) ? (__family++).ToString() : String.Format("{0}.Family", s.FamilyPrime().Name);
+        string Family = (s.Prime == null) ? (__family++).ToString() : string.Format("{0}.Family", s.FamilyPrime().Name);
         string Format = s.Format;
 
         string Value = s.Unit.Factor.Value.Type.Name;
         string One = s.Unit.Factor.Value.Type.One.CSString();
         string Zero = s.Unit.Factor.Value.Type.Zero.CSString();
 
-        if (!String.IsNullOrWhiteSpace(s.RefPoint))
+        if (!string.IsNullOrWhiteSpace(s.RefPoint))
         {
 #>
     [ScaleReferencePoint("<#= s.RefPoint #>")]
@@ -178,16 +187,16 @@ namespace <#= __projectNamespace #>
     public partial struct <#= Scale #> : ILevel<<#= Value #>>, IEquatable<<#= Scale #>>, IComparable<<#= Scale #>>, IFormattable
     {
         #region Fields
-        private readonly <#= Unit #> m_level;
+        internal readonly <#= Unit #> m_level;
         #endregion
 
         #region Properties
-        // instance properties
-        public <#= Unit #> Level { get { return m_level; } }
-        public <#= Unit #> NormalizedLevel { get { return (m_level - <#= Scale #>.Offset); } }
-        // ILevel<<#= Value #>> properties
-        IQuantity<<#= Value #>> ILevel<<#= Value #>>.Level { get { return Level; } }
+        public <#= Unit #> Level                                     { get { return m_level; } }
+        public <#= Unit #> NormalizedLevel                           { get { return (m_level - <#= Scale #>.Offset); } }
+        IQuantity<<#= Value #>> ILevel<<#= Value #>>.Level           { get { return Level; } }
         IQuantity<<#= Value #>> ILevel<<#= Value #>>.NormalizedLevel { get { return NormalizedLevel; } }
+        int ILevel<<#= Value #>>.Family                              { get { return <#= Scale #>.Family; } }
+        SymbolCollection ILevel<<#= Value #>>.Symbol                 { get { return <#= Unit #>.Symbol; } }
         #endregion
 
         #region Constructor(s)
@@ -198,6 +207,10 @@ namespace <#= __projectNamespace #>
         public <#= Scale #>(<#= Value #> level) :
             this(new <#= Unit #>(level))
         {
+        }
+        public static ILevel<<#= Value #>> Create(<#= Value #> level)
+        {
+            return new <#= Scale #>(level);
         }
         #endregion
 
@@ -217,40 +230,37 @@ namespace <#= __projectNamespace #>
 
         public static <#= Scale #> From(ILevel<<#= Value #>> q)
         {
-            /* The following 2 statements might be required if you have two (or more) scale families derived from the same units
-               but bound to different reference levels. E.g. two families of temperature scales: one with common reference level
-               set to absolute zero and the other one with common reference level set to water freeze point.
-               This is rather unlikely and the statements are commented out to avoid (likely) superfluous checks. */
-               
-            // Scale<<#= Value #>> source = new Scale<<#= Value #>>(q);
-            // if (source.Family != <#= Scale #>.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"<#= Scale #>\"", q.GetType().Name));
-
+            if (q.Family != <#= Scale #>.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"<#= Scale #>\"", q.GetType().Name));
             return new <#= Scale #>(<#= Unit #>.From(q.NormalizedLevel) + <#= Scale #>.Offset);
+        }
+        public static ILevel<<#= Value #>> Convert(ILevel<<#= Value #>> q)
+        {
+            return From(q);
         }
         #endregion
 
         #region IObject / IEquatable<<#= Scale #>>
         public override int GetHashCode() { return m_level.GetHashCode(); }
         public override bool /* IObject */ Equals(object obj) { return (obj is <#= Scale #>) && Equals((<#= Scale #>)obj); }
-        public bool /* IEquatable<<#= Scale #>> */ Equals(<#= Scale #> other) { return this.Level == other.Level; }
+        public bool /* IEquatable<<#= Scale #>> */ Equals(<#= Scale #> other) { return this.m_level == other.m_level; }
         #endregion
 
         #region Comparison / IComparable<<#= Scale #>>
-        public static bool operator ==(<#= Scale #> lhs, <#= Scale #> rhs) { return lhs.Level == rhs.Level; }
-        public static bool operator !=(<#= Scale #> lhs, <#= Scale #> rhs) { return lhs.Level != rhs.Level; }
-        public static bool operator <(<#= Scale #> lhs, <#= Scale #> rhs) { return lhs.Level < rhs.Level; }
-        public static bool operator >(<#= Scale #> lhs, <#= Scale #> rhs) { return lhs.Level > rhs.Level; }
-        public static bool operator <=(<#= Scale #> lhs, <#= Scale #> rhs) { return lhs.Level <= rhs.Level; }
-        public static bool operator >=(<#= Scale #> lhs, <#= Scale #> rhs) { return lhs.Level >= rhs.Level; }
-        public int /* IComparable<<#= Scale #>> */ CompareTo(<#= Scale #> other) { return this.Level.CompareTo(other.Level); }
+        public static bool operator ==(<#= Scale #> lhs, <#= Scale #> rhs) { return lhs.m_level == rhs.m_level; }
+        public static bool operator !=(<#= Scale #> lhs, <#= Scale #> rhs) { return lhs.m_level != rhs.m_level; }
+        public static bool operator <(<#= Scale #> lhs, <#= Scale #> rhs) { return lhs.m_level < rhs.m_level; }
+        public static bool operator >(<#= Scale #> lhs, <#= Scale #> rhs) { return lhs.m_level > rhs.m_level; }
+        public static bool operator <=(<#= Scale #> lhs, <#= Scale #> rhs) { return lhs.m_level <= rhs.m_level; }
+        public static bool operator >=(<#= Scale #> lhs, <#= Scale #> rhs) { return lhs.m_level >= rhs.m_level; }
+        public int /* IComparable<<#= Scale #>> */ CompareTo(<#= Scale #> other) { return this.m_level.CompareTo(other.m_level); }
         #endregion
 
         #region Arithmetic
-        public static <#= Scale #> operator +(<#= Scale #> lhs, <#= Unit #> rhs) { return new <#= Scale #>(lhs.Level + rhs); }
-        public static <#= Scale #> operator +(<#= Unit #> lhs, <#= Scale #> rhs) { return new <#= Scale #>(lhs + rhs.Level); }
-        public static <#= Scale #> operator -(<#= Scale #> lhs, <#= Unit #> rhs) { return new <#= Scale #>(lhs.Level - rhs); }
-        public static <#= Unit #> operator -(<#= Scale #> lhs, <#= Scale #> rhs) { return (lhs.Level - rhs.Level); }
-        public static <#= Scale #> operator -(<#= Scale #> q) { return new <#= Scale #>(-q.Level); }
+        public static <#= Scale #> operator +(<#= Scale #> lhs, <#= Unit #> rhs) { return new <#= Scale #>(lhs.m_level + rhs); }
+        public static <#= Scale #> operator +(<#= Unit #> lhs, <#= Scale #> rhs) { return new <#= Scale #>(lhs + rhs.m_level); }
+        public static <#= Scale #> operator -(<#= Scale #> lhs, <#= Unit #> rhs) { return new <#= Scale #>(lhs.m_level - rhs); }
+        public static <#= Unit #> operator -(<#= Scale #> lhs, <#= Scale #> rhs) { return (lhs.m_level - rhs.m_level); }
+        public static <#= Scale #> operator -(<#= Scale #> q) { return new <#= Scale #>(-q.m_level); }
         public static <#= Scale #> operator ++(<#= Scale #> q) { return q + <#= Unit #>.One; }
         public static <#= Scale #> operator --(<#= Scale #> q) { return q - <#= Unit #>.One; }
         #endregion
@@ -266,15 +276,15 @@ namespace <#= __projectNamespace #>
         #endregion
 
         #region Statics
-        private static readonly <#= Unit #> s_offset = new <#= Unit #>(<#= Offset #>);  // offset to <#= s.RefPointNormalized #>
-        private static readonly int s_family = <#= Family #>;
-        private static string s_format = "<#= Format #>";
-        private static readonly <#= Scale #> s_zero = new <#= Scale #>(<#= Zero #>);
+        private static readonly <#= Unit #> s_offset    = new <#= Unit #>(<#= Offset #>);  // offset to <#= s.RefPointNormalized #>
+        private static readonly int s_family            = <#= Family #>;
+        private static /*mutable*/ string s_format      = "<#= Format #>";
+        private static readonly <#= Scale #> s_zero     = new <#= Scale #>(<#= Zero #>);
         
-        public static <#= Unit #> Offset { get { return s_offset; } }
-        public static int Family { get { return s_family; } }
-        public static string Format { get { return s_format; } set { s_format = value; } }
-        public static <#= Scale #> Zero { get { return s_zero; } }
+        public static <#= Unit #> Offset    { get { return s_offset; } }
+        public static int Family            { get { return s_family; } }
+        public static string Format         { get { return s_format; } set { s_format = value; } }
+        public static <#= Scale #> Zero     { get { return s_zero; } }
         #endregion
     }
 <#+

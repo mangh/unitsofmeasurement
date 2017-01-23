@@ -17,6 +17,12 @@ namespace $safeprojectname$
     /// </summary>
     public interface IQuantity<T> where T : struct
     {
+        // Quantity (instance) properties
         T Value { get; }
+
+        // Unit (class) properties
+        int Family { get; }
+        T Factor { get; }
+        SymbolCollection Symbol { get; }
     }
 }

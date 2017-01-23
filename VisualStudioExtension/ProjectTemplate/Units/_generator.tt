@@ -86,7 +86,7 @@
         __savedItems = new List<string>();
 
         __targetNamespace = (string)__template.Properties.Item("CustomToolNamespace").Value;
-        if (String.IsNullOrWhiteSpace(__targetNamespace))
+        if (string.IsNullOrWhiteSpace(__targetNamespace))
             __targetNamespace = (string)__project.Properties.Item("DefaultNamespace").Value;
     }
 
@@ -170,7 +170,7 @@ namespace {0}
     void Summarize(List<UnitType> units, List<ScaleType> scales)
     {
         WriteLine("Units and Scales generated on {0}", DateTime.Now);
-        WriteLine(String.Empty);
+        WriteLine(string.Empty);
 
         WriteLine(
 @"////////////////////////////////////////////////////////////////////////////////
@@ -182,9 +182,9 @@ namespace {0}
 
         foreach (UnitType u in units)
         {
-            WriteLine(String.Empty);
+            WriteLine(string.Empty);
             WriteLine("({0}) {1}", u.FamilyPrime().Name, u.ToString());
-            WriteLine(String.Empty);
+            WriteLine(string.Empty);
 
             foreach (MeasureType s in u.Relatives())
             {
@@ -196,7 +196,7 @@ namespace {0}
             }
         }
 
-        WriteLine(String.Empty);
+        WriteLine(string.Empty);
         WriteLine(
 @"////////////////////////////////////////////////////////////////////////////////
 //
@@ -207,9 +207,9 @@ namespace {0}
 
         foreach (ScaleType s in scales)
         {
-            WriteLine(String.Empty);
+            WriteLine(string.Empty);
             WriteLine("({0}) {1}", s.FamilyPrime().Name, s.ToString());
-            WriteLine(String.Empty);
+            WriteLine(string.Empty);
 
             foreach (MeasureType x in s.Relatives())
             {
@@ -217,7 +217,7 @@ namespace {0}
             }
         }
 
-        WriteLine(String.Empty);
+        WriteLine(string.Empty);
         WriteLine("// End of report ///////////////////////////////////////////////////////////////");
     }
 #>
@@ -227,9 +227,9 @@ namespace {0}
     {
         string Unit = u.Name;
         string Sense = u.Sense.Code;
-        string Family = (u.Prime == null) ? (__family++).ToString() : String.Format("{0}.Family", u.FamilyPrime().Name);
+        string Family = (u.Prime == null) ? (__family++).ToString() : string.Format("{0}.Family", u.FamilyPrime().Name);
         string Format = u.Format;
-        string Tags = String.Format("\"{0}\"", String.Join("\", \"", u.Tags));
+        string Tags = string.Format("\"{0}\"", string.Join("\", \"", u.Tags));
         
         string Factor = u.Factor.Code;
         string Value = u.Factor.Value.Type.Name;
@@ -244,12 +244,19 @@ namespace {0}
 
         #region Properties
         public <#= Value #> Value { get { return m_value; } }
+        int IQuantity<<#= Value #>>.Family { get { return <#= Unit #>.Family; } }
+        <#= Value #> IQuantity<<#= Value #>>.Factor { get { return <#= Unit #>.Factor; } }
+        SymbolCollection IQuantity<<#= Value #>>.Symbol { get { return <#= Unit #>.Symbol; } }
         #endregion
 
         #region Constructor(s)
         public <#= Unit #>(<#= Value #> value)
         {
             m_value = value;
+        }
+        public static IQuantity<<#= Value #>> Create(<#= Value #> value)
+        {
+            return new <#= Unit #>(value);
         }
         #endregion
 
@@ -266,9 +273,12 @@ namespace {0}
 #>
         public static <#= Unit #> From(IQuantity<<#= Value #>> q)
         {
-            Unit<<#= Value #>> source = new Unit<<#= Value #>>(q);
-            if (source.Family != <#= Unit #>.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"<#= Unit #>\"", q.GetType().Name));
-            return new <#= Unit #>((<#= Unit #>.Factor / source.Factor) * q.Value);
+            if (q.Family != <#= Unit #>.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"<#= Unit #>\"", q.GetType().Name));
+            return new <#= Unit #>((<#= Unit #>.Factor / q.Factor) * q.Value);
+        }
+        public static IQuantity<<#= Value #>> Convert(IQuantity<<#= Value #>> q)
+        {
+            return From(q);
         }
         #endregion
 
@@ -306,8 +316,8 @@ namespace {0}
             string lhsValue = (o.Lhs.IsPredefined) ? "lhs" : "lhs.m_value";
             string rhsValue = (o.Rhs.IsPredefined) ? "rhs" : "rhs.m_value";
             string retValue = (o.Result.IsPredefined) ? 
-                String.Format("{0} {1} {2}", lhsValue, o.Operation, rhsValue) :
-                String.Format("new {0}({1} {2} {3})", o.Result.Name, lhsValue, o.Operation, rhsValue);
+                string.Format("{0} {1} {2}", lhsValue, o.Operation, rhsValue) :
+                string.Format("new {0}({1} {2} {3})", o.Result.Name, lhsValue, o.Operation, rhsValue);
 #>
         public static <#= o.Result.Name #> operator <#= o.Operation #>(<#= o.Lhs.Name #> lhs, <#= o.Rhs.Name #> rhs) { return <#= retValue #>; }
 <#+
@@ -321,20 +331,20 @@ namespace {0}
         public string ToString(IFormatProvider fp) { return ToString(<#= Unit #>.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return String.Format(fp, format ?? <#= Unit #>.Format, m_value, <#= Unit #>.Symbol[0]);
+            return string.Format(fp, format ?? <#= Unit #>.Format, m_value, <#= Unit #>.Symbol[0]);
         }
         #endregion
 
         #region Statics
         private static readonly Dimension s_sense = <#= Sense #>;
         private static readonly int s_family = <#= Family #>;
-        private static <#= Value #> s_factor = <#= Factor #>;
-        private static string s_format = "<#= Format #>";
+        private static /*mutable*/ <#= Value #> s_factor = <#= Factor #>;
+        private static /*mutable*/ string s_format = "<#= Format #>";
         private static readonly SymbolCollection s_symbol = new SymbolCollection(<#= Tags #>);
 
         private static readonly <#= Unit #> s_one = new <#= Unit #>(<#= One #>);
         private static readonly <#= Unit #> s_zero = new <#= Unit #>(<#= Zero #>);
-        
+
         public static Dimension Sense { get { return s_sense; } }
         public static int Family { get { return s_family; } }
         public static <#= Value #> Factor { get { return s_factor; } set { s_factor = value; } }
@@ -355,14 +365,14 @@ namespace {0}
         string Scale = s.Name;
         string Unit = s.Unit.Name;
         string Offset = s.Offset.Code;
-        string Family = (s.Prime == null) ? (__family++).ToString() : String.Format("{0}.Family", s.FamilyPrime().Name);
+        string Family = (s.Prime == null) ? (__family++).ToString() : string.Format("{0}.Family", s.FamilyPrime().Name);
         string Format = s.Format;
 
         string Value = s.Unit.Factor.Value.Type.Name;
         string One = s.Unit.Factor.Value.Type.One.CSString();
         string Zero = s.Unit.Factor.Value.Type.Zero.CSString();
 
-        if (!String.IsNullOrWhiteSpace(s.RefPoint))
+        if (!string.IsNullOrWhiteSpace(s.RefPoint))
         {
 #>
     [ScaleReferencePoint("<#= s.RefPoint #>")]
@@ -376,12 +386,13 @@ namespace {0}
         #endregion
 
         #region Properties
-        // instance properties
         public <#= Unit #> Level { get { return m_level; } }
         public <#= Unit #> NormalizedLevel { get { return (m_level - <#= Scale #>.Offset); } }
-        // ILevel<<#= Value #>> properties
+
         IQuantity<<#= Value #>> ILevel<<#= Value #>>.Level { get { return Level; } }
         IQuantity<<#= Value #>> ILevel<<#= Value #>>.NormalizedLevel { get { return NormalizedLevel; } }
+        int ILevel<<#= Value #>>.Family { get { return <#= Scale #>.Family; } }
+        SymbolCollection ILevel<<#= Value #>>.Symbol { get { return <#= Unit #>.Symbol; } }
         #endregion
 
         #region Constructor(s)
@@ -392,6 +403,10 @@ namespace {0}
         public <#= Scale #>(<#= Value #> level) :
             this(new <#= Unit #>(level))
         {
+        }
+        public static ILevel<<#= Value #>> Create(<#= Value #> level)
+        {
+            return new <#= Scale #>(level);
         }
         #endregion
 
@@ -411,15 +426,12 @@ namespace {0}
 
         public static <#= Scale #> From(ILevel<<#= Value #>> q)
         {
-            /* The following 2 statements might be required if you have two (or more) scale families derived from the same units
-               but bound to different reference levels. E.g. two families of temperature scales: one with common reference level
-               set to absolute zero and the other one with common reference level set to water freeze point.
-               This is rather unlikely and the statements are commented out to avoid (likely) superfluous checks. */
-               
-            // Scale<<#= Value #>> source = new Scale<<#= Value #>>(q);
-            // if (source.Family != <#= Scale #>.Family) throw new InvalidOperationException(String.Format("Cannot convert \"{0}\" to \"<#= Scale #>\"", q.GetType().Name));
-
+            if (q.Family != <#= Scale #>.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"<#= Scale #>\"", q.GetType().Name));
             return new <#= Scale #>(<#= Unit #>.From(q.NormalizedLevel) + <#= Scale #>.Offset);
+        }
+        public static ILevel<<#= Value #>> Convert(ILevel<<#= Value #>> q)
+        {
+            return From(q);
         }
         #endregion
 
@@ -462,12 +474,14 @@ namespace {0}
         #region Statics
         private static readonly <#= Unit #> s_offset = new <#= Unit #>(<#= Offset #>);  // offset to <#= s.RefPointNormalized #>
         private static readonly int s_family = <#= Family #>;
-        private static string s_format = "<#= Format #>";
+        private static /*mutable*/ string s_format = "<#= Format #>";
+
         private static readonly <#= Scale #> s_zero = new <#= Scale #>(<#= Zero #>);
         
         public static <#= Unit #> Offset { get { return s_offset; } }
         public static int Family { get { return s_family; } }
         public static string Format { get { return s_format; } set { s_format = value; } }
+
         public static <#= Scale #> Zero { get { return s_zero; } }
         #endregion
     }

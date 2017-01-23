@@ -127,7 +127,7 @@ namespace $safeprojectname$
                 else
                     m_families.Add(family, measureType);
             }
-            private Man.UnitsOfMeasurement.Dimension TranslateDimension($safeprojectname$.Dimension sense)
+            private Man.UnitsOfMeasurement.Dimension TranslateDimension(Dimension sense)
             {
                 return new Man.UnitsOfMeasurement.Dimension(
                     sense[Magnitude.Length],
