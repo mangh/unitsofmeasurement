@@ -70,8 +70,8 @@ namespace RuntimeUnits
                 Console.WriteLine("\tFAILED (from)!");
             else
             {
-                IQuantity<double> cables = units["cb"].From(length);
-                IQuantity<double> fathoms = units["ftm"].From(length);
+                IQuantity<double> cables = units["cb"].ConvertQuantity(length);
+                IQuantity<double> fathoms = units["ftm"].ConvertQuantity(length);
                 Kilometer kilometers = Kilometer.From(length);
 
                 Console.WriteLine(" {0} = {1} = {2} = {3}",
@@ -87,9 +87,9 @@ namespace RuntimeUnits
             else
             {
                 Kilometer kilometers = (Kilometer)length;
-                IQuantity<double> nmiles = units["nmi"].From(length);
-                IQuantity<double> cables = units["cb"].From(length);
-                IQuantity<double> fathoms = units["ftm"].From(length);
+                IQuantity<double> nmiles = units["nmi"].ConvertQuantity(length);
+                IQuantity<double> cables = units["cb"].ConvertQuantity(length);
+                IQuantity<double> fathoms = units["ftm"].ConvertQuantity(length);
 
                 Console.WriteLine(" {0} = {1} = {2} = {3}",
                     (nmiles as IFormattable).ToString("{0} {1}", ci),
@@ -135,7 +135,7 @@ namespace RuntimeUnits
             else
             {
                 Celsius celsius = (Celsius)temperature;
-                ILevel<double> reamures = scales["deg.Re"].From(temperature);
+                ILevel<double> reamures = scales["deg.Re"].ConvertLevel(temperature);
                 Kelvin kelvins = (Kelvin)celsius;
                 Rankine rankines = (Rankine)celsius;
                 Fahrenheit fahrenheits = (Fahrenheit)celsius;

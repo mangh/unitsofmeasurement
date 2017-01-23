@@ -11,7 +11,8 @@
     <RootNamespace>Currencies</RootNamespace>
     <AssemblyName>Currencies</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -55,6 +56,9 @@
       <Project>{0D583157-013B-4133-9B4E-BF3E5D845F26}</Project>
       <Name>UnitsOfMeasurement</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="BeforeBuild" Inputs="@(Compile)" Outputs="Properties\FileVersion.cs">
