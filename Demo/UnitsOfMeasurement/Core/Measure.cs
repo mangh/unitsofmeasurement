@@ -45,15 +45,13 @@ namespace Demo.UnitsOfMeasurement
         /// <param name="t">measure (unit|scale) type</param>
         protected Measure(Type t)
         {
-            CheckType(t);
             m_handle = t.TypeHandle;
         }
-        public abstract void CheckType(Type t);
         #endregion
 
         #region IEquatable<MeasureProxy>
         public override int GetHashCode() { return m_handle.GetHashCode(); }
-        public override bool Equals(object obj) { return (obj != null) && (obj is Measure) && Equals((Measure)obj); }
+        public override bool Equals(object obj) { return (obj is Measure) && Equals((Measure)obj); }
         public bool Equals(Measure other) { return this.m_handle.Equals(other.Handle); }
         #endregion
 
@@ -86,16 +84,17 @@ namespace Demo.UnitsOfMeasurement
         /// <summary>
         /// Create instance (object) of the measure (unit|scale)
         /// </summary>
-        /// <param name="value">constructor argument</param>
-        /// <returns>Instance of the measure (object)</returns>
-        /// <exception cref="System.NullReferenceException">Thrown when no constructor exists for the given value type</exception>
-        public object CreateInstance(object value)
-        {
-            Type[] argTypes = { value.GetType() };  // Constructor argument types
-            object[] argValues = { value };         // Constructor argument values
-            ConstructorInfo ctor = this.Type.GetConstructor(argTypes);   // Get constructor
-            return ctor.Invoke(argValues);          // Return measure instance
-        }
+        /// <param name="value">Constructor argument.</param>
+        /// <returns>Instance of the measure (object).</returns>
+        public abstract object CreateInstance(object value);
+
+        /// <summary>
+        /// Converts an instance of a measure (unit|scale) to the unit of measurement of this measure.
+        /// </summary>
+        /// <param name="q">IQuantity&lt;T&gt; or ILevel&lt;T&gt; to be converted from.</param>
+        /// <returns>Instance of the measure i.e. IQuantity&lt;T&gt; or ILevel&lt;T&gt; returned as object.</returns>
+        public abstract object ConvertInstance(object q);
+
         /// <summary>
         /// Invoke static method of the measure (unit|scale)
         /// </summary>

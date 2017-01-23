@@ -10,6 +10,7 @@
 
 ********************************************************************************/
 using System;
+using System.Reflection;
 
 namespace $safeprojectname$
 {
@@ -26,7 +27,8 @@ namespace $safeprojectname$
         public const string SymbolPropertyName = "Symbol";
 
         // static methods
-        public const string ConversionMethodName = "From";
+        public const string CreateMethodName = "Create";
+        public const string ConvertMethodName = "Convert";
 
         // instance properties
         public const string ValuePropertyName = "Value";
@@ -43,31 +45,42 @@ namespace $safeprojectname$
     public partial class Unit<T> : Measure where T : struct
     {
         #region Fields
-        // None
+        private readonly Dimension m_sense;
+        private readonly int m_family;
+        private readonly SymbolCollection m_symbol;
+
+        private readonly Func<T> m_factorGet;
+        private readonly Action<T> m_factorSet;
+
+        private readonly Func<string> m_formatGet;
+        private readonly Action<string> m_formatSet;
+
+        private readonly Func<T, IQuantity<T>> m_createQuantity;
+        private readonly Func<IQuantity<T>, IQuantity<T>> m_convertQuantity;
         #endregion
 
         #region Properties
         public override Dimension Sense
         {
-            get { return (Dimension)GetProperty(UnitConstants.SensePropertyName); }
+            get { return m_sense; }
         }
         public override int Family
         {
-            get { return (int)GetProperty(UnitConstants.FamilyPropertyName); }
+            get { return m_family; }
         }
         public override SymbolCollection Symbol
         {
-            get { return (SymbolCollection)GetProperty(UnitConstants.SymbolPropertyName); }
+            get { return m_symbol; }
         }
         public override string Format
         {
-            get { return (string)GetProperty(UnitConstants.FormatPropertyName); }
-            set { SetProperty(UnitConstants.FormatPropertyName, value); }
+            get { return m_formatGet(); }
+            set { m_formatSet(value); }
         }
         public T Factor
         {
-            get { return (T)GetProperty(UnitConstants.FactorPropertyName); }
-            set { SetProperty(UnitConstants.FactorPropertyName, value); }
+            get { return m_factorGet(); }
+            set { m_factorSet(value); }
         }
         #endregion
 
@@ -77,9 +90,25 @@ namespace $safeprojectname$
         /// </summary>
         /// <param name="t">unit value type implementing IQuantity&lt;T&gt;</param>
         /// <exception cref="System.ArgumentException">Thrown when Type t is not a value type implementing IQuantity&lt;T&gt;</exception>
-        public Unit(Type t) :
-            base(t)
+        public Unit(Type unit) :
+            base(unit)
         {
+            if(!IsAssignableFrom(unit))
+                throw new ArgumentException(string.Format("\"{0}\" is not a unit type implementing IQuantity<> interface.", unit.Name));
+
+            m_sense = (Dimension)GetProperty(UnitConstants.SensePropertyName);
+            m_family = (int)GetProperty(UnitConstants.FamilyPropertyName);
+            m_symbol = (SymbolCollection)GetProperty(UnitConstants.SymbolPropertyName);
+
+            PropertyInfo pi = unit.GetProperty(UnitConstants.FactorPropertyName);
+            m_factorGet = Delegate.CreateDelegate(typeof(Func<T>), pi.GetGetMethod()) as Func<T>;
+            m_factorSet = Delegate.CreateDelegate(typeof(Action<T>), pi.GetSetMethod()) as Action<T>;
+
+            pi = unit.GetProperty(UnitConstants.FormatPropertyName);
+            m_formatGet = Delegate.CreateDelegate(typeof(Func<string>), pi.GetGetMethod()) as Func<string>;
+            m_formatSet = Delegate.CreateDelegate(typeof(Action<string>), pi.GetSetMethod()) as Action<string>;
+            m_createQuantity = Delegate.CreateDelegate(typeof(Func<T, IQuantity<T>>), unit.GetMethod(UnitConstants.CreateMethodName)) as Func<T, IQuantity<T>>;
+            m_convertQuantity = Delegate.CreateDelegate(typeof(Func<IQuantity<T>, IQuantity<T>>), unit.GetMethod(UnitConstants.ConvertMethodName)) as Func<IQuantity<T>, IQuantity<T>>;
         }
         /// <summary>
         /// Construct unit type proxy from IQuantity&lt;T&gt; unit instance object
@@ -88,10 +117,6 @@ namespace $safeprojectname$
         public Unit(IQuantity<T> q) :
             this(q.GetType())
         {
-        }
-        public override void CheckType(Type t)
-        {
-            if (!IsAssignableFrom(t)) throw new ArgumentException(String.Format("\"{0}\" is not a value type implementing IQuantity<{1}>", t.Name, default(T).GetType().Name));
         }
         #endregion
 
@@ -103,7 +128,12 @@ namespace $safeprojectname$
         /// <returns>IQuantity&lt;T&gt; instance object (quantity)</returns>
         public IQuantity<T> CreateQuantity(T value)
         {
-            return (IQuantity<T>)CreateInstance(value);
+            return m_createQuantity(value);
+        }
+        public override object CreateInstance(object value)
+        {
+            if(value is T) return m_createQuantity((T)value);
+            throw new ArgumentException(string.Format("{0}.CreateInstance: value is not of type \"{1}\".", typeof(Unit<T>).Name, typeof(T).Name));
         }
 
         /// <summary>
@@ -111,9 +141,15 @@ namespace $safeprojectname$
         /// </summary>
         /// <param name="q">input IQuantity&lt;T&gt; instance object (to be converted from)</param>
         /// <returns>IQuantity&lt;T&gt; instance object of this unit type (conversion result)</returns>
-        public IQuantity<T> From(IQuantity<T> q)
+        public IQuantity<T> ConvertQuantity(IQuantity<T> q)
         {
-            return (IQuantity<T>)InvokeMethod(UnitConstants.ConversionMethodName, new object[] { q });
+            return m_convertQuantity(q);
+        }
+        public override object ConvertInstance(object quantity)
+        {
+            IQuantity<T> q = quantity as IQuantity<T>;
+            if(q != null) return m_convertQuantity(q);
+            throw new ArgumentException(string.Format("{0}.ConvertInstance: quantity is not of type \"{1}\".", typeof(Unit<T>).Name, typeof(IQuantity<T>).Name));
         }
         #endregion
 
