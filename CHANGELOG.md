@@ -1,3 +1,24 @@
+### Release 1.5 Build 2017.01.23.1151
+
+###### Performance improvements
+
+* Extended interfaces IQuantity\<T\> and ILevel\<T\>. Now unit and scale properties (Family, Factor etc.) can be accessed directly, via IQuantity\<T\> or ILevel\<T\> interfaces, without referring to Reflection-based and performance (very) costly proxy
+  types: Unit\<T\> and Scale\<T\>.
+
+* Delegates applied in Unit\<T\> and Scale\<T\> proxies. This significantly enhance the performance of the proxy-types (previously operating via pure Reflection). Creation (constructor) of a proxy-type is still Reflection-based
+  and costly but usage of (a previously created) proxy is much (hundreds of times) faster than previously.
+
+###### Other changes
+
+* UnitCatalog[] and ScaleCatalog[] indexers extended.
+
+* Benchmark demo enhanced: averages calculated for all operations, all averages calculated with a standard deviation.
+
+* .Net Framework Client Profile abandoned. Only full .Net Framework Profile is used.
+
+* Removed redundant namespace reference in RuntimeLoader.Decompiler.
+
+
 ### Release 1.4 Build 2016.09.05.1130
 
 * ```internal``` access for ```m_value``` & ```m_level``` fields in unit & scale structs. Access modifier for ```m_value``` & ```m_level``` fields changed from ```private``` to ```internal```. This allows to access these fields directly (not via ```Value``` & ```Level``` properties), and consequently, results in faster quantity arithmethic. ```Demo/Benchmark``` shows (under VS2010) that unit/plain arithmetic performance ratio decreased to about 1.3 versus 1.6 in previous version, with private fields.
