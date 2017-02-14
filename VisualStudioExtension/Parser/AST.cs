@@ -38,7 +38,6 @@ namespace Man.UnitsOfMeasurement
     {
         #region Properties
         public virtual bool IsNumeric { get { return false; } }
-        public virtual bool IsLiteral { get { return false; } }
         public virtual UnitType Unit { get { return null; } }
         #endregion
 
@@ -118,7 +117,6 @@ namespace Man.UnitsOfMeasurement
         public string Literal { get; private set; }
 
         public override bool IsNumeric { get { return true; } }
-        public override bool IsLiteral { get { return true; } }
 
         public ASTLiteral(string literal) :
             base()
@@ -169,7 +167,6 @@ namespace Man.UnitsOfMeasurement
         public ASTNode Expr { get; private set; }
 
         public override bool IsNumeric { get { return Expr.IsNumeric; } }
-        public override bool IsLiteral { get { return Expr.IsLiteral; } }
 
         public ASTUnary(bool plus, ASTNode expr) :
             base()
@@ -186,7 +183,6 @@ namespace Man.UnitsOfMeasurement
         public ASTNode Expr { get; private set; }
 
         public override bool IsNumeric { get { return Expr.IsNumeric; } }
-        public override bool IsLiteral { get { return Expr.IsLiteral; } }
         public override UnitType Unit { get { return Expr.Unit; } }
 
         public ASTParenthesized(ASTNode expr) :
@@ -222,7 +218,6 @@ namespace Man.UnitsOfMeasurement
         public ASTNode Rhs { get; private set; }
 
         public override bool IsNumeric { get { return Lhs.IsNumeric && Rhs.IsNumeric; } }
-        public override bool IsLiteral { get { return Lhs.IsLiteral || Rhs.IsLiteral; } }
 
         public ASTProduct(ASTNode lhs, ASTNode rhs) :
             base()
@@ -336,7 +331,6 @@ namespace Man.UnitsOfMeasurement
         public ASTNode Rhs { get; private set; }
 
         public override bool IsNumeric { get { return Lhs.IsNumeric && Rhs.IsNumeric; } }
-        public override bool IsLiteral { get { return Lhs.IsLiteral || Rhs.IsLiteral; } }
 
         public ASTQuotient(ASTNode lhs, ASTNode rhs) :
             base()
@@ -458,7 +452,6 @@ namespace Man.UnitsOfMeasurement
         public ASTNode Rhs { get; private set; }
 
         public override bool IsNumeric { get { return Lhs.IsNumeric && Rhs.IsNumeric; } }
-        public override bool IsLiteral { get { return Lhs.IsLiteral || Rhs.IsLiteral; } }
 
         public ASTSum(ASTNode lhs, ASTNode rhs) :
             base()
@@ -475,7 +468,6 @@ namespace Man.UnitsOfMeasurement
         public ASTNode Rhs { get; private set; }
 
         public override bool IsNumeric { get { return Lhs.IsNumeric && Rhs.IsNumeric; } }
-        public override bool IsLiteral { get { return Lhs.IsLiteral || Rhs.IsLiteral; } }
 
         public ASTDifference(ASTNode lhs, ASTNode rhs) :
             base()
