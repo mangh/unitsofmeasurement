@@ -332,7 +332,7 @@ namespace {0}
         public string ToString(IFormatProvider fp) { return ToString(<#= Unit #>.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? <#= Unit #>.Format, m_value, <#= Unit #>.Symbol[0]);
+            return string.Format(fp, format ?? <#= Unit #>.Format, m_value, <#= Unit #>.Symbol.Default);
         }
         #endregion
 

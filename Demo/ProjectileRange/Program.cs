@@ -40,7 +40,7 @@ namespace ProjectileRange
                     "\n angle |  tmax |  xmax   |  ymax   |   Q   |   P   |  Q/P" +
                     "\n  ({0})  |  ({1})  |  ({2})    |  ({3})    | ticks | ticks | ratio" +
                     "\n ------+-------+---------+---------+-------+-------+------",
-                    Degree.Symbol[0], Second.Symbol[0], Meter.Symbol[0], Meter.Symbol[0] 
+                    Degree.Symbol.Default, Second.Symbol.Default, Meter.Symbol.Default, Meter.Symbol.Default 
                 );
 
                 double performanceRatio = 0.0;

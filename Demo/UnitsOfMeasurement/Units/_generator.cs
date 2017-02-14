@@ -96,7 +96,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(Meter.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Meter.Format, m_value, Meter.Symbol[0]);
+            return string.Format(fp, format ?? Meter.Format, m_value, Meter.Symbol.Default);
         }
         #endregion
 
@@ -200,7 +200,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(Centimeter.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Centimeter.Format, m_value, Centimeter.Symbol[0]);
+            return string.Format(fp, format ?? Centimeter.Format, m_value, Centimeter.Symbol.Default);
         }
         #endregion
 
@@ -304,7 +304,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(Millimeter.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Millimeter.Format, m_value, Millimeter.Symbol[0]);
+            return string.Format(fp, format ?? Millimeter.Format, m_value, Millimeter.Symbol.Default);
         }
         #endregion
 
@@ -410,7 +410,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(Kilometer.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Kilometer.Format, m_value, Kilometer.Symbol[0]);
+            return string.Format(fp, format ?? Kilometer.Format, m_value, Kilometer.Symbol.Default);
         }
         #endregion
 
@@ -514,7 +514,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(Inch.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Inch.Format, m_value, Inch.Symbol[0]);
+            return string.Format(fp, format ?? Inch.Format, m_value, Inch.Symbol.Default);
         }
         #endregion
 
@@ -619,7 +619,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(Foot.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Foot.Format, m_value, Foot.Symbol[0]);
+            return string.Format(fp, format ?? Foot.Format, m_value, Foot.Symbol.Default);
         }
         #endregion
 
@@ -723,7 +723,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(Yard.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Yard.Format, m_value, Yard.Symbol[0]);
+            return string.Format(fp, format ?? Yard.Format, m_value, Yard.Symbol.Default);
         }
         #endregion
 
@@ -829,7 +829,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(Mile.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Mile.Format, m_value, Mile.Symbol[0]);
+            return string.Format(fp, format ?? Mile.Format, m_value, Mile.Symbol.Default);
         }
         #endregion
 
@@ -930,7 +930,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(Second.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Second.Format, m_value, Second.Symbol[0]);
+            return string.Format(fp, format ?? Second.Format, m_value, Second.Symbol.Default);
         }
         #endregion
 
@@ -1029,7 +1029,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(Minute.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Minute.Format, m_value, Minute.Symbol[0]);
+            return string.Format(fp, format ?? Minute.Format, m_value, Minute.Symbol.Default);
         }
         #endregion
 
@@ -1128,7 +1128,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(Hour.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Hour.Format, m_value, Hour.Symbol[0]);
+            return string.Format(fp, format ?? Hour.Format, m_value, Hour.Symbol.Default);
         }
         #endregion
 
@@ -1231,7 +1231,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(Kilogram.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Kilogram.Format, m_value, Kilogram.Symbol[0]);
+            return string.Format(fp, format ?? Kilogram.Format, m_value, Kilogram.Symbol.Default);
         }
         #endregion
 
@@ -1332,7 +1332,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(Gram.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Gram.Format, m_value, Gram.Symbol[0]);
+            return string.Format(fp, format ?? Gram.Format, m_value, Gram.Symbol.Default);
         }
         #endregion
 
@@ -1433,7 +1433,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(Tonne.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Tonne.Format, m_value, Tonne.Symbol[0]);
+            return string.Format(fp, format ?? Tonne.Format, m_value, Tonne.Symbol.Default);
         }
         #endregion
 
@@ -1534,7 +1534,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(Pound.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Pound.Format, m_value, Pound.Symbol[0]);
+            return string.Format(fp, format ?? Pound.Format, m_value, Pound.Symbol.Default);
         }
         #endregion
 
@@ -1635,7 +1635,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(Ounce.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Ounce.Format, m_value, Ounce.Symbol[0]);
+            return string.Format(fp, format ?? Ounce.Format, m_value, Ounce.Symbol.Default);
         }
         #endregion
 
@@ -1735,7 +1735,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(DegKelvin.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? DegKelvin.Format, m_value, DegKelvin.Symbol[0]);
+            return string.Format(fp, format ?? DegKelvin.Format, m_value, DegKelvin.Symbol.Default);
         }
         #endregion
 
@@ -1835,7 +1835,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(DegCelsius.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? DegCelsius.Format, m_value, DegCelsius.Symbol[0]);
+            return string.Format(fp, format ?? DegCelsius.Format, m_value, DegCelsius.Symbol.Default);
         }
         #endregion
 
@@ -1935,7 +1935,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(DegRankine.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? DegRankine.Format, m_value, DegRankine.Symbol[0]);
+            return string.Format(fp, format ?? DegRankine.Format, m_value, DegRankine.Symbol.Default);
         }
         #endregion
 
@@ -2035,7 +2035,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(DegFahrenheit.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? DegFahrenheit.Format, m_value, DegFahrenheit.Symbol[0]);
+            return string.Format(fp, format ?? DegFahrenheit.Format, m_value, DegFahrenheit.Symbol.Default);
         }
         #endregion
 
@@ -2136,7 +2136,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(Ampere.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Ampere.Format, m_value, Ampere.Symbol[0]);
+            return string.Format(fp, format ?? Ampere.Format, m_value, Ampere.Symbol.Default);
         }
         #endregion
 
@@ -2233,7 +2233,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(Mole.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Mole.Format, m_value, Mole.Symbol[0]);
+            return string.Format(fp, format ?? Mole.Format, m_value, Mole.Symbol.Default);
         }
         #endregion
 
@@ -2330,7 +2330,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(Candela.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Candela.Format, m_value, Candela.Symbol[0]);
+            return string.Format(fp, format ?? Candela.Format, m_value, Candela.Symbol.Default);
         }
         #endregion
 
@@ -2430,7 +2430,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(EUR.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? EUR.Format, m_value, EUR.Symbol[0]);
+            return string.Format(fp, format ?? EUR.Format, m_value, EUR.Symbol.Default);
         }
         #endregion
 
@@ -2530,7 +2530,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(USD.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? USD.Format, m_value, USD.Symbol[0]);
+            return string.Format(fp, format ?? USD.Format, m_value, USD.Symbol.Default);
         }
         #endregion
 
@@ -2630,7 +2630,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(GBP.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? GBP.Format, m_value, GBP.Symbol[0]);
+            return string.Format(fp, format ?? GBP.Format, m_value, GBP.Symbol.Default);
         }
         #endregion
 
@@ -2730,7 +2730,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(PLN.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? PLN.Format, m_value, PLN.Symbol[0]);
+            return string.Format(fp, format ?? PLN.Format, m_value, PLN.Symbol.Default);
         }
         #endregion
 
@@ -2832,7 +2832,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(Radian.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Radian.Format, m_value, Radian.Symbol[0]);
+            return string.Format(fp, format ?? Radian.Format, m_value, Radian.Symbol.Default);
         }
         #endregion
 
@@ -2932,7 +2932,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(Degree.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Degree.Format, m_value, Degree.Symbol[0]);
+            return string.Format(fp, format ?? Degree.Format, m_value, Degree.Symbol.Default);
         }
         #endregion
 
@@ -3032,7 +3032,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(Grad.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Grad.Format, m_value, Grad.Symbol[0]);
+            return string.Format(fp, format ?? Grad.Format, m_value, Grad.Symbol.Default);
         }
         #endregion
 
@@ -3136,7 +3136,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(Cycles.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Cycles.Format, m_value, Cycles.Symbol[0]);
+            return string.Format(fp, format ?? Cycles.Format, m_value, Cycles.Symbol.Default);
         }
         #endregion
 
@@ -3233,7 +3233,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(Steradian.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Steradian.Format, m_value, Steradian.Symbol[0]);
+            return string.Format(fp, format ?? Steradian.Format, m_value, Steradian.Symbol.Default);
         }
         #endregion
 
@@ -3334,7 +3334,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(Hertz.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Hertz.Format, m_value, Hertz.Symbol[0]);
+            return string.Format(fp, format ?? Hertz.Format, m_value, Hertz.Symbol.Default);
         }
         #endregion
 
@@ -3435,7 +3435,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(Radian_Sec.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Radian_Sec.Format, m_value, Radian_Sec.Symbol[0]);
+            return string.Format(fp, format ?? Radian_Sec.Format, m_value, Radian_Sec.Symbol.Default);
         }
         #endregion
 
@@ -3536,7 +3536,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(RPM.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? RPM.Format, m_value, RPM.Symbol[0]);
+            return string.Format(fp, format ?? RPM.Format, m_value, RPM.Symbol.Default);
         }
         #endregion
 
@@ -3637,7 +3637,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(SquareMeter.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? SquareMeter.Format, m_value, SquareMeter.Symbol[0]);
+            return string.Format(fp, format ?? SquareMeter.Format, m_value, SquareMeter.Symbol.Default);
         }
         #endregion
 
@@ -3736,7 +3736,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(SquareFoot.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? SquareFoot.Format, m_value, SquareFoot.Symbol[0]);
+            return string.Format(fp, format ?? SquareFoot.Format, m_value, SquareFoot.Symbol.Default);
         }
         #endregion
 
@@ -3835,7 +3835,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(CubicMeter.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? CubicMeter.Format, m_value, CubicMeter.Symbol[0]);
+            return string.Format(fp, format ?? CubicMeter.Format, m_value, CubicMeter.Symbol.Default);
         }
         #endregion
 
@@ -3939,7 +3939,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(Meter_Sec.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Meter_Sec.Format, m_value, Meter_Sec.Symbol[0]);
+            return string.Format(fp, format ?? Meter_Sec.Format, m_value, Meter_Sec.Symbol.Default);
         }
         #endregion
 
@@ -4040,7 +4040,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(Kilometer_Hour.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Kilometer_Hour.Format, m_value, Kilometer_Hour.Symbol[0]);
+            return string.Format(fp, format ?? Kilometer_Hour.Format, m_value, Kilometer_Hour.Symbol.Default);
         }
         #endregion
 
@@ -4141,7 +4141,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(MPH.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? MPH.Format, m_value, MPH.Symbol[0]);
+            return string.Format(fp, format ?? MPH.Format, m_value, MPH.Symbol.Default);
         }
         #endregion
 
@@ -4242,7 +4242,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(Meter_Sec2.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Meter_Sec2.Format, m_value, Meter_Sec2.Symbol[0]);
+            return string.Format(fp, format ?? Meter_Sec2.Format, m_value, Meter_Sec2.Symbol.Default);
         }
         #endregion
 
@@ -4350,7 +4350,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(Newton.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Newton.Format, m_value, Newton.Symbol[0]);
+            return string.Format(fp, format ?? Newton.Format, m_value, Newton.Symbol.Default);
         }
         #endregion
 
@@ -4450,7 +4450,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(PoundForce.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? PoundForce.Format, m_value, PoundForce.Symbol[0]);
+            return string.Format(fp, format ?? PoundForce.Format, m_value, PoundForce.Symbol.Default);
         }
         #endregion
 
@@ -4550,7 +4550,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(Poundal.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Poundal.Format, m_value, Poundal.Symbol[0]);
+            return string.Format(fp, format ?? Poundal.Format, m_value, Poundal.Symbol.Default);
         }
         #endregion
 
@@ -4650,7 +4650,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(Dyne.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Dyne.Format, m_value, Dyne.Symbol[0]);
+            return string.Format(fp, format ?? Dyne.Format, m_value, Dyne.Symbol.Default);
         }
         #endregion
 
@@ -4757,7 +4757,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(Joule.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Joule.Format, m_value, Joule.Symbol[0]);
+            return string.Format(fp, format ?? Joule.Format, m_value, Joule.Symbol.Default);
         }
         #endregion
 
@@ -4858,7 +4858,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(Watt.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Watt.Format, m_value, Watt.Symbol[0]);
+            return string.Format(fp, format ?? Watt.Format, m_value, Watt.Symbol.Default);
         }
         #endregion
 
@@ -4957,7 +4957,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(NewtonMeter.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? NewtonMeter.Format, m_value, NewtonMeter.Symbol[0]);
+            return string.Format(fp, format ?? NewtonMeter.Format, m_value, NewtonMeter.Symbol.Default);
         }
         #endregion
 
@@ -5058,7 +5058,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(Joule_Kelvin.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Joule_Kelvin.Format, m_value, Joule_Kelvin.Symbol[0]);
+            return string.Format(fp, format ?? Joule_Kelvin.Format, m_value, Joule_Kelvin.Symbol.Default);
         }
         #endregion
 
@@ -5157,7 +5157,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(Joule_Kelvin_Kilogram.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Joule_Kelvin_Kilogram.Format, m_value, Joule_Kelvin_Kilogram.Symbol[0]);
+            return string.Format(fp, format ?? Joule_Kelvin_Kilogram.Format, m_value, Joule_Kelvin_Kilogram.Symbol.Default);
         }
         #endregion
 
@@ -5260,7 +5260,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(Pascal.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Pascal.Format, m_value, Pascal.Symbol[0]);
+            return string.Format(fp, format ?? Pascal.Format, m_value, Pascal.Symbol.Default);
         }
         #endregion
 
@@ -5361,7 +5361,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(Bar.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Bar.Format, m_value, Bar.Symbol[0]);
+            return string.Format(fp, format ?? Bar.Format, m_value, Bar.Symbol.Default);
         }
         #endregion
 
@@ -5462,7 +5462,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(AtmTechnical.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? AtmTechnical.Format, m_value, AtmTechnical.Symbol[0]);
+            return string.Format(fp, format ?? AtmTechnical.Format, m_value, AtmTechnical.Symbol.Default);
         }
         #endregion
 
@@ -5563,7 +5563,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(AtmStandard.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? AtmStandard.Format, m_value, AtmStandard.Symbol[0]);
+            return string.Format(fp, format ?? AtmStandard.Format, m_value, AtmStandard.Symbol.Default);
         }
         #endregion
 
@@ -5664,7 +5664,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(MillimeterHg.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? MillimeterHg.Format, m_value, MillimeterHg.Symbol[0]);
+            return string.Format(fp, format ?? MillimeterHg.Format, m_value, MillimeterHg.Symbol.Default);
         }
         #endregion
 
@@ -5765,7 +5765,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(Coulomb.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Coulomb.Format, m_value, Coulomb.Symbol[0]);
+            return string.Format(fp, format ?? Coulomb.Format, m_value, Coulomb.Symbol.Default);
         }
         #endregion
 
@@ -5870,7 +5870,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(Volt.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Volt.Format, m_value, Volt.Symbol[0]);
+            return string.Format(fp, format ?? Volt.Format, m_value, Volt.Symbol.Default);
         }
         #endregion
 
@@ -5969,7 +5969,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(Ohm.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Ohm.Format, m_value, Ohm.Symbol[0]);
+            return string.Format(fp, format ?? Ohm.Format, m_value, Ohm.Symbol.Default);
         }
         #endregion
 
@@ -6068,7 +6068,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(Siemens.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Siemens.Format, m_value, Siemens.Symbol[0]);
+            return string.Format(fp, format ?? Siemens.Format, m_value, Siemens.Symbol.Default);
         }
         #endregion
 
@@ -6169,7 +6169,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(Farad.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Farad.Format, m_value, Farad.Symbol[0]);
+            return string.Format(fp, format ?? Farad.Format, m_value, Farad.Symbol.Default);
         }
         #endregion
 
@@ -6270,7 +6270,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(Weber.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Weber.Format, m_value, Weber.Symbol[0]);
+            return string.Format(fp, format ?? Weber.Format, m_value, Weber.Symbol.Default);
         }
         #endregion
 
@@ -6370,7 +6370,7 @@ namespace Demo.UnitsOfMeasurement
         public string ToString(IFormatProvider fp) { return ToString(Meter2_Sec2.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Meter2_Sec2.Format, m_value, Meter2_Sec2.Symbol[0]);
+            return string.Format(fp, format ?? Meter2_Sec2.Format, m_value, Meter2_Sec2.Symbol.Default);
         }
         #endregion
 

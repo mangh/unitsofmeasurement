@@ -1524,8 +1524,8 @@ this.Write(this.ToStringHelper.ToStringWithCulture(Unit));
         #line hidden
         
         #line 141 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\VisualStudioExtension\ProjectTemplate\RuntimeLoader\Generator.tt"
-this.Write(".Symbol[0]);\r\n        }\r\n        #endregion\r\n\r\n        #region Statics\r\n        p" +
-        "rivate static readonly Dimension s_sense           = ");
+this.Write(".Symbol.Default);\r\n        }\r\n        #endregion\r\n\r\n        #region Statics\r\n    " +
+        "    private static readonly Dimension s_sense           = ");
 
         
         #line default

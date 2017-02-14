@@ -89,7 +89,7 @@ namespace $safeprojectname$
         public string ToString(IFormatProvider fp) { return ToString(Meter.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Meter.Format, m_value, Meter.Symbol[0]);
+            return string.Format(fp, format ?? Meter.Format, m_value, Meter.Symbol.Default);
         }
         #endregion
 
@@ -186,7 +186,7 @@ namespace $safeprojectname$
         public string ToString(IFormatProvider fp) { return ToString(Second.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Second.Format, m_value, Second.Symbol[0]);
+            return string.Format(fp, format ?? Second.Format, m_value, Second.Symbol.Default);
         }
         #endregion
 
@@ -285,7 +285,7 @@ namespace $safeprojectname$
         public string ToString(IFormatProvider fp) { return ToString(Kilogram.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Kilogram.Format, m_value, Kilogram.Symbol[0]);
+            return string.Format(fp, format ?? Kilogram.Format, m_value, Kilogram.Symbol.Default);
         }
         #endregion
 
@@ -385,7 +385,7 @@ namespace $safeprojectname$
         public string ToString(IFormatProvider fp) { return ToString(DegKelvin.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? DegKelvin.Format, m_value, DegKelvin.Symbol[0]);
+            return string.Format(fp, format ?? DegKelvin.Format, m_value, DegKelvin.Symbol.Default);
         }
         #endregion
 
@@ -485,7 +485,7 @@ namespace $safeprojectname$
         public string ToString(IFormatProvider fp) { return ToString(DegCelsius.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? DegCelsius.Format, m_value, DegCelsius.Symbol[0]);
+            return string.Format(fp, format ?? DegCelsius.Format, m_value, DegCelsius.Symbol.Default);
         }
         #endregion
 
@@ -585,7 +585,7 @@ namespace $safeprojectname$
         public string ToString(IFormatProvider fp) { return ToString(DegRankine.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? DegRankine.Format, m_value, DegRankine.Symbol[0]);
+            return string.Format(fp, format ?? DegRankine.Format, m_value, DegRankine.Symbol.Default);
         }
         #endregion
 
@@ -685,7 +685,7 @@ namespace $safeprojectname$
         public string ToString(IFormatProvider fp) { return ToString(DegFahrenheit.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? DegFahrenheit.Format, m_value, DegFahrenheit.Symbol[0]);
+            return string.Format(fp, format ?? DegFahrenheit.Format, m_value, DegFahrenheit.Symbol.Default);
         }
         #endregion
 
@@ -784,7 +784,7 @@ namespace $safeprojectname$
         public string ToString(IFormatProvider fp) { return ToString(EUR.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? EUR.Format, m_value, EUR.Symbol[0]);
+            return string.Format(fp, format ?? EUR.Format, m_value, EUR.Symbol.Default);
         }
         #endregion
 
@@ -883,7 +883,7 @@ namespace $safeprojectname$
         public string ToString(IFormatProvider fp) { return ToString(USD.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? USD.Format, m_value, USD.Symbol[0]);
+            return string.Format(fp, format ?? USD.Format, m_value, USD.Symbol.Default);
         }
         #endregion
 
@@ -982,7 +982,7 @@ namespace $safeprojectname$
         public string ToString(IFormatProvider fp) { return ToString(PLN.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? PLN.Format, m_value, PLN.Symbol[0]);
+            return string.Format(fp, format ?? PLN.Format, m_value, PLN.Symbol.Default);
         }
         #endregion
 
@@ -1081,7 +1081,7 @@ namespace $safeprojectname$
         public string ToString(IFormatProvider fp) { return ToString(Radian.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Radian.Format, m_value, Radian.Symbol[0]);
+            return string.Format(fp, format ?? Radian.Format, m_value, Radian.Symbol.Default);
         }
         #endregion
 
@@ -1180,7 +1180,7 @@ namespace $safeprojectname$
         public string ToString(IFormatProvider fp) { return ToString(Degree.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Degree.Format, m_value, Degree.Symbol[0]);
+            return string.Format(fp, format ?? Degree.Format, m_value, Degree.Symbol.Default);
         }
         #endregion
 
@@ -1281,7 +1281,7 @@ namespace $safeprojectname$
         public string ToString(IFormatProvider fp) { return ToString(Cycles.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Cycles.Format, m_value, Cycles.Symbol[0]);
+            return string.Format(fp, format ?? Cycles.Format, m_value, Cycles.Symbol.Default);
         }
         #endregion
 
@@ -1380,7 +1380,7 @@ namespace $safeprojectname$
         public string ToString(IFormatProvider fp) { return ToString(Hertz.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Hertz.Format, m_value, Hertz.Symbol[0]);
+            return string.Format(fp, format ?? Hertz.Format, m_value, Hertz.Symbol.Default);
         }
         #endregion
 
@@ -1478,7 +1478,7 @@ namespace $safeprojectname$
         public string ToString(IFormatProvider fp) { return ToString(SquareMeter.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? SquareMeter.Format, m_value, SquareMeter.Symbol[0]);
+            return string.Format(fp, format ?? SquareMeter.Format, m_value, SquareMeter.Symbol.Default);
         }
         #endregion
 
@@ -1579,7 +1579,7 @@ namespace $safeprojectname$
         public string ToString(IFormatProvider fp) { return ToString(Meter_Sec.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Meter_Sec.Format, m_value, Meter_Sec.Symbol[0]);
+            return string.Format(fp, format ?? Meter_Sec.Format, m_value, Meter_Sec.Symbol.Default);
         }
         #endregion
 
@@ -1678,7 +1678,7 @@ namespace $safeprojectname$
         public string ToString(IFormatProvider fp) { return ToString(Meter_Sec2.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Meter_Sec2.Format, m_value, Meter_Sec2.Symbol[0]);
+            return string.Format(fp, format ?? Meter_Sec2.Format, m_value, Meter_Sec2.Symbol.Default);
         }
         #endregion
 
@@ -1781,7 +1781,7 @@ namespace $safeprojectname$
         public string ToString(IFormatProvider fp) { return ToString(Newton.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Newton.Format, m_value, Newton.Symbol[0]);
+            return string.Format(fp, format ?? Newton.Format, m_value, Newton.Symbol.Default);
         }
         #endregion
 
@@ -1880,7 +1880,7 @@ namespace $safeprojectname$
         public string ToString(IFormatProvider fp) { return ToString(Joule.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? Joule.Format, m_value, Joule.Symbol[0]);
+            return string.Format(fp, format ?? Joule.Format, m_value, Joule.Symbol.Default);
         }
         #endregion
 
@@ -1979,7 +1979,7 @@ namespace $safeprojectname$
         public string ToString(IFormatProvider fp) { return ToString(NewtonMeter.Format, fp); }
         public string /* IFormattable */ ToString(string format, IFormatProvider fp)
         {
-            return string.Format(fp, format ?? NewtonMeter.Format, m_value, NewtonMeter.Symbol[0]);
+            return string.Format(fp, format ?? NewtonMeter.Format, m_value, NewtonMeter.Symbol.Default);
         }
         #endregion
 

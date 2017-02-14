@@ -28,6 +28,7 @@ namespace Demo.UnitsOfMeasurement
 
         #region Properties
         public int Count { get { return m_collection.Length; } }
+        public string Default { get { return m_collection[0]; } }
         #endregion
 
         #region Constructor(s)
