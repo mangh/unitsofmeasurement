@@ -95,7 +95,14 @@ namespace Man.UnitsOfMeasurement
                     return false;
                 if (m_symbol != Lexer.Symbol.StringLiteral)
                     break;
-                unit.Tags.Add(m_lexer.TokenText); 
+
+                string tag = m_lexer.TokenText;
+                UnitType other = FindUnitOfTag(tag);
+                if (other == null)
+                    unit.Tags.Add(tag);
+                else
+                    Note("{0} symbol \"{1}\": already used in {2} unit.", unit.Name, tag, other.Name);
+
                 GetToken();
             }
             if (unit.Tags.Count > 0) return true;
