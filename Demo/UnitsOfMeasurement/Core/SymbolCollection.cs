@@ -52,17 +52,12 @@ namespace Demo.UnitsOfMeasurement
         }
         public int IndexOf(string symbol)
         {
-            return Array.FindIndex(m_collection, s => SymbolCollection.Comparer.Equals(s, symbol));
+            return Array.FindIndex(m_collection, s => String.CompareOrdinal(s, symbol) == 0);
         }
         public bool Intersects(IEnumerable<string> symbols)
         {
             return symbols.Any(s => this.IndexOf(s) >= 0);
         }
-        #endregion
-
-        #region Defaults
-        private static IEqualityComparer<string> s_comparer = StringComparer.Ordinal;
-        public static IEqualityComparer<string> Comparer { get { return s_comparer; } set { s_comparer = value; } }
         #endregion
     }
 }
