@@ -41,7 +41,7 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region IEnumerable
-        public IEnumerator<string> GetEnumerator() { return m_collection.Cast<string>().GetEnumerator(); }
+        public IEnumerator<string> GetEnumerator() { return (m_collection as IEnumerable<string>).GetEnumerator(); }
         IEnumerator IEnumerable.GetEnumerator() { return m_collection.GetEnumerator(); }
         #endregion
 
