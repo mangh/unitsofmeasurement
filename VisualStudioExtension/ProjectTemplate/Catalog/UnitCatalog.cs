@@ -115,7 +115,7 @@ namespace $safeprojectname$
         }
         public bool TryParse(string input, IFormatProvider fp, NumberStyles style, out IQuantity<T> result)
         {
-            if (TextParser.TryParse(input, fp, out m_lastParsedNumber, out m_lastParsedSymbol))
+            if (TextParser.TryParse(input, fp, style, out m_lastParsedNumber, out m_lastParsedSymbol))
             {
                 if ((m_lastParsedMeasure = this[m_lastParsedSymbol]) != null)
                 {

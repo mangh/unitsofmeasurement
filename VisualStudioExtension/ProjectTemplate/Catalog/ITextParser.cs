@@ -11,11 +11,12 @@
 ********************************************************************************/
 
 using System;
+using System.Globalization;
 
 namespace $safeprojectname$
 {
     public interface ITextParser
     {
-        bool TryParse(string input, IFormatProvider fp, out string number, out string symbol);
+        bool TryParse(string input, IFormatProvider fp, NumberStyles style, out string number, out string symbol);
     }
 }
