@@ -28,25 +28,29 @@ namespace Man.UnitsOfMeasurement
             NumericType numType = GetUnitNumericType(); if (numType == null) return;
 
             // Identifier (unit name)
-            string unitName = GetUnitName(); if (unitName == null) return;
+            string unitName = GetEntityName("unit"); if (unitName == null) return;
 
-            UnitType unit = new UnitType(unitName);
+            UnitType candidate = new UnitType(unitName);
 
             // Tags
-            if (!GetUnitTags(unit)) return;
+            if (!GetUnitTags(candidate)) return;
 
             // Format
-            if ((unit.Format = GetFormat("{0} {1}")) == null) return;
+            if ((candidate.Format = GetFormat(candidate.Name, "{0} {1}")) == null) return;
 
             // "="
-            if (m_symbol == Lexer.Symbol.EQ) GetToken(); else { Note("\"{0}\": expected equal sign \"=\"", m_lexer.TokenText); return; }
+            if (m_symbol == Lexer.Symbol.EQ)
+                GetToken();
+            else
+            {
+                Note("{0}: \"{1}\" found while expected equal sign \"=\".", candidate.Name, m_token);
+                return;
+            }
 
             // <Dim Expr>
-            if (!GetDimExpr(unit, numType)) return;
+            if (!GetDimExpr(candidate, numType)) return;
 
-            m_units.Add(unit);
-
-            CheckSemicolon();
+            m_units.Add(candidate);
         }
 
         private NumericType GetUnitNumericType()
@@ -56,120 +60,104 @@ namespace Man.UnitsOfMeasurement
             {
                 type = NumericType.Double;
             }
-            else if ((GetToken() != Lexer.Symbol.Identifier) || ((type = NumericType.Factory(m_lexer.TokenText)) == null))
+            else if ((GetToken() != Lexer.Symbol.Identifier) || ((type = NumericType.Factory(m_token)) == null))
             {
-                Note("\"{0}\": expected numeric value type name: \"double\" | \"float\" | \"decimal\"", m_lexer.TokenText);
+                Note("\"{0}\" found while expected numeric type name: \"double\" | \"float\" | \"decimal\".", m_token);
                 type = null;
+            }
+            else if (GetToken() == Lexer.Symbol.GT)
+            {
+                GetToken();
             }
             else
             {
-                if (GetToken() == Lexer.Symbol.GT) GetToken(); else Note("\"{0}\": expected closing bracket \">\"", m_lexer.TokenText);
+                Note("\"{0}\" found while expected closing bracket \">\".", m_token);
             }
             return type;
         }
 
-        private string GetUnitName()
-        {
-            if (m_symbol != Lexer.Symbol.Identifier)
-                Note("\"{0}\": expected unit name", m_lexer.TokenText);
-            else
-            {
-                string name = m_lexer.TokenText;
-                if (IsUniqueName(name))
-                {
-                    GetToken();
-                    return name;
-                }
-                Note("Duplicate \"{0}\" definition", name);
-            }
-            return null;
-        }
-
         // <Tags> ::= <Tags> StringLiteral
         //         | StringLiteral
-        private bool GetUnitTags(UnitType unit)
+        private bool GetUnitTags(UnitType candidate)
         {
             while (m_symbol != Lexer.Symbol.EOF)
             {
-                if (m_symbol == Lexer.Symbol.Error)
-                    return false;
                 if (m_symbol != Lexer.Symbol.StringLiteral)
                     break;
 
-                string tag = m_lexer.TokenText;
-                UnitType other = FindUnitOfTag(tag);
+                UnitType other = FindUnitOfTag(m_token);
                 if (other == null)
-                    unit.Tags.Add(tag);
+                    candidate.Tags.Add(m_token);
                 else
-                    Note("{0} symbol \"{1}\": already used in {2} unit.", unit.Name, tag, other.Name);
+                    Note("{0}: symbol \"{1}\" rejected as already used for {2} unit.", candidate.Name, m_token, other.Name);
 
                 GetToken();
             }
-            if (unit.Tags.Count > 0) return true;
+            if (candidate.Tags.Count > 0) return true;
 
-            Note("\"{0}\": expected unit symbols (string literals)", m_lexer.TokenText);
+            Note("{0}: missing unit symbol(s).", candidate.Name);
             return false;
         }
 
         // <Format> ::= ':' StringLiteral
         //           |  ! No format -> default format: "{0} {1}" ("value symbol" e.g. "100 mph")
-        private string GetFormat(string defaultFormat)
+        private string GetFormat(string candidateName, string defaultFormat)
         {
-            string format;
             if (m_symbol != Lexer.Symbol.Colon)
             {
-                format = defaultFormat;
+                return defaultFormat;
             }
             else if (GetToken() != Lexer.Symbol.StringLiteral)
             {
-                Note("\"{0}\": expected format string e.g. \"{0} {1}\"", m_lexer.TokenText);
-                format = null;
+                Note("{0}: \"{1}\" found while expected format string e.g. \"{{0}} {{1}}\".", candidateName, m_token);
+            }
+            else if (String.IsNullOrWhiteSpace(m_token))
+            {
+                Note("{0}: empty format string.", candidateName);
             }
             else
             {
-                format = m_lexer.TokenText;
-                if (String.IsNullOrWhiteSpace(format))
-                {
-                    Note("Empty format string");
-                    format = null;
-                }
+                string format = m_token;
                 GetToken();
+                return format;
             }
-            return format;
+            return null;
         }
 
         //<Dim Expr> ::= <Dim Expr> '|' <Dim Term>
         //           |   <Dim Term>
-        public bool GetDimExpr(UnitType unit, NumericType numType)
+        public bool GetDimExpr(UnitType candidate, NumericType numType)
         {
-            ASTNode basic, alternate;
+            ASTNode basic = GetDimTerm(candidate, numType);
 
-            if ((basic = GetDimTerm(numType)) == null) return false;
+            if (basic == null) return false;
 
-            unit.Sense = m_senseEncoder.Encode(basic);
-            unit.Factor = m_exprEncoder.Encode(basic, numType);
-            basic.Normalized().Bind(unit);
+            candidate.Sense = m_senseEncoder.Encode(basic);
+            candidate.Factor = m_exprEncoder.Encode(basic, numType);
+            basic.Normalized().Bind(candidate);
 
             while (m_symbol == Lexer.Symbol.Pipe)
             {
                 GetToken();
-                if ((alternate = GetDimTerm(numType)) == null) return false;
+
+                ASTNode alternate = GetDimTerm(candidate, numType);
+                if (alternate == null) return false;
 
                 SenseExpr sense = m_senseEncoder.Encode(alternate);
-                if (sense.Value != unit.Sense.Value)
+                if (sense.Value != candidate.Sense.Value)
                 {
-                    Note("Inconsistent dimensions: \"{0}\" -> {1} != {2} <- \"{3}\"", 
-                        unit.Sense.Code, unit.Sense.Value, sense.Value, sense.Code);
+                    Note("{0}: inconsistent dimensions: {1} == {2} != {3} == {4}.",
+                        candidate.Name, candidate.Sense.Code, candidate.Sense.Value, sense.Value, sense.Code);
                     return false;
                 }
                 NumExpr factor = m_exprEncoder.Encode(alternate, numType);
-                if (factor.IsTrueValue && unit.Factor.IsTrueValue && (factor.Value != unit.Factor.Value))
+                if (factor.IsTrueValue && candidate.Factor.IsTrueValue && (factor.Value != candidate.Factor.Value))
                 {
-                    Note("Inconsistent conversion factors: \"{0}\" -> {1} != {2} <- \"{3}\"",
-                        unit.Factor.Code, unit.Factor.Value, factor.Value, factor.Code);
+                    Note("{0}: inconsistent conversion factors: {1} == {2} != {3} == {4}.",
+                        candidate.Name, candidate.Factor.Code, candidate.Factor.Value, factor.Value, factor.Code);
                     return false;
                 }
-                alternate.Normalized().Bind(unit);
+                alternate.Normalized().Bind(candidate);
             }
             return true;
         }
@@ -177,20 +165,22 @@ namespace Man.UnitsOfMeasurement
         //<Dim Term> ::= <Dim Term> '*' <Dim Factor>
         //            |  <Dim Term> '/' <Dim Factor>
         //            |  <Dim Factor>
-        private ASTNode GetDimTerm(NumericType numType)
+        private ASTNode GetDimTerm(UnitType candidate, NumericType numType)
         {
-            ASTNode lhs, rhs;
-
-            if ((lhs = GetDimFactor(numType)) == null) return lhs;
+            ASTNode lhs = GetDimFactor(candidate, numType);
+            if (lhs == null)
+                return null;
 
             while ((m_symbol == Lexer.Symbol.Times) || (m_symbol == Lexer.Symbol.Div))
             {
                 Lexer.Symbol operation = m_symbol;
 
                 GetToken();
-                if ((rhs = GetDimFactor(numType)) == null) return rhs;
 
-                if (operation == Lexer.Symbol.Times) 
+                ASTNode rhs = GetDimFactor(candidate, numType);
+                if (rhs == null)
+                    return null;
+                else if (operation == Lexer.Symbol.Times) 
                     lhs = new ASTProduct(lhs, rhs);
                 else
                     lhs = new ASTQuotient(lhs, rhs);
@@ -204,63 +194,82 @@ namespace Man.UnitsOfMeasurement
         //             |   '(' <Dim Term> ')'
         //
         // <Num Literal> ::= IntLiteral | RealLiteral | StringLiteral  ! Member-access (e.g. "Math.PI")
-        private ASTNode GetDimFactor(NumericType numType)
+        private ASTNode GetDimFactor(UnitType candidate, NumericType numType)
         {
-            ASTNode factor = null;
-
             // '<' Magnitude '>'?
-            if (m_symbol == Lexer.Symbol.LT)    
+            if (m_symbol == Lexer.Symbol.LT)
             {
                 GetToken();
-                factor = GetDimMagnitude();
+                return GetDimMagnitude(candidate);
             }
 
             // '(' <Dim Term> ')'?
             else if (m_symbol == Lexer.Symbol.Lparen)
             {
                 GetToken();
-                if ((factor = GetDimTerm(numType)) != null)
+                ASTNode factor = GetDimTerm(candidate, numType);
+                if (factor != null)
                 {
-                    if (m_symbol == Lexer.Symbol.Rparen) { GetToken(); factor = new ASTParenthesized(factor); }
-                    else { Note("\"{0}\": expected closing parenthesis \")\"", m_lexer.TokenText); factor = null; }
+                    if (m_symbol != Lexer.Symbol.Rparen)
+                    {
+                        Note("{0}: \"{1}\" found while expected closing parenthesis \")\".", candidate.Name, m_token);
+                    }
+                    else
+                    {
+                        GetToken();
+                        return new ASTParenthesized(factor);
+                    }
                 }
             }
 
             // <Num Literal>?
             else if ((m_symbol == Lexer.Symbol.IntNumber) || (m_symbol == Lexer.Symbol.RealNumber))
             {
-                Number number = numType.TryParse(m_lexer.TokenText);
-                if (number == null) Note("\"{0}\": invalid number", m_lexer.TokenText);
-                else { GetToken(); factor = new ASTNumber(number); }
+                Number number = numType.TryParse(m_token);
+                if (number == null)
+                {
+                    Note("{0}: invalid number \"{1}\".", candidate.Name, m_token);
+                }
+                else
+                {
+                    GetToken();
+                    return new ASTNumber(number);
+                }
             }
 
+            // <String Literal> e.g. "Math.PI"?
             else if (m_symbol == Lexer.Symbol.StringLiteral)
             {
-                factor = new ASTLiteral(m_lexer.TokenText); GetToken();
+                ASTNode factor = new ASTLiteral(m_token);
+                GetToken();
+                return factor;
             }
 
             // Unit identifier?
             else if (m_symbol == Lexer.Symbol.Identifier)
             {
-                string name = m_lexer.TokenText;
-                UnitType u = FindUnit(name);
+                UnitType u = FindUnit(m_token);
                 if (u == null)
-                    Note("Undefined unit \"{0}\"", name);
+                {
+                    Note("{0}: undefined unit \"{1}\".", candidate.Name, m_token);
+                }
                 else if (u.Factor.Value.Type != numType)
-                    Note("Unit \"{0}\" is of type <{1}> != <{2}>", name, u.Factor.Value.Type.Name, numType.Name);
+                {
+                    Note("{0}: unit \"{1}\" is of type <{2}> != <{3}>.", candidate.Name, m_token, u.Factor.Value.Type.Name, numType.Name);
+                }
                 else
                 {
-                    factor = new ASTUnit(u);
                     GetToken();
+                    return new ASTUnit(u);
                 }
             }
 
-            else 
+            else
             {
-                Note("\"{0}\": expected: <dimension> | unit | number | \"literal\" | (expression)", m_lexer.TokenText);
+                Note("{0}: \"{1}\" found while expected: <dimension> | unit | number | \"literal\" | (expression).", candidate.Name, m_token);
             }
 
-            return factor;
+            return null;
         }
 
         //<Magnitude> ::= Length
@@ -272,29 +281,30 @@ namespace Man.UnitsOfMeasurement
         //             |  LuminousIntensity
         //             |  Other | Money ! Other and Money represent the same magnitude
         //             |    ! Dimensionless
-        private ASTMagnitude GetDimMagnitude()
+        private ASTMagnitude GetDimMagnitude(UnitType candidate)
         {
             if (m_symbol == Lexer.Symbol.GT)
             {
-                GetToken(); 
+                GetToken();
                 return new ASTMagnitude();
             }
 
             Magnitude m;
-            ASTMagnitude factor;
-            if ((m_symbol != Lexer.Symbol.Identifier) || !Enum.TryParse(m_lexer.TokenText, false, out m))
+            if ((m_symbol != Lexer.Symbol.Identifier) || !Enum.TryParse(m_token, false, out m))
             {
-                factor = null;
-                Note("\"{0}\": expecting dimension keyword: <" + 
-                    String.Join("> | <", Enum.GetNames(typeof(Magnitude))) +
-                    "> or \"<>\" for dimensionless unit", m_lexer.TokenText);
+                Note("{0}: \"{1}\" found while expected dimension keyword: <{2}> or <> for dimensionless unit.",
+                    candidate.Name, m_token, String.Join(">, <", Enum.GetNames(typeof(Magnitude))));
+            }
+            else if (GetToken() == Lexer.Symbol.GT)
+            {
+                GetToken();
+                return new ASTMagnitude(m);
             }
             else
             {
-                factor = new ASTMagnitude(m);
-                if (GetToken() == Lexer.Symbol.GT) GetToken(); else Note("\"{0}\": expected closing bracket \">\"", m_lexer.TokenText);
+                Note("{0}: \"{1}\" found while expected closing bracket \">\".", candidate.Name, m_token);
             }
-            return factor;
+            return null;
         }
         #endregion
     }

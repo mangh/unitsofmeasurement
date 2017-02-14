@@ -26,6 +26,9 @@ namespace Man.UnitsOfMeasurement
         #region Properties
         public Symbol TokenSymbol { get { return m_token.Symbol; } }
         public string TokenText { get { return m_token.Text; } }
+        public int TokenLine { get { return m_token.Line; } }
+        public int TokenColumn { get { return m_token.Column; } }
+        public bool TokenIsFaulty { get { return m_token.IsFaulty; } }
         #endregion
 
         #region Constructor(s)
@@ -70,7 +73,7 @@ namespace Man.UnitsOfMeasurement
             else
             {
                 CopyChar(); 
-                Note("\"{0}\": unrecognized token", m_token.Text);
+                Note("\"{0}\": unrecognized token.", m_token.Text);
                 return m_token.Symbol = Symbol.Error;
             }
 
@@ -131,13 +134,13 @@ namespace Man.UnitsOfMeasurement
                 }
                 escape = (m_input.Char == '*');
             }
-            Note("Unexpected EOF while looking for the closing token \"*/\"");
+            Note("Unexpected EOF while looking for the closing token \"*/\".");
         }
 
         // StringLiteral = '"'( {String Ch} | '\'{Printable} )* '"'
         private Symbol GetStringLiteral()
         {
-            string noteUnexpectedEOL = "Unexpected EOL while looking for the closing quotation mark (\")";
+            string noteUnexpectedEOL = "Unexpected EOL while looking for the closing quotation mark (\").";
             m_token.Symbol = Symbol.StringLiteral;
             int escape = 0;
             while (m_input.Read())
@@ -155,7 +158,7 @@ namespace Man.UnitsOfMeasurement
                 }
                 else if (Char.IsControl(m_input.Char))
                 {
-                    Note(((m_input.Char == '\r') || (m_input.Char == '\n')) ? noteUnexpectedEOL : "Control characters within string literal");
+                    Note(((m_input.Char == '\r') || (m_input.Char == '\n')) ? noteUnexpectedEOL : "Control characters within string literal.");
                     return Symbol.Error;
                 }
                 else
@@ -182,7 +185,7 @@ namespace Man.UnitsOfMeasurement
             }
             while (CopyChar() && (Char.IsLetter(m_input.Char) || (m_input.Char == '_') || (m_input.Char == '@')));
 
-            Note("\"{0}\": badly formed (qualified) identifier", m_token.Text);
+            Note("\"{0}\": badly formed (qualified) identifier.", m_token.Text);
             return Symbol.Error;
         }
 
@@ -205,7 +208,7 @@ namespace Man.UnitsOfMeasurement
                 if (GetDigits() <= 0)
                 {
                     if (integers > 0) return m_token.Symbol;
-                    Note("\"{0}\": expecting number {Digit}+ | {Digit}*'.'{Digit}+(('e'|'E')('+'|'-')*{Digit}+)*", m_token.Text);
+                    Note("\"{0}\": expecting number {{Digit}}+ | {{Digit}}*'.'{{Digit}}+(('e'|'E')('+'|'-')*{{Digit}}+)*.", m_token.Text);
                     return Symbol.Error;
                 }
             }
@@ -242,11 +245,17 @@ namespace Man.UnitsOfMeasurement
 
         public void Note(string info)
         {
+            m_token.IsFaulty = true;
             m_logger(true, m_token.Line, m_token.Column, m_token.Text, info);
         }
         public void Note(string format, params object[] info)
         {
-            m_logger(true, m_token.Line, m_token.Column, m_token.Text, String.Format(format, info));
+            Note(String.Format(format, info));
+        }
+        public void Note(int line, int column, string token, string info)
+        {
+            m_token.IsFaulty = true;
+            m_logger(true, line, column, token, info);
         }
         #endregion
     }

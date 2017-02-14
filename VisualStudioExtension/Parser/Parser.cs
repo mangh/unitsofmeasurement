@@ -22,6 +22,7 @@ namespace Man.UnitsOfMeasurement
         #region Fields
         private Lexer m_lexer;
         private Lexer.Symbol m_symbol;
+        private string m_token;
         private List<UnitType> m_units;
         private List<ScaleType> m_scales;
         private SenseEncoderCS m_senseEncoder;
@@ -51,53 +52,94 @@ namespace Man.UnitsOfMeasurement
         // <Scale> ::= 'scale' Identifier <Format> Identifier '=' Identifier <Num Expr> ';'
         public void Parse()
         {
-            string badTokenFormat = "\"{0}\": expecting \"unit\" or \"scale\" keyword (or a comment)";
+            string badTokenMessageFormat = "\"{0}\" found while expected \"unit\" or \"scale\" keyword.";
 
             while (m_symbol != Lexer.Symbol.EOF)
             {
-                string token = m_lexer.TokenText;
-
                 if (m_symbol != Lexer.Symbol.Identifier)
-                    Note(badTokenFormat, token);
-                else if (token == "unit")
-                    { GetToken(); ParseUnit();}
-                else if (token == "scale")
-                    { GetToken(); ParseScale(); }
+                {
+                    Note(badTokenMessageFormat, m_token);
+                    Synchronize();
+                }
+                else if (m_token == "unit")
+                {
+                    GetToken();
+                    ParseUnit();
+                    CheckSemicolon();
+                }
+                else if (m_token == "scale")
+                {
+                    GetToken();
+                    ParseScale();
+                    CheckSemicolon();
+                }
                 else
-                    Note(badTokenFormat, token);
-
-                Synchronize();
+                {
+                    Note(badTokenMessageFormat, m_token);
+                    Synchronize();
+                }
             }
         }
 
         private Lexer.Symbol GetToken()
         {
-            return (m_symbol = m_lexer.GetToken());
+            m_symbol = m_lexer.GetToken();
+            m_token = m_lexer.TokenText;
+            return m_symbol;
+        }
+
+        private string GetEntityName(string entityType)
+        {
+            if (m_symbol != Lexer.Symbol.Identifier)
+            {
+                Note("\"{0}\" found while expected {1} name.", m_token, entityType);
+            }
+            else if (IsUniqueName(m_token))
+            {
+                string entityName = m_token;
+                GetToken();
+                return entityName;
+            }
+            else
+            {
+                Note("{0}: duplicate definition (unit and scale names must be unique).", m_token);
+            }
+            return null;
         }
 
         private void CheckSemicolon()
         {
-            if (m_symbol != Lexer.Symbol.Semicolon) Note("\"{0}\": expected semicolon \";\"", m_lexer.TokenText);
+            if (m_symbol == Lexer.Symbol.Semicolon)
+                GetToken();
+
+            else if (m_lexer.TokenIsFaulty)
+                Synchronize();
+
+            else
+                Note("\"{0}\" found while expected semicolon \";\".", m_token);
+        }
+
+        private void Synchronize()
+        {
+            while (m_symbol != Lexer.Symbol.EOF)
+            {
+                if (m_symbol == Lexer.Symbol.Semicolon)
+                {
+                    GetToken();
+                    break;
+                }
+                if ((m_symbol == Lexer.Symbol.Identifier) && ((m_token == "unit") || (m_token == "scale")))
+                {
+                    break;
+                }
+                GetToken();
+            }
         }
 
         private UnitType FindUnit(string name) { return m_units.Find(u => u.Name == name); }
         private UnitType FindUnitOfTag(string tag) { return m_units.Find(u => u.Tags.Contains(tag)); }
         private ScaleType FindScale(string name) { return m_scales.Find(s => s.Name == name); }
         private bool IsUniqueName(string name) { return (FindUnit(name) == null) && (FindScale(name) == null); }
-
-        private void Synchronize()
-        {
-            while (m_symbol != Lexer.Symbol.EOF)
-            {
-                if (m_symbol == Lexer.Symbol.Semicolon) { GetToken(); return; }
-                if (m_symbol == Lexer.Symbol.Identifier)
-                {
-                    string token = m_lexer.TokenText;
-                    if ((token == "unit") || (token == "scale")) return;
-                }
-                GetToken();
-            }
-        }
 
         private void Note(string info)
         {
@@ -106,6 +148,10 @@ namespace Man.UnitsOfMeasurement
         public void Note(string format, params object[] info)
         {
             m_lexer.Note(format, info);
+        }
+        public void Note(int line, int column, string token, string info)
+        {
+            m_lexer.Note(line, column, token, info);
         }
         #endregion
     }

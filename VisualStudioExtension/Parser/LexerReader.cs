@@ -50,9 +50,10 @@ namespace Man.UnitsOfMeasurement
             {
                 m_char = (char)(m_charcode = m_reader.Read());
 
+                m_charIndex++;
+
                 if (EOF) return false;
 
-                m_charIndex++;
                 if (m_char == '\n')
                 {
                     m_charIndex = 0; 

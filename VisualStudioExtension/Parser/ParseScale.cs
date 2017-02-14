@@ -27,22 +27,22 @@ namespace Man.UnitsOfMeasurement
         private void ParseScale()
         {
             // Identifier (scale name)
-            string scaleName = GetScaleName(); if (scaleName == null) return;
+            string scaleName = GetEntityName("scale"); if (scaleName == null) return;
 
             // Format
-            string format = GetFormat(String.Empty); if (format == null) return;
+            string format = GetFormat(scaleName, String.Empty); if (format == null) return;
 
             // Identifier (refpoint)
-            string refpoint = GetReferencePoint(); if (refpoint == null) return;
+            string refpoint = GetReferencePoint(scaleName); if (refpoint == null) return;
 
             // "="
-            if (m_symbol == Lexer.Symbol.EQ) GetToken(); else { Note("\"{0}\": expected equal sign \"=\"", m_lexer.TokenText); return; }
+            if (m_symbol == Lexer.Symbol.EQ) GetToken(); else { Note("{0}: \"{1}\" found while expected equal sign \"=\".", scaleName, m_token); return; }
 
             // Identifier (unit)
-            UnitType unit = GetScaleUnit(); if (unit == null) return;
+            UnitType unit = GetScaleUnit(scaleName); if (unit == null) return;
 
             // Scale offset <Num Expr>
-            ASTNode offsetAST = GetNumExpr(unit.Factor.Value.Type); if (offsetAST == null) return;
+            ASTNode offsetAST = GetNumExpr(scaleName, unit.Factor.Value.Type); if (offsetAST == null) return;
             NumExpr offsetExpr = m_exprEncoder.Encode(offsetAST, unit.Factor.Value.Type);
 
             ScaleType scale = new ScaleType(scaleName, refpoint, unit, offsetExpr);
@@ -54,77 +54,64 @@ namespace Man.UnitsOfMeasurement
                 relative.AddRelative(scale);
 
             m_scales.Add(scale);
-
-            CheckSemicolon();
         }
 
-        private string GetScaleName()
-        {
-            if (m_symbol != Lexer.Symbol.Identifier)
-            {
-                Note("\"{0}\": expected scale name", m_lexer.TokenText);
-            }
-            else
-            {
-                string name = m_lexer.TokenText;
-                if (IsUniqueName(name))
-                {
-                    GetToken();
-                    return name;
-                }
-                Note("Duplicate \"{0}\" definition", name);
-            }
-            return null;
-        }
-
-        private string GetReferencePoint()
+        private string GetReferencePoint(string scaleName)
         {
             if (m_symbol == Lexer.Symbol.EQ)
                 return String.Empty;
 
             if (m_symbol == Lexer.Symbol.Identifier)
             {
-                string refpoint = m_lexer.TokenText;
+                string refpoint = m_token;
                 GetToken();
                 return refpoint;
             }
-            Note("\"{0}\": expected reference-point name or equal sign \"=\"", m_lexer.TokenText);
+            Note("{0}: \"{1}\" found while expected reference-point name or equal sign \"=\".", scaleName, m_token);
             return null;
         }
 
-        private UnitType GetScaleUnit()
+        private UnitType GetScaleUnit(string scaleName)
         {
             UnitType unit;
             if (m_symbol != Lexer.Symbol.Identifier)
             {
-                Note("\"{0}\": expected unit name", m_lexer.TokenText);
-                unit = null;
+                Note("{0}: \"{1}\" found while expected unit name.", scaleName, m_token);
+            }
+            else if ((unit = FindUnit(m_token)) == null)
+            {
+                Note("{0}: undefined unit \"{1}\".", scaleName, m_token);
             }
             else
             {
-                unit = FindUnit(m_lexer.TokenText);
-                if (unit == null) Note("\"{0}\": undefined unit", m_lexer.TokenText);
-                else GetToken();
+                GetToken();
+                return unit;
             }
-            return unit;
+            return null;
         }
 
         //<Num Expr> ::= <Num Expr> '+' <Num Term>
         //            |  <Num Expr> '-' <Num Term>
         //            |  <Num Term>
-        private ASTNode GetNumExpr(NumericType numType)
+        private ASTNode GetNumExpr(string scaleName, NumericType numType)
         {
-            ASTNode lhs, rhs;
+            ASTNode lhs = GetNumTerm(scaleName, numType);
+            if (lhs == null)
+                return null;
 
-            if ((lhs = GetNumTerm(numType)) == null) return lhs;
             while ((m_symbol == Lexer.Symbol.Plus) || (m_symbol == Lexer.Symbol.Minus))
             {
                 Lexer.Symbol operation = m_symbol;
 
                 GetToken();
-                if ((rhs = GetNumTerm(numType)) == null) return rhs;
 
-                if (operation == Lexer.Symbol.Plus) lhs = new ASTSum(lhs, rhs); else lhs = new ASTDifference(lhs, rhs);
+                ASTNode rhs = GetNumTerm(scaleName, numType);
+                if (rhs == null)
+                    return null;
+                else if (operation == Lexer.Symbol.Plus)
+                    lhs = new ASTSum(lhs, rhs);
+                else
+                    lhs = new ASTDifference(lhs, rhs);
             }
             return lhs;
         }
@@ -132,17 +119,25 @@ namespace Man.UnitsOfMeasurement
         //<Num Term> ::= <Num Term> '*' <Num Unary>
         //            |  <Num Term> '/' <Num Unary>
         //            |  <Num Unary>
-        private ASTNode GetNumTerm(NumericType numType)
+        private ASTNode GetNumTerm(string scaleName, NumericType numType)
         {
-            ASTNode lhs, rhs;
+            ASTNode lhs = GetNumUnary(scaleName, numType);
 
-            if ((lhs = GetNumUnary(numType)) == null) return lhs;
+            if (lhs == null)
+                return null;
+
             while ((m_symbol == Lexer.Symbol.Times) || (m_symbol == Lexer.Symbol.Div))
             {
                 Lexer.Symbol operation = m_symbol;
                 GetToken();
-                if ((rhs = GetNumUnary(numType)) == null) return rhs;
-                if (operation == Lexer.Symbol.Times) lhs = new ASTProduct(lhs, rhs); else lhs = new ASTQuotient(lhs, rhs); 
+
+                ASTNode rhs = GetNumUnary(scaleName, numType);
+                if (rhs == null)
+                    return null;
+                else if (operation == Lexer.Symbol.Times)
+                    lhs = new ASTProduct(lhs, rhs);
+                else
+                    lhs = new ASTQuotient(lhs, rhs); 
             }
             return lhs;
         }
@@ -150,58 +145,73 @@ namespace Man.UnitsOfMeasurement
         //<Num Unary> ::= <Num Factor>
         //             | '+' <Num Unary>
         //             | '-' <Num Unary>
-        private ASTNode GetNumUnary(NumericType numType)
+        private ASTNode GetNumUnary(string scaleName, NumericType numType)
         {
-            ASTNode factor;
             if (m_symbol == Lexer.Symbol.Plus)
             {
                 GetToken();
-                if ((factor = GetNumFactor(numType)) != null) factor = new ASTUnary(true, factor);
+                ASTNode factor = GetNumFactor(scaleName, numType);
+                return (factor == null) ? null : new ASTUnary(true, factor);
             }
             else if (m_symbol == Lexer.Symbol.Minus)
             {
                 GetToken();
-                if ((factor = GetNumFactor(numType)) != null) factor = new ASTUnary(false, factor);
+                ASTNode factor = GetNumFactor(scaleName, numType);
+                return (factor == null) ? null : new ASTUnary(false, factor);
             }
             else
             {
-                factor = GetNumFactor(numType);
+                return GetNumFactor(scaleName, numType);
             }
-            return factor;
         }
 
         // <Num Factor> ::= <Num Literal>
         //              | '(' <Num Expr> ')'
         //
         // <Num Literal> ::= IntLiteral | RealLiteral | StringLiteral  ! Member-access (e.g. "Math.PI")
-        private ASTNode GetNumFactor(NumericType numType)
+        private ASTNode GetNumFactor(string scaleName, NumericType numType)
         {
-            ASTNode factor = null;
             if (m_symbol == Lexer.Symbol.Lparen)
             {
                 GetToken();
-                if ((factor = GetNumExpr(numType)) != null)
+                ASTNode factor = GetNumExpr(scaleName, numType);
+                if (factor != null)
                 {
-                    if (m_symbol == Lexer.Symbol.Rparen) { GetToken(); factor = new ASTParenthesized(factor); }
-                    else Note("\"{0}\": expected closing parenthesis \")\"", m_lexer.TokenText);
+                    if (m_symbol != Lexer.Symbol.Rparen)
+                    {
+                        Note("{0}: \"{1}\" found while expected closing parenthesis \")\".", scaleName, m_token);
+                    }
+                    else
+                    {
+                        GetToken();
+                        return new ASTParenthesized(factor);
+                    }
                 }
             }
             else if ((m_symbol == Lexer.Symbol.IntNumber) || (m_symbol == Lexer.Symbol.RealNumber))
             {
-                Number number = numType.TryParse(m_lexer.TokenText);
-                if (number == null) Note("\"{0}\": invalid number", m_lexer.TokenText);
-                else { GetToken(); factor = new ASTNumber(number); }
+                Number number = numType.TryParse(m_token);
+                if (number == null)
+                {
+                    Note("{0}: invalid number \"{1}\".", scaleName, m_token);
+                }
+                else
+                {
+                    GetToken();
+                    return new ASTNumber(number);
+                }
             }
             else if (m_symbol == Lexer.Symbol.StringLiteral)
             {
-                factor = new ASTLiteral(m_lexer.TokenText);
+                string literal = m_token;
                 GetToken();
+                return new ASTLiteral(literal);
             }
             else
             {
-                Note("\"{0}\": expected numeric factor: number | (numeric expression) | \"stringliteral\"", m_lexer.TokenText);
+                Note("{0}: \"{1}\" found while expected numeric factor: number | (numeric expression) | \"stringliteral\".", scaleName, m_token);
             }
-            return factor;
+            return null;
         }
 
         public ScaleType GetRelativeScale(ScaleType scale)

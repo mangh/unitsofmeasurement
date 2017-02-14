@@ -26,6 +26,7 @@ namespace Man.UnitsOfMeasurement
             private Symbol m_symbol;
             private int m_linIndex;
             private int m_colIndex;
+            private bool m_isfaulty;
             #endregion
 
             #region Properties
@@ -34,6 +35,7 @@ namespace Man.UnitsOfMeasurement
             public int Line { get { return m_linIndex; } }
             public int Column { get { return m_colIndex; } }
             public int Length { get { return m_chars.Length; } }
+            public bool IsFaulty { get { return m_isfaulty; } set { m_isfaulty = value; } }
             #endregion
 
             #region Constructor(s)
@@ -46,7 +48,7 @@ namespace Man.UnitsOfMeasurement
             #endregion
 
             #region Methods
-            public void Clear() { m_symbol = Symbol.Unknown; m_chars.Clear(); }
+            public void Clear() { m_symbol = Symbol.Unknown; m_isfaulty = false; m_chars.Clear(); }
             public void SavePosition(int line, int col) { m_linIndex = line; m_colIndex = col; }
             public void Append(char c) { m_chars.Append(c); }
             public void Append(string s) { m_chars.Append(s); }
