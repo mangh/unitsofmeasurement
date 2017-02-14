@@ -315,9 +315,10 @@ namespace {0}
         {
             string lhsValue = (o.Lhs.IsPredefined) ? "lhs" : "lhs.m_value";
             string rhsValue = (o.Rhs.IsPredefined) ? "rhs" : "rhs.m_value";
+            string action = (o.Operation == "^") ? "*" : o.Operation;
             string retValue = (o.Result.IsPredefined) ? 
-                string.Format("{0} {1} {2}", lhsValue, o.Operation, rhsValue) :
-                string.Format("new {0}({1} {2} {3})", o.Result.Name, lhsValue, o.Operation, rhsValue);
+                string.Format("{0} {1} {2}", lhsValue, action, rhsValue) :
+                string.Format("new {0}({1} {2} {3})", o.Result.Name, lhsValue, action, rhsValue);
 #>
         public static <#= o.Result.Name #> operator <#= o.Operation #>(<#= o.Lhs.Name #> lhs, <#= o.Rhs.Name #> rhs) { return <#= retValue #>; }
 <#+

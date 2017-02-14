@@ -39,6 +39,7 @@ namespace Man.UnitsOfMeasurement
         #region Properties
         public virtual bool IsNumeric { get { return false; } }
         public virtual UnitType Unit { get { return null; } }
+        public virtual bool IsWedgeCompatible { get { return false; } }
         #endregion
 
         #region Constructor(s)
@@ -92,7 +93,7 @@ namespace Man.UnitsOfMeasurement
         ///     - not implemented (no binding), for any other expressions.
         /// </summary>
         /// <remarks>u, v - units. x - numeric expression (made of numbers and/or literals only)</remarks>
-        public virtual void Bind(UnitType result) { }
+        public virtual void Bind(UnitType candidate) { }
 
         #endregion
     }
@@ -155,6 +156,7 @@ namespace Man.UnitsOfMeasurement
     {
         private UnitType m_unit;
         public override UnitType Unit { get { return m_unit; } }
+        public override bool IsWedgeCompatible { get { return true; } }
 
         public ASTUnit(UnitType unit) :
             base()
@@ -164,7 +166,7 @@ namespace Man.UnitsOfMeasurement
 
         public override void Accept(IASTEncoder encoder) { encoder.Encode(this); }
 
-        public override void Bind(UnitType result) { m_unit.AddRelative(result); }
+        public override void Bind(UnitType candidate) { m_unit.AddRelative(candidate); }
 
         public override string ToString() { return m_unit.Name; }
     }
@@ -194,6 +196,7 @@ namespace Man.UnitsOfMeasurement
 
         public override bool IsNumeric { get { return Expr.IsNumeric; } }
         public override UnitType Unit { get { return Expr.Unit; } }
+        public override bool IsWedgeCompatible { get { return Expr.IsWedgeCompatible; } }
 
         public ASTParenthesized(ASTNode expr) :
             base()
@@ -219,23 +222,43 @@ namespace Man.UnitsOfMeasurement
             return (normalized != null) ? new ASTParenthesized(normalized) : null;
         }
 
-        public override void Bind(UnitType result) { Expr.Bind(result); }
+        public override void Bind(UnitType candidate) { Expr.Bind(candidate); }
 
         public override string ToString() { return string.Format("({0})", Expr.ToString()); }
     }
 
     internal class ASTProduct : ASTNode
     {
+        private bool m_iswedgeproduct;
+
         public ASTNode Lhs { get; private set; }
         public ASTNode Rhs { get; private set; }
+        public string Operation { get { return m_iswedgeproduct ? "^" : "*"; } }
 
         public override bool IsNumeric { get { return Lhs.IsNumeric && Rhs.IsNumeric; } }
+        public override bool IsWedgeCompatible
+        {
+            get
+            { 
+                return m_iswedgeproduct ||
+                    (Lhs.IsNumeric && Rhs.IsWedgeCompatible) ||
+                    (Lhs.IsWedgeCompatible && Rhs.IsNumeric);
+            }
+        }
 
-        public ASTProduct(ASTNode lhs, ASTNode rhs) :
+        public ASTProduct(ASTNode lhs, ASTNode rhs, bool iswedgeproduct) :
             base()
         {
+            if (iswedgeproduct && (!lhs.IsWedgeCompatible || !rhs.IsWedgeCompatible))
+                throw new ArgumentException("Wedge product requires wedge-compatible factors.");
+
             Lhs = lhs;
             Rhs = rhs;
+            m_iswedgeproduct = iswedgeproduct;
+        }
+        public ASTProduct(ASTNode lhs, ASTNode rhs) :
+            this(lhs, rhs, false)
+        {
         }
 
         public override void Accept(IASTEncoder encoder) { Lhs.Accept(encoder); Rhs.Accept(encoder); encoder.Encode(this); }
@@ -285,7 +308,7 @@ namespace Man.UnitsOfMeasurement
             return null;
         }
 
-        public override void Bind(UnitType result)
+        public override void Bind(UnitType candidate)
         {
             UnitType L = Lhs.Unit;
             UnitType R = Rhs.Unit;
@@ -298,8 +321,8 @@ namespace Man.UnitsOfMeasurement
                 // Newton.cs (or Meter.cs): 
                 //      public static Joule operator *(Newton lhs, Meter rhs) { return new Joule(lhs.Value * rhs.Value); }
                 //      public static Joule operator *(Meter lhs, Newton rhs) { return new Joule(lhs.Value * rhs.Value); }
-                L.AddOuterOperation(result, "*", L, R);
-                if (L.Name != R.Name) L.AddOuterOperation(result, "*", R, L);   // --or -- R.Arithmetic.Add(result, "*", R, L);
+                L.AddOuterOperation(candidate, Operation, L, R);
+                if (L.Name != R.Name) L.AddOuterOperation(candidate, Operation, R, L);
 
                 // => result / unitL = unitR
                 // => result / unitR = unitL
@@ -307,8 +330,8 @@ namespace Man.UnitsOfMeasurement
                 // Joule.cs: 
                 //      public static Newton operator /(Joule lhs, Meter rhs) { return new Newton(lhs.Value / rhs.Value); }
                 //      public static Meter operator /(Joule lhs, Newton rhs) { return new Meter(lhs.Value / rhs.Value); }
-                result.AddOuterOperation(R, "/", result, L);
-                if (L.Name != R.Name) result.AddOuterOperation(L, "/", result, R);
+                candidate.AddOuterOperation(R, "/", candidate, L);
+                if (L.Name != R.Name) candidate.AddOuterOperation(L, "/", candidate, R);
             }
             else if ((L != null) && (Rhs.IsNumeric))
             {
@@ -320,7 +343,7 @@ namespace Man.UnitsOfMeasurement
                 // Centimeter.cs:
                 //      public static explicit operator Centimeter(Meter q) { return new Centimeter((Centimeter.Factor / Meter.Factor) * q.Value); }
                 //
-                Lhs.Bind(result);
+                Lhs.Bind(candidate);
             }
             else if ((Lhs.IsNumeric) && (R != null))
             {
@@ -332,11 +355,11 @@ namespace Man.UnitsOfMeasurement
                 //  Centimeter.cs:
                 //      public static explicit operator Centimeter(Meter q) { return new Centimeter((Centimeter.Factor / Meter.Factor) * q.Value); }
                 //
-                Rhs.Bind(result);
+                Rhs.Bind(candidate);
             }
         }
 
-        public override string ToString() { return string.Format("{0}{1}{2}", Lhs.ToString(), "*", Rhs.ToString()); }
+        public override string ToString() { return string.Format("{0}{1}{2}", Lhs.ToString(), Operation, Rhs.ToString()); }
     }
 
     internal class ASTQuotient : ASTNode
@@ -345,6 +368,16 @@ namespace Man.UnitsOfMeasurement
         public ASTNode Rhs { get; private set; }
 
         public override bool IsNumeric { get { return Lhs.IsNumeric && Rhs.IsNumeric; } }
+        public override bool IsWedgeCompatible
+        {
+            get
+            {
+                return
+                    (Lhs.IsWedgeCompatible && Rhs.IsWedgeCompatible) ||
+                    (Lhs.IsNumeric && Rhs.IsWedgeCompatible) ||
+                    (Lhs.IsWedgeCompatible && Rhs.IsNumeric);
+            }
+        }
 
         public ASTQuotient(ASTNode lhs, ASTNode rhs) :
             base()
@@ -396,7 +429,7 @@ namespace Man.UnitsOfMeasurement
             return null;
         }
 
-        public override void Bind(UnitType result)
+        public override void Bind(UnitType candidate)
         {
             UnitType L = Lhs.Unit;
             UnitType R = Rhs.Unit;
@@ -412,18 +445,18 @@ namespace Man.UnitsOfMeasurement
                 // E.g.: MPH = Mile / Hour
                 // Mile.cs (or Hour.cs): 
                 //      public static MPH operator *(Mile lhs, Hour rhs) { return new MPH(lhs.Value / rhs.Value); }
-                L.AddOuterOperation(result, "/", L, R);
+                L.AddOuterOperation(candidate, "/", L, R);
 
                 // => unitL / result = unitR
                 // Mile.cs (or MPH.cs): 
                 //      public static Hour operator /(Mile lhs, MPH rhs) { return new Hour(lhs.Value / rhs.Value); }
-                L.AddOuterOperation(R, "/", L, result);
+                L.AddOuterOperation(R, "/", L, candidate);
 
                 // => result * unitR = unitL
                 // Hour.cs (or MPH.cs): 
                 //      public static Mile operator *(MPH lhs, Hour rhs) { return new Mile(lhs.Value / rhs.Value); }
-                result.AddOuterOperation(L, "*", result, R);
-                result.AddOuterOperation(L, "*", R, result);
+                candidate.AddOuterOperation(L, "*", candidate, R);
+                candidate.AddOuterOperation(L, "*", R, candidate);
             }
             else if ((L != null) && (Rhs.IsNumeric))
             {
@@ -435,7 +468,7 @@ namespace Man.UnitsOfMeasurement
                 // Centimeter.cs:
                 //      public static explicit operator Centimeter(Meter q) { return new Centimeter((Centimeter.Factor / Meter.Factor) * q.Value); }
                 //
-                Lhs.Bind(result);
+                Lhs.Bind(candidate);
             }
             else if ((Lhs.IsNumeric) && (R != null))
             {
@@ -445,17 +478,17 @@ namespace Man.UnitsOfMeasurement
                 // E.g. Hertz "Hz" = 1.0 / Second
                 // Second.cs
                 //      public static Hertz operator /(double lhs, Second rhs) { return new Hertz(lhs / rhs.Value); }
-                R.AddOuterOperation(result, "/", numType, R);
+                R.AddOuterOperation(candidate, "/", numType, R);
 
                 // Hertz.cs
                 //      public static Second operator /(double lhs, Hertz rhs) { return new Second(lhs / rhs.Value); }
-                result.AddOuterOperation(R, "/", numType, result);
+                candidate.AddOuterOperation(R, "/", numType, candidate);
 
                 // Hertz.cs (or Second.cs)
                 //      public static double operator *(Hertz lhs, Second rhs) { return lhs.Value * rhs.Value; }
                 //      public static double operator *(Second lhs, Hertz rhs) { return lhs.Value * rhs.Value; }
-                result.AddOuterOperation(numType, "*", result, R);
-                result.AddOuterOperation(numType, "*", R, result);
+                candidate.AddOuterOperation(numType, "*", candidate, R);
+                candidate.AddOuterOperation(numType, "*", R, candidate);
             }
         }
 

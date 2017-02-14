@@ -53,6 +53,7 @@ Comment End   = '*/'
             |   <Dim Term>
 
 <Dim Term> ::= <Dim Term> '*' <Dim Factor>
+            |  <Dim Term> '^' <Dim Factor>  ! Wedge product, for units only
             |  <Dim Term> '/' <Dim Factor>
             |  <Dim Factor>
 

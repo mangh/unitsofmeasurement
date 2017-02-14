@@ -1,4 +1,4 @@
-﻿Units and Scales generated on 2017-01-23 12:09:48
+﻿Units and Scales generated on 2017-02-14 13:52:39
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -104,6 +104,8 @@
     Kilogram = Newton / Meter_Sec2
     Joule = Newton * Meter
     Joule = Meter * Newton
+    NewtonMeter = Newton ^ Meter
+    NewtonMeter = Meter ^ Newton
 
 (Joule) [L2T-2M] Joule : 1 {"J"}
 
@@ -112,6 +114,8 @@
 
 (NewtonMeter) [L2T-2M] NewtonMeter : 1 {"N\u00B7m", "N*m"}
 
+    Meter = NewtonMeter / Newton
+    Newton = NewtonMeter / Meter
 
 ////////////////////////////////////////////////////////////////////////////////
 //

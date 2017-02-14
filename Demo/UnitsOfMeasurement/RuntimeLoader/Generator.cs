@@ -1368,92 +1368,93 @@ this.Write(" rhs) { return lhs.m_value / rhs.m_value; }\r\n        // Outer:\r\n
         {
             string lhsValue = (o.Lhs.IsPredefined) ? "lhs" : "lhs.Value";
             string rhsValue = (o.Rhs.IsPredefined) ? "rhs" : "rhs.Value";
+            string action = (o.Operation == "^") ? "*" : o.Operation;
             string retValue = (o.Result.IsPredefined) ? 
-                string.Format("{0} {1} {2}", lhsValue, o.Operation, rhsValue) :
-                string.Format("new {0}({1} {2} {3})", o.Result.Name, lhsValue, o.Operation, rhsValue);
+                string.Format("{0} {1} {2}", lhsValue, action, rhsValue) :
+                string.Format("new {0}({1} {2} {3})", o.Result.Name, lhsValue, action, rhsValue);
 
         
         #line default
         #line hidden
         
-        #line 127 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 128 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write("        public static ");
 
         
         #line default
         #line hidden
         
-        #line 128 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 129 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(o.Result.Name));
 
         
         #line default
         #line hidden
         
-        #line 128 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 129 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" operator ");
 
         
         #line default
         #line hidden
         
-        #line 128 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 129 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(o.Operation));
 
         
         #line default
         #line hidden
         
-        #line 128 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 129 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write("(");
 
         
         #line default
         #line hidden
         
-        #line 128 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 129 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(o.Lhs.Name));
 
         
         #line default
         #line hidden
         
-        #line 128 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 129 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" lhs, ");
 
         
         #line default
         #line hidden
         
-        #line 128 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 129 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(o.Rhs.Name));
 
         
         #line default
         #line hidden
         
-        #line 128 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 129 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" rhs) { return ");
 
         
         #line default
         #line hidden
         
-        #line 128 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 129 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(retValue));
 
         
         #line default
         #line hidden
         
-        #line 128 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 129 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write("; }\r\n");
 
         
         #line default
         #line hidden
         
-        #line 129 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 130 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 
         }
 
@@ -1461,7 +1462,7 @@ this.Write("; }\r\n");
         #line default
         #line hidden
         
-        #line 131 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 132 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write("        #endregion\r\n\r\n        #region Formatting\r\n        public override string " +
         "ToString() { return ToString(");
 
@@ -1469,14 +1470,14 @@ this.Write("        #endregion\r\n\r\n        #region Formatting\r\n        publ
         #line default
         #line hidden
         
-        #line 135 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 136 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Unit));
 
         
         #line default
         #line hidden
         
-        #line 135 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 136 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(".Format, null); }\r\n        public string ToString(string format) { return ToStrin" +
         "g(format, null); }\r\n        public string ToString(IFormatProvider fp) { return " +
         "ToString(");
@@ -1485,14 +1486,14 @@ this.Write(".Format, null); }\r\n        public string ToString(string format) {
         #line default
         #line hidden
         
-        #line 137 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 138 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Unit));
 
         
         #line default
         #line hidden
         
-        #line 137 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 138 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(".Format, fp); }\r\n        public string /* IFormattable */ ToString(string format," +
         " IFormatProvider fp)\r\n        {\r\n            return string.Format(fp, format ?? " +
         "");
@@ -1501,28 +1502,28 @@ this.Write(".Format, fp); }\r\n        public string /* IFormattable */ ToString
         #line default
         #line hidden
         
-        #line 140 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 141 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Unit));
 
         
         #line default
         #line hidden
         
-        #line 140 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 141 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(".Format, Value, ");
 
         
         #line default
         #line hidden
         
-        #line 140 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 141 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Unit));
 
         
         #line default
         #line hidden
         
-        #line 140 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 141 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(".Symbol[0]);\r\n        }\r\n        #endregion\r\n\r\n        #region Statics\r\n        p" +
         "rivate static readonly Dimension s_sense           = ");
 
@@ -1530,70 +1531,70 @@ this.Write(".Symbol[0]);\r\n        }\r\n        #endregion\r\n\r\n        #regi
         #line default
         #line hidden
         
-        #line 145 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 146 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Sense));
 
         
         #line default
         #line hidden
         
-        #line 145 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 146 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(";\r\n        private static readonly int s_family                = ");
 
         
         #line default
         #line hidden
         
-        #line 146 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 147 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Family));
 
         
         #line default
         #line hidden
         
-        #line 146 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 147 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(";\r\n        private static /*mutable*/ ");
 
         
         #line default
         #line hidden
         
-        #line 147 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 148 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Value));
 
         
         #line default
         #line hidden
         
-        #line 147 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 148 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" s_factor    = ");
 
         
         #line default
         #line hidden
         
-        #line 147 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 148 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Factor));
 
         
         #line default
         #line hidden
         
-        #line 147 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 148 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(";\r\n        private static /*mutable*/ string s_format          = \"");
 
         
         #line default
         #line hidden
         
-        #line 148 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 149 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Format));
 
         
         #line default
         #line hidden
         
-        #line 148 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 149 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write("\";\r\n        private static readonly SymbolCollection s_symbol   = new SymbolColle" +
         "ction(");
 
@@ -1601,98 +1602,98 @@ this.Write("\";\r\n        private static readonly SymbolCollection s_symbol   =
         #line default
         #line hidden
         
-        #line 149 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 150 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Tags));
 
         
         #line default
         #line hidden
         
-        #line 149 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 150 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(");\r\n\r\n        private static readonly ");
 
         
         #line default
         #line hidden
         
-        #line 151 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 152 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Unit));
 
         
         #line default
         #line hidden
         
-        #line 151 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 152 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" s_one           = new ");
 
         
         #line default
         #line hidden
         
-        #line 151 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 152 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Unit));
 
         
         #line default
         #line hidden
         
-        #line 151 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 152 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write("(");
 
         
         #line default
         #line hidden
         
-        #line 151 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 152 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(One));
 
         
         #line default
         #line hidden
         
-        #line 151 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 152 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(");\r\n        private static readonly ");
 
         
         #line default
         #line hidden
         
-        #line 152 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 153 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Unit));
 
         
         #line default
         #line hidden
         
-        #line 152 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 153 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" s_zero          = new ");
 
         
         #line default
         #line hidden
         
-        #line 152 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 153 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Unit));
 
         
         #line default
         #line hidden
         
-        #line 152 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 153 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write("(");
 
         
         #line default
         #line hidden
         
-        #line 152 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 153 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Zero));
 
         
         #line default
         #line hidden
         
-        #line 152 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 153 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(");\r\n        \r\n        public static Dimension Sense           { get { return s_se" +
         "nse; } }\r\n        public static int Family                { get { return s_famil" +
         "y; } }\r\n        public static ");
@@ -1701,14 +1702,14 @@ this.Write(");\r\n        \r\n        public static Dimension Sense           { 
         #line default
         #line hidden
         
-        #line 156 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 157 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Value));
 
         
         #line default
         #line hidden
         
-        #line 156 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 157 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(@" Factor       { get { return s_factor; } set { s_factor = value; } }
         public static string Format             { get { return s_format; } set { s_format = value; } }
         public static SymbolCollection Symbol   { get { return s_symbol; } }
@@ -1718,35 +1719,35 @@ this.Write(@" Factor       { get { return s_factor; } set { s_factor = value; } 
         #line default
         #line hidden
         
-        #line 159 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 160 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Unit));
 
         
         #line default
         #line hidden
         
-        #line 159 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 160 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" One           { get { return s_one; } }\r\n        public static ");
 
         
         #line default
         #line hidden
         
-        #line 160 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 161 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Unit));
 
         
         #line default
         #line hidden
         
-        #line 160 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 161 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" Zero          { get { return s_zero; } }\r\n        #endregion\r\n    }\r\n");
 
         
         #line default
         #line hidden
         
-        #line 163 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 164 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 
     }
 
@@ -1754,7 +1755,7 @@ this.Write(" Zero          { get { return s_zero; } }\r\n        #endregion\r\n 
         #line default
         #line hidden
         
-        #line 167 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 168 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 
     void ProcessScale(ScaleType s)
     {
@@ -1775,28 +1776,28 @@ this.Write(" Zero          { get { return s_zero; } }\r\n        #endregion\r\n 
         #line default
         #line hidden
         
-        #line 182 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 183 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write("    [ScaleReferencePoint(\"");
 
         
         #line default
         #line hidden
         
-        #line 183 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 184 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(s.RefPoint));
 
         
         #line default
         #line hidden
         
-        #line 183 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 184 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write("\")]\r\n");
 
         
         #line default
         #line hidden
         
-        #line 184 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 185 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 
         }
 
@@ -1804,91 +1805,91 @@ this.Write("\")]\r\n");
         #line default
         #line hidden
         
-        #line 186 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 187 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write("    public partial struct ");
 
         
         #line default
         #line hidden
         
-        #line 187 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 188 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 187 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 188 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" : ILevel<");
 
         
         #line default
         #line hidden
         
-        #line 187 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 188 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Value));
 
         
         #line default
         #line hidden
         
-        #line 187 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 188 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(">, IEquatable<");
 
         
         #line default
         #line hidden
         
-        #line 187 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 188 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 187 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 188 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(">, IComparable<");
 
         
         #line default
         #line hidden
         
-        #line 187 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 188 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 187 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 188 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(">, IFormattable\r\n    {\r\n        #region Fields\r\n        internal readonly ");
 
         
         #line default
         #line hidden
         
-        #line 190 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 191 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Unit));
 
         
         #line default
         #line hidden
         
-        #line 190 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 191 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" m_level;\r\n        #endregion\r\n\r\n        #region Properties\r\n        public ");
 
         
         #line default
         #line hidden
         
-        #line 194 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 195 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Unit));
 
         
         #line default
         #line hidden
         
-        #line 194 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 195 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" Level                                     { get { return m_level; } }\r\n        p" +
         "ublic ");
 
@@ -1896,140 +1897,140 @@ this.Write(" Level                                     { get { return m_level; }
         #line default
         #line hidden
         
-        #line 195 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 196 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Unit));
 
         
         #line default
         #line hidden
         
-        #line 195 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 196 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" NormalizedLevel                           { get { return (m_level - ");
 
         
         #line default
         #line hidden
         
-        #line 195 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 196 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 195 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 196 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(".Offset); } }\r\n        IQuantity<");
 
         
         #line default
         #line hidden
         
-        #line 196 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 197 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Value));
 
         
         #line default
         #line hidden
         
-        #line 196 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 197 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write("> ILevel<");
 
         
         #line default
         #line hidden
         
-        #line 196 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 197 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Value));
 
         
         #line default
         #line hidden
         
-        #line 196 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 197 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(">.Level           { get { return Level; } }\r\n        IQuantity<");
 
         
         #line default
         #line hidden
         
-        #line 197 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 198 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Value));
 
         
         #line default
         #line hidden
         
-        #line 197 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 198 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write("> ILevel<");
 
         
         #line default
         #line hidden
         
-        #line 197 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 198 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Value));
 
         
         #line default
         #line hidden
         
-        #line 197 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 198 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(">.NormalizedLevel { get { return NormalizedLevel; } }\r\n        int ILevel<");
 
         
         #line default
         #line hidden
         
-        #line 198 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 199 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Value));
 
         
         #line default
         #line hidden
         
-        #line 198 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 199 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(">.Family                              { get { return ");
 
         
         #line default
         #line hidden
         
-        #line 198 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 199 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 198 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 199 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(".Family; } }\r\n        SymbolCollection ILevel<");
 
         
         #line default
         #line hidden
         
-        #line 199 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 200 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Value));
 
         
         #line default
         #line hidden
         
-        #line 199 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 200 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(">.Symbol                 { get { return ");
 
         
         #line default
         #line hidden
         
-        #line 199 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 200 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Unit));
 
         
         #line default
         #line hidden
         
-        #line 199 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 200 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(".Symbol; } }\r\n        #endregion\r\n\r\n        #region Constructor(s)\r\n        publi" +
         "c ");
 
@@ -2037,112 +2038,112 @@ this.Write(".Symbol; } }\r\n        #endregion\r\n\r\n        #region Constructo
         #line default
         #line hidden
         
-        #line 203 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 204 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 203 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 204 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write("(");
 
         
         #line default
         #line hidden
         
-        #line 203 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 204 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Unit));
 
         
         #line default
         #line hidden
         
-        #line 203 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 204 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" level)\r\n        {\r\n            m_level = level;\r\n        }\r\n        public ");
 
         
         #line default
         #line hidden
         
-        #line 207 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 208 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 207 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 208 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write("(");
 
         
         #line default
         #line hidden
         
-        #line 207 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 208 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Value));
 
         
         #line default
         #line hidden
         
-        #line 207 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 208 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" level) :\r\n            this(new ");
 
         
         #line default
         #line hidden
         
-        #line 208 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 209 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Unit));
 
         
         #line default
         #line hidden
         
-        #line 208 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 209 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write("(level))\r\n        {\r\n        }\r\n        public static ILevel<");
 
         
         #line default
         #line hidden
         
-        #line 211 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 212 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Value));
 
         
         #line default
         #line hidden
         
-        #line 211 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 212 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write("> Create(");
 
         
         #line default
         #line hidden
         
-        #line 211 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 212 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Value));
 
         
         #line default
         #line hidden
         
-        #line 211 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 212 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" level)\r\n        {\r\n            return new ");
 
         
         #line default
         #line hidden
         
-        #line 213 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 214 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 213 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 214 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write("(level);\r\n        }\r\n        #endregion\r\n\r\n        #region Conversions\r\n        p" +
         "ublic static explicit operator ");
 
@@ -2150,91 +2151,91 @@ this.Write("(level);\r\n        }\r\n        #endregion\r\n\r\n        #region C
         #line default
         #line hidden
         
-        #line 218 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 219 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 218 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 219 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write("(");
 
         
         #line default
         #line hidden
         
-        #line 218 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 219 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Value));
 
         
         #line default
         #line hidden
         
-        #line 218 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 219 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" q) { return new ");
 
         
         #line default
         #line hidden
         
-        #line 218 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 219 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 218 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 219 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write("(q); }\r\n        public static explicit operator ");
 
         
         #line default
         #line hidden
         
-        #line 219 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 220 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 219 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 220 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write("(");
 
         
         #line default
         #line hidden
         
-        #line 219 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 220 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Unit));
 
         
         #line default
         #line hidden
         
-        #line 219 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 220 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" q) { return new ");
 
         
         #line default
         #line hidden
         
-        #line 219 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 220 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 219 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 220 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write("(q); }\r\n\r\n");
 
         
         #line default
         #line hidden
         
-        #line 221 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 222 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 
         foreach (MeasureType x in s.Relatives())
         {
@@ -2244,84 +2245,84 @@ this.Write("(q); }\r\n\r\n");
         #line default
         #line hidden
         
-        #line 225 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 226 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write("        public static explicit operator ");
 
         
         #line default
         #line hidden
         
-        #line 226 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 227 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
-
-        
-        #line default
-        #line hidden
-        
-        #line 226 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
-this.Write("(");
-
-        
-        #line default
-        #line hidden
-        
-        #line 226 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
-this.Write(this.ToStringHelper.ToStringWithCulture(Relative));
-
-        
-        #line default
-        #line hidden
-        
-        #line 226 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
-this.Write(" q) { return new ");
-
-        
-        #line default
-        #line hidden
-        
-        #line 226 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
-this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
-
-        
-        #line default
-        #line hidden
-        
-        #line 226 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
-this.Write("((");
-
-        
-        #line default
-        #line hidden
-        
-        #line 226 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
-this.Write(this.ToStringHelper.ToStringWithCulture(Unit));
-
-        
-        #line default
-        #line hidden
-        
-        #line 226 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
-this.Write(")(q.NormalizedLevel) + ");
-
-        
-        #line default
-        #line hidden
-        
-        #line 226 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
-this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
-
-        
-        #line default
-        #line hidden
-        
-        #line 226 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
-this.Write(".Offset); }\r\n");
 
         
         #line default
         #line hidden
         
         #line 227 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+this.Write("(");
+
+        
+        #line default
+        #line hidden
+        
+        #line 227 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(Relative));
+
+        
+        #line default
+        #line hidden
+        
+        #line 227 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+this.Write(" q) { return new ");
+
+        
+        #line default
+        #line hidden
+        
+        #line 227 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
+
+        
+        #line default
+        #line hidden
+        
+        #line 227 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+this.Write("((");
+
+        
+        #line default
+        #line hidden
+        
+        #line 227 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(Unit));
+
+        
+        #line default
+        #line hidden
+        
+        #line 227 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+this.Write(")(q.NormalizedLevel) + ");
+
+        
+        #line default
+        #line hidden
+        
+        #line 227 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
+
+        
+        #line default
+        #line hidden
+        
+        #line 227 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+this.Write(".Offset); }\r\n");
+
+        
+        #line default
+        #line hidden
+        
+        #line 228 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 
         }
 
@@ -2329,49 +2330,49 @@ this.Write(".Offset); }\r\n");
         #line default
         #line hidden
         
-        #line 229 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 230 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write("\r\n        public static ");
 
         
         #line default
         #line hidden
         
-        #line 231 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 232 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 231 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 232 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" From(ILevel<");
 
         
         #line default
         #line hidden
         
-        #line 231 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 232 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Value));
 
         
         #line default
         #line hidden
         
-        #line 231 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 232 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write("> q)\r\n        {\r\n            if (q.Family != ");
 
         
         #line default
         #line hidden
         
-        #line 233 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 234 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 233 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 234 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(".Family) throw new InvalidOperationException(string.Format(\"Cannot convert \\\"{0}\\" +
         "\" to \\\"");
 
@@ -2379,84 +2380,84 @@ this.Write(".Family) throw new InvalidOperationException(string.Format(\"Cannot 
         #line default
         #line hidden
         
-        #line 233 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 234 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 233 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 234 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write("\\\"\", q.GetType().Name));\r\n            return new ");
 
         
         #line default
         #line hidden
         
-        #line 234 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 235 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 234 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 235 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write("(");
 
         
         #line default
         #line hidden
         
-        #line 234 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 235 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Unit));
 
         
         #line default
         #line hidden
         
-        #line 234 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 235 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(".From(q.NormalizedLevel) + ");
 
         
         #line default
         #line hidden
         
-        #line 234 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 235 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 234 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 235 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(".Offset);\r\n        }\r\n        public static ILevel<");
 
         
         #line default
         #line hidden
         
-        #line 236 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 237 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Value));
 
         
         #line default
         #line hidden
         
-        #line 236 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 237 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write("> Convert(ILevel<");
 
         
         #line default
         #line hidden
         
-        #line 236 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 237 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Value));
 
         
         #line default
         #line hidden
         
-        #line 236 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 237 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write("> q)\r\n        {\r\n            return From(q);\r\n        }\r\n        #endregion\r\n\r\n  " +
         "      #region IObject / IEquatable<");
 
@@ -2464,14 +2465,14 @@ this.Write("> q)\r\n        {\r\n            return From(q);\r\n        }\r\n   
         #line default
         #line hidden
         
-        #line 242 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 243 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 242 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 243 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(">\r\n        public override int GetHashCode() { return m_level.GetHashCode(); }\r\n " +
         "       public override bool /* IObject */ Equals(object obj) { return (obj is ");
 
@@ -2479,56 +2480,56 @@ this.Write(">\r\n        public override int GetHashCode() { return m_level.GetH
         #line default
         #line hidden
         
-        #line 244 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 245 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 244 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 245 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(") && Equals((");
 
         
         #line default
         #line hidden
         
-        #line 244 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 245 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 244 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 245 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(")obj); }\r\n        public bool /* IEquatable<");
 
         
         #line default
         #line hidden
         
-        #line 245 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 246 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 245 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 246 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write("> */ Equals(");
 
         
         #line default
         #line hidden
         
-        #line 245 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 246 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 245 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 246 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" other) { return this.m_level == other.m_level; }\r\n        #endregion\r\n\r\n        " +
         "#region Comparison / IComparable<");
 
@@ -2536,42 +2537,42 @@ this.Write(" other) { return this.m_level == other.m_level; }\r\n        #endreg
         #line default
         #line hidden
         
-        #line 248 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 249 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 248 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 249 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(">\r\n        public static bool operator ==(");
 
         
         #line default
         #line hidden
         
-        #line 249 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 250 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 249 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 250 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" lhs, ");
 
         
         #line default
         #line hidden
         
-        #line 249 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 250 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 249 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 250 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" rhs) { return lhs.m_level == rhs.m_level; }\r\n        public static bool operator" +
         " !=(");
 
@@ -2579,28 +2580,28 @@ this.Write(" rhs) { return lhs.m_level == rhs.m_level; }\r\n        public stati
         #line default
         #line hidden
         
-        #line 250 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 251 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 250 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 251 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" lhs, ");
 
         
         #line default
         #line hidden
         
-        #line 250 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 251 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 250 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 251 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" rhs) { return lhs.m_level != rhs.m_level; }\r\n        public static bool operator" +
         " <(");
 
@@ -2608,28 +2609,28 @@ this.Write(" rhs) { return lhs.m_level != rhs.m_level; }\r\n        public stati
         #line default
         #line hidden
         
-        #line 251 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 252 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 251 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 252 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" lhs, ");
 
         
         #line default
         #line hidden
         
-        #line 251 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 252 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 251 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 252 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" rhs) { return lhs.m_level < rhs.m_level; }\r\n        public static bool operator " +
         ">(");
 
@@ -2637,28 +2638,28 @@ this.Write(" rhs) { return lhs.m_level < rhs.m_level; }\r\n        public static
         #line default
         #line hidden
         
-        #line 252 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 253 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 252 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 253 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" lhs, ");
 
         
         #line default
         #line hidden
         
-        #line 252 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 253 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 252 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 253 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" rhs) { return lhs.m_level > rhs.m_level; }\r\n        public static bool operator " +
         "<=(");
 
@@ -2666,28 +2667,28 @@ this.Write(" rhs) { return lhs.m_level > rhs.m_level; }\r\n        public static
         #line default
         #line hidden
         
-        #line 253 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 254 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 253 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 254 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" lhs, ");
 
         
         #line default
         #line hidden
         
-        #line 253 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 254 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 253 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 254 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" rhs) { return lhs.m_level <= rhs.m_level; }\r\n        public static bool operator" +
         " >=(");
 
@@ -2695,56 +2696,56 @@ this.Write(" rhs) { return lhs.m_level <= rhs.m_level; }\r\n        public stati
         #line default
         #line hidden
         
-        #line 254 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 255 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 254 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 255 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" lhs, ");
 
         
         #line default
         #line hidden
         
-        #line 254 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 255 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 254 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 255 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" rhs) { return lhs.m_level >= rhs.m_level; }\r\n        public int /* IComparable<");
 
         
         #line default
         #line hidden
         
-        #line 255 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 256 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 255 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 256 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write("> */ CompareTo(");
 
         
         #line default
         #line hidden
         
-        #line 255 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 256 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 255 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 256 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" other) { return this.m_level.CompareTo(other.m_level); }\r\n        #endregion\r\n\r\n" +
         "        #region Arithmetic\r\n        public static ");
 
@@ -2752,336 +2753,336 @@ this.Write(" other) { return this.m_level.CompareTo(other.m_level); }\r\n       
         #line default
         #line hidden
         
-        #line 259 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 260 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 259 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 260 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" operator +(");
 
         
         #line default
         #line hidden
         
-        #line 259 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 260 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 259 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 260 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" lhs, ");
 
         
         #line default
         #line hidden
         
-        #line 259 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 260 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Unit));
 
         
         #line default
         #line hidden
         
-        #line 259 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 260 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" rhs) { return new ");
 
         
         #line default
         #line hidden
         
-        #line 259 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 260 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 259 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 260 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write("(lhs.m_level + rhs); }\r\n        public static ");
 
         
         #line default
         #line hidden
         
-        #line 260 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 261 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 260 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 261 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" operator +(");
 
         
         #line default
         #line hidden
         
-        #line 260 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 261 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Unit));
 
         
         #line default
         #line hidden
         
-        #line 260 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 261 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" lhs, ");
 
         
         #line default
         #line hidden
         
-        #line 260 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 261 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 260 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 261 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" rhs) { return new ");
 
         
         #line default
         #line hidden
         
-        #line 260 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 261 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 260 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 261 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write("(lhs + rhs.m_level); }\r\n        public static ");
 
         
         #line default
         #line hidden
         
-        #line 261 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 262 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 261 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 262 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" operator -(");
 
         
         #line default
         #line hidden
         
-        #line 261 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 262 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 261 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 262 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" lhs, ");
 
         
         #line default
         #line hidden
         
-        #line 261 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 262 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Unit));
 
         
         #line default
         #line hidden
         
-        #line 261 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 262 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" rhs) { return new ");
 
         
         #line default
         #line hidden
         
-        #line 261 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 262 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 261 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 262 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write("(lhs.m_level - rhs); }\r\n        public static ");
 
         
         #line default
         #line hidden
         
-        #line 262 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 263 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Unit));
 
         
         #line default
         #line hidden
         
-        #line 262 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 263 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" operator -(");
 
         
         #line default
         #line hidden
         
-        #line 262 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 263 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 262 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 263 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" lhs, ");
 
         
         #line default
         #line hidden
         
-        #line 262 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 263 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 262 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 263 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" rhs) { return (lhs.m_level - rhs.m_level); }\r\n        public static ");
 
         
         #line default
         #line hidden
         
-        #line 263 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 264 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 263 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 264 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" operator -(");
 
         
         #line default
         #line hidden
         
-        #line 263 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 264 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 263 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 264 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" q) { return new ");
 
         
         #line default
         #line hidden
         
-        #line 263 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 264 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 263 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 264 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write("(-q.m_level); }\r\n        public static ");
 
         
         #line default
         #line hidden
         
-        #line 264 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 265 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 264 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 265 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" operator ++(");
 
         
         #line default
         #line hidden
         
-        #line 264 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 265 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 264 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 265 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" q) { return q + ");
 
         
         #line default
         #line hidden
         
-        #line 264 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 265 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Unit));
 
         
         #line default
         #line hidden
         
-        #line 264 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 265 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(".One; }\r\n        public static ");
 
         
         #line default
         #line hidden
         
-        #line 265 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 266 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 265 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 266 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" operator --(");
 
         
         #line default
         #line hidden
         
-        #line 265 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 266 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 265 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 266 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" q) { return q - ");
 
         
         #line default
         #line hidden
         
-        #line 265 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 266 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Unit));
 
         
         #line default
         #line hidden
         
-        #line 265 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 266 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(".One; }\r\n        #endregion\r\n\r\n        #region Formatting\r\n        public overrid" +
         "e string ToString() { return ToString(");
 
@@ -3089,14 +3090,14 @@ this.Write(".One; }\r\n        #endregion\r\n\r\n        #region Formatting\r\n 
         #line default
         #line hidden
         
-        #line 269 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 270 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 269 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 270 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(".Format, null); }\r\n        public string ToString(string format) { return ToStrin" +
         "g(format, null); }\r\n        public string ToString(IFormatProvider fp) { return " +
         "ToString(");
@@ -3105,14 +3106,14 @@ this.Write(".Format, null); }\r\n        public string ToString(string format) {
         #line default
         #line hidden
         
-        #line 271 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 272 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 271 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 272 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(".Format, fp); }\r\n        public string /* IFormattable */ ToString(string format," +
         " IFormatProvider fp)\r\n        {\r\n            return m_level.ToString(format ?? ");
 
@@ -3120,14 +3121,14 @@ this.Write(".Format, fp); }\r\n        public string /* IFormattable */ ToString
         #line default
         #line hidden
         
-        #line 274 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 275 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 274 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 275 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(".Format, fp);\r\n        }\r\n        #endregion\r\n\r\n        #region Statics\r\n        " +
         "private static readonly ");
 
@@ -3135,140 +3136,140 @@ this.Write(".Format, fp);\r\n        }\r\n        #endregion\r\n\r\n        #reg
         #line default
         #line hidden
         
-        #line 279 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 280 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Unit));
 
         
         #line default
         #line hidden
         
-        #line 279 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 280 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" s_offset    = new ");
 
         
         #line default
         #line hidden
         
-        #line 279 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 280 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Unit));
 
         
         #line default
         #line hidden
         
-        #line 279 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 280 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write("(");
 
         
         #line default
         #line hidden
         
-        #line 279 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 280 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Offset));
 
         
         #line default
         #line hidden
         
-        #line 279 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 280 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(");  // offset to ");
 
         
         #line default
         #line hidden
         
-        #line 279 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 280 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(s.RefPointNormalized));
 
         
         #line default
         #line hidden
         
-        #line 279 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 280 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write("\r\n        private static readonly int s_family            = ");
 
         
         #line default
         #line hidden
         
-        #line 280 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 281 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Family));
 
         
         #line default
         #line hidden
         
-        #line 280 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 281 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(";\r\n        private static /*mutable*/ string s_format      = \"");
 
         
         #line default
         #line hidden
         
-        #line 281 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 282 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Format));
 
         
         #line default
         #line hidden
         
-        #line 281 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 282 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write("\";\r\n        private static readonly ");
 
         
         #line default
         #line hidden
         
-        #line 282 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 283 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 282 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 283 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" s_zero     = new ");
 
         
         #line default
         #line hidden
         
-        #line 282 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 283 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 282 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 283 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write("(");
 
         
         #line default
         #line hidden
         
-        #line 282 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 283 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Zero));
 
         
         #line default
         #line hidden
         
-        #line 282 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 283 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(");\r\n        \r\n        public static ");
 
         
         #line default
         #line hidden
         
-        #line 284 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 285 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Unit));
 
         
         #line default
         #line hidden
         
-        #line 284 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 285 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" Offset    { get { return s_offset; } }\r\n        public static int Family        " +
         "    { get { return s_family; } }\r\n        public static string Format         { " +
         "get { return s_format; } set { s_format = value; } }\r\n        public static ");
@@ -3277,21 +3278,21 @@ this.Write(" Offset    { get { return s_offset; } }\r\n        public static int
         #line default
         #line hidden
         
-        #line 287 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 288 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(Scale));
 
         
         #line default
         #line hidden
         
-        #line 287 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 288 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 this.Write(" Zero     { get { return s_zero; } }\r\n        #endregion\r\n    }\r\n");
 
         
         #line default
         #line hidden
         
-        #line 290 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
+        #line 291 "C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\Demo\UnitsOfMeasurement\RuntimeLoader\Generator.tt"
 
     }
 

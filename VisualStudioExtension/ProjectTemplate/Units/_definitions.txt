@@ -277,28 +277,37 @@ unit Joule "J" = Newton * Meter;
 //
 //      Torque (moment of force)
 //
-//      NOTE: We can't specify: NewtonMeter "Nm" = Newton * Meter, as we have already
-//      specified Joule = Newton * Meter, and that (as a product of 2 units), would
-//      generate operators of the same arguments but different return values e.g.:
+//      NOTE: We can't specify:
+//
+//          NewtonMeter "N*m" = Newton * Meter
+//
+//      as we have already specified
+//
+//          Joule "J" = Newton * Meter
+//
+//      and that (as aproduct of 2 units), would generate operators of the same
+//      arguments but different return values:
 //
 //          Joule operator *(Newton lhs, Meter rhs)
 //          NewtonMeter operator *(Newton lhs, Meter rhs)
 //
 //      and C# wouldn't know which one to apply when it finds Newton * Meter product.
 //
-//      To work around the problem you can specify: NewtonMeter "Nm" = Newton * <Length>
-//      (product of unit and non-unit), or NewtonMeter "Nm" = Kilogram * Meter_Sec2 * Meter
-//      (product of 3 units), and implement necessary operators/methods in an extension
-//      file e.g NewtonMeterEx.cs. The resulting NewtonMeter unit would be of the same
-//      dimension as Joule but of different family:
+//      To work around the problem you can make use of wedge product ("^" operator
+//      instead of star "*"):
+//
+//          NewtonMeter "N*m" = Newton ^ Meter
+//
+//      The resulting NewtonMeter unit would be of the same dimension as Joule but
+//      of different family:
 //
 //          NewtonMeter.Sense == Joule.Sense
 //          NewtonMeter.Family != Joule.Family
 //
-unit NewtonMeter "N\u00B7m" "N*m" = Kilogram * Meter_Sec2 * Meter;
-// unit DyneCentimeter "dyn\u00B7cm" "dyn*cm" = Dyne * Centimeter | NewtonMeter * 1.0e7;
-// unit PoundFoot "lbf\u00B7ft" "lbf*ft" = PoundForce * Foot | NewtonMeter * (100/2.54/12/4.4482216152605);
-// unit PoundInch "lbf\u00B7in" "lbf*in" = PoundForce * Inch | NewtonMeter * (100/2.54/4.4482216152605);
+unit NewtonMeter "N\u00B7m" "N*m" = Newton ^ Meter;
+// unit DyneCentimeter "dyn\u00B7cm" "dyn*cm" = Dyne ^ Centimeter | NewtonMeter * 1.0e7;
+// unit PoundFoot "lbf\u00B7ft" "lbf*ft" = PoundForce ^ Foot | NewtonMeter * (100/2.54/12/4.4482216152605);
+// unit PoundInch "lbf\u00B7in" "lbf*in" = PoundForce ^ Inch | NewtonMeter * (100/2.54/4.4482216152605);
 
 ////////////////////////////////////////////////////////////////////////////////
 //

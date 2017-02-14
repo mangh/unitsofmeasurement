@@ -4338,6 +4338,8 @@ namespace Demo.UnitsOfMeasurement
         public static Kilogram operator /(Newton lhs, Meter_Sec2 rhs) { return new Kilogram(lhs.m_value / rhs.m_value); }
         public static Joule operator *(Newton lhs, Meter rhs) { return new Joule(lhs.m_value * rhs.m_value); }
         public static Joule operator *(Meter lhs, Newton rhs) { return new Joule(lhs.m_value * rhs.m_value); }
+        public static NewtonMeter operator ^(Newton lhs, Meter rhs) { return new NewtonMeter(lhs.m_value * rhs.m_value); }
+        public static NewtonMeter operator ^(Meter lhs, Newton rhs) { return new NewtonMeter(lhs.m_value * rhs.m_value); }
         public static Pascal operator /(Newton lhs, SquareMeter rhs) { return new Pascal(lhs.m_value / rhs.m_value); }
         public static SquareMeter operator /(Newton lhs, Pascal rhs) { return new SquareMeter(lhs.m_value / rhs.m_value); }
         #endregion
@@ -4945,6 +4947,8 @@ namespace Demo.UnitsOfMeasurement
         public static NewtonMeter operator /(NewtonMeter lhs, double rhs) { return new NewtonMeter(lhs.m_value / rhs); }
         public static double operator /(NewtonMeter lhs, NewtonMeter rhs) { return lhs.m_value / rhs.m_value; }
         // Outer:
+        public static Meter operator /(NewtonMeter lhs, Newton rhs) { return new Meter(lhs.m_value / rhs.m_value); }
+        public static Newton operator /(NewtonMeter lhs, Meter rhs) { return new Newton(lhs.m_value / rhs.m_value); }
         #endregion
 
         #region Formatting
@@ -4958,9 +4962,9 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Statics
-        private static readonly Dimension s_sense = Kilogram.Sense * Meter_Sec2.Sense * Meter.Sense;
+        private static readonly Dimension s_sense = Newton.Sense * Meter.Sense;
         private static readonly int s_family = 18;
-        private static /*mutable*/ double s_factor = Kilogram.Factor * Meter_Sec2.Factor * Meter.Factor;
+        private static /*mutable*/ double s_factor = Newton.Factor * Meter.Factor;
         private static /*mutable*/ string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("N\u00B7m", "N*m");
 

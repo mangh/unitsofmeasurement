@@ -163,6 +163,7 @@ namespace Man.UnitsOfMeasurement
         }
 
         //<Dim Term> ::= <Dim Term> '*' <Dim Factor>
+        //            |  <Dim Term> '^' <Dim Factor>
         //            |  <Dim Term> '/' <Dim Factor>
         //            |  <Dim Factor>
         private ASTNode GetDimTerm(UnitType candidate, NumericType numType)
@@ -171,19 +172,39 @@ namespace Man.UnitsOfMeasurement
             if (lhs == null)
                 return null;
 
-            while ((m_symbol == Lexer.Symbol.Times) || (m_symbol == Lexer.Symbol.Div))
+            while ((m_symbol == Lexer.Symbol.Times) || (m_symbol == Lexer.Symbol.Div) || (m_symbol == Lexer.Symbol.Wedge))
             {
-                Lexer.Symbol operation = m_symbol;
+                Lexer.Symbol operatorSymbol = m_symbol;
+                string operatorToken = m_token;
+                int operatorLine = m_lexer.TokenLine;
+                int operatorColumn = m_lexer.TokenColumn;
 
                 GetToken();
 
                 ASTNode rhs = GetDimFactor(candidate, numType);
                 if (rhs == null)
                     return null;
-                else if (operation == Lexer.Symbol.Times) 
-                    lhs = new ASTProduct(lhs, rhs);
-                else
+
+                else if (operatorSymbol == Lexer.Symbol.Div)
                     lhs = new ASTQuotient(lhs, rhs);
+
+                else if (operatorSymbol == Lexer.Symbol.Times)
+                    lhs = new ASTProduct(lhs, rhs, iswedgeproduct: false);
+
+                else if (lhs.IsWedgeCompatible && rhs.IsWedgeCompatible)
+                    lhs = new ASTProduct(lhs, rhs, iswedgeproduct: true);
+
+                else
+                {
+                    string denote = "\u02C7\u02C7\u02C7{0}\u02C7\u02C7\u02C7";   //  ˇˇˇexprˇˇˇ
+                    Note(operatorLine, operatorColumn, operatorToken,
+                        String.Format("{0}: wedge product incompatible factor(s): {1} ^ {2}.", candidate.Name,
+                            lhs.IsWedgeCompatible ? lhs.ToString() : String.Format(denote, lhs),
+                            rhs.IsWedgeCompatible ? rhs.ToString() : String.Format(denote, rhs)
+                        )
+                    );
+                    return null;
+                }
             }
             return lhs;
         }

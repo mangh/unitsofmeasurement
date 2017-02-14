@@ -69,8 +69,6 @@
     <Compile Include="RuntimeLoader\GeneratorExt.cs" />
     <Compile Include="RuntimeLoader\Parser.cs" />
     <Compile Include="RuntimeLoader\RuntimeLoader.cs" />
-    <Compile Include="Units\NewtonEx.cs" />
-    <Compile Include="Units\NewtonMeterEx.cs" />
     <Compile Include="Units\_generator.cs">
       <DependentUpon>_generator.tt</DependentUpon>
     </Compile>

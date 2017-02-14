@@ -1,4 +1,4 @@
-﻿Units and Scales generated on 2017-01-23 09:15:18
+﻿Units and Scales generated on 2017-02-14 13:25:57
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -321,6 +321,8 @@
     Kilogram = Newton / Meter_Sec2
     Joule = Newton * Meter
     Joule = Meter * Newton
+    NewtonMeter = Newton ^ Meter
+    NewtonMeter = Meter ^ Newton
     Pascal = Newton / SquareMeter
     SquareMeter = Newton / Pascal
 
@@ -364,6 +366,8 @@
 
 (NewtonMeter) [L2T-2M] NewtonMeter : 1 {"N\u00B7m", "N*m"}
 
+    Meter = NewtonMeter / Newton
+    Newton = NewtonMeter / Meter
 
 (Joule_Kelvin) [L2T-2Mϴ-1] Joule_Kelvin : 1 {"J/K"}
 

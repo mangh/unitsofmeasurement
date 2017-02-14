@@ -68,6 +68,7 @@ namespace Man.UnitsOfMeasurement
             else if (m_input.Char == '+') { m_token.Symbol = Symbol.Plus; }
             else if (m_input.Char == '-') { m_token.Symbol = Symbol.Minus; }
             else if (m_input.Char == '*') { m_token.Symbol = Symbol.Times; }
+            else if (m_input.Char == '^') { m_token.Symbol = Symbol.Wedge; }
             else if (m_input.Char == ':') { m_token.Symbol = Symbol.Colon; }
             else if (m_input.Char == ';') { m_token.Symbol = Symbol.Semicolon; }
             else

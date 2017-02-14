@@ -33,6 +33,7 @@ namespace Man.UnitsOfMeasurement
             LT = 6, // '<'
             GT = 7, // '>'
             Pipe = 8, // '|'
+            Wedge = 9, // '^'
 
             // Brackets
             Lparen = 13, // '('
