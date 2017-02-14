@@ -110,6 +110,8 @@ namespace Man.UnitsOfMeasurement
         }
 
         public override void Accept(IASTEncoder encoder) { encoder.Encode(this); }
+
+        public override string ToString() { return Number.ToString(); }
     }
 
     internal class ASTLiteral : ASTNode
@@ -125,6 +127,8 @@ namespace Man.UnitsOfMeasurement
         }
 
         public override void Accept(IASTEncoder encoder) { encoder.Encode(this); }
+
+        public override string ToString() { return string.Format("\"{0}\"", Literal); }
     }
 
     internal class ASTMagnitude : ASTNode
@@ -143,6 +147,8 @@ namespace Man.UnitsOfMeasurement
         }
 
         public override void Accept(IASTEncoder encoder) { encoder.Encode(this); }
+
+        public override string ToString() { return string.Format("<{0}>", Exponent == -1 ? string.Empty : ((Magnitude)Exponent).ToString()); }
     }
 
     internal class ASTUnit : ASTNode
@@ -159,6 +165,8 @@ namespace Man.UnitsOfMeasurement
         public override void Accept(IASTEncoder encoder) { encoder.Encode(this); }
 
         public override void Bind(UnitType result) { m_unit.AddRelative(result); }
+
+        public override string ToString() { return m_unit.Name; }
     }
 
     internal class ASTUnary : ASTNode
@@ -176,6 +184,8 @@ namespace Man.UnitsOfMeasurement
         }
 
         public override void Accept(IASTEncoder encoder) { Expr.Accept(encoder); encoder.Encode(this); }
+
+        public override string ToString() { return string.Format("{0}{1}", Plus ? "+" : "-", Expr.ToString()); }
     }
 
     internal class ASTParenthesized : ASTNode
@@ -210,6 +220,8 @@ namespace Man.UnitsOfMeasurement
         }
 
         public override void Bind(UnitType result) { Expr.Bind(result); }
+
+        public override string ToString() { return string.Format("({0})", Expr.ToString()); }
     }
 
     internal class ASTProduct : ASTNode
@@ -323,6 +335,8 @@ namespace Man.UnitsOfMeasurement
                 Rhs.Bind(result);
             }
         }
+
+        public override string ToString() { return string.Format("{0}{1}{2}", Lhs.ToString(), "*", Rhs.ToString()); }
     }
 
     internal class ASTQuotient : ASTNode
@@ -444,6 +458,8 @@ namespace Man.UnitsOfMeasurement
                 result.AddOuterOperation(numType, "*", R, result);
             }
         }
+
+        public override string ToString() { return string.Format("{0}/{1}", Lhs.ToString(), Rhs.ToString()); }
     }
 
     internal class ASTSum : ASTNode
@@ -460,6 +476,8 @@ namespace Man.UnitsOfMeasurement
             Rhs = rhs;
         }
         public override void Accept(IASTEncoder encoder) { Lhs.Accept(encoder); Rhs.Accept(encoder); encoder.Encode(this); }
+
+        public override string ToString() { return string.Format("{0}+{1}", Lhs.ToString(), Rhs.ToString()); }
     }
 
     internal class ASTDifference : ASTNode
@@ -476,5 +494,7 @@ namespace Man.UnitsOfMeasurement
             Rhs = rhs;
         }
         public override void Accept(IASTEncoder encoder) { Lhs.Accept(encoder); Rhs.Accept(encoder); encoder.Encode(this); }
+
+        public override string ToString() { return string.Format("{0}-{1}", Lhs.ToString(), Rhs.ToString()); }
     }
 }
