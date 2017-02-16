@@ -178,12 +178,12 @@ namespace {0}
 //  U N I T S                              | {0} units | {1} families (id: {2} - {3})
 //
 ////////////////////////////////////////////////////////////////////////////////
-(family) [dim] name : factor {{tags}}", units.Count, __scalestartfamily, 0, __scalestartfamily - 1);
+[dim] unit {{tags}} : factor (family)", units.Count, __scalestartfamily, 0, __scalestartfamily - 1);
 
         foreach (UnitType u in units)
         {
             WriteLine(string.Empty);
-            WriteLine("({0}) {1}", u.FamilyPrime().Name, u.ToString());
+            WriteLine("{0} ({1})", u.ToString(), u.FamilyPrime().Name);
             WriteLine(string.Empty);
 
             foreach (MeasureType s in u.Relatives())
@@ -203,12 +203,12 @@ namespace {0}
 //  S C A L E S                            | {0} scales | {1} families (id: {2} - {3})
 //
 ////////////////////////////////////////////////////////////////////////////////
-(family) [dim] name : refpoint = unit offset", scales.Count, __family - __scalestartfamily, __scalestartfamily, __family - 1);
+[dim] scale : refpoint = unit offset (family)", scales.Count, __family - __scalestartfamily, __scalestartfamily, __family - 1);
 
         foreach (ScaleType s in scales)
         {
             WriteLine(string.Empty);
-            WriteLine("({0}) {1}", s.FamilyPrime().Name, s.ToString());
+            WriteLine("{0} ({1})", s.ToString(), s.FamilyPrime().Name);
             WriteLine(string.Empty);
 
             foreach (MeasureType x in s.Relatives())

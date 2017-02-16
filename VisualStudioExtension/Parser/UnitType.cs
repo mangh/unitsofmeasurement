@@ -54,11 +54,11 @@ namespace Man.UnitsOfMeasurement
         }
         public override string ToString()
         {
-            return String.Format("[{0}] {1} : {2} {{{3}}}",
-                (Sense == null) ? String.Empty : Sense.Value.ToString(), 
+            return String.Format("[{0}] {1} {{{2}}} : {3}",
+                (Sense == null) ? String.Empty : Sense.Value.ToString(),
                 Name,
-                (Factor == null) ? String.Empty : (Factor.IsTrueValue ? Factor.Value.ToString() : (Factor.Code ?? String.Empty)),
-                Tags.Count <= 0 ? String.Empty : String.Format("\"{0}\"", String.Join("\", \"", Tags))
+                Tags.Count <= 0 ? String.Empty : String.Format("\"{0}\"", String.Join("\", \"", Tags)),
+                (Factor == null) ? String.Empty : (Factor.IsTrueValue ? Factor.Value.ToString() : (Factor.Code ?? String.Empty))
             );
         }
         #endregion
