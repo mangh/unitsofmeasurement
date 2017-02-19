@@ -60,5 +60,12 @@ namespace Demo.UnitsOfMeasurement
             return symbols.Any(s => this.IndexOf(s) >= 0);
         }
         #endregion
+
+        #region Formatting
+        public override string ToString()
+        {
+            return string.Format("{{\"{0}\"}}", String.Join("\", \"", m_collection));
+        }
+        #endregion
     }
 }

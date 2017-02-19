@@ -111,7 +111,7 @@ namespace Demo.UnitsOfMeasurement
 
         public override string ToString()
         {
-            return String.Format("({0}) {1} {{\"{2}\"}}", this.Sense, this.Type.Name, String.Join("\", \"", this.Symbol));
+            return String.Format("({0}) {1} {2}", this.Sense, this.Type.Name, this.Symbol);
         }
         #endregion
     }
