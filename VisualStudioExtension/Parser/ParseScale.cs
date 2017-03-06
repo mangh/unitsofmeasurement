@@ -39,7 +39,7 @@ namespace Man.UnitsOfMeasurement
             if (m_symbol == Lexer.Symbol.EQ) GetToken(); else { Note("{0}: \"{1}\" found while expected equal sign \"=\".", scaleName, m_token); return; }
 
             // Identifier (unit)
-            UnitType unit = GetScaleUnit(scaleName); if (unit == null) return;
+            UnitType unit = GetScaleUnit(refpoint, scaleName); if (unit == null) return;
 
             // Scale offset <Num Expr>
             ASTNode offsetAST = GetNumExpr(scaleName, unit.Factor.Value.Type); if (offsetAST == null) return;
@@ -71,9 +71,10 @@ namespace Man.UnitsOfMeasurement
             return null;
         }
 
-        private UnitType GetScaleUnit(string scaleName)
+        private UnitType GetScaleUnit(string refpoint, string scaleName)
         {
             UnitType unit;
+            ScaleType twin;
             if (m_symbol != Lexer.Symbol.Identifier)
             {
                 Note("{0}: \"{1}\" found while expected unit name.", scaleName, m_token);
@@ -81,6 +82,10 @@ namespace Man.UnitsOfMeasurement
             else if ((unit = FindUnit(m_token)) == null)
             {
                 Note("{0}: undefined unit \"{1}\".", scaleName, m_token);
+            }
+            else if((twin = FindScale(refpoint, unit)) != null)
+            {
+                Note("{0}: based on the same unit \"{1}\" as scale {2} (in {3} family). Scales would be indistinguishable.", scaleName, m_token, twin.Name, refpoint);
             }
             else
             {

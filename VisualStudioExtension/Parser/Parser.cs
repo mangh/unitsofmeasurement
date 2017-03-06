@@ -139,6 +139,7 @@ namespace Man.UnitsOfMeasurement
         private UnitType FindUnit(string name) { return m_units.Find(u => u.Name == name); }
         private UnitType FindUnitOfTag(string tag) { return m_units.Find(u => u.Tags.Contains(tag)); }
         private ScaleType FindScale(string name) { return m_scales.Find(s => s.Name == name); }
+        private ScaleType FindScale(string refpoint, UnitType unit) { return m_scales.Find(s => (s.RefPoint == refpoint) && (s.Unit == unit)); }
         private bool IsUniqueName(string name) { return (FindUnit(name) == null) && (FindScale(name) == null); }
 
         private void Note(string info)
