@@ -35,6 +35,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TemplateWizard", "VisualStu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RuntimeUnits", "Demo\RuntimeUnits\RuntimeUnits.csproj", "{5B57A44E-AFE5-4928-918F-6E499AAE8D27}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestParser", "Demo\TestParser\TestParser.csproj", "{6B52F713-F288-4FB9-A097-7256782A3426}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = UnitsOfMeasurement.vsmdi
@@ -148,6 +150,16 @@ Global
 		{5B57A44E-AFE5-4928-918F-6E499AAE8D27}.Release|Mixed Platforms.Build.0 = Release|x86
 		{5B57A44E-AFE5-4928-918F-6E499AAE8D27}.Release|x86.ActiveCfg = Release|x86
 		{5B57A44E-AFE5-4928-918F-6E499AAE8D27}.Release|x86.Build.0 = Release|x86
+		{6B52F713-F288-4FB9-A097-7256782A3426}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{6B52F713-F288-4FB9-A097-7256782A3426}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{6B52F713-F288-4FB9-A097-7256782A3426}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{6B52F713-F288-4FB9-A097-7256782A3426}.Debug|x86.ActiveCfg = Debug|x86
+		{6B52F713-F288-4FB9-A097-7256782A3426}.Debug|x86.Build.0 = Debug|x86
+		{6B52F713-F288-4FB9-A097-7256782A3426}.Release|Any CPU.ActiveCfg = Release|x86
+		{6B52F713-F288-4FB9-A097-7256782A3426}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{6B52F713-F288-4FB9-A097-7256782A3426}.Release|Mixed Platforms.Build.0 = Release|x86
+		{6B52F713-F288-4FB9-A097-7256782A3426}.Release|x86.ActiveCfg = Release|x86
+		{6B52F713-F288-4FB9-A097-7256782A3426}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -163,5 +175,6 @@ Global
 		{9FAD043C-1CEC-4F4C-A689-F31AC7148F92} = {785C11E8-C667-40C1-A85B-87D42F5AC87B}
 		{7D20459F-0E6E-45C4-97B3-752011E050E7} = {785C11E8-C667-40C1-A85B-87D42F5AC87B}
 		{5B57A44E-AFE5-4928-918F-6E499AAE8D27} = {785C11E8-C667-40C1-A85B-87D42F5AC87B}
+		{6B52F713-F288-4FB9-A097-7256782A3426} = {785C11E8-C667-40C1-A85B-87D42F5AC87B}
 	EndGlobalSection
 EndGlobal
