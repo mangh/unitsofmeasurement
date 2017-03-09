@@ -22,35 +22,26 @@ namespace UnitsOfMeasurement.Test
     {
         [TestMethod]
         [ExpectedException(typeof(System.ArgumentException))]
-        public void DuplicateSymbolThrowsException()
+        public void DuplicateProxyThrowsException()
         {
-            var catalog = new UnitCatalog<double>();
-            catalog.Add(typeof(Meter)); // OK
-            catalog.Add(typeof(Meter)); // exception
+            Catalog.Add(Meter.Proxy);
         }
 
         [TestMethod]
         [ExpectedException(typeof(System.ArgumentException))]
-        public void DuplicateSymbolThrowsException2()
+        public void DuplicateProxyFromAssemblyThrowsException()
         {
-            // Load all the units from Newton assembly. This will load Meter family too:
-            var catalog = UnitCatalog<double>.LoadFromAssembly(typeof(Newton).Assembly);
-
-            // Loading Meter family again throws ArgumentException: An item with the same symbol(s) has already been added.
-            catalog.AppendFromAssembly(typeof(Meter).Assembly, Meter.Family);
-            // ... but this would work after first making:
-            //catalog.Clear();
+            // Catalog is (statically) populated with all compile-time units and scales. Reloading from assembly is reduntant.
+            Catalog.AppendFromAssembly(typeof(Meter).Assembly);
         }
 
         [TestMethod]
         public void Parsing()
         {
-            var units = UnitCatalog<double>.LoadFromAssembly(typeof(Meter).Assembly, Meter.Family);
-            var currencies = UnitCatalog<decimal>.LoadFromAssembly(typeof(EUR).Assembly, EUR.Family);
+            var currencyParser = new QuantityParser<decimal>(EUR.Family);
 
             IQuantity<decimal> amount;
-
-            bool done = currencies.TryParse("100 EUR", CultureInfo.InvariantCulture, out amount);
+            bool done = currencyParser.TryParse("100 EUR", CultureInfo.InvariantCulture, out amount);
             Assert.IsTrue(done, "Parsing '100 EUR' failed");
             Assert.IsTrue(amount is EUR, "Parsing '100 EUR' did not return EUR type");
             Assert.AreEqual((EUR)100.0m, (EUR)amount, "Parsing '100 EUR' did not return '100 EUR'");
@@ -58,9 +49,10 @@ namespace UnitsOfMeasurement.Test
 
             Assert.AreEqual(((IFormattable)amount).ToString("{1} {0}", CultureInfo.InvariantCulture), "EUR 100", "((IFormattable)amount).ToString failed");
 
-            IQuantity<double> quantity;
+            var lengthParser = new QuantityParser<double>(Meter.Family);
 
-            done = units.TryParse("100 in", new CultureInfo("en-US"), out quantity);
+            IQuantity<double> quantity;
+            done = lengthParser.TryParse("100 in", new CultureInfo("en-US"), out quantity);
             Assert.IsTrue(done, "Parsing '100 in' failed");
             Assert.IsTrue(quantity is Inch, "Parsing '100 in' did not return Inch type");
             Assert.AreEqual((Inch)100.0, (Inch)quantity, "Parsing '100 in' did not return '100 in'");
@@ -68,11 +60,11 @@ namespace UnitsOfMeasurement.Test
 
             Assert.AreEqual(((IFormattable)quantity).ToString("{1} {0}", CultureInfo.InvariantCulture), "in 100", "((IFormattable)quantity).ToString failed");
 
-            var scales = ScaleCatalog<double>.LoadFromAssembly(typeof(Kelvin).Assembly, Kelvin.Family);
+            var temperatureLevelParser = new LevelParser<double>(Kelvin.Family);
 
             ILevel<double> level;
 
-            done = scales.TryParse("100 °C", CultureInfo.InvariantCulture, out level);
+            done = temperatureLevelParser.TryParse("100 °C", CultureInfo.InvariantCulture, out level);
             Assert.IsTrue(done, "Parsing '100 °C' level failed");
             Assert.IsTrue(level is Celsius, "Parsing '100 °C' did not return Celsius type");
             Assert.AreEqual((Celsius)100.0, (Celsius)level, "Parsing '100 °C' did not return '100 °C' level");
@@ -81,14 +73,14 @@ namespace UnitsOfMeasurement.Test
             Assert.AreEqual(((IFormattable)level).ToString("{1} {0}", CultureInfo.InvariantCulture), "°C 100", "((IFormattable)level).ToString failed");
 
             // You can also get the last result via 'quantities' and 'units' (instead of 'levels' and 'scales')
-            units.AppendFromAssembly(typeof(DegKelvin).Assembly, DegKelvin.Family);
+            var temperatureQuantityParser = new QuantityParser<double>(DegKelvin.Family);
 
-            done = units.TryParse("100 °C", CultureInfo.InvariantCulture, out quantity);
+            done = temperatureQuantityParser.TryParse("100 °C", CultureInfo.InvariantCulture, out quantity);
             Assert.IsTrue(done, "Parsing '100 °C' quantity failed");
             Assert.IsTrue(quantity is DegCelsius, "Parsing '100 °C' did not return DegCelsius type");
             Assert.AreEqual((DegCelsius)100.0, (DegCelsius)quantity, "Parsing '100 °C' did not return '100 °C' quantity");
             Assert.AreEqual((Celsius)100.0, (Celsius)quantity.Value, "Creating Celsius level from parsed '100 °C' failed");
-            Assert.AreEqual((Fahrenheit)212.0, (Fahrenheit)(Celsius)quantity.Value, "Converting '100 °C' quantity into Fahrenheit failed");
+            Assert.AreEqual((Fahrenheit)212.0, Fahrenheit.From(quantity), "Converting '100 °C' quantity into Fahrenheit failed");
         }
     }
 }

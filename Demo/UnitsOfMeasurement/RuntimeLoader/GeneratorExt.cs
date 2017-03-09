@@ -38,7 +38,7 @@ namespace Demo.UnitsOfMeasurement
         }
         public Generator()
         {
-            throw new NotImplementedException(String.Format("{0}: parameterless constructor is inappropriate for generating run-time units", "UnitsOfMeasurement1.Generator"));
+            throw new NotImplementedException(String.Format("{0}(): parameterless constructor is inappropriate for generating run-time units.", this.GetType().FullName));
         }
         #endregion
     }

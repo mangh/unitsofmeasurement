@@ -198,7 +198,7 @@ unit RPM "rpm" = Cycles / Minute | (30 / "Math.PI") * Radian_Sec;
 //      parser will complain about inconsistent factors (unequal in 17 digits)
 //      but display them (using 15 digits) as equal in an error message e.g.:
 //
-//      "Foot.Factor * Foot.Factor" -> 10.7639104167097 != 10.7639104167097 <- "SquareMeter.Factor * 10.7639104167097d"
+//      "Foot.Factor * Foot.Factor" == 10.7639104167097 != 10.7639104167097 == "SquareMeter.Factor * 10.7639104167097d"
 //
 //      In such cases the parser is right - the factors are not consistent - 
 //      but it cannot display them correctly.
@@ -280,7 +280,7 @@ unit Watt "W" = Joule / Second;
 //
 //          Joule "J" = Newton * Meter
 //
-//      and that (as aproduct of 2 units), would generate operators of the same
+//      and that (as a product of 2 units), would generate operators of the same
 //      arguments but different return values:
 //
 //          Joule operator *(Newton lhs, Meter rhs)

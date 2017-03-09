@@ -21,9 +21,7 @@ namespace $safeprojectname$
 
         #region Properties
         public double Value { get { return m_value; } }
-        int IQuantity<double>.Family { get { return Meter.Family; } }
-        double IQuantity<double>.Factor { get { return Meter.Factor; } }
-        SymbolCollection IQuantity<double>.Symbol { get { return Meter.Symbol; } }
+        Unit<double> IQuantity<double>.Unit { get { return Meter.Proxy; } }
         #endregion
 
         #region Constructor(s)
@@ -31,22 +29,14 @@ namespace $safeprojectname$
         {
             m_value = value;
         }
-        public static IQuantity<double> Create(double value)
-        {
-            return new Meter(value);
-        }
         #endregion
 
         #region Conversions
         public static explicit operator Meter(double q) { return new Meter(q); }
         public static Meter From(IQuantity<double> q)
         {
-            if (q.Family != Meter.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Meter\"", q.GetType().Name));
-            return new Meter((Meter.Factor / q.Factor) * q.Value);
-        }
-        public static IQuantity<double> Convert(IQuantity<double> q)
-        {
-            return From(q);
+            if (q.Unit.Family != Meter.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Meter\"", q.GetType().Name));
+            return new Meter((Meter.Factor / q.Unit.Factor) * q.Value);
         }
         #endregion
 
@@ -93,24 +83,57 @@ namespace $safeprojectname$
         }
         #endregion
 
-        #region Statics
+        #region Static fields
         private static readonly Dimension s_sense = Dimension.Length;
         private static readonly int s_family = 0;
         private static /*mutable*/ double s_factor = 1d;
         private static /*mutable*/ string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("m");
+        private static readonly Unit<double> s_proxy = new Meter_Proxy();
 
         private static readonly Meter s_one = new Meter(1d);
         private static readonly Meter s_zero = new Meter(0d);
+        #endregion
 
+        #region Static Properties
         public static Dimension Sense { get { return s_sense; } }
         public static int Family { get { return s_family; } }
         public static double Factor { get { return s_factor; } set { s_factor = value; } }
         public static string Format { get { return s_format; } set { s_format = value; } }
         public static SymbolCollection Symbol { get { return s_symbol; } }
+        public static Unit<double> Proxy { get { return s_proxy; } }
 
         public static Meter One { get { return s_one; } }
         public static Meter Zero { get { return s_zero; } }
+        #endregion
+    }
+
+    public partial class Meter_Proxy : Unit<double>
+    {
+        #region Properties
+        public override int Family { get { return Meter.Family; } }
+        public override Dimension Sense { get { return Meter.Sense; } }
+        public override SymbolCollection Symbol { get { return Meter.Symbol; } }
+        public override double Factor { get { return Meter.Factor; } set { Meter.Factor = value; } }
+        public override string Format { get { return Meter.Format; } set { Meter.Format = value; } }
+        #endregion
+
+        #region Constructor(s)
+        public Meter_Proxy() :
+            base(typeof(Meter))
+        {
+        }
+        #endregion
+
+        #region Methods
+        public override IQuantity<double> Create(double value)
+        {
+            return new Meter(value);
+        }
+        public override IQuantity<double> From(IQuantity<double> quantity)
+        {
+            return Meter.From(quantity);
+        }
         #endregion
     }
     public partial struct Second : IQuantity<double>, IEquatable<Second>, IComparable<Second>, IFormattable
@@ -121,9 +144,7 @@ namespace $safeprojectname$
 
         #region Properties
         public double Value { get { return m_value; } }
-        int IQuantity<double>.Family { get { return Second.Family; } }
-        double IQuantity<double>.Factor { get { return Second.Factor; } }
-        SymbolCollection IQuantity<double>.Symbol { get { return Second.Symbol; } }
+        Unit<double> IQuantity<double>.Unit { get { return Second.Proxy; } }
         #endregion
 
         #region Constructor(s)
@@ -131,22 +152,14 @@ namespace $safeprojectname$
         {
             m_value = value;
         }
-        public static IQuantity<double> Create(double value)
-        {
-            return new Second(value);
-        }
         #endregion
 
         #region Conversions
         public static explicit operator Second(double q) { return new Second(q); }
         public static Second From(IQuantity<double> q)
         {
-            if (q.Family != Second.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Second\"", q.GetType().Name));
-            return new Second((Second.Factor / q.Factor) * q.Value);
-        }
-        public static IQuantity<double> Convert(IQuantity<double> q)
-        {
-            return From(q);
+            if (q.Unit.Family != Second.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Second\"", q.GetType().Name));
+            return new Second((Second.Factor / q.Unit.Factor) * q.Value);
         }
         #endregion
 
@@ -190,24 +203,57 @@ namespace $safeprojectname$
         }
         #endregion
 
-        #region Statics
+        #region Static fields
         private static readonly Dimension s_sense = Dimension.Time;
         private static readonly int s_family = 1;
         private static /*mutable*/ double s_factor = 1d;
         private static /*mutable*/ string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("s");
+        private static readonly Unit<double> s_proxy = new Second_Proxy();
 
         private static readonly Second s_one = new Second(1d);
         private static readonly Second s_zero = new Second(0d);
+        #endregion
 
+        #region Static Properties
         public static Dimension Sense { get { return s_sense; } }
         public static int Family { get { return s_family; } }
         public static double Factor { get { return s_factor; } set { s_factor = value; } }
         public static string Format { get { return s_format; } set { s_format = value; } }
         public static SymbolCollection Symbol { get { return s_symbol; } }
+        public static Unit<double> Proxy { get { return s_proxy; } }
 
         public static Second One { get { return s_one; } }
         public static Second Zero { get { return s_zero; } }
+        #endregion
+    }
+
+    public partial class Second_Proxy : Unit<double>
+    {
+        #region Properties
+        public override int Family { get { return Second.Family; } }
+        public override Dimension Sense { get { return Second.Sense; } }
+        public override SymbolCollection Symbol { get { return Second.Symbol; } }
+        public override double Factor { get { return Second.Factor; } set { Second.Factor = value; } }
+        public override string Format { get { return Second.Format; } set { Second.Format = value; } }
+        #endregion
+
+        #region Constructor(s)
+        public Second_Proxy() :
+            base(typeof(Second))
+        {
+        }
+        #endregion
+
+        #region Methods
+        public override IQuantity<double> Create(double value)
+        {
+            return new Second(value);
+        }
+        public override IQuantity<double> From(IQuantity<double> quantity)
+        {
+            return Second.From(quantity);
+        }
         #endregion
     }
     public partial struct Kilogram : IQuantity<double>, IEquatable<Kilogram>, IComparable<Kilogram>, IFormattable
@@ -218,9 +264,7 @@ namespace $safeprojectname$
 
         #region Properties
         public double Value { get { return m_value; } }
-        int IQuantity<double>.Family { get { return Kilogram.Family; } }
-        double IQuantity<double>.Factor { get { return Kilogram.Factor; } }
-        SymbolCollection IQuantity<double>.Symbol { get { return Kilogram.Symbol; } }
+        Unit<double> IQuantity<double>.Unit { get { return Kilogram.Proxy; } }
         #endregion
 
         #region Constructor(s)
@@ -228,22 +272,14 @@ namespace $safeprojectname$
         {
             m_value = value;
         }
-        public static IQuantity<double> Create(double value)
-        {
-            return new Kilogram(value);
-        }
         #endregion
 
         #region Conversions
         public static explicit operator Kilogram(double q) { return new Kilogram(q); }
         public static Kilogram From(IQuantity<double> q)
         {
-            if (q.Family != Kilogram.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Kilogram\"", q.GetType().Name));
-            return new Kilogram((Kilogram.Factor / q.Factor) * q.Value);
-        }
-        public static IQuantity<double> Convert(IQuantity<double> q)
-        {
-            return From(q);
+            if (q.Unit.Family != Kilogram.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Kilogram\"", q.GetType().Name));
+            return new Kilogram((Kilogram.Factor / q.Unit.Factor) * q.Value);
         }
         #endregion
 
@@ -289,24 +325,57 @@ namespace $safeprojectname$
         }
         #endregion
 
-        #region Statics
+        #region Static fields
         private static readonly Dimension s_sense = Dimension.Mass;
         private static readonly int s_family = 2;
         private static /*mutable*/ double s_factor = 1d;
         private static /*mutable*/ string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("kg");
+        private static readonly Unit<double> s_proxy = new Kilogram_Proxy();
 
         private static readonly Kilogram s_one = new Kilogram(1d);
         private static readonly Kilogram s_zero = new Kilogram(0d);
+        #endregion
 
+        #region Static Properties
         public static Dimension Sense { get { return s_sense; } }
         public static int Family { get { return s_family; } }
         public static double Factor { get { return s_factor; } set { s_factor = value; } }
         public static string Format { get { return s_format; } set { s_format = value; } }
         public static SymbolCollection Symbol { get { return s_symbol; } }
+        public static Unit<double> Proxy { get { return s_proxy; } }
 
         public static Kilogram One { get { return s_one; } }
         public static Kilogram Zero { get { return s_zero; } }
+        #endregion
+    }
+
+    public partial class Kilogram_Proxy : Unit<double>
+    {
+        #region Properties
+        public override int Family { get { return Kilogram.Family; } }
+        public override Dimension Sense { get { return Kilogram.Sense; } }
+        public override SymbolCollection Symbol { get { return Kilogram.Symbol; } }
+        public override double Factor { get { return Kilogram.Factor; } set { Kilogram.Factor = value; } }
+        public override string Format { get { return Kilogram.Format; } set { Kilogram.Format = value; } }
+        #endregion
+
+        #region Constructor(s)
+        public Kilogram_Proxy() :
+            base(typeof(Kilogram))
+        {
+        }
+        #endregion
+
+        #region Methods
+        public override IQuantity<double> Create(double value)
+        {
+            return new Kilogram(value);
+        }
+        public override IQuantity<double> From(IQuantity<double> quantity)
+        {
+            return Kilogram.From(quantity);
+        }
         #endregion
     }
     public partial struct DegKelvin : IQuantity<double>, IEquatable<DegKelvin>, IComparable<DegKelvin>, IFormattable
@@ -317,19 +386,13 @@ namespace $safeprojectname$
 
         #region Properties
         public double Value { get { return m_value; } }
-        int IQuantity<double>.Family { get { return DegKelvin.Family; } }
-        double IQuantity<double>.Factor { get { return DegKelvin.Factor; } }
-        SymbolCollection IQuantity<double>.Symbol { get { return DegKelvin.Symbol; } }
+        Unit<double> IQuantity<double>.Unit { get { return DegKelvin.Proxy; } }
         #endregion
 
         #region Constructor(s)
         public DegKelvin(double value)
         {
             m_value = value;
-        }
-        public static IQuantity<double> Create(double value)
-        {
-            return new DegKelvin(value);
         }
         #endregion
 
@@ -340,12 +403,8 @@ namespace $safeprojectname$
         public static explicit operator DegKelvin(DegCelsius q) { return new DegKelvin((DegKelvin.Factor / DegCelsius.Factor) * q.m_value); }
         public static DegKelvin From(IQuantity<double> q)
         {
-            if (q.Family != DegKelvin.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"DegKelvin\"", q.GetType().Name));
-            return new DegKelvin((DegKelvin.Factor / q.Factor) * q.Value);
-        }
-        public static IQuantity<double> Convert(IQuantity<double> q)
-        {
-            return From(q);
+            if (q.Unit.Family != DegKelvin.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"DegKelvin\"", q.GetType().Name));
+            return new DegKelvin((DegKelvin.Factor / q.Unit.Factor) * q.Value);
         }
         #endregion
 
@@ -389,24 +448,57 @@ namespace $safeprojectname$
         }
         #endregion
 
-        #region Statics
+        #region Static fields
         private static readonly Dimension s_sense = Dimension.Temperature;
         private static readonly int s_family = 3;
         private static /*mutable*/ double s_factor = 1d;
         private static /*mutable*/ string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("K", "deg.K");
+        private static readonly Unit<double> s_proxy = new DegKelvin_Proxy();
 
         private static readonly DegKelvin s_one = new DegKelvin(1d);
         private static readonly DegKelvin s_zero = new DegKelvin(0d);
+        #endregion
 
+        #region Static Properties
         public static Dimension Sense { get { return s_sense; } }
         public static int Family { get { return s_family; } }
         public static double Factor { get { return s_factor; } set { s_factor = value; } }
         public static string Format { get { return s_format; } set { s_format = value; } }
         public static SymbolCollection Symbol { get { return s_symbol; } }
+        public static Unit<double> Proxy { get { return s_proxy; } }
 
         public static DegKelvin One { get { return s_one; } }
         public static DegKelvin Zero { get { return s_zero; } }
+        #endregion
+    }
+
+    public partial class DegKelvin_Proxy : Unit<double>
+    {
+        #region Properties
+        public override int Family { get { return DegKelvin.Family; } }
+        public override Dimension Sense { get { return DegKelvin.Sense; } }
+        public override SymbolCollection Symbol { get { return DegKelvin.Symbol; } }
+        public override double Factor { get { return DegKelvin.Factor; } set { DegKelvin.Factor = value; } }
+        public override string Format { get { return DegKelvin.Format; } set { DegKelvin.Format = value; } }
+        #endregion
+
+        #region Constructor(s)
+        public DegKelvin_Proxy() :
+            base(typeof(DegKelvin))
+        {
+        }
+        #endregion
+
+        #region Methods
+        public override IQuantity<double> Create(double value)
+        {
+            return new DegKelvin(value);
+        }
+        public override IQuantity<double> From(IQuantity<double> quantity)
+        {
+            return DegKelvin.From(quantity);
+        }
         #endregion
     }
     public partial struct DegCelsius : IQuantity<double>, IEquatable<DegCelsius>, IComparable<DegCelsius>, IFormattable
@@ -417,19 +509,13 @@ namespace $safeprojectname$
 
         #region Properties
         public double Value { get { return m_value; } }
-        int IQuantity<double>.Family { get { return DegCelsius.Family; } }
-        double IQuantity<double>.Factor { get { return DegCelsius.Factor; } }
-        SymbolCollection IQuantity<double>.Symbol { get { return DegCelsius.Symbol; } }
+        Unit<double> IQuantity<double>.Unit { get { return DegCelsius.Proxy; } }
         #endregion
 
         #region Constructor(s)
         public DegCelsius(double value)
         {
             m_value = value;
-        }
-        public static IQuantity<double> Create(double value)
-        {
-            return new DegCelsius(value);
         }
         #endregion
 
@@ -440,12 +526,8 @@ namespace $safeprojectname$
         public static explicit operator DegCelsius(DegRankine q) { return new DegCelsius((DegCelsius.Factor / DegRankine.Factor) * q.m_value); }
         public static DegCelsius From(IQuantity<double> q)
         {
-            if (q.Family != DegCelsius.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"DegCelsius\"", q.GetType().Name));
-            return new DegCelsius((DegCelsius.Factor / q.Factor) * q.Value);
-        }
-        public static IQuantity<double> Convert(IQuantity<double> q)
-        {
-            return From(q);
+            if (q.Unit.Family != DegCelsius.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"DegCelsius\"", q.GetType().Name));
+            return new DegCelsius((DegCelsius.Factor / q.Unit.Factor) * q.Value);
         }
         #endregion
 
@@ -489,24 +571,57 @@ namespace $safeprojectname$
         }
         #endregion
 
-        #region Statics
+        #region Static fields
         private static readonly Dimension s_sense = DegKelvin.Sense;
         private static readonly int s_family = DegKelvin.Family;
         private static /*mutable*/ double s_factor = DegKelvin.Factor;
         private static /*mutable*/ string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("\u00B0C", "deg.C");
+        private static readonly Unit<double> s_proxy = new DegCelsius_Proxy();
 
         private static readonly DegCelsius s_one = new DegCelsius(1d);
         private static readonly DegCelsius s_zero = new DegCelsius(0d);
+        #endregion
 
+        #region Static Properties
         public static Dimension Sense { get { return s_sense; } }
         public static int Family { get { return s_family; } }
         public static double Factor { get { return s_factor; } set { s_factor = value; } }
         public static string Format { get { return s_format; } set { s_format = value; } }
         public static SymbolCollection Symbol { get { return s_symbol; } }
+        public static Unit<double> Proxy { get { return s_proxy; } }
 
         public static DegCelsius One { get { return s_one; } }
         public static DegCelsius Zero { get { return s_zero; } }
+        #endregion
+    }
+
+    public partial class DegCelsius_Proxy : Unit<double>
+    {
+        #region Properties
+        public override int Family { get { return DegCelsius.Family; } }
+        public override Dimension Sense { get { return DegCelsius.Sense; } }
+        public override SymbolCollection Symbol { get { return DegCelsius.Symbol; } }
+        public override double Factor { get { return DegCelsius.Factor; } set { DegCelsius.Factor = value; } }
+        public override string Format { get { return DegCelsius.Format; } set { DegCelsius.Format = value; } }
+        #endregion
+
+        #region Constructor(s)
+        public DegCelsius_Proxy() :
+            base(typeof(DegCelsius))
+        {
+        }
+        #endregion
+
+        #region Methods
+        public override IQuantity<double> Create(double value)
+        {
+            return new DegCelsius(value);
+        }
+        public override IQuantity<double> From(IQuantity<double> quantity)
+        {
+            return DegCelsius.From(quantity);
+        }
         #endregion
     }
     public partial struct DegRankine : IQuantity<double>, IEquatable<DegRankine>, IComparable<DegRankine>, IFormattable
@@ -517,19 +632,13 @@ namespace $safeprojectname$
 
         #region Properties
         public double Value { get { return m_value; } }
-        int IQuantity<double>.Family { get { return DegRankine.Family; } }
-        double IQuantity<double>.Factor { get { return DegRankine.Factor; } }
-        SymbolCollection IQuantity<double>.Symbol { get { return DegRankine.Symbol; } }
+        Unit<double> IQuantity<double>.Unit { get { return DegRankine.Proxy; } }
         #endregion
 
         #region Constructor(s)
         public DegRankine(double value)
         {
             m_value = value;
-        }
-        public static IQuantity<double> Create(double value)
-        {
-            return new DegRankine(value);
         }
         #endregion
 
@@ -540,12 +649,8 @@ namespace $safeprojectname$
         public static explicit operator DegRankine(DegFahrenheit q) { return new DegRankine((DegRankine.Factor / DegFahrenheit.Factor) * q.m_value); }
         public static DegRankine From(IQuantity<double> q)
         {
-            if (q.Family != DegRankine.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"DegRankine\"", q.GetType().Name));
-            return new DegRankine((DegRankine.Factor / q.Factor) * q.Value);
-        }
-        public static IQuantity<double> Convert(IQuantity<double> q)
-        {
-            return From(q);
+            if (q.Unit.Family != DegRankine.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"DegRankine\"", q.GetType().Name));
+            return new DegRankine((DegRankine.Factor / q.Unit.Factor) * q.Value);
         }
         #endregion
 
@@ -589,24 +694,57 @@ namespace $safeprojectname$
         }
         #endregion
 
-        #region Statics
+        #region Static fields
         private static readonly Dimension s_sense = DegKelvin.Sense;
         private static readonly int s_family = DegKelvin.Family;
         private static /*mutable*/ double s_factor = (9d / 5d) * DegKelvin.Factor;
         private static /*mutable*/ string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("\u00B0R", "deg.R");
+        private static readonly Unit<double> s_proxy = new DegRankine_Proxy();
 
         private static readonly DegRankine s_one = new DegRankine(1d);
         private static readonly DegRankine s_zero = new DegRankine(0d);
+        #endregion
 
+        #region Static Properties
         public static Dimension Sense { get { return s_sense; } }
         public static int Family { get { return s_family; } }
         public static double Factor { get { return s_factor; } set { s_factor = value; } }
         public static string Format { get { return s_format; } set { s_format = value; } }
         public static SymbolCollection Symbol { get { return s_symbol; } }
+        public static Unit<double> Proxy { get { return s_proxy; } }
 
         public static DegRankine One { get { return s_one; } }
         public static DegRankine Zero { get { return s_zero; } }
+        #endregion
+    }
+
+    public partial class DegRankine_Proxy : Unit<double>
+    {
+        #region Properties
+        public override int Family { get { return DegRankine.Family; } }
+        public override Dimension Sense { get { return DegRankine.Sense; } }
+        public override SymbolCollection Symbol { get { return DegRankine.Symbol; } }
+        public override double Factor { get { return DegRankine.Factor; } set { DegRankine.Factor = value; } }
+        public override string Format { get { return DegRankine.Format; } set { DegRankine.Format = value; } }
+        #endregion
+
+        #region Constructor(s)
+        public DegRankine_Proxy() :
+            base(typeof(DegRankine))
+        {
+        }
+        #endregion
+
+        #region Methods
+        public override IQuantity<double> Create(double value)
+        {
+            return new DegRankine(value);
+        }
+        public override IQuantity<double> From(IQuantity<double> quantity)
+        {
+            return DegRankine.From(quantity);
+        }
         #endregion
     }
     public partial struct DegFahrenheit : IQuantity<double>, IEquatable<DegFahrenheit>, IComparable<DegFahrenheit>, IFormattable
@@ -617,19 +755,13 @@ namespace $safeprojectname$
 
         #region Properties
         public double Value { get { return m_value; } }
-        int IQuantity<double>.Family { get { return DegFahrenheit.Family; } }
-        double IQuantity<double>.Factor { get { return DegFahrenheit.Factor; } }
-        SymbolCollection IQuantity<double>.Symbol { get { return DegFahrenheit.Symbol; } }
+        Unit<double> IQuantity<double>.Unit { get { return DegFahrenheit.Proxy; } }
         #endregion
 
         #region Constructor(s)
         public DegFahrenheit(double value)
         {
             m_value = value;
-        }
-        public static IQuantity<double> Create(double value)
-        {
-            return new DegFahrenheit(value);
         }
         #endregion
 
@@ -640,12 +772,8 @@ namespace $safeprojectname$
         public static explicit operator DegFahrenheit(DegKelvin q) { return new DegFahrenheit((DegFahrenheit.Factor / DegKelvin.Factor) * q.m_value); }
         public static DegFahrenheit From(IQuantity<double> q)
         {
-            if (q.Family != DegFahrenheit.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"DegFahrenheit\"", q.GetType().Name));
-            return new DegFahrenheit((DegFahrenheit.Factor / q.Factor) * q.Value);
-        }
-        public static IQuantity<double> Convert(IQuantity<double> q)
-        {
-            return From(q);
+            if (q.Unit.Family != DegFahrenheit.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"DegFahrenheit\"", q.GetType().Name));
+            return new DegFahrenheit((DegFahrenheit.Factor / q.Unit.Factor) * q.Value);
         }
         #endregion
 
@@ -689,24 +817,57 @@ namespace $safeprojectname$
         }
         #endregion
 
-        #region Statics
+        #region Static fields
         private static readonly Dimension s_sense = DegKelvin.Sense;
         private static readonly int s_family = DegKelvin.Family;
         private static /*mutable*/ double s_factor = (9d / 5d) * DegKelvin.Factor;
         private static /*mutable*/ string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("\u00B0F", "deg.F");
+        private static readonly Unit<double> s_proxy = new DegFahrenheit_Proxy();
 
         private static readonly DegFahrenheit s_one = new DegFahrenheit(1d);
         private static readonly DegFahrenheit s_zero = new DegFahrenheit(0d);
+        #endregion
 
+        #region Static Properties
         public static Dimension Sense { get { return s_sense; } }
         public static int Family { get { return s_family; } }
         public static double Factor { get { return s_factor; } set { s_factor = value; } }
         public static string Format { get { return s_format; } set { s_format = value; } }
         public static SymbolCollection Symbol { get { return s_symbol; } }
+        public static Unit<double> Proxy { get { return s_proxy; } }
 
         public static DegFahrenheit One { get { return s_one; } }
         public static DegFahrenheit Zero { get { return s_zero; } }
+        #endregion
+    }
+
+    public partial class DegFahrenheit_Proxy : Unit<double>
+    {
+        #region Properties
+        public override int Family { get { return DegFahrenheit.Family; } }
+        public override Dimension Sense { get { return DegFahrenheit.Sense; } }
+        public override SymbolCollection Symbol { get { return DegFahrenheit.Symbol; } }
+        public override double Factor { get { return DegFahrenheit.Factor; } set { DegFahrenheit.Factor = value; } }
+        public override string Format { get { return DegFahrenheit.Format; } set { DegFahrenheit.Format = value; } }
+        #endregion
+
+        #region Constructor(s)
+        public DegFahrenheit_Proxy() :
+            base(typeof(DegFahrenheit))
+        {
+        }
+        #endregion
+
+        #region Methods
+        public override IQuantity<double> Create(double value)
+        {
+            return new DegFahrenheit(value);
+        }
+        public override IQuantity<double> From(IQuantity<double> quantity)
+        {
+            return DegFahrenheit.From(quantity);
+        }
         #endregion
     }
     public partial struct EUR : IQuantity<decimal>, IEquatable<EUR>, IComparable<EUR>, IFormattable
@@ -717,19 +878,13 @@ namespace $safeprojectname$
 
         #region Properties
         public decimal Value { get { return m_value; } }
-        int IQuantity<decimal>.Family { get { return EUR.Family; } }
-        decimal IQuantity<decimal>.Factor { get { return EUR.Factor; } }
-        SymbolCollection IQuantity<decimal>.Symbol { get { return EUR.Symbol; } }
+        Unit<decimal> IQuantity<decimal>.Unit { get { return EUR.Proxy; } }
         #endregion
 
         #region Constructor(s)
         public EUR(decimal value)
         {
             m_value = value;
-        }
-        public static IQuantity<decimal> Create(decimal value)
-        {
-            return new EUR(value);
         }
         #endregion
 
@@ -739,12 +894,8 @@ namespace $safeprojectname$
         public static explicit operator EUR(USD q) { return new EUR((EUR.Factor / USD.Factor) * q.m_value); }
         public static EUR From(IQuantity<decimal> q)
         {
-            if (q.Family != EUR.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"EUR\"", q.GetType().Name));
-            return new EUR((EUR.Factor / q.Factor) * q.Value);
-        }
-        public static IQuantity<decimal> Convert(IQuantity<decimal> q)
-        {
-            return From(q);
+            if (q.Unit.Family != EUR.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"EUR\"", q.GetType().Name));
+            return new EUR((EUR.Factor / q.Unit.Factor) * q.Value);
         }
         #endregion
 
@@ -788,24 +939,57 @@ namespace $safeprojectname$
         }
         #endregion
 
-        #region Statics
+        #region Static fields
         private static readonly Dimension s_sense = Dimension.Other;
         private static readonly int s_family = 4;
         private static /*mutable*/ decimal s_factor = decimal.One;
         private static /*mutable*/ string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("EUR");
+        private static readonly Unit<decimal> s_proxy = new EUR_Proxy();
 
         private static readonly EUR s_one = new EUR(decimal.One);
         private static readonly EUR s_zero = new EUR(decimal.Zero);
+        #endregion
 
+        #region Static Properties
         public static Dimension Sense { get { return s_sense; } }
         public static int Family { get { return s_family; } }
         public static decimal Factor { get { return s_factor; } set { s_factor = value; } }
         public static string Format { get { return s_format; } set { s_format = value; } }
         public static SymbolCollection Symbol { get { return s_symbol; } }
+        public static Unit<decimal> Proxy { get { return s_proxy; } }
 
         public static EUR One { get { return s_one; } }
         public static EUR Zero { get { return s_zero; } }
+        #endregion
+    }
+
+    public partial class EUR_Proxy : Unit<decimal>
+    {
+        #region Properties
+        public override int Family { get { return EUR.Family; } }
+        public override Dimension Sense { get { return EUR.Sense; } }
+        public override SymbolCollection Symbol { get { return EUR.Symbol; } }
+        public override decimal Factor { get { return EUR.Factor; } set { EUR.Factor = value; } }
+        public override string Format { get { return EUR.Format; } set { EUR.Format = value; } }
+        #endregion
+
+        #region Constructor(s)
+        public EUR_Proxy() :
+            base(typeof(EUR))
+        {
+        }
+        #endregion
+
+        #region Methods
+        public override IQuantity<decimal> Create(decimal value)
+        {
+            return new EUR(value);
+        }
+        public override IQuantity<decimal> From(IQuantity<decimal> quantity)
+        {
+            return EUR.From(quantity);
+        }
         #endregion
     }
     public partial struct USD : IQuantity<decimal>, IEquatable<USD>, IComparable<USD>, IFormattable
@@ -816,19 +1000,13 @@ namespace $safeprojectname$
 
         #region Properties
         public decimal Value { get { return m_value; } }
-        int IQuantity<decimal>.Family { get { return USD.Family; } }
-        decimal IQuantity<decimal>.Factor { get { return USD.Factor; } }
-        SymbolCollection IQuantity<decimal>.Symbol { get { return USD.Symbol; } }
+        Unit<decimal> IQuantity<decimal>.Unit { get { return USD.Proxy; } }
         #endregion
 
         #region Constructor(s)
         public USD(decimal value)
         {
             m_value = value;
-        }
-        public static IQuantity<decimal> Create(decimal value)
-        {
-            return new USD(value);
         }
         #endregion
 
@@ -838,12 +1016,8 @@ namespace $safeprojectname$
         public static explicit operator USD(PLN q) { return new USD((USD.Factor / PLN.Factor) * q.m_value); }
         public static USD From(IQuantity<decimal> q)
         {
-            if (q.Family != USD.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"USD\"", q.GetType().Name));
-            return new USD((USD.Factor / q.Factor) * q.Value);
-        }
-        public static IQuantity<decimal> Convert(IQuantity<decimal> q)
-        {
-            return From(q);
+            if (q.Unit.Family != USD.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"USD\"", q.GetType().Name));
+            return new USD((USD.Factor / q.Unit.Factor) * q.Value);
         }
         #endregion
 
@@ -887,24 +1061,57 @@ namespace $safeprojectname$
         }
         #endregion
 
-        #region Statics
+        #region Static fields
         private static readonly Dimension s_sense = EUR.Sense;
         private static readonly int s_family = EUR.Family;
         private static /*mutable*/ decimal s_factor = 1.3433m * EUR.Factor;
         private static /*mutable*/ string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("USD");
+        private static readonly Unit<decimal> s_proxy = new USD_Proxy();
 
         private static readonly USD s_one = new USD(decimal.One);
         private static readonly USD s_zero = new USD(decimal.Zero);
+        #endregion
 
+        #region Static Properties
         public static Dimension Sense { get { return s_sense; } }
         public static int Family { get { return s_family; } }
         public static decimal Factor { get { return s_factor; } set { s_factor = value; } }
         public static string Format { get { return s_format; } set { s_format = value; } }
         public static SymbolCollection Symbol { get { return s_symbol; } }
+        public static Unit<decimal> Proxy { get { return s_proxy; } }
 
         public static USD One { get { return s_one; } }
         public static USD Zero { get { return s_zero; } }
+        #endregion
+    }
+
+    public partial class USD_Proxy : Unit<decimal>
+    {
+        #region Properties
+        public override int Family { get { return USD.Family; } }
+        public override Dimension Sense { get { return USD.Sense; } }
+        public override SymbolCollection Symbol { get { return USD.Symbol; } }
+        public override decimal Factor { get { return USD.Factor; } set { USD.Factor = value; } }
+        public override string Format { get { return USD.Format; } set { USD.Format = value; } }
+        #endregion
+
+        #region Constructor(s)
+        public USD_Proxy() :
+            base(typeof(USD))
+        {
+        }
+        #endregion
+
+        #region Methods
+        public override IQuantity<decimal> Create(decimal value)
+        {
+            return new USD(value);
+        }
+        public override IQuantity<decimal> From(IQuantity<decimal> quantity)
+        {
+            return USD.From(quantity);
+        }
         #endregion
     }
     public partial struct PLN : IQuantity<decimal>, IEquatable<PLN>, IComparable<PLN>, IFormattable
@@ -915,19 +1122,13 @@ namespace $safeprojectname$
 
         #region Properties
         public decimal Value { get { return m_value; } }
-        int IQuantity<decimal>.Family { get { return PLN.Family; } }
-        decimal IQuantity<decimal>.Factor { get { return PLN.Factor; } }
-        SymbolCollection IQuantity<decimal>.Symbol { get { return PLN.Symbol; } }
+        Unit<decimal> IQuantity<decimal>.Unit { get { return PLN.Proxy; } }
         #endregion
 
         #region Constructor(s)
         public PLN(decimal value)
         {
             m_value = value;
-        }
-        public static IQuantity<decimal> Create(decimal value)
-        {
-            return new PLN(value);
         }
         #endregion
 
@@ -937,12 +1138,8 @@ namespace $safeprojectname$
         public static explicit operator PLN(EUR q) { return new PLN((PLN.Factor / EUR.Factor) * q.m_value); }
         public static PLN From(IQuantity<decimal> q)
         {
-            if (q.Family != PLN.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"PLN\"", q.GetType().Name));
-            return new PLN((PLN.Factor / q.Factor) * q.Value);
-        }
-        public static IQuantity<decimal> Convert(IQuantity<decimal> q)
-        {
-            return From(q);
+            if (q.Unit.Family != PLN.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"PLN\"", q.GetType().Name));
+            return new PLN((PLN.Factor / q.Unit.Factor) * q.Value);
         }
         #endregion
 
@@ -986,24 +1183,57 @@ namespace $safeprojectname$
         }
         #endregion
 
-        #region Statics
+        #region Static fields
         private static readonly Dimension s_sense = EUR.Sense;
         private static readonly int s_family = EUR.Family;
         private static /*mutable*/ decimal s_factor = 4.1437m * EUR.Factor;
         private static /*mutable*/ string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("PLN");
+        private static readonly Unit<decimal> s_proxy = new PLN_Proxy();
 
         private static readonly PLN s_one = new PLN(decimal.One);
         private static readonly PLN s_zero = new PLN(decimal.Zero);
+        #endregion
 
+        #region Static Properties
         public static Dimension Sense { get { return s_sense; } }
         public static int Family { get { return s_family; } }
         public static decimal Factor { get { return s_factor; } set { s_factor = value; } }
         public static string Format { get { return s_format; } set { s_format = value; } }
         public static SymbolCollection Symbol { get { return s_symbol; } }
+        public static Unit<decimal> Proxy { get { return s_proxy; } }
 
         public static PLN One { get { return s_one; } }
         public static PLN Zero { get { return s_zero; } }
+        #endregion
+    }
+
+    public partial class PLN_Proxy : Unit<decimal>
+    {
+        #region Properties
+        public override int Family { get { return PLN.Family; } }
+        public override Dimension Sense { get { return PLN.Sense; } }
+        public override SymbolCollection Symbol { get { return PLN.Symbol; } }
+        public override decimal Factor { get { return PLN.Factor; } set { PLN.Factor = value; } }
+        public override string Format { get { return PLN.Format; } set { PLN.Format = value; } }
+        #endregion
+
+        #region Constructor(s)
+        public PLN_Proxy() :
+            base(typeof(PLN))
+        {
+        }
+        #endregion
+
+        #region Methods
+        public override IQuantity<decimal> Create(decimal value)
+        {
+            return new PLN(value);
+        }
+        public override IQuantity<decimal> From(IQuantity<decimal> quantity)
+        {
+            return PLN.From(quantity);
+        }
         #endregion
     }
     public partial struct Radian : IQuantity<double>, IEquatable<Radian>, IComparable<Radian>, IFormattable
@@ -1014,19 +1244,13 @@ namespace $safeprojectname$
 
         #region Properties
         public double Value { get { return m_value; } }
-        int IQuantity<double>.Family { get { return Radian.Family; } }
-        double IQuantity<double>.Factor { get { return Radian.Factor; } }
-        SymbolCollection IQuantity<double>.Symbol { get { return Radian.Symbol; } }
+        Unit<double> IQuantity<double>.Unit { get { return Radian.Proxy; } }
         #endregion
 
         #region Constructor(s)
         public Radian(double value)
         {
             m_value = value;
-        }
-        public static IQuantity<double> Create(double value)
-        {
-            return new Radian(value);
         }
         #endregion
 
@@ -1036,12 +1260,8 @@ namespace $safeprojectname$
         public static explicit operator Radian(Degree q) { return new Radian((Radian.Factor / Degree.Factor) * q.m_value); }
         public static Radian From(IQuantity<double> q)
         {
-            if (q.Family != Radian.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Radian\"", q.GetType().Name));
-            return new Radian((Radian.Factor / q.Factor) * q.Value);
-        }
-        public static IQuantity<double> Convert(IQuantity<double> q)
-        {
-            return From(q);
+            if (q.Unit.Family != Radian.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Radian\"", q.GetType().Name));
+            return new Radian((Radian.Factor / q.Unit.Factor) * q.Value);
         }
         #endregion
 
@@ -1085,24 +1305,57 @@ namespace $safeprojectname$
         }
         #endregion
 
-        #region Statics
+        #region Static fields
         private static readonly Dimension s_sense = Dimension.None;
         private static readonly int s_family = 5;
         private static /*mutable*/ double s_factor = 1d;
         private static /*mutable*/ string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("rad");
+        private static readonly Unit<double> s_proxy = new Radian_Proxy();
 
         private static readonly Radian s_one = new Radian(1d);
         private static readonly Radian s_zero = new Radian(0d);
+        #endregion
 
+        #region Static Properties
         public static Dimension Sense { get { return s_sense; } }
         public static int Family { get { return s_family; } }
         public static double Factor { get { return s_factor; } set { s_factor = value; } }
         public static string Format { get { return s_format; } set { s_format = value; } }
         public static SymbolCollection Symbol { get { return s_symbol; } }
+        public static Unit<double> Proxy { get { return s_proxy; } }
 
         public static Radian One { get { return s_one; } }
         public static Radian Zero { get { return s_zero; } }
+        #endregion
+    }
+
+    public partial class Radian_Proxy : Unit<double>
+    {
+        #region Properties
+        public override int Family { get { return Radian.Family; } }
+        public override Dimension Sense { get { return Radian.Sense; } }
+        public override SymbolCollection Symbol { get { return Radian.Symbol; } }
+        public override double Factor { get { return Radian.Factor; } set { Radian.Factor = value; } }
+        public override string Format { get { return Radian.Format; } set { Radian.Format = value; } }
+        #endregion
+
+        #region Constructor(s)
+        public Radian_Proxy() :
+            base(typeof(Radian))
+        {
+        }
+        #endregion
+
+        #region Methods
+        public override IQuantity<double> Create(double value)
+        {
+            return new Radian(value);
+        }
+        public override IQuantity<double> From(IQuantity<double> quantity)
+        {
+            return Radian.From(quantity);
+        }
         #endregion
     }
     public partial struct Degree : IQuantity<double>, IEquatable<Degree>, IComparable<Degree>, IFormattable
@@ -1113,19 +1366,13 @@ namespace $safeprojectname$
 
         #region Properties
         public double Value { get { return m_value; } }
-        int IQuantity<double>.Family { get { return Degree.Family; } }
-        double IQuantity<double>.Factor { get { return Degree.Factor; } }
-        SymbolCollection IQuantity<double>.Symbol { get { return Degree.Symbol; } }
+        Unit<double> IQuantity<double>.Unit { get { return Degree.Proxy; } }
         #endregion
 
         #region Constructor(s)
         public Degree(double value)
         {
             m_value = value;
-        }
-        public static IQuantity<double> Create(double value)
-        {
-            return new Degree(value);
         }
         #endregion
 
@@ -1135,12 +1382,8 @@ namespace $safeprojectname$
         public static explicit operator Degree(Cycles q) { return new Degree((Degree.Factor / Cycles.Factor) * q.m_value); }
         public static Degree From(IQuantity<double> q)
         {
-            if (q.Family != Degree.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Degree\"", q.GetType().Name));
-            return new Degree((Degree.Factor / q.Factor) * q.Value);
-        }
-        public static IQuantity<double> Convert(IQuantity<double> q)
-        {
-            return From(q);
+            if (q.Unit.Family != Degree.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Degree\"", q.GetType().Name));
+            return new Degree((Degree.Factor / q.Unit.Factor) * q.Value);
         }
         #endregion
 
@@ -1184,24 +1427,57 @@ namespace $safeprojectname$
         }
         #endregion
 
-        #region Statics
+        #region Static fields
         private static readonly Dimension s_sense = Radian.Sense;
         private static readonly int s_family = Radian.Family;
         private static /*mutable*/ double s_factor = (180d / Math.PI) * Radian.Factor;
         private static /*mutable*/ string s_format = "{0}{1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("\u00B0", "deg");
+        private static readonly Unit<double> s_proxy = new Degree_Proxy();
 
         private static readonly Degree s_one = new Degree(1d);
         private static readonly Degree s_zero = new Degree(0d);
+        #endregion
 
+        #region Static Properties
         public static Dimension Sense { get { return s_sense; } }
         public static int Family { get { return s_family; } }
         public static double Factor { get { return s_factor; } set { s_factor = value; } }
         public static string Format { get { return s_format; } set { s_format = value; } }
         public static SymbolCollection Symbol { get { return s_symbol; } }
+        public static Unit<double> Proxy { get { return s_proxy; } }
 
         public static Degree One { get { return s_one; } }
         public static Degree Zero { get { return s_zero; } }
+        #endregion
+    }
+
+    public partial class Degree_Proxy : Unit<double>
+    {
+        #region Properties
+        public override int Family { get { return Degree.Family; } }
+        public override Dimension Sense { get { return Degree.Sense; } }
+        public override SymbolCollection Symbol { get { return Degree.Symbol; } }
+        public override double Factor { get { return Degree.Factor; } set { Degree.Factor = value; } }
+        public override string Format { get { return Degree.Format; } set { Degree.Format = value; } }
+        #endregion
+
+        #region Constructor(s)
+        public Degree_Proxy() :
+            base(typeof(Degree))
+        {
+        }
+        #endregion
+
+        #region Methods
+        public override IQuantity<double> Create(double value)
+        {
+            return new Degree(value);
+        }
+        public override IQuantity<double> From(IQuantity<double> quantity)
+        {
+            return Degree.From(quantity);
+        }
         #endregion
     }
     public partial struct Cycles : IQuantity<double>, IEquatable<Cycles>, IComparable<Cycles>, IFormattable
@@ -1212,19 +1488,13 @@ namespace $safeprojectname$
 
         #region Properties
         public double Value { get { return m_value; } }
-        int IQuantity<double>.Family { get { return Cycles.Family; } }
-        double IQuantity<double>.Factor { get { return Cycles.Factor; } }
-        SymbolCollection IQuantity<double>.Symbol { get { return Cycles.Symbol; } }
+        Unit<double> IQuantity<double>.Unit { get { return Cycles.Proxy; } }
         #endregion
 
         #region Constructor(s)
         public Cycles(double value)
         {
             m_value = value;
-        }
-        public static IQuantity<double> Create(double value)
-        {
-            return new Cycles(value);
         }
         #endregion
 
@@ -1234,12 +1504,8 @@ namespace $safeprojectname$
         public static explicit operator Cycles(Radian q) { return new Cycles((Cycles.Factor / Radian.Factor) * q.m_value); }
         public static Cycles From(IQuantity<double> q)
         {
-            if (q.Family != Cycles.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Cycles\"", q.GetType().Name));
-            return new Cycles((Cycles.Factor / q.Factor) * q.Value);
-        }
-        public static IQuantity<double> Convert(IQuantity<double> q)
-        {
-            return From(q);
+            if (q.Unit.Family != Cycles.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Cycles\"", q.GetType().Name));
+            return new Cycles((Cycles.Factor / q.Unit.Factor) * q.Value);
         }
         #endregion
 
@@ -1285,24 +1551,57 @@ namespace $safeprojectname$
         }
         #endregion
 
-        #region Statics
+        #region Static fields
         private static readonly Dimension s_sense = Radian.Sense;
         private static readonly int s_family = Radian.Family;
         private static /*mutable*/ double s_factor = Radian.Factor / (2d * Math.PI);
         private static /*mutable*/ string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("c");
+        private static readonly Unit<double> s_proxy = new Cycles_Proxy();
 
         private static readonly Cycles s_one = new Cycles(1d);
         private static readonly Cycles s_zero = new Cycles(0d);
+        #endregion
 
+        #region Static Properties
         public static Dimension Sense { get { return s_sense; } }
         public static int Family { get { return s_family; } }
         public static double Factor { get { return s_factor; } set { s_factor = value; } }
         public static string Format { get { return s_format; } set { s_format = value; } }
         public static SymbolCollection Symbol { get { return s_symbol; } }
+        public static Unit<double> Proxy { get { return s_proxy; } }
 
         public static Cycles One { get { return s_one; } }
         public static Cycles Zero { get { return s_zero; } }
+        #endregion
+    }
+
+    public partial class Cycles_Proxy : Unit<double>
+    {
+        #region Properties
+        public override int Family { get { return Cycles.Family; } }
+        public override Dimension Sense { get { return Cycles.Sense; } }
+        public override SymbolCollection Symbol { get { return Cycles.Symbol; } }
+        public override double Factor { get { return Cycles.Factor; } set { Cycles.Factor = value; } }
+        public override string Format { get { return Cycles.Format; } set { Cycles.Format = value; } }
+        #endregion
+
+        #region Constructor(s)
+        public Cycles_Proxy() :
+            base(typeof(Cycles))
+        {
+        }
+        #endregion
+
+        #region Methods
+        public override IQuantity<double> Create(double value)
+        {
+            return new Cycles(value);
+        }
+        public override IQuantity<double> From(IQuantity<double> quantity)
+        {
+            return Cycles.From(quantity);
+        }
         #endregion
     }
     public partial struct Hertz : IQuantity<double>, IEquatable<Hertz>, IComparable<Hertz>, IFormattable
@@ -1313,9 +1612,7 @@ namespace $safeprojectname$
 
         #region Properties
         public double Value { get { return m_value; } }
-        int IQuantity<double>.Family { get { return Hertz.Family; } }
-        double IQuantity<double>.Factor { get { return Hertz.Factor; } }
-        SymbolCollection IQuantity<double>.Symbol { get { return Hertz.Symbol; } }
+        Unit<double> IQuantity<double>.Unit { get { return Hertz.Proxy; } }
         #endregion
 
         #region Constructor(s)
@@ -1323,22 +1620,14 @@ namespace $safeprojectname$
         {
             m_value = value;
         }
-        public static IQuantity<double> Create(double value)
-        {
-            return new Hertz(value);
-        }
         #endregion
 
         #region Conversions
         public static explicit operator Hertz(double q) { return new Hertz(q); }
         public static Hertz From(IQuantity<double> q)
         {
-            if (q.Family != Hertz.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Hertz\"", q.GetType().Name));
-            return new Hertz((Hertz.Factor / q.Factor) * q.Value);
-        }
-        public static IQuantity<double> Convert(IQuantity<double> q)
-        {
-            return From(q);
+            if (q.Unit.Family != Hertz.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Hertz\"", q.GetType().Name));
+            return new Hertz((Hertz.Factor / q.Unit.Factor) * q.Value);
         }
         #endregion
 
@@ -1384,24 +1673,57 @@ namespace $safeprojectname$
         }
         #endregion
 
-        #region Statics
+        #region Static fields
         private static readonly Dimension s_sense = Cycles.Sense / Second.Sense;
         private static readonly int s_family = 6;
         private static /*mutable*/ double s_factor = Cycles.Factor / Second.Factor;
         private static /*mutable*/ string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("Hz");
+        private static readonly Unit<double> s_proxy = new Hertz_Proxy();
 
         private static readonly Hertz s_one = new Hertz(1d);
         private static readonly Hertz s_zero = new Hertz(0d);
+        #endregion
 
+        #region Static Properties
         public static Dimension Sense { get { return s_sense; } }
         public static int Family { get { return s_family; } }
         public static double Factor { get { return s_factor; } set { s_factor = value; } }
         public static string Format { get { return s_format; } set { s_format = value; } }
         public static SymbolCollection Symbol { get { return s_symbol; } }
+        public static Unit<double> Proxy { get { return s_proxy; } }
 
         public static Hertz One { get { return s_one; } }
         public static Hertz Zero { get { return s_zero; } }
+        #endregion
+    }
+
+    public partial class Hertz_Proxy : Unit<double>
+    {
+        #region Properties
+        public override int Family { get { return Hertz.Family; } }
+        public override Dimension Sense { get { return Hertz.Sense; } }
+        public override SymbolCollection Symbol { get { return Hertz.Symbol; } }
+        public override double Factor { get { return Hertz.Factor; } set { Hertz.Factor = value; } }
+        public override string Format { get { return Hertz.Format; } set { Hertz.Format = value; } }
+        #endregion
+
+        #region Constructor(s)
+        public Hertz_Proxy() :
+            base(typeof(Hertz))
+        {
+        }
+        #endregion
+
+        #region Methods
+        public override IQuantity<double> Create(double value)
+        {
+            return new Hertz(value);
+        }
+        public override IQuantity<double> From(IQuantity<double> quantity)
+        {
+            return Hertz.From(quantity);
+        }
         #endregion
     }
     public partial struct SquareMeter : IQuantity<double>, IEquatable<SquareMeter>, IComparable<SquareMeter>, IFormattable
@@ -1412,9 +1734,7 @@ namespace $safeprojectname$
 
         #region Properties
         public double Value { get { return m_value; } }
-        int IQuantity<double>.Family { get { return SquareMeter.Family; } }
-        double IQuantity<double>.Factor { get { return SquareMeter.Factor; } }
-        SymbolCollection IQuantity<double>.Symbol { get { return SquareMeter.Symbol; } }
+        Unit<double> IQuantity<double>.Unit { get { return SquareMeter.Proxy; } }
         #endregion
 
         #region Constructor(s)
@@ -1422,22 +1742,14 @@ namespace $safeprojectname$
         {
             m_value = value;
         }
-        public static IQuantity<double> Create(double value)
-        {
-            return new SquareMeter(value);
-        }
         #endregion
 
         #region Conversions
         public static explicit operator SquareMeter(double q) { return new SquareMeter(q); }
         public static SquareMeter From(IQuantity<double> q)
         {
-            if (q.Family != SquareMeter.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"SquareMeter\"", q.GetType().Name));
-            return new SquareMeter((SquareMeter.Factor / q.Factor) * q.Value);
-        }
-        public static IQuantity<double> Convert(IQuantity<double> q)
-        {
-            return From(q);
+            if (q.Unit.Family != SquareMeter.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"SquareMeter\"", q.GetType().Name));
+            return new SquareMeter((SquareMeter.Factor / q.Unit.Factor) * q.Value);
         }
         #endregion
 
@@ -1482,24 +1794,57 @@ namespace $safeprojectname$
         }
         #endregion
 
-        #region Statics
+        #region Static fields
         private static readonly Dimension s_sense = Meter.Sense * Meter.Sense;
         private static readonly int s_family = 7;
         private static /*mutable*/ double s_factor = Meter.Factor * Meter.Factor;
         private static /*mutable*/ string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("m\u00B2", "m2");
+        private static readonly Unit<double> s_proxy = new SquareMeter_Proxy();
 
         private static readonly SquareMeter s_one = new SquareMeter(1d);
         private static readonly SquareMeter s_zero = new SquareMeter(0d);
+        #endregion
 
+        #region Static Properties
         public static Dimension Sense { get { return s_sense; } }
         public static int Family { get { return s_family; } }
         public static double Factor { get { return s_factor; } set { s_factor = value; } }
         public static string Format { get { return s_format; } set { s_format = value; } }
         public static SymbolCollection Symbol { get { return s_symbol; } }
+        public static Unit<double> Proxy { get { return s_proxy; } }
 
         public static SquareMeter One { get { return s_one; } }
         public static SquareMeter Zero { get { return s_zero; } }
+        #endregion
+    }
+
+    public partial class SquareMeter_Proxy : Unit<double>
+    {
+        #region Properties
+        public override int Family { get { return SquareMeter.Family; } }
+        public override Dimension Sense { get { return SquareMeter.Sense; } }
+        public override SymbolCollection Symbol { get { return SquareMeter.Symbol; } }
+        public override double Factor { get { return SquareMeter.Factor; } set { SquareMeter.Factor = value; } }
+        public override string Format { get { return SquareMeter.Format; } set { SquareMeter.Format = value; } }
+        #endregion
+
+        #region Constructor(s)
+        public SquareMeter_Proxy() :
+            base(typeof(SquareMeter))
+        {
+        }
+        #endregion
+
+        #region Methods
+        public override IQuantity<double> Create(double value)
+        {
+            return new SquareMeter(value);
+        }
+        public override IQuantity<double> From(IQuantity<double> quantity)
+        {
+            return SquareMeter.From(quantity);
+        }
         #endregion
     }
     public partial struct Meter_Sec : IQuantity<double>, IEquatable<Meter_Sec>, IComparable<Meter_Sec>, IFormattable
@@ -1510,9 +1855,7 @@ namespace $safeprojectname$
 
         #region Properties
         public double Value { get { return m_value; } }
-        int IQuantity<double>.Family { get { return Meter_Sec.Family; } }
-        double IQuantity<double>.Factor { get { return Meter_Sec.Factor; } }
-        SymbolCollection IQuantity<double>.Symbol { get { return Meter_Sec.Symbol; } }
+        Unit<double> IQuantity<double>.Unit { get { return Meter_Sec.Proxy; } }
         #endregion
 
         #region Constructor(s)
@@ -1520,22 +1863,14 @@ namespace $safeprojectname$
         {
             m_value = value;
         }
-        public static IQuantity<double> Create(double value)
-        {
-            return new Meter_Sec(value);
-        }
         #endregion
 
         #region Conversions
         public static explicit operator Meter_Sec(double q) { return new Meter_Sec(q); }
         public static Meter_Sec From(IQuantity<double> q)
         {
-            if (q.Family != Meter_Sec.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Meter_Sec\"", q.GetType().Name));
-            return new Meter_Sec((Meter_Sec.Factor / q.Factor) * q.Value);
-        }
-        public static IQuantity<double> Convert(IQuantity<double> q)
-        {
-            return From(q);
+            if (q.Unit.Family != Meter_Sec.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Meter_Sec\"", q.GetType().Name));
+            return new Meter_Sec((Meter_Sec.Factor / q.Unit.Factor) * q.Value);
         }
         #endregion
 
@@ -1583,24 +1918,57 @@ namespace $safeprojectname$
         }
         #endregion
 
-        #region Statics
+        #region Static fields
         private static readonly Dimension s_sense = Meter.Sense / Second.Sense;
         private static readonly int s_family = 8;
         private static /*mutable*/ double s_factor = Meter.Factor / Second.Factor;
         private static /*mutable*/ string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("m/s");
+        private static readonly Unit<double> s_proxy = new Meter_Sec_Proxy();
 
         private static readonly Meter_Sec s_one = new Meter_Sec(1d);
         private static readonly Meter_Sec s_zero = new Meter_Sec(0d);
+        #endregion
 
+        #region Static Properties
         public static Dimension Sense { get { return s_sense; } }
         public static int Family { get { return s_family; } }
         public static double Factor { get { return s_factor; } set { s_factor = value; } }
         public static string Format { get { return s_format; } set { s_format = value; } }
         public static SymbolCollection Symbol { get { return s_symbol; } }
+        public static Unit<double> Proxy { get { return s_proxy; } }
 
         public static Meter_Sec One { get { return s_one; } }
         public static Meter_Sec Zero { get { return s_zero; } }
+        #endregion
+    }
+
+    public partial class Meter_Sec_Proxy : Unit<double>
+    {
+        #region Properties
+        public override int Family { get { return Meter_Sec.Family; } }
+        public override Dimension Sense { get { return Meter_Sec.Sense; } }
+        public override SymbolCollection Symbol { get { return Meter_Sec.Symbol; } }
+        public override double Factor { get { return Meter_Sec.Factor; } set { Meter_Sec.Factor = value; } }
+        public override string Format { get { return Meter_Sec.Format; } set { Meter_Sec.Format = value; } }
+        #endregion
+
+        #region Constructor(s)
+        public Meter_Sec_Proxy() :
+            base(typeof(Meter_Sec))
+        {
+        }
+        #endregion
+
+        #region Methods
+        public override IQuantity<double> Create(double value)
+        {
+            return new Meter_Sec(value);
+        }
+        public override IQuantity<double> From(IQuantity<double> quantity)
+        {
+            return Meter_Sec.From(quantity);
+        }
         #endregion
     }
     public partial struct Meter_Sec2 : IQuantity<double>, IEquatable<Meter_Sec2>, IComparable<Meter_Sec2>, IFormattable
@@ -1611,9 +1979,7 @@ namespace $safeprojectname$
 
         #region Properties
         public double Value { get { return m_value; } }
-        int IQuantity<double>.Family { get { return Meter_Sec2.Family; } }
-        double IQuantity<double>.Factor { get { return Meter_Sec2.Factor; } }
-        SymbolCollection IQuantity<double>.Symbol { get { return Meter_Sec2.Symbol; } }
+        Unit<double> IQuantity<double>.Unit { get { return Meter_Sec2.Proxy; } }
         #endregion
 
         #region Constructor(s)
@@ -1621,22 +1987,14 @@ namespace $safeprojectname$
         {
             m_value = value;
         }
-        public static IQuantity<double> Create(double value)
-        {
-            return new Meter_Sec2(value);
-        }
         #endregion
 
         #region Conversions
         public static explicit operator Meter_Sec2(double q) { return new Meter_Sec2(q); }
         public static Meter_Sec2 From(IQuantity<double> q)
         {
-            if (q.Family != Meter_Sec2.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Meter_Sec2\"", q.GetType().Name));
-            return new Meter_Sec2((Meter_Sec2.Factor / q.Factor) * q.Value);
-        }
-        public static IQuantity<double> Convert(IQuantity<double> q)
-        {
-            return From(q);
+            if (q.Unit.Family != Meter_Sec2.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Meter_Sec2\"", q.GetType().Name));
+            return new Meter_Sec2((Meter_Sec2.Factor / q.Unit.Factor) * q.Value);
         }
         #endregion
 
@@ -1682,24 +2040,57 @@ namespace $safeprojectname$
         }
         #endregion
 
-        #region Statics
+        #region Static fields
         private static readonly Dimension s_sense = Meter_Sec.Sense / Second.Sense;
         private static readonly int s_family = 9;
         private static /*mutable*/ double s_factor = Meter_Sec.Factor / Second.Factor;
         private static /*mutable*/ string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("m/s2");
+        private static readonly Unit<double> s_proxy = new Meter_Sec2_Proxy();
 
         private static readonly Meter_Sec2 s_one = new Meter_Sec2(1d);
         private static readonly Meter_Sec2 s_zero = new Meter_Sec2(0d);
+        #endregion
 
+        #region Static Properties
         public static Dimension Sense { get { return s_sense; } }
         public static int Family { get { return s_family; } }
         public static double Factor { get { return s_factor; } set { s_factor = value; } }
         public static string Format { get { return s_format; } set { s_format = value; } }
         public static SymbolCollection Symbol { get { return s_symbol; } }
+        public static Unit<double> Proxy { get { return s_proxy; } }
 
         public static Meter_Sec2 One { get { return s_one; } }
         public static Meter_Sec2 Zero { get { return s_zero; } }
+        #endregion
+    }
+
+    public partial class Meter_Sec2_Proxy : Unit<double>
+    {
+        #region Properties
+        public override int Family { get { return Meter_Sec2.Family; } }
+        public override Dimension Sense { get { return Meter_Sec2.Sense; } }
+        public override SymbolCollection Symbol { get { return Meter_Sec2.Symbol; } }
+        public override double Factor { get { return Meter_Sec2.Factor; } set { Meter_Sec2.Factor = value; } }
+        public override string Format { get { return Meter_Sec2.Format; } set { Meter_Sec2.Format = value; } }
+        #endregion
+
+        #region Constructor(s)
+        public Meter_Sec2_Proxy() :
+            base(typeof(Meter_Sec2))
+        {
+        }
+        #endregion
+
+        #region Methods
+        public override IQuantity<double> Create(double value)
+        {
+            return new Meter_Sec2(value);
+        }
+        public override IQuantity<double> From(IQuantity<double> quantity)
+        {
+            return Meter_Sec2.From(quantity);
+        }
         #endregion
     }
     public partial struct Newton : IQuantity<double>, IEquatable<Newton>, IComparable<Newton>, IFormattable
@@ -1710,9 +2101,7 @@ namespace $safeprojectname$
 
         #region Properties
         public double Value { get { return m_value; } }
-        int IQuantity<double>.Family { get { return Newton.Family; } }
-        double IQuantity<double>.Factor { get { return Newton.Factor; } }
-        SymbolCollection IQuantity<double>.Symbol { get { return Newton.Symbol; } }
+        Unit<double> IQuantity<double>.Unit { get { return Newton.Proxy; } }
         #endregion
 
         #region Constructor(s)
@@ -1720,22 +2109,14 @@ namespace $safeprojectname$
         {
             m_value = value;
         }
-        public static IQuantity<double> Create(double value)
-        {
-            return new Newton(value);
-        }
         #endregion
 
         #region Conversions
         public static explicit operator Newton(double q) { return new Newton(q); }
         public static Newton From(IQuantity<double> q)
         {
-            if (q.Family != Newton.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Newton\"", q.GetType().Name));
-            return new Newton((Newton.Factor / q.Factor) * q.Value);
-        }
-        public static IQuantity<double> Convert(IQuantity<double> q)
-        {
-            return From(q);
+            if (q.Unit.Family != Newton.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Newton\"", q.GetType().Name));
+            return new Newton((Newton.Factor / q.Unit.Factor) * q.Value);
         }
         #endregion
 
@@ -1785,24 +2166,57 @@ namespace $safeprojectname$
         }
         #endregion
 
-        #region Statics
+        #region Static fields
         private static readonly Dimension s_sense = Kilogram.Sense * Meter_Sec2.Sense;
         private static readonly int s_family = 10;
         private static /*mutable*/ double s_factor = Kilogram.Factor * Meter_Sec2.Factor;
         private static /*mutable*/ string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("N");
+        private static readonly Unit<double> s_proxy = new Newton_Proxy();
 
         private static readonly Newton s_one = new Newton(1d);
         private static readonly Newton s_zero = new Newton(0d);
+        #endregion
 
+        #region Static Properties
         public static Dimension Sense { get { return s_sense; } }
         public static int Family { get { return s_family; } }
         public static double Factor { get { return s_factor; } set { s_factor = value; } }
         public static string Format { get { return s_format; } set { s_format = value; } }
         public static SymbolCollection Symbol { get { return s_symbol; } }
+        public static Unit<double> Proxy { get { return s_proxy; } }
 
         public static Newton One { get { return s_one; } }
         public static Newton Zero { get { return s_zero; } }
+        #endregion
+    }
+
+    public partial class Newton_Proxy : Unit<double>
+    {
+        #region Properties
+        public override int Family { get { return Newton.Family; } }
+        public override Dimension Sense { get { return Newton.Sense; } }
+        public override SymbolCollection Symbol { get { return Newton.Symbol; } }
+        public override double Factor { get { return Newton.Factor; } set { Newton.Factor = value; } }
+        public override string Format { get { return Newton.Format; } set { Newton.Format = value; } }
+        #endregion
+
+        #region Constructor(s)
+        public Newton_Proxy() :
+            base(typeof(Newton))
+        {
+        }
+        #endregion
+
+        #region Methods
+        public override IQuantity<double> Create(double value)
+        {
+            return new Newton(value);
+        }
+        public override IQuantity<double> From(IQuantity<double> quantity)
+        {
+            return Newton.From(quantity);
+        }
         #endregion
     }
     public partial struct Joule : IQuantity<double>, IEquatable<Joule>, IComparable<Joule>, IFormattable
@@ -1813,9 +2227,7 @@ namespace $safeprojectname$
 
         #region Properties
         public double Value { get { return m_value; } }
-        int IQuantity<double>.Family { get { return Joule.Family; } }
-        double IQuantity<double>.Factor { get { return Joule.Factor; } }
-        SymbolCollection IQuantity<double>.Symbol { get { return Joule.Symbol; } }
+        Unit<double> IQuantity<double>.Unit { get { return Joule.Proxy; } }
         #endregion
 
         #region Constructor(s)
@@ -1823,22 +2235,14 @@ namespace $safeprojectname$
         {
             m_value = value;
         }
-        public static IQuantity<double> Create(double value)
-        {
-            return new Joule(value);
-        }
         #endregion
 
         #region Conversions
         public static explicit operator Joule(double q) { return new Joule(q); }
         public static Joule From(IQuantity<double> q)
         {
-            if (q.Family != Joule.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Joule\"", q.GetType().Name));
-            return new Joule((Joule.Factor / q.Factor) * q.Value);
-        }
-        public static IQuantity<double> Convert(IQuantity<double> q)
-        {
-            return From(q);
+            if (q.Unit.Family != Joule.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Joule\"", q.GetType().Name));
+            return new Joule((Joule.Factor / q.Unit.Factor) * q.Value);
         }
         #endregion
 
@@ -1884,24 +2288,57 @@ namespace $safeprojectname$
         }
         #endregion
 
-        #region Statics
+        #region Static fields
         private static readonly Dimension s_sense = Newton.Sense * Meter.Sense;
         private static readonly int s_family = 11;
         private static /*mutable*/ double s_factor = Newton.Factor * Meter.Factor;
         private static /*mutable*/ string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("J");
+        private static readonly Unit<double> s_proxy = new Joule_Proxy();
 
         private static readonly Joule s_one = new Joule(1d);
         private static readonly Joule s_zero = new Joule(0d);
+        #endregion
 
+        #region Static Properties
         public static Dimension Sense { get { return s_sense; } }
         public static int Family { get { return s_family; } }
         public static double Factor { get { return s_factor; } set { s_factor = value; } }
         public static string Format { get { return s_format; } set { s_format = value; } }
         public static SymbolCollection Symbol { get { return s_symbol; } }
+        public static Unit<double> Proxy { get { return s_proxy; } }
 
         public static Joule One { get { return s_one; } }
         public static Joule Zero { get { return s_zero; } }
+        #endregion
+    }
+
+    public partial class Joule_Proxy : Unit<double>
+    {
+        #region Properties
+        public override int Family { get { return Joule.Family; } }
+        public override Dimension Sense { get { return Joule.Sense; } }
+        public override SymbolCollection Symbol { get { return Joule.Symbol; } }
+        public override double Factor { get { return Joule.Factor; } set { Joule.Factor = value; } }
+        public override string Format { get { return Joule.Format; } set { Joule.Format = value; } }
+        #endregion
+
+        #region Constructor(s)
+        public Joule_Proxy() :
+            base(typeof(Joule))
+        {
+        }
+        #endregion
+
+        #region Methods
+        public override IQuantity<double> Create(double value)
+        {
+            return new Joule(value);
+        }
+        public override IQuantity<double> From(IQuantity<double> quantity)
+        {
+            return Joule.From(quantity);
+        }
         #endregion
     }
     public partial struct NewtonMeter : IQuantity<double>, IEquatable<NewtonMeter>, IComparable<NewtonMeter>, IFormattable
@@ -1912,9 +2349,7 @@ namespace $safeprojectname$
 
         #region Properties
         public double Value { get { return m_value; } }
-        int IQuantity<double>.Family { get { return NewtonMeter.Family; } }
-        double IQuantity<double>.Factor { get { return NewtonMeter.Factor; } }
-        SymbolCollection IQuantity<double>.Symbol { get { return NewtonMeter.Symbol; } }
+        Unit<double> IQuantity<double>.Unit { get { return NewtonMeter.Proxy; } }
         #endregion
 
         #region Constructor(s)
@@ -1922,22 +2357,14 @@ namespace $safeprojectname$
         {
             m_value = value;
         }
-        public static IQuantity<double> Create(double value)
-        {
-            return new NewtonMeter(value);
-        }
         #endregion
 
         #region Conversions
         public static explicit operator NewtonMeter(double q) { return new NewtonMeter(q); }
         public static NewtonMeter From(IQuantity<double> q)
         {
-            if (q.Family != NewtonMeter.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"NewtonMeter\"", q.GetType().Name));
-            return new NewtonMeter((NewtonMeter.Factor / q.Factor) * q.Value);
-        }
-        public static IQuantity<double> Convert(IQuantity<double> q)
-        {
-            return From(q);
+            if (q.Unit.Family != NewtonMeter.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"NewtonMeter\"", q.GetType().Name));
+            return new NewtonMeter((NewtonMeter.Factor / q.Unit.Factor) * q.Value);
         }
         #endregion
 
@@ -1983,24 +2410,57 @@ namespace $safeprojectname$
         }
         #endregion
 
-        #region Statics
+        #region Static fields
         private static readonly Dimension s_sense = Newton.Sense * Meter.Sense;
         private static readonly int s_family = 12;
         private static /*mutable*/ double s_factor = Newton.Factor * Meter.Factor;
         private static /*mutable*/ string s_format = "{0} {1}";
         private static readonly SymbolCollection s_symbol = new SymbolCollection("N\u00B7m", "N*m");
+        private static readonly Unit<double> s_proxy = new NewtonMeter_Proxy();
 
         private static readonly NewtonMeter s_one = new NewtonMeter(1d);
         private static readonly NewtonMeter s_zero = new NewtonMeter(0d);
+        #endregion
 
+        #region Static Properties
         public static Dimension Sense { get { return s_sense; } }
         public static int Family { get { return s_family; } }
         public static double Factor { get { return s_factor; } set { s_factor = value; } }
         public static string Format { get { return s_format; } set { s_format = value; } }
         public static SymbolCollection Symbol { get { return s_symbol; } }
+        public static Unit<double> Proxy { get { return s_proxy; } }
 
         public static NewtonMeter One { get { return s_one; } }
         public static NewtonMeter Zero { get { return s_zero; } }
+        #endregion
+    }
+
+    public partial class NewtonMeter_Proxy : Unit<double>
+    {
+        #region Properties
+        public override int Family { get { return NewtonMeter.Family; } }
+        public override Dimension Sense { get { return NewtonMeter.Sense; } }
+        public override SymbolCollection Symbol { get { return NewtonMeter.Symbol; } }
+        public override double Factor { get { return NewtonMeter.Factor; } set { NewtonMeter.Factor = value; } }
+        public override string Format { get { return NewtonMeter.Format; } set { NewtonMeter.Format = value; } }
+        #endregion
+
+        #region Constructor(s)
+        public NewtonMeter_Proxy() :
+            base(typeof(NewtonMeter))
+        {
+        }
+        #endregion
+
+        #region Methods
+        public override IQuantity<double> Create(double value)
+        {
+            return new NewtonMeter(value);
+        }
+        public override IQuantity<double> From(IQuantity<double> quantity)
+        {
+            return NewtonMeter.From(quantity);
+        }
         #endregion
     }
     [ScaleReferencePoint("AbsoluteZero")]
@@ -2016,8 +2476,7 @@ namespace $safeprojectname$
 
         IQuantity<double> ILevel<double>.Level { get { return Level; } }
         IQuantity<double> ILevel<double>.NormalizedLevel { get { return NormalizedLevel; } }
-        int ILevel<double>.Family { get { return Kelvin.Family; } }
-        SymbolCollection ILevel<double>.Symbol { get { return DegKelvin.Symbol; } }
+        Scale<double> ILevel<double>.Scale { get { return Kelvin.Proxy; } }
         #endregion
 
         #region Constructor(s)
@@ -2029,10 +2488,6 @@ namespace $safeprojectname$
             this(new DegKelvin(level))
         {
         }
-        public static ILevel<double> Create(double level)
-        {
-            return new Kelvin(level);
-        }
         #endregion
 
         #region Conversions
@@ -2042,15 +2497,16 @@ namespace $safeprojectname$
         public static explicit operator Kelvin(Fahrenheit q) { return new Kelvin((DegKelvin)(q.NormalizedLevel) + Kelvin.Offset); }
         public static explicit operator Kelvin(Rankine q) { return new Kelvin((DegKelvin)(q.NormalizedLevel) + Kelvin.Offset); }
         public static explicit operator Kelvin(Celsius q) { return new Kelvin((DegKelvin)(q.NormalizedLevel) + Kelvin.Offset); }
-
         public static Kelvin From(ILevel<double> q)
         {
-            if (q.Family != Kelvin.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Kelvin\"", q.GetType().Name));
+            if (q.Scale.Family != Kelvin.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Kelvin\".", q.GetType().Name));
             return new Kelvin(DegKelvin.From(q.NormalizedLevel) + Kelvin.Offset);
         }
-        public static ILevel<double> Convert(ILevel<double> q)
+        public static Kelvin From(IQuantity<double> q)
         {
-            return From(q);
+            Scale<double> scale = Catalog.Scale(Kelvin.Family, q.Unit);
+            if(scale == null) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Kelvin\".", q.GetType().Name));
+            return Kelvin.From(scale.Create(q.Value));
         }
         #endregion
 
@@ -2090,18 +2546,53 @@ namespace $safeprojectname$
         }
         #endregion
 
-        #region Statics
-        private static readonly DegKelvin s_offset = new DegKelvin(0d);  // offset to AbsoluteZero
+        #region Static fields
+        private static readonly DegKelvin s_offset /* from AbsoluteZero reference level */ = new DegKelvin(0d);
         private static readonly int s_family = 13;
         private static /*mutable*/ string s_format = "{0} {1}";
+        private static readonly Scale<double> s_proxy = new Kelvin_Proxy();
 
         private static readonly Kelvin s_zero = new Kelvin(0d);
+        #endregion
         
+        #region Static properties
         public static DegKelvin Offset { get { return s_offset; } }
         public static int Family { get { return s_family; } }
         public static string Format { get { return s_format; } set { s_format = value; } }
+        public static Scale<double> Proxy { get { return s_proxy; } }
 
         public static Kelvin Zero { get { return s_zero; } }
+        #endregion
+    }
+    public partial class Kelvin_Proxy : Scale<double>
+    {
+        #region Properties
+        public override int Family { get { return Kelvin.Family; } }
+        public override Unit Unit { get { return DegKelvin.Proxy; } }
+        public override IQuantity<double> Offset { get { return Kelvin.Offset; } }
+        public override string Format { get { return Kelvin.Format; } set { Kelvin.Format = value; } }
+        #endregion
+
+        #region Constructor(s)
+        public Kelvin_Proxy() :
+            base(typeof(Kelvin))
+        {
+        }
+        #endregion
+
+        #region Methods
+        public override ILevel<double> Create(double value)
+        {
+            return new Kelvin(value);
+        }
+        public override ILevel<double> From(ILevel<double> level)
+        {
+            return Kelvin.From(level);
+        }
+        public override ILevel<double> From(IQuantity<double> quantity)
+        {
+            return Kelvin.From(quantity);
+        }
         #endregion
     }
     [ScaleReferencePoint("AbsoluteZero")]
@@ -2117,8 +2608,7 @@ namespace $safeprojectname$
 
         IQuantity<double> ILevel<double>.Level { get { return Level; } }
         IQuantity<double> ILevel<double>.NormalizedLevel { get { return NormalizedLevel; } }
-        int ILevel<double>.Family { get { return Celsius.Family; } }
-        SymbolCollection ILevel<double>.Symbol { get { return DegCelsius.Symbol; } }
+        Scale<double> ILevel<double>.Scale { get { return Celsius.Proxy; } }
         #endregion
 
         #region Constructor(s)
@@ -2130,10 +2620,6 @@ namespace $safeprojectname$
             this(new DegCelsius(level))
         {
         }
-        public static ILevel<double> Create(double level)
-        {
-            return new Celsius(level);
-        }
         #endregion
 
         #region Conversions
@@ -2143,15 +2629,16 @@ namespace $safeprojectname$
         public static explicit operator Celsius(Kelvin q) { return new Celsius((DegCelsius)(q.NormalizedLevel) + Celsius.Offset); }
         public static explicit operator Celsius(Fahrenheit q) { return new Celsius((DegCelsius)(q.NormalizedLevel) + Celsius.Offset); }
         public static explicit operator Celsius(Rankine q) { return new Celsius((DegCelsius)(q.NormalizedLevel) + Celsius.Offset); }
-
         public static Celsius From(ILevel<double> q)
         {
-            if (q.Family != Celsius.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Celsius\"", q.GetType().Name));
+            if (q.Scale.Family != Celsius.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Celsius\".", q.GetType().Name));
             return new Celsius(DegCelsius.From(q.NormalizedLevel) + Celsius.Offset);
         }
-        public static ILevel<double> Convert(ILevel<double> q)
+        public static Celsius From(IQuantity<double> q)
         {
-            return From(q);
+            Scale<double> scale = Catalog.Scale(Celsius.Family, q.Unit);
+            if(scale == null) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Celsius\".", q.GetType().Name));
+            return Celsius.From(scale.Create(q.Value));
         }
         #endregion
 
@@ -2191,18 +2678,53 @@ namespace $safeprojectname$
         }
         #endregion
 
-        #region Statics
-        private static readonly DegCelsius s_offset = new DegCelsius(-273.15d);  // offset to AbsoluteZero
+        #region Static fields
+        private static readonly DegCelsius s_offset /* from AbsoluteZero reference level */ = new DegCelsius(-273.15d);
         private static readonly int s_family = Kelvin.Family;
         private static /*mutable*/ string s_format = "{0} {1}";
+        private static readonly Scale<double> s_proxy = new Celsius_Proxy();
 
         private static readonly Celsius s_zero = new Celsius(0d);
+        #endregion
         
+        #region Static properties
         public static DegCelsius Offset { get { return s_offset; } }
         public static int Family { get { return s_family; } }
         public static string Format { get { return s_format; } set { s_format = value; } }
+        public static Scale<double> Proxy { get { return s_proxy; } }
 
         public static Celsius Zero { get { return s_zero; } }
+        #endregion
+    }
+    public partial class Celsius_Proxy : Scale<double>
+    {
+        #region Properties
+        public override int Family { get { return Celsius.Family; } }
+        public override Unit Unit { get { return DegCelsius.Proxy; } }
+        public override IQuantity<double> Offset { get { return Celsius.Offset; } }
+        public override string Format { get { return Celsius.Format; } set { Celsius.Format = value; } }
+        #endregion
+
+        #region Constructor(s)
+        public Celsius_Proxy() :
+            base(typeof(Celsius))
+        {
+        }
+        #endregion
+
+        #region Methods
+        public override ILevel<double> Create(double value)
+        {
+            return new Celsius(value);
+        }
+        public override ILevel<double> From(ILevel<double> level)
+        {
+            return Celsius.From(level);
+        }
+        public override ILevel<double> From(IQuantity<double> quantity)
+        {
+            return Celsius.From(quantity);
+        }
         #endregion
     }
     [ScaleReferencePoint("AbsoluteZero")]
@@ -2218,8 +2740,7 @@ namespace $safeprojectname$
 
         IQuantity<double> ILevel<double>.Level { get { return Level; } }
         IQuantity<double> ILevel<double>.NormalizedLevel { get { return NormalizedLevel; } }
-        int ILevel<double>.Family { get { return Rankine.Family; } }
-        SymbolCollection ILevel<double>.Symbol { get { return DegRankine.Symbol; } }
+        Scale<double> ILevel<double>.Scale { get { return Rankine.Proxy; } }
         #endregion
 
         #region Constructor(s)
@@ -2231,10 +2752,6 @@ namespace $safeprojectname$
             this(new DegRankine(level))
         {
         }
-        public static ILevel<double> Create(double level)
-        {
-            return new Rankine(level);
-        }
         #endregion
 
         #region Conversions
@@ -2244,15 +2761,16 @@ namespace $safeprojectname$
         public static explicit operator Rankine(Celsius q) { return new Rankine((DegRankine)(q.NormalizedLevel) + Rankine.Offset); }
         public static explicit operator Rankine(Kelvin q) { return new Rankine((DegRankine)(q.NormalizedLevel) + Rankine.Offset); }
         public static explicit operator Rankine(Fahrenheit q) { return new Rankine((DegRankine)(q.NormalizedLevel) + Rankine.Offset); }
-
         public static Rankine From(ILevel<double> q)
         {
-            if (q.Family != Rankine.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Rankine\"", q.GetType().Name));
+            if (q.Scale.Family != Rankine.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Rankine\".", q.GetType().Name));
             return new Rankine(DegRankine.From(q.NormalizedLevel) + Rankine.Offset);
         }
-        public static ILevel<double> Convert(ILevel<double> q)
+        public static Rankine From(IQuantity<double> q)
         {
-            return From(q);
+            Scale<double> scale = Catalog.Scale(Rankine.Family, q.Unit);
+            if(scale == null) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Rankine\".", q.GetType().Name));
+            return Rankine.From(scale.Create(q.Value));
         }
         #endregion
 
@@ -2292,18 +2810,53 @@ namespace $safeprojectname$
         }
         #endregion
 
-        #region Statics
-        private static readonly DegRankine s_offset = new DegRankine(0d);  // offset to AbsoluteZero
+        #region Static fields
+        private static readonly DegRankine s_offset /* from AbsoluteZero reference level */ = new DegRankine(0d);
         private static readonly int s_family = Kelvin.Family;
         private static /*mutable*/ string s_format = "{0} {1}";
+        private static readonly Scale<double> s_proxy = new Rankine_Proxy();
 
         private static readonly Rankine s_zero = new Rankine(0d);
+        #endregion
         
+        #region Static properties
         public static DegRankine Offset { get { return s_offset; } }
         public static int Family { get { return s_family; } }
         public static string Format { get { return s_format; } set { s_format = value; } }
+        public static Scale<double> Proxy { get { return s_proxy; } }
 
         public static Rankine Zero { get { return s_zero; } }
+        #endregion
+    }
+    public partial class Rankine_Proxy : Scale<double>
+    {
+        #region Properties
+        public override int Family { get { return Rankine.Family; } }
+        public override Unit Unit { get { return DegRankine.Proxy; } }
+        public override IQuantity<double> Offset { get { return Rankine.Offset; } }
+        public override string Format { get { return Rankine.Format; } set { Rankine.Format = value; } }
+        #endregion
+
+        #region Constructor(s)
+        public Rankine_Proxy() :
+            base(typeof(Rankine))
+        {
+        }
+        #endregion
+
+        #region Methods
+        public override ILevel<double> Create(double value)
+        {
+            return new Rankine(value);
+        }
+        public override ILevel<double> From(ILevel<double> level)
+        {
+            return Rankine.From(level);
+        }
+        public override ILevel<double> From(IQuantity<double> quantity)
+        {
+            return Rankine.From(quantity);
+        }
         #endregion
     }
     [ScaleReferencePoint("AbsoluteZero")]
@@ -2319,8 +2872,7 @@ namespace $safeprojectname$
 
         IQuantity<double> ILevel<double>.Level { get { return Level; } }
         IQuantity<double> ILevel<double>.NormalizedLevel { get { return NormalizedLevel; } }
-        int ILevel<double>.Family { get { return Fahrenheit.Family; } }
-        SymbolCollection ILevel<double>.Symbol { get { return DegFahrenheit.Symbol; } }
+        Scale<double> ILevel<double>.Scale { get { return Fahrenheit.Proxy; } }
         #endregion
 
         #region Constructor(s)
@@ -2332,10 +2884,6 @@ namespace $safeprojectname$
             this(new DegFahrenheit(level))
         {
         }
-        public static ILevel<double> Create(double level)
-        {
-            return new Fahrenheit(level);
-        }
         #endregion
 
         #region Conversions
@@ -2345,15 +2893,16 @@ namespace $safeprojectname$
         public static explicit operator Fahrenheit(Rankine q) { return new Fahrenheit((DegFahrenheit)(q.NormalizedLevel) + Fahrenheit.Offset); }
         public static explicit operator Fahrenheit(Celsius q) { return new Fahrenheit((DegFahrenheit)(q.NormalizedLevel) + Fahrenheit.Offset); }
         public static explicit operator Fahrenheit(Kelvin q) { return new Fahrenheit((DegFahrenheit)(q.NormalizedLevel) + Fahrenheit.Offset); }
-
         public static Fahrenheit From(ILevel<double> q)
         {
-            if (q.Family != Fahrenheit.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Fahrenheit\"", q.GetType().Name));
+            if (q.Scale.Family != Fahrenheit.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Fahrenheit\".", q.GetType().Name));
             return new Fahrenheit(DegFahrenheit.From(q.NormalizedLevel) + Fahrenheit.Offset);
         }
-        public static ILevel<double> Convert(ILevel<double> q)
+        public static Fahrenheit From(IQuantity<double> q)
         {
-            return From(q);
+            Scale<double> scale = Catalog.Scale(Fahrenheit.Family, q.Unit);
+            if(scale == null) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Fahrenheit\".", q.GetType().Name));
+            return Fahrenheit.From(scale.Create(q.Value));
         }
         #endregion
 
@@ -2393,18 +2942,99 @@ namespace $safeprojectname$
         }
         #endregion
 
-        #region Statics
-        private static readonly DegFahrenheit s_offset = new DegFahrenheit(-273.15d * (9d / 5d) + 32d);  // offset to AbsoluteZero
+        #region Static fields
+        private static readonly DegFahrenheit s_offset /* from AbsoluteZero reference level */ = new DegFahrenheit(-273.15d * (9d / 5d) + 32d);
         private static readonly int s_family = Kelvin.Family;
         private static /*mutable*/ string s_format = "{0} {1}";
+        private static readonly Scale<double> s_proxy = new Fahrenheit_Proxy();
 
         private static readonly Fahrenheit s_zero = new Fahrenheit(0d);
+        #endregion
         
+        #region Static properties
         public static DegFahrenheit Offset { get { return s_offset; } }
         public static int Family { get { return s_family; } }
         public static string Format { get { return s_format; } set { s_format = value; } }
+        public static Scale<double> Proxy { get { return s_proxy; } }
 
         public static Fahrenheit Zero { get { return s_zero; } }
+        #endregion
+    }
+    public partial class Fahrenheit_Proxy : Scale<double>
+    {
+        #region Properties
+        public override int Family { get { return Fahrenheit.Family; } }
+        public override Unit Unit { get { return DegFahrenheit.Proxy; } }
+        public override IQuantity<double> Offset { get { return Fahrenheit.Offset; } }
+        public override string Format { get { return Fahrenheit.Format; } set { Fahrenheit.Format = value; } }
+        #endregion
+
+        #region Constructor(s)
+        public Fahrenheit_Proxy() :
+            base(typeof(Fahrenheit))
+        {
+        }
+        #endregion
+
+        #region Methods
+        public override ILevel<double> Create(double value)
+        {
+            return new Fahrenheit(value);
+        }
+        public override ILevel<double> From(ILevel<double> level)
+        {
+            return Fahrenheit.From(level);
+        }
+        public override ILevel<double> From(IQuantity<double> quantity)
+        {
+            return Fahrenheit.From(quantity);
+        }
+        #endregion
+    }
+    public static partial class Catalog
+    {
+        #region Constructor
+        static Catalog()
+        {
+            Allocate(
+                20 + 13, // 20 units  + 13 entries for possible late units (1 for each family)
+                4 + 1 // 4 scales + 1 entries for possible late scales (1 for each family)
+            );
+            Populate();
+        }
+        #endregion
+
+        #region Populate
+        public static void Populate()
+        {
+            // units:
+            Add(Meter.Proxy);            // [L] Meter {"m"} : 1  (Meter)
+            Add(Second.Proxy);            // [T] Second {"s"} : 1  (Second)
+            Add(Kilogram.Proxy);            // [M] Kilogram {"kg"} : 1  (Kilogram)
+            Add(DegKelvin.Proxy);            // [ϴ] DegKelvin {"K", "deg.K"} : 1  (DegKelvin)
+            Add(DegCelsius.Proxy);            // [ϴ] DegCelsius {"\u00B0C", "deg.C"} : 1  (DegKelvin)
+            Add(DegRankine.Proxy);            // [ϴ] DegRankine {"\u00B0R", "deg.R"} : 1.8  (DegKelvin)
+            Add(DegFahrenheit.Proxy);            // [ϴ] DegFahrenheit {"\u00B0F", "deg.F"} : 1.8  (DegKelvin)
+            Add(EUR.Proxy);            // [¤] EUR {"EUR"} : 1  (EUR)
+            Add(USD.Proxy);            // [¤] USD {"USD"} : 1.3433  (EUR)
+            Add(PLN.Proxy);            // [¤] PLN {"PLN"} : 4.1437  (EUR)
+            Add(Radian.Proxy);            // [1] Radian {"rad"} : 1  (Radian)
+            Add(Degree.Proxy);            // [1] Degree {"\u00B0", "deg"} : (180d / Math.PI) * Radian.Factor  (Radian)
+            Add(Cycles.Proxy);            // [1] Cycles {"c"} : Radian.Factor / (2d * Math.PI)  (Radian)
+            Add(Hertz.Proxy);            // [T-1] Hertz {"Hz"} : Cycles.Factor / Second.Factor  (Hertz)
+            Add(SquareMeter.Proxy);            // [L2] SquareMeter {"m\u00B2", "m2"} : 1  (SquareMeter)
+            Add(Meter_Sec.Proxy);            // [LT-1] Meter_Sec {"m/s"} : 1  (Meter_Sec)
+            Add(Meter_Sec2.Proxy);            // [LT-2] Meter_Sec2 {"m/s2"} : 1  (Meter_Sec2)
+            Add(Newton.Proxy);            // [LT-2M] Newton {"N"} : 1  (Newton)
+            Add(Joule.Proxy);            // [L2T-2M] Joule {"J"} : 1  (Joule)
+            Add(NewtonMeter.Proxy);            // [L2T-2M] NewtonMeter {"N\u00B7m", "N*m"} : 1  (NewtonMeter)
+
+            // scales:
+            Add(Kelvin.Proxy);            // [ϴ] Kelvin : AbsoluteZero = DegKelvin 0  (Kelvin)
+            Add(Celsius.Proxy);            // [ϴ] Celsius : AbsoluteZero = DegCelsius -273.15  (Kelvin)
+            Add(Rankine.Proxy);            // [ϴ] Rankine : AbsoluteZero = DegRankine 0  (Kelvin)
+            Add(Fahrenheit.Proxy);            // [ϴ] Fahrenheit : AbsoluteZero = DegFahrenheit -459.66999999999996  (Kelvin)
+        }
         #endregion
     }
 }

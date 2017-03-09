@@ -24,8 +24,6 @@ namespace $safeprojectname$
             private List<Man.UnitsOfMeasurement.UnitType> m_units;
             private List<Man.UnitsOfMeasurement.ScaleType> m_scales;
             private Dictionary<int, Man.UnitsOfMeasurement.MeasureType> m_families;
-            private MeasureFactory m_unitFactory;
-            private MeasureFactory m_scaleFactory;
             #endregion
 
             #region Properties
@@ -36,47 +34,27 @@ namespace $safeprojectname$
             public Decompiler(List<Man.UnitsOfMeasurement.UnitType> units, List<Man.UnitsOfMeasurement.ScaleType> scales)
             {
                 m_units = units;
-                m_unitFactory = new MeasureFactory(UnitConstants.GenericInterfaceHandle);
-
                 m_scales = scales;
-                m_scaleFactory = new MeasureFactory(ScaleConstants.GenericInterfaceHandle);
-
                 m_families = new Dictionary<int, Man.UnitsOfMeasurement.MeasureType>(16);
             }
             #endregion
 
             #region Methods
-            public void Decompile(IEnumerable<string> assemblypaths)
+            public void Decompile()
             {
-                foreach (string assemblypath in assemblypaths) Decompile(Assembly.LoadFrom(assemblypath));
-            }
-            public void Decompile(IEnumerable<Assembly> assemblies)
-            {
-                foreach (Assembly assembly in assemblies) Decompile(assembly);
-            }
-            public void Decompile(Assembly assembly)
-            {
-                List<Measure> scalesfound = new List<Measure>();
-                Measure measure;
-                foreach (Type t in assembly.GetExportedTypes())
-                {
-                    if ((measure = m_scaleFactory.CreateMeasure(t)) != null)
-                        scalesfound.Add(measure);
+                foreach(var u in Catalog.Units<double>()) Decompile(u);
+                foreach(var u in Catalog.Units<decimal>()) Decompile(u);
+                foreach(var u in Catalog.Units<float>()) Decompile(u);
 
-                    else if ((measure = m_unitFactory.CreateMeasure(t)) != null)
-                        DecompileUnit(measure);
-                }
-                // Scales are to be processed after all (underlying) units are known (decompiled)
-                foreach (Measure scale in scalesfound)
-                {
-                    DecompileScale(scale);
-                }
+                foreach(var s in Catalog.Scales<double>()) Decompile(s);
+                foreach(var s in Catalog.Scales<decimal>()) Decompile(s);
+                foreach(var s in Catalog.Scales<float>()) Decompile(s);
             }
 
-            private void DecompileUnit(Measure unit)
+            private void Decompile<T>(Unit<T> unit)
+                where T : struct
             {
-                Man.UnitsOfMeasurement.Number factor =
-                    Man.UnitsOfMeasurement.Number.CreateFromObject(unit.GetProperty(UnitConstants.FactorPropertyName));
+                Man.UnitsOfMeasurement.Number factor = Man.UnitsOfMeasurement.Number.CreateFromObject(unit.Factor);
 
                 Man.UnitsOfMeasurement.UnitType decompiledUnit =
                     new Man.UnitsOfMeasurement.UnitType(
@@ -85,26 +63,22 @@ namespace $safeprojectname$
                         new Man.UnitsOfMeasurement.NumExpr(factor != null, factor, null /* no factor code */)
                     );
 
+                decompiledUnit.Tags.AddRange(unit.Symbol);
+
                 AddFamily(unit.Family, decompiledUnit);
 
                 m_units.Add(decompiledUnit);
             }
 
-            private void DecompileScale(Measure scale)
+            private void Decompile<T>(Scale<T> scale)
+                where T : struct
             {
                 string scaleRefPoint = Attribute.IsDefined(scale.Type, typeof(ScaleReferencePointAttribute)) ?
                     (Attribute.GetCustomAttribute(scale.Type, typeof(ScaleReferencePointAttribute)) as ScaleReferencePointAttribute).Name :
-                    String.Empty;
+                    string.Empty;
 
-                object scaleOffset = scale.GetProperty(ScaleConstants.OffsetPropertyName);
-                Type scaleUnit = scaleOffset.GetType();
-
-                Man.UnitsOfMeasurement.Number offset =
-                    Man.UnitsOfMeasurement.Number.CreateFromObject(
-                        scaleUnit.GetProperty(UnitConstants.ValuePropertyName).GetValue(scaleOffset, null)
-                    );
-
-                Man.UnitsOfMeasurement.UnitType scaleUnitType = m_units.Find(u => u.Name == scaleUnit.Name);
+                Man.UnitsOfMeasurement.Number offset = Man.UnitsOfMeasurement.Number.CreateFromObject(scale.Offset.Value);
+                Man.UnitsOfMeasurement.UnitType scaleUnitType = m_units.Find(u => u.Name == scale.Unit.Type.Name);
 
                 Man.UnitsOfMeasurement.ScaleType decompiledScale =
                     new Man.UnitsOfMeasurement.ScaleType(

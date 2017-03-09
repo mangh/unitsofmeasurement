@@ -129,17 +129,5 @@ namespace UnitOfMeasureTest
                 Assert.IsTrue((post == pre) && (pre == temperature) && (temperature == (Fahrenheit)5.0));
             }
         }
-
-        [TestClass]
-        public class ScaleProxies
-        {
-            [TestMethod]
-            [ExpectedException(typeof(System.ArgumentException))]
-            public void ScaleConstructorThrowsExceptionOnIncompatibleArgument()
-            {
-                // Scale<T> constructor requires: 1) value type argument 2) implementing ILevel<T>, otherwise it throws exception.
-                var test = new Scale<double>(typeof(DegKelvin));    // DegKelvin implements IQuantity<double> (incompatible with Scale<double>)
-            }
-        }
     }
 }

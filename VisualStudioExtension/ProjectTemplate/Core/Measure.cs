@@ -15,12 +15,15 @@ using System.Reflection;
 namespace $safeprojectname$
 {
     /// <summary>
-    /// Measure (unit|scale) type proxy giving access to static
-    /// members (e.g.: Sense, Family, Symbol, Format) of the measure type
+    /// Base proxy representing either a unit or a scale and giving access to their common properties.
     /// </summary>
-    /// <remarks>In release 1.0 it was named UnitProxy</remarks>
-    public abstract partial class Measure : IEquatable<Measure>
+    public abstract class Measure : IEquatable<Measure>
     {
+        #region Constants
+        public static readonly RuntimeTypeHandle NoneMeasureTypeHandle = typeof(object).TypeHandle;
+        public static readonly TypeCode NoneMeasureTypeCode = TypeCode.Object;
+        #endregion
+
         #region Fields
         private readonly RuntimeTypeHandle m_handle;
         #endregion
@@ -29,13 +32,7 @@ namespace $safeprojectname$
 
         public RuntimeTypeHandle Handle { get { return m_handle; } }
         public Type Type { get { return Type.GetTypeFromHandle(m_handle); } }
-
-        // Measure static properties (independent of underlying value type)
-        public abstract Dimension Sense { get; }
         public abstract int Family { get; }
-        public abstract SymbolCollection Symbol { get; }
-        public abstract string Format { get; set; }
-
         #endregion
 
         #region Constructor(s)
@@ -49,7 +46,7 @@ namespace $safeprojectname$
         }
         #endregion
 
-        #region IEquatable<MeasureProxy>
+        #region IEquatable<Measure>
         public override int GetHashCode() { return m_handle.GetHashCode(); }
         public override bool Equals(object obj) { return (obj is Measure) && Equals((Measure)obj); }
         public bool Equals(Measure other) { return this.m_handle.Equals(other.Handle); }
@@ -59,59 +56,69 @@ namespace $safeprojectname$
         /// <summary>
         /// Get static property of the measure (unit|scale)
         /// </summary>
-        /// <param name="name">(static) property name</param>
-        /// <returns>property value (as object)</returns>
-        /// <exception cref="System.NullReferenceException">Thrown when name refers to non-existent property</exception>
-        public object GetProperty(string name)
+        /// <param name="T">Type code for a type parameter T used in Unit&lt;T&gt; or Scale&lt;T&gt; definition.</param>
+        /// <returns>
+        /// Unit.GenericTypeHandle (for Unit&lt;&gt; subclass) |
+        /// Scale.GenericTypeHandle (for Scale&lt;&gt; subclass) |
+        /// Measure.NoneMeasureTypeHandle (for any other type).
+        /// </returns>
+        public RuntimeTypeHandle Examine(out TypeCode T)
         {
-            Type measure = this.Type;
-            PropertyInfo property = measure.GetProperty(name);
-            return property.GetValue(measure, null);
-        }
-        /// <summary>
-        /// Set static property of the measure (unit|scale)
-        /// </summary>
-        /// <param name="name">(static) property name</param>
-        /// <param name="value">(static) property value</param>
-        /// <returns>property value (as object)</returns>
-        /// <exception cref="System.NullReferenceException">Thrown when name refers to non-existent property</exception>
-        public void SetProperty(string name, object value)
-        {
-            Type measure = this.Type;
-            PropertyInfo property = measure.GetProperty(name);
-            property.SetValue(measure, value, null);
-        }
-        /// <summary>
-        /// Create instance (object) of the measure (unit|scale)
-        /// </summary>
-        /// <param name="value">Constructor argument.</param>
-        /// <returns>Instance of the measure (object).</returns>
-        public abstract object CreateInstance(object value);
+            Type b = this.GetType().BaseType;
+            while(b != null)
+            {
+                if(b.IsGenericType)
+                {
+                    Type[] args = b.GetGenericArguments();
+                    if(args.Length == 1)
+                    {
+                        T = Type.GetTypeCode(args[0]);
 
+                        if(b.FullName.StartsWith(Unit.GenericTypeFullName))
+                            return Unit.GenericTypeHandle;
+
+                        else if(b.FullName.StartsWith(Scale.GenericTypeFullName))
+                            return Scale.GenericTypeHandle;
+                    }
+                }
+                b = b.BaseType;
+            }
+            T = NoneMeasureTypeCode;
+            return NoneMeasureTypeHandle;
+        }
+        #endregion
+
+        #region Formatting
+        public override string ToString()
+        {
+            return string.Format("({0}) {1}", Family, Type.Name);
+        }
+        #endregion
+
+        #region Statics
         /// <summary>
         /// Converts an instance of a measure (unit|scale) to the unit of measurement of this measure.
         /// </summary>
-        /// <param name="q">IQuantity&lt;T&gt; or ILevel&lt;T&gt; to be converted from.</param>
-        /// <returns>Instance of the measure i.e. IQuantity&lt;T&gt; or ILevel&lt;T&gt; returned as object.</returns>
-        public abstract object ConvertInstance(object q);
-
-        /// <summary>
-        /// Invoke static method of the measure (unit|scale)
-        /// </summary>
-        /// <param name="name">name of the method to be invoked</param>
-        /// <param name="arguments">method arguments</param>
-        /// <returns>method return value (as object)</returns>
-        /// <exception cref="System.NullReferenceException">Thrown when name refers to non-existent method</exception>
-        public object InvokeMethod(string name, object[] arguments)
+        /// <param name="t">Input type to retrieve proxy from.</param>
+        /// <returns>Proxy type (Unit&lt;T&gt; or Scale&lt;T&gt;) for a unit or scale input type; null for any other types.</returns>
+        public static Measure TryRetrieveFrom(Type t)
         {
-            Type measure = this.Type;
-            MethodInfo mi = measure.GetMethod(name);
-            return mi.Invoke(measure, arguments);
-        }
-
-        public override string ToString()
-        {
-            return String.Format("({0}) {1} {2}", this.Sense, this.Type.Name, this.Symbol);
+            if(t.IsValueType)
+            {
+                foreach(Type ifc in t.GetInterfaces())
+                {
+                    if(ifc.FullName.StartsWith(Unit.GenericInterfaceFullName) ||
+                        ifc.FullName.StartsWith(Scale.GenericInterfaceFullName))
+                    {
+                        PropertyInfo proxyInfo = t.GetProperty("Proxy", BindingFlags.Static | BindingFlags.Public);
+                        if(proxyInfo != null)
+                        {
+                            return proxyInfo.GetValue(t, null) as Measure;
+                        }
+                    }
+                }
+            }
+            return null;
         }
         #endregion
     }

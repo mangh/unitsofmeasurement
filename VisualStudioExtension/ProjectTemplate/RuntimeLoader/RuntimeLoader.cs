@@ -11,6 +11,7 @@
 ********************************************************************************/
 using System;
 using System.IO;
+using System.Linq;
 using System.Collections.Generic;
 using System.CodeDom.Compiler;
 using System.Reflection;
@@ -23,11 +24,11 @@ namespace $safeprojectname$
         private List<Man.UnitsOfMeasurement.UnitType> m_units;
         private List<Man.UnitsOfMeasurement.ScaleType> m_scales;
 
-        private Decompiler m_decompiler;
-        private Parser m_parser;
-        private Compiler m_compiler;
+        private Decompiler m_decompiler;    // decompiles in-memory units & into m_units & m_scales structures
+        private Parser m_parser;            // parses txt definitions and supplements m_units & m_scales structures
+        private Compiler m_compiler;        // C# compiler (compiles new generated units & scales)
 
-        private CompilerErrorCollection m_errors;
+        private CompilerErrorCollection m_errors;   // errors from either unit parser or C# compiler.
         #endregion
 
         #region Properties
@@ -49,40 +50,75 @@ namespace $safeprojectname$
         #endregion
 
         #region Methods
-        /// <summary>Load supplementary (runtime) units/scales from a definition text file</summary>
-        /// <param name="definitionsTextfile">definition file path</param>
-        /// <param name="compiledMeasures">assemblies containing compile-time units and/or scales</param>
-        /// <returns>assembly with supplementary (runtime) units/scales, saved to an external DLL | null in case of errors</returns>
-        public Assembly LoadFromFile(string definitionsTextfile, string[] compiledMeasures)
+        public bool LoadFromFile(string definitionsTextfile)
         {
-            string definitionsAssembly;
-            return (IsCompilationRequired(definitionsTextfile, out definitionsAssembly)) ? 
-                Load(definitionsTextfile, compiledMeasures, m_parser.ParseFile, definitionsAssembly) :
-                LoadFromAssembly(definitionsAssembly);
+            Assembly supplement = CompileFromFile(definitionsTextfile);
+            bool done = (supplement != null);
+            if(done)
+            {
+                Catalog.AppendFromAssembly(supplement);
+            }
+            return done;
+        }
+        public bool LoadFromString(string definitions)
+        {
+            Assembly supplement = CompileFromString(definitions);
+            bool done = (supplement != null);
+            if(done)
+            {
+                Catalog.AppendFromAssembly(supplement);
+            }
+            return done;
+        }
+
+        /// <summary>Compile supplementary (runtime) units/scales from a definition text file</summary>
+        /// <param name="definitionsTextfile">definition file path</param>
+        /// <returns>assembly with supplementary (runtime) units/scales, saved to an external DLL | null in case of errors</returns>
+        private Assembly CompileFromFile(string definitionsTextfile)
+        {
+            string definitionsAssembly =
+                string.Format("{0}\\{1}.dll",
+                    Path.GetDirectoryName(definitionsTextfile), 
+                    Path.GetFileNameWithoutExtension(definitionsTextfile)
+                );
+
+            FileSystemInfo textfile = new FileInfo(definitionsTextfile);
+            FileSystemInfo assembly = new FileInfo(definitionsAssembly);
+
+            if(textfile.LastWriteTime >= assembly.LastWriteTime)
+            {
+                return Compile(definitionsTextfile, m_parser.ParseFile, outputAssemblyPath: definitionsAssembly);
+            }
+            else
+            {
+                m_errors = m_parser.Errors;
+                m_errors.Clear();
+                return Assembly.LoadFrom(definitionsAssembly);
+            }
         }
 
         /// <summary>Load supplementary (runtime) units/scales from a definition string</summary>
         /// <param name="definitions">definition string</param>
-        /// <param name="compiledMeasures">assemblies containing compile-time units and/or scales</param>
         /// <returns>assembly with supplementary (runtime) units/scales, NOT saved to an external DLL | null in case of errors</returns>
-        public Assembly LoadFromString(string definitions, string[] compiledMeasures)
+        private Assembly CompileFromString(string definitions)
         {
-            return Load(definitions, compiledMeasures, m_parser.ParseString, null);
+            return Compile(definitions, m_parser.ParseString, outputAssemblyPath: null);
         }
 
-        /// <summary>Load supplementary (runtime) units/scales from a file or string</summary>
-        /// <param name="definitions">definition file path | definition string</param>
-        /// <param name="compiledMeasures">assemblies containing compile-time units and/or scales</param>
-        /// <param name="parse">ParseFile | ParseString (Parser methods)</param>
+        /// <summary>Compile supplementary (runtime) units/scales from a file or string</summary>
+        /// <param name="definitions">definition file path --or-- definition string</param>
+        /// <param name="parse">ParseFile | ParseString (parser methods)</param>
         /// <param name="outputAssemblyPath">path to the output DLL | null if the DLL is not required</param>
         /// <returns>assembly with supplementary (runtime) units/scales | null in case of errors</returns>
-        private Assembly Load(string definitions, string[] compiledMeasures, Func<string, bool> parse, string outputAssemblyPath)
+        private Assembly Compile(string definitions, Func<string, bool> parse, string outputAssemblyPath)
         {
             // Switch error collection back to the parser
             m_errors = m_parser.Errors;
 
+            m_errors.Clear();
+
             // Initialize m_units & m_scales lists with compile-time definitions:
-            m_decompiler.Decompile(compiledMeasures);
+            m_decompiler.Decompile();
 
             int unitStartIndex = m_units.Count;                     // start index for (possible) new units
             int scaleStartIndex = m_scales.Count;                   // start index for (possible) new scales
@@ -97,41 +133,20 @@ namespace $safeprojectname$
                 Generator generator = new Generator(familyStartId, m_units, unitStartIndex, m_scales, scaleStartIndex);
                 string source = generator.TransformText();
 
+                // References to assemblies containing units & scales that might be referenced from the source.
+                // NOTE: references to measures appended previously from string (and not saved to a DLL) are not available!!!
+                string[] references = Catalog.All
+                        .Select(m => m.Type.Assembly.Location).Distinct()
+                        .Where(location => !string.IsNullOrWhiteSpace(location)) // NOTE: assembly locations for measures appended from string are empty!!!
+                        .ToArray();
+
                 // Compile the generated source code:
-                if (m_compiler.CompileFromSource(source, compiledMeasures, outputAssemblyPath))
+                if(m_compiler.CompileFromSource(source, references, outputAssemblyPath))
                     supplement = m_compiler.Results.CompiledAssembly;
 
                 m_errors = m_compiler.Results.Errors;
             }
             return supplement;
-        }
-
-        /// <summary>Load runtime definitions from previously compiled assembly</summary>
-        /// <param name="assemblyPath">path to the assembly file</param>
-        /// <returns>assembly with supplementary (runtime) units/scales</returns>
-        private Assembly LoadFromAssembly(string assemblyPath)
-        {
-            m_errors = m_parser.Errors;
-            m_errors.Clear();
-            return Assembly.LoadFrom(assemblyPath);
-        }
-
-        /// <summary>Tests whether definitions have been modified since the last compilation</summary>
-        /// <param name="definitionsTextfile">definitions file path</param>
-        /// <param name="definitionsAssembly">assembly file path, set to definitionsDirectory/definitionsFileName.dll</param>
-        /// <returns>
-        /// true if the definitions have been modified and require recompilation; 
-        /// false otherwise (runtime definitions can be loaded directly from the saved assembly)
-        /// </returns>
-        private bool IsCompilationRequired(string definitionsTextfile, out string definitionsAssembly)
-        {
-            definitionsAssembly = String.Format("{0}\\{1}.dll", 
-                Path.GetDirectoryName(definitionsTextfile), Path.GetFileNameWithoutExtension(definitionsTextfile));
-
-            FileSystemInfo textfile = new FileInfo(definitionsTextfile);
-            FileSystemInfo assembly = new FileInfo(definitionsAssembly);
-
-            return (textfile.LastWriteTime >= assembly.LastWriteTime);
         }
         #endregion
     }

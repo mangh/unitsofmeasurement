@@ -22,7 +22,6 @@ namespace $safeprojectname$
         IQuantity<T> NormalizedLevel { get; }   // Level relative to family (common) reference point
 
         // Scale (class) properties
-        int Family { get; }
-        SymbolCollection Symbol { get; }
+        Scale<T> Scale { get; }
     }
 }

@@ -10,109 +10,76 @@
 
 ********************************************************************************/
 using System;
-using System.Reflection;
+using System.Collections.Generic;
 
 namespace $safeprojectname$
 {
     /// <summary>
     /// Scale constants
     /// </summary>
-    public static class ScaleConstants
+    public abstract class Scale : Measure
     {
-        // static properties
-        public const string OffsetPropertyName = "Offset";
-        public const string FamilyPropertyName = "Family";
-        public const string FormatPropertyName = "Format";
-
-        // static methods
-        public const string CreateMethodName = "Create";
-        public const string ConvertMethodName = "Convert";
-
-        // instance properties
-        public const string LevelPropertyName = "Level";
-        public const string NormalizedLevelPropertyName = "NormalizedLevel";
-
-        // generic types
+        #region Constants
         public static readonly RuntimeTypeHandle GenericTypeHandle = typeof(Scale<>).TypeHandle;
-        public static readonly RuntimeTypeHandle GenericInterfaceHandle = typeof(ILevel<>).TypeHandle;
-    }
-
-    /// <summary>
-    /// Scale type proxy giving access to static members (e.g.: Sense, Family, Symbol, Format) of the scale type
-    /// </summary>
-    /// <typeparam name="T">double, decimal, float: value type underlying the scale type</typeparam>
-    public partial class Scale<T> : Measure where T : struct
-    {
-        #region Fields
-        private readonly Unit<T> m_unit;
-        private readonly int m_family;
-        private readonly IQuantity<T> _offset;
-
-        private readonly Func<string> m_formatGet;
-        private readonly Action<string> m_formatSet;
-
-        private readonly Func<T, ILevel<T>> m_createLevel;
-        private readonly Func<ILevel<T>, ILevel<T>> m_convertLevel;
+        public static readonly string GenericTypeFullName = typeof(Scale<>).FullName;
+        public static readonly string GenericInterfaceFullName = typeof(ILevel<>).FullName;
         #endregion
 
         #region Properties
+        public abstract Unit Unit { get; }
+        public abstract string Format { get; set; }
+        #endregion
 
-        public Unit<T> Unit
+        #region Constructor(s)
+        /// <summary>
+        /// Create scale proxy from a scale type.
+        /// </summary>
+        /// <param name="scale">Scale of any value type.</param>
+        protected Scale(Type scale) :
+            base(scale)
         {
-            get { return m_unit; }
         }
-        public override Dimension Sense
+        #endregion
+
+        #region Formatting
+        public override string ToString()
         {
-            get { return m_unit.Sense; }
+            return string.Format("[{0}] {1} {2}", Unit.Sense, Type.Name, Unit.Symbol);
         }
-        public override int Family
-        {
-            get { return m_family; }
-        }
-        public override SymbolCollection Symbol
-        {
-            get { return m_unit.Symbol; }
-        }
-        public override string Format
-        {
-            get { return m_formatGet(); }
-            set { m_formatSet(value); }
-        }
-        public IQuantity<T> Offset
-        {
-            get { return _offset; }
-        }
+        #endregion
+    }
+
+    /// <summary>
+    /// Scale proxy type giving access to properties and methods specific to the type parameter T.
+    /// </summary>
+    /// <typeparam name="T">Value type underlying the scale type: double, decimal, float.</typeparam>
+    public abstract class Scale<T> : Scale
+        where T : struct
+    {
+        #region Properties
+        public abstract IQuantity<T> Offset { get; }
         #endregion
 
         #region Constructor(s)
         /// <summary>
         /// Construct scale type proxy from a value type implementing ILevel&lt;T&gt;
         /// </summary>
-        /// <param name="t">scale value type implementing ILevel&lt;T&gt;</param>
-        /// <exception cref="System.ArgumentException">Thrown when Type t is not a value type implementing ILevel&lt;T&gt;</exception>
-        public Scale(Type scale) :
+        /// <param name="scale">Scale value type implementing ILevel&lt;T&gt;.</param>
+        /// <exception cref="System.ArgumentException">Thrown when scale argument is not a value type implementing ILevel&lt;T&gt;.</exception>
+        protected Scale(Type scale) :
             base(scale)
         {
             if(!IsAssignableFrom(scale))
-                throw new ArgumentException(string.Format("\"{0}\" is not a scale type implementing ILevel<> interface.", scale.Name));
-
-            m_family = (int)GetProperty(ScaleConstants.FamilyPropertyName);
-            _offset = (IQuantity<T>)GetProperty(ScaleConstants.OffsetPropertyName);
-            m_unit = new Unit<T>(_offset);
-
-            PropertyInfo pi = scale.GetProperty(ScaleConstants.FormatPropertyName);
-            m_formatGet = Delegate.CreateDelegate(typeof(Func<string>), pi.GetGetMethod()) as Func<string>;
-            m_formatSet = Delegate.CreateDelegate(typeof(Action<string>), pi.GetSetMethod()) as Action<string>;
-            m_createLevel = Delegate.CreateDelegate(typeof(Func<T, ILevel<T>>), scale.GetMethod(ScaleConstants.CreateMethodName)) as Func<T, ILevel<T>>;
-            m_convertLevel = Delegate.CreateDelegate(typeof(Func<ILevel<T>, ILevel<T>>), scale.GetMethod(ScaleConstants.ConvertMethodName)) as Func<ILevel<T>, ILevel<T>>;
+                throw new ArgumentException(string.Format("\"{0}\" is not a scale type implementing {1} interface.", scale.Name, typeof(ILevel<T>).Name));
         }
         /// <summary>
         /// Construct scale type proxy from ILevel&lt;T&gt; scale instance object
         /// </summary>
-        /// <param name="q">ILevel&lt;T&gt; instance object</param>
-        public Scale(ILevel<T> q) :
-            this(q.GetType())
+        /// <param name="t">Type to be verified.</param>
+        /// <returns>"true" for valid scale type, otherwise "false".</returns>
+        public static bool IsAssignableFrom(Type t)
         {
+            return t.IsValueType && typeof(ILevel<T>).IsAssignableFrom(t);
         }
         #endregion
 
@@ -120,46 +87,23 @@ namespace $safeprojectname$
         /// <summary>
         /// Create scale instance object (level)
         /// </summary>
-        /// <param name="value">level value</param>
-        /// <returns>ILevel&lt;T&gt; instance object (level)</returns>
-        public ILevel<T> CreateLevel(T value)
-        {
-            return m_createLevel(value);
-        }
-        public override object CreateInstance(object value)
-        {
-            if(value is T) return m_createLevel((T)value);
-            throw new ArgumentException(string.Format("{0}.CreateInstance: value is not of type \"{1}\".", typeof(Scale<T>).Name, typeof(T).Name));
-        }
+        /// <param name="value">Value to be assigned to the level.</param>
+        /// <returns>Level of the given value.</returns>
+        public abstract ILevel<T> Create(T value);
 
         /// <summary>
         /// Convert ILevel&lt;T&gt; level to the unit of measurement and offset of this scale type
         /// </summary>
-        /// <param name="q">input ILevel&lt;T&gt; instance object (to be converted from)</param>
-        /// <returns>ILevel&lt;T&gt; instance object of this scale type (conversion result)</returns>
-        public ILevel<T> ConvertLevel(ILevel<T> q)
-        {
-            return m_convertLevel(q);
-        }
-        public override object ConvertInstance(object level)
-        {
-            ILevel<T> q = level as ILevel<T>;
-            if(q != null) return m_convertLevel(q);
-            throw new ArgumentException(string.Format("{0}.ConvertInstance: level is not of type \"{1}\".", typeof(Scale<T>).Name, typeof(ILevel<T>).Name));
-        }
+        /// <param name="level">Level to be converted from.</param>
+        /// <returns>Converted level.</returns>
+        public abstract ILevel<T> From(ILevel<T> level);
 
-        #endregion
-
-        #region Statics
         /// <summary>
         /// Verify whether the type is a scale type
         /// </summary>
-        /// <param name="t">type to be verified</param>
-        /// <returns>"true" for scale type, otherwise "false"</returns>
-        public static bool IsAssignableFrom(Type t)
-        {
-            return t.IsValueType && typeof(ILevel<T>).IsAssignableFrom(t);
-        }
+        /// <param name="quantity">Quantity to be converted (attached).</param>
+        /// <returns>Level attached to the scale.</returns>
+        public abstract ILevel<T> From(IQuantity<T> quantity);
         #endregion
     }
 }

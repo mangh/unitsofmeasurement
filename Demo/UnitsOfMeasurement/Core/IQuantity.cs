@@ -21,8 +21,6 @@ namespace Demo.UnitsOfMeasurement
         T Value { get; }
 
         // Unit (class) properties
-        int Family { get; }
-        T Factor { get; }
-        SymbolCollection Symbol { get; }
+        Unit<T> Unit { get; }
     }
 }
