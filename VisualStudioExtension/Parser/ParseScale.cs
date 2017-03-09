@@ -24,36 +24,49 @@ namespace Man.UnitsOfMeasurement
         //      1st identifier = scale identifier, 
         //      2nd identifier = ref.point identifier, 
         //      3rd identifier = unit identifier, 
-        private void ParseScale()
+        private bool ParseScale()
         {
             // Identifier (scale name)
-            string scaleName = GetEntityName("scale"); if (scaleName == null) return;
+            string scaleName = GetEntityName("scale");
+            if (scaleName == null) return false;
 
             // Format
-            string format = GetFormat(scaleName, String.Empty); if (format == null) return;
+            string format = GetFormat(scaleName, String.Empty);
+            if (format == null) return false;
 
             // Identifier (refpoint)
-            string refpoint = GetReferencePoint(scaleName); if (refpoint == null) return;
+            string refpoint = GetReferencePoint(scaleName);
+            if (refpoint == null) return false;
 
             // "="
-            if (m_symbol == Lexer.Symbol.EQ) GetToken(); else { Note("{0}: \"{1}\" found while expected equal sign \"=\".", scaleName, m_token); return; }
+            if (m_symbol == Lexer.Symbol.EQ)
+                GetToken();
+            else
+            {
+                Note("{0}: \"{1}\" found while expected equal sign \"=\".", scaleName, m_token);
+                return false;
+            }
 
             // Identifier (unit)
-            UnitType unit = GetScaleUnit(refpoint, scaleName); if (unit == null) return;
+            UnitType unit = GetScaleUnit(refpoint, scaleName);
+            if (unit == null) return false;
 
             // Scale offset <Num Expr>
-            ASTNode offsetAST = GetNumExpr(scaleName, unit.Factor.Value.Type); if (offsetAST == null) return;
-            NumExpr offsetExpr = m_exprEncoder.Encode(offsetAST, unit.Factor.Value.Type);
+            ASTNode offsetAST = GetNumExpr(scaleName, unit.Factor.Value.Type);
+            if (offsetAST == null) return false;
 
-            ScaleType scale = new ScaleType(scaleName, refpoint, unit, offsetExpr);
-
-            scale.Format = String.IsNullOrWhiteSpace(format) ? unit.Format : format;
-
-            ScaleType relative = GetRelativeScale(scale);
-            if (relative != null)
-                relative.AddRelative(scale);
-
-            m_scales.Add(scale);
+            // Semicolon ";"
+            bool done = GetSemicolon(scaleName);
+            if (done)
+            {
+                NumExpr offsetExpr = m_exprEncoder.Encode(offsetAST, unit.Factor.Value.Type);
+                ScaleType scale = new ScaleType(scaleName, refpoint, unit, offsetExpr);
+                scale.Format = String.IsNullOrWhiteSpace(format) ? unit.Format : format;
+                ScaleType relative = GetRelativeScale(scale);
+                if (relative != null) relative.AddRelative(scale);
+                m_scales.Add(scale);
+            }
+            return done;
         }
 
         private string GetReferencePoint(string scaleName)
@@ -85,7 +98,7 @@ namespace Man.UnitsOfMeasurement
             }
             else if((twin = FindScale(refpoint, unit)) != null)
             {
-                Note("{0}: based on the same unit \"{1}\" as scale {2} (in {3} family). Scales would be indistinguishable.", scaleName, m_token, twin.Name, refpoint);
+                Note("{0}: same unit {1} as in scale {2} (ambiguous unit-to-scale relationship).", scaleName, m_token, twin.Name);
             }
             else
             {

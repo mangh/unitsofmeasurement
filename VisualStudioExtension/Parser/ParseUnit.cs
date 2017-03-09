@@ -22,21 +22,24 @@ namespace Man.UnitsOfMeasurement
         #region Methods
 
         // <Unit> ::= 'unit'<ValueType> Identifier <Tags> <Format> '=' <Dim Expr> ';'
-        private void ParseUnit()
+        private bool ParseUnit()
         {
             // <ValueType>
-            NumericType numType = GetUnitNumericType(); if (numType == null) return;
+            NumericType numType = GetUnitNumericType();
+            if (numType == null) return false;
 
             // Identifier (unit name)
-            string unitName = GetEntityName("unit"); if (unitName == null) return;
+            string unitName = GetEntityName("unit");
+            if (unitName == null) return false;
 
             UnitType candidate = new UnitType(unitName);
 
             // Tags
-            if (!GetUnitTags(candidate)) return;
+            if (!GetUnitTags(candidate)) return false;
 
             // Format
-            if ((candidate.Format = GetFormat(candidate.Name, "{0} {1}")) == null) return;
+            candidate.Format = GetFormat(candidate.Name, "{0} {1}");
+            if (candidate.Format == null) return false;
 
             // "="
             if (m_symbol == Lexer.Symbol.EQ)
@@ -44,13 +47,19 @@ namespace Man.UnitsOfMeasurement
             else
             {
                 Note("{0}: \"{1}\" found while expected equal sign \"=\".", candidate.Name, m_token);
-                return;
+                return false;
             }
 
             // <Dim Expr>
-            if (!GetDimExpr(candidate, numType)) return;
+            if (!GetDimExpr(candidate, numType)) return false;
 
-            m_units.Add(candidate);
+            // Semicolon ";"
+            bool done = GetSemicolon(candidate.Name);
+            if (done)
+            {
+                m_units.Add(candidate);
+            }
+            return done;
         }
 
         private NumericType GetUnitNumericType()

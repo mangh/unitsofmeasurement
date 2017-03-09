@@ -59,25 +59,22 @@ namespace Man.UnitsOfMeasurement
                 if (m_symbol != Lexer.Symbol.Identifier)
                 {
                     Note(badTokenMessageFormat, m_token);
-                    Synchronize();
                 }
                 else if (m_token == "unit")
                 {
                     GetToken();
-                    ParseUnit();
-                    CheckSemicolon();
+                    if (ParseUnit()) continue;
                 }
                 else if (m_token == "scale")
                 {
                     GetToken();
-                    ParseScale();
-                    CheckSemicolon();
+                    if (ParseScale()) continue;
                 }
                 else
                 {
                     Note(badTokenMessageFormat, m_token);
-                    Synchronize();
                 }
+                Synchronize();
             }
         }
 
@@ -107,16 +104,20 @@ namespace Man.UnitsOfMeasurement
             return null;
         }
 
-        private void CheckSemicolon()
+        private bool GetSemicolon(string entityName)
         {
-            if (m_symbol == Lexer.Symbol.Semicolon)
+            bool found = (m_symbol == Lexer.Symbol.Semicolon);
+
+            if (found)
+            {
                 GetToken();
+            }
+            else if (!m_lexer.TokenIsFaulty)
+            {
+                Note("{0}: invalid expression \"{1}\" or missing semicolon \";\".", entityName, m_token);
+            }
 
-            else if (m_lexer.TokenIsFaulty)
-                Synchronize();
-
-            else
-                Note("\"{0}\" found while expected semicolon \";\".", m_token);
+            return found;
         }
 
         private void Synchronize()
