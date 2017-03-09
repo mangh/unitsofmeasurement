@@ -101,7 +101,7 @@ namespace ProjectileRange
             tmax = (v * UMath.Sin(angle) + UMath.Sqrt((v * UMath.Sin(angle)) * (v * UMath.Sin(angle)) + 2.0 * g * h)) / g;
 
             ymax = h;
-            for (Second t = (Second)0.0; t < tmax; t++)
+            for (Second t = Second.Zero; t < tmax; t++)
             {
                 Meter y = h + v * UMath.Sin(angle) * t - g * t * t / 2.0;
                 if (y > ymax) ymax = y;

@@ -11,6 +11,7 @@
 ********************************************************************************/
 
 using System;
+using System.Linq;
 using System.Globalization;
 using System.Collections.Generic;
 using System.Xml;
@@ -28,14 +29,15 @@ namespace Currencies
                 "as published at https://github.com/mangh/unitsofmeasurement."
             );
 
-            Console.WriteLine("\nUpdating exchange rates in currency units (demo application).\n");
+            Console.WriteLine("\nUpdating currency unit exchange rates (demo application).\n");
 
-            var catalog = UnitCatalog<decimal>.LoadFromAssembly(typeof(EUR).Assembly);
-
-            UpdateCurrencyRates(catalog, @"http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml");
+            UpdateCurrencyRates(
+                Catalog.Units<decimal>(EUR.Family), 
+                @"http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml"
+            );
         }
 
-        private static void UpdateCurrencyRates(UnitCatalog<decimal> catalog, string url)
+        private static void UpdateCurrencyRates(IEnumerable<Unit<decimal>> catalog, string url)
         {
             Console.WriteLine("Connecting to {0} ...", url);
 
@@ -55,7 +57,7 @@ namespace Currencies
                         if ((attrCurrency != null) && (attrRate != null))
                         {
                             decimal rate;
-                            Unit<decimal> currency = catalog[attrCurrency.Value];
+                            Unit<decimal> currency = catalog.FirstOrDefault(c => c.Symbol.IndexOf(attrCurrency.Value) == 0);
                             if ((currency != null) && decimal.TryParse(attrRate.Value, NumberStyles.Number, CultureInfo.InvariantCulture, out rate))
                             {
                                 decimal oldrate = currency.Factor;

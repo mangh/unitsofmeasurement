@@ -234,7 +234,7 @@ namespace Benchmark
         }
     }
 }
-/* Sample output under VS2010, Release config, Platform target: AnyCPU, Prefer 32 bit, Optimize code:
+/* Sample output under VS2010 (Release config, Platform target: AnyCPU, Prefer 32 bit, Optimize code):
 
 Units of Measurement for C# applications. Copyright (c) Marek Anioła.
 This program is provided to you under the terms of the license
@@ -285,7 +285,7 @@ as published at https://github.com/mangh/unitsofmeasurement.
 Press any key to continue . . .
 */
 
-/* Sample output under VS2015, Release config, Platform target: AnyCPU, Prefer 32 bit, Optimize code:
+/* Sample output under VS2015 (Release config, Platform target: AnyCPU, Prefer 32 bit, Optimize code):
 
  Unit versus plain arithmetic benchmark (press Esc to quit, any other key to repeat).
 
