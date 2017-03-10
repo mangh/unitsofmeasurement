@@ -100,8 +100,9 @@ namespace RuntimeUnits
             Console.WriteLine();
             Console.WriteLine(headerformat, input);
 
-            IEnumerable<Scale<double>> allowedScales = Catalog.Scales<double>(Kelvin.Family);
-            var parser = new QuantityParser<double>(allowedUnits: allowedScales.Select(s => s.Unit as Unit<double>));
+            var allowedScales = Catalog.Scales<double>(Kelvin.Family);
+
+            var parser = new QuantityParser<double>(allowedScales); // NOTE: scales provide here units required by the parser!
 
             IQuantity<double> temperature;
             if (!parser.TryParse(input, out temperature))

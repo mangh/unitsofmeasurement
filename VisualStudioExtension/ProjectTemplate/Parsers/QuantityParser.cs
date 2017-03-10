@@ -35,6 +35,10 @@ namespace $safeprojectname$
             NumberStyle = NumberStyles.Float;
             TryTokenize = TokenizePostfixed;
         }
+        public QuantityParser(IEnumerable<Scale<T>> allowedScales) :
+            this(Catalog.Units<T>(allowedScales))
+        {
+        }
         public QuantityParser(int family) :
             this(Catalog.Units<T>(family))
         {

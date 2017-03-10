@@ -137,6 +137,15 @@ namespace Demo.UnitsOfMeasurement
         {
             return Units<T>(u => u.Sense == sense);
         }
+
+        /// <summary>Returns units underlying selected scales.</summary>
+        /// <typeparam name="T">Type of units to be selected.</typeparam>
+        /// <param name="scales">Selected scales.</param>
+        public static IEnumerable<Unit<T>> Units<T>(IEnumerable<Scale<T>> scales)
+            where T : struct
+        {
+            return scales.Select(s => s.Unit as Unit<T>);
+        }
         #endregion
 
         #region Scale<T>, IEnumerable<Scale<T>>

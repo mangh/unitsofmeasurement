@@ -13,7 +13,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace Demo.UnitsOfMeasurement
+namespace $safeprojectname$
 {
     /// <summary>
     /// Catalog of all unit and scale proxies available at compile-time, possibly supplemented with late proxies at run-time.
@@ -136,6 +136,15 @@ namespace Demo.UnitsOfMeasurement
             where T : struct
         {
             return Units<T>(u => u.Sense == sense);
+        }
+
+        /// <summary>Returns units underlying selected scales.</summary>
+        /// <typeparam name="T">Type of units to be selected.</typeparam>
+        /// <param name="scales">Selected scales.</param>
+        public static IEnumerable<Unit<T>> Units<T>(IEnumerable<Scale<T>> scales)
+            where T : struct
+        {
+            return scales.Select(s => s.Unit as Unit<T>);
         }
         #endregion
 
