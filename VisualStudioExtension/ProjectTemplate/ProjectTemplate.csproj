@@ -49,7 +49,6 @@
     <Compile Include="Core\ILevel.cs" />
     <Compile Include="Core\IQuantity.cs" />
     <Compile Include="Core\Measure.cs" />
-    <Compile Include="Core\MeasureFactory.cs" />
     <Compile Include="Core\Scale.cs" />
     <Compile Include="Core\ScaleReferencePointAttribute.cs" />
     <Compile Include="Core\SymbolCollection.cs" />
