@@ -88,6 +88,7 @@ namespace UnitOfMeasureTest
             {
                 Celsius celsius = (Celsius)100.0;
                 Assert.IsTrue(celsius == (Celsius)(Kelvin)(100.0 + 273.15));
+                Assert.IsTrue(celsius.Equals((Celsius)(Kelvin)(100.0 + 273.15)));
                 Assert.IsTrue((Kelvin)celsius > (Kelvin)100.0);
                 Assert.IsTrue((Kelvin)celsius >= (Kelvin)100.0);
                 Assert.IsTrue((Kelvin)100.0 < (Kelvin)celsius);
