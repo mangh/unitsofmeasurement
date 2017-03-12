@@ -66,7 +66,61 @@
     <Compile Include="RuntimeLoader\Parser.cs" />
     <Compile Include="RuntimeLoader\RuntimeLoader.cs" />
     <Compile Include="Units\Catalog.cs" />
-    <Compile Include="Units\_generator.cs">
+    <Compile Include="Units\Catalog.Populate.cs">
+      <DependentUpon>_generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Units\Celsius.cs">
+      <DependentUpon>_generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Units\DegCelsius.cs">
+      <DependentUpon>_generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Units\DegFahrenheit.cs">
+      <DependentUpon>_generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Units\DegKelvin.cs">
+      <DependentUpon>_generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Units\Degree.cs">
+      <DependentUpon>_generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Units\EUR.cs">
+      <DependentUpon>_generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Units\Fahrenheit.cs">
+      <DependentUpon>_generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Units\Joule.cs">
+      <DependentUpon>_generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Units\Kelvin.cs">
+      <DependentUpon>_generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Units\Kilogram.cs">
+      <DependentUpon>_generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Units\Meter.cs">
+      <DependentUpon>_generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Units\Meter_Sec.cs">
+      <DependentUpon>_generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Units\Meter_Sec2.cs">
+      <DependentUpon>_generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Units\Newton.cs">
+      <DependentUpon>_generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Units\NewtonMeter.cs">
+      <DependentUpon>_generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Units\PLN.cs">
+      <DependentUpon>_generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Units\Radian.cs">
+      <DependentUpon>_generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Units\Second.cs">
       <DependentUpon>_generator.tt</DependentUpon>
     </Compile>
   </ItemGroup>

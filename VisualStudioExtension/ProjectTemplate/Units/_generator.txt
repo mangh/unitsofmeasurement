@@ -1,15 +1,14 @@
-﻿Units and Scales generated on 2017-03-09 18:00:15
+﻿Units and Scales generated on 2017-03-12 11:27:57
 
 ////////////////////////////////////////////////////////////////////////////////
 //
-//  U N I T S                              | 20 units | 13 families (id: 0 - 12)
+//  U N I T S                              | 15 units | 11 families (id: 0 - 10)
 //
 ////////////////////////////////////////////////////////////////////////////////
 [dim] unit {tags} : factor (family)
 
 [L] Meter {"m"} : 1 (Meter)
 
-    SquareMeter = Meter * Meter
     Meter_Sec = Meter / Second
     Second = Meter / Meter_Sec
 
@@ -24,67 +23,33 @@
 [ϴ] DegKelvin {"K", "deg.K"} : 1 (DegKelvin)
 
     (DegKelvin)DegFahrenheit
-    (DegKelvin)DegRankine
     (DegKelvin)DegCelsius
 
 [ϴ] DegCelsius {"\u00B0C", "deg.C"} : 1 (DegKelvin)
 
     (DegCelsius)DegKelvin
     (DegCelsius)DegFahrenheit
-    (DegCelsius)DegRankine
-
-[ϴ] DegRankine {"\u00B0R", "deg.R"} : 1.8 (DegKelvin)
-
-    (DegRankine)DegCelsius
-    (DegRankine)DegKelvin
-    (DegRankine)DegFahrenheit
 
 [ϴ] DegFahrenheit {"\u00B0F", "deg.F"} : 1.8 (DegKelvin)
 
-    (DegFahrenheit)DegRankine
     (DegFahrenheit)DegCelsius
     (DegFahrenheit)DegKelvin
 
 [¤] EUR {"EUR"} : 1 (EUR)
 
     (EUR)PLN
-    (EUR)USD
-
-[¤] USD {"USD"} : 1.3433 (EUR)
-
-    (USD)EUR
-    (USD)PLN
 
 [¤] PLN {"PLN"} : 4.1437 (EUR)
 
-    (PLN)USD
     (PLN)EUR
 
 [1] Radian {"rad"} : 1 (Radian)
 
-    (Radian)Cycles
     (Radian)Degree
 
 [1] Degree {"\u00B0", "deg"} : (180d / Math.PI) * Radian.Factor (Radian)
 
     (Degree)Radian
-    (Degree)Cycles
-
-[1] Cycles {"c"} : Radian.Factor / (2d * Math.PI) (Radian)
-
-    (Cycles)Degree
-    (Cycles)Radian
-    Hertz = Cycles / Second
-    Second = Cycles / Hertz
-
-[T-1] Hertz {"Hz"} : Cycles.Factor / Second.Factor (Hertz)
-
-    Cycles = Hertz * Second
-    Cycles = Second * Hertz
-
-[L2] SquareMeter {"m\u00B2", "m2"} : 1 (SquareMeter)
-
-    Meter = SquareMeter / Meter
 
 [LT-1] Meter_Sec {"m/s"} : 1 (Meter_Sec)
 
@@ -119,7 +84,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 //
-//  S C A L E S                            | 4 scales | 1 families (id: 13 - 13)
+//  S C A L E S                            | 3 scales | 1 families (id: 11 - 11)
 //
 ////////////////////////////////////////////////////////////////////////////////
 [dim] scale : refpoint = unit offset (family)
@@ -127,24 +92,15 @@
 [ϴ] Kelvin : AbsoluteZero = DegKelvin 0 (Kelvin)
 
     (Kelvin)Fahrenheit
-    (Kelvin)Rankine
     (Kelvin)Celsius
 
 [ϴ] Celsius : AbsoluteZero = DegCelsius -273.15 (Kelvin)
 
     (Celsius)Kelvin
     (Celsius)Fahrenheit
-    (Celsius)Rankine
-
-[ϴ] Rankine : AbsoluteZero = DegRankine 0 (Kelvin)
-
-    (Rankine)Celsius
-    (Rankine)Kelvin
-    (Rankine)Fahrenheit
 
 [ϴ] Fahrenheit : AbsoluteZero = DegFahrenheit -459.66999999999996 (Kelvin)
 
-    (Fahrenheit)Rankine
     (Fahrenheit)Celsius
     (Fahrenheit)Kelvin
 

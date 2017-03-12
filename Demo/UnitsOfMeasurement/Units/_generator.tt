@@ -1,7 +1,7 @@
 <#@ template debug="false" hostspecific="true" language="C#" #>
 <#@ output extension=".txt" encoding="utf-8" #>
 <#@ assembly name="EnvDTE" #>
-<#@ assembly name="C:\Users\Marek\Documents\_git\MAN\UnitsOfMeasurement\VisualStudioExtension\Parser\bin\Debug\Man.UnitsOfMeasurement.Parser.dll" #>
+<#@ assembly name="$(SolutionDir)VisualStudioExtension\Parser\bin\Debug\Man.UnitsOfMeasurement.Parser.dll" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.IO" #>
 <#@ import namespace="System.Text" #>

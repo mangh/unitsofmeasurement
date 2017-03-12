@@ -61,12 +61,12 @@ unit Kilogram "kg" = <Mass>;
 //
 unit DegKelvin "K" "deg.K" = <Temperature>;
 unit DegCelsius "\u00B0C" "deg.C" = DegKelvin;
-unit DegRankine "\u00B0R" "deg.R" = (9 / 5) * DegKelvin;
+// unit DegRankine "\u00B0R" "deg.R" = (9 / 5) * DegKelvin;
 unit DegFahrenheit "\u00B0F" "deg.F" = (9 / 5) * DegKelvin;
 
 scale Kelvin AbsoluteZero = DegKelvin 0.0;
 scale Celsius AbsoluteZero = DegCelsius -273.15;
-scale Rankine AbsoluteZero = DegRankine 0.0;
+// scale Rankine AbsoluteZero = DegRankine 0.0;
 scale Fahrenheit AbsoluteZero = DegFahrenheit -273.15 * (9 / 5) + 32;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -98,7 +98,7 @@ scale Fahrenheit AbsoluteZero = DegFahrenheit -273.15 * (9 / 5) + 32;
 //      are to be updated on application startup.
 //
 unit<decimal> EUR "EUR" = <Money>;	// Euro
-unit<decimal> USD "USD" = 1.3433 * EUR;	// US Dollar
+// unit<decimal> USD "USD" = 1.3433 * EUR;	// US Dollar
 // unit<decimal> JPY "JPY" = 136.74 * EUR;	// Japanese Yen
 // unit<decimal> BGN "BGN" = 1.9558 * EUR;	// BulgarianLev
 // unit<decimal> CZK "CZK" = 27.481 * EUR;	// Czech Koruna
@@ -148,7 +148,7 @@ unit Degree "\u00B0" "deg" : "{0}{1}" = (180 / "Math.PI") * Radian;
 // unit ArcSecond "\"" : "{0}{1}" = 60 * ArcMinute;
 // unit Grad "grad" = (200 / "Math.PI") * Radian;
 
-unit Cycles "c" = Radian / (2 * "Math.PI");
+// unit Cycles "c" = Radian / (2 * "Math.PI");
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -174,7 +174,7 @@ unit Cycles "c" = Radian / (2 * "Math.PI");
 //      any other multi-formula definitions with literals (Degree_Sec, RPM etc).
 //      Therefore it's up to you to take care of their consistency.
 //
-unit Hertz "Hz" = Cycles / Second;
+// unit Hertz "Hz" = Cycles / Second;
 // unit KiloHertz "kHz" = Hertz / 1000;
 // unit MegaHertz "MHz" = KiloHertz / 1000;
 // unit GigaHertz "GHz" = MegaHertz / 1000;
@@ -207,7 +207,7 @@ unit Hertz "Hz" = Cycles / Second;
 //      In such cases the parser is right - the factors are not consistent - 
 //      but it cannot display them correctly.
 //
-unit SquareMeter "m\u00B2" "m2" = Meter * Meter;
+// unit SquareMeter "m\u00B2" "m2" = Meter * Meter;
 // unit SquareCentimeter "cm\u00B2" "cm2" = Centimeter * Centimeter | SquareMeter * 1.0e4;
 // unit SquareKilometer "km\u00B2" "km2" = Kilometer * Kilometer | SquareMeter / 1.0e6;
 
