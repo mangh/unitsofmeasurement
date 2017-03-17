@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" ?>
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
+  <Metadata>
+    <Identity Id="Man.UnitsOfMeasurement.8132829a-250b-47fe-9b58-9921d56f0a75" Version="2.0" Language="en-US" Publisher="MAN" />
+    <DisplayName>UnitsOfMeasurement</DisplayName>
+    <Description xml:space="preserve">Project template for creating Units of Measurement C# class library (.dll)</Description>
+    <MoreInfo>https://github.com/mangh/unitsofmeasurement</MoreInfo>
+    <License>license.txt</License>
+    <GettingStartedGuide>https://github.com/mangh/unitsofmeasurement/wiki</GettingStartedGuide>
+    <ReleaseNotes>https://github.com/mangh/unitsofmeasurement/blob/master/CHANGELOG.md</ReleaseNotes>
+    <Icon>Icon.png</Icon>
+    <PreviewImage>Preview.PNG</PreviewImage>
+    <Tags>T4; template; unit; measure</Tags>
+  </Metadata>
+  <Installation>
+    <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[15.0,)" />
+    <InstallationTarget Version="[15.0,)" Id="Microsoft.VisualStudio.Pro" />
+  </Installation>
+  <Dependencies>
+    <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.0,)" />
+  </Dependencies>
+  <Assets>
+    <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="File" Path="ProjectTemplates" d:TargetPath="ProjectTemplates\UnitsOfMeasurement.zip" />
+    <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="Parser" Path="|Parser|" AssemblyName="|Parser;AssemblyName|" />
+    <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="TemplateWizard" Path="|TemplateWizard|" AssemblyName="|TemplateWizard;AssemblyName|" />
+  </Assets>
+  <Prerequisites>
+    <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[15.0,)" DisplayName="Visual Studio core editor" />
+  </Prerequisites>
+</PackageManifest>
