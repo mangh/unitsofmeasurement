@@ -1,6 +1,0 @@
-Units of Measurement for C# applications Release 2.0.
-
-Copyright (C) Marek Aniola
-
-This program is provided to you under the terms of the license
-as published at https://github.com/mangh/unitsofmeasurement
