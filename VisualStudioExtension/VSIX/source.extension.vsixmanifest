@@ -1,36 +1,30 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Vsix xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="1.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2010">
-    <Identifier Id="UnitsOfMeasurementParser.MAN.940cf930-eb44-4dea-a4ee-7b47261810f6">
-        <Name>Units of Measurement</Name>
-        <Author>MAN</Author>
-        <Version>2.0</Version>
-        <Description xml:space="preserve">Project template for creating Units of Measurement C# class libraries (.dll)</Description>
-        <Locale>1033</Locale>
-        <MoreInfoUrl>https://github.com/mangh/unitsofmeasurement</MoreInfoUrl>
-        <License>license.txt</License>
-        <GettingStartedGuide>https://github.com/mangh/unitsofmeasurement/wiki</GettingStartedGuide>
-        <Icon>Icon.png</Icon>
-        <PreviewImage>Preview.PNG</PreviewImage>
-        <SupportedProducts>
-            <VisualStudio Version="10.0">
-                <Edition>Pro</Edition>
-            </VisualStudio>
-            <VisualStudio Version="11.0">
-                <Edition>Pro</Edition>
-            </VisualStudio>
-            <VisualStudio Version="12.0">
-                <Edition>Pro</Edition>
-            </VisualStudio>
-            <VisualStudio Version="14.0">
-                <Edition>Pro</Edition>
-            </VisualStudio>
-        </SupportedProducts>
-        <SupportedFrameworkRuntimeEdition MinVersion="4.0" />
-    </Identifier>
-    <References />
-    <Content>
-        <CustomExtension Type="Assembly">|Parser|</CustomExtension>
-        <Assembly AssemblyName="|TemplateWizard;AssemblyName|">|TemplateWizard|</Assembly>
-        <ProjectTemplate>ProjectTemplates</ProjectTemplate>
-    </Content>
-</Vsix>
+﻿<?xml version="1.0" ?>
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
+  <Metadata>
+    <Identity Id="Man.UnitsOfMeasurement.8132829a-250b-47fe-9b58-9921d56f0a75" Version="2.0" Language="en-US" Publisher="MAN" />
+    <DisplayName>UnitsOfMeasurement</DisplayName>
+    <Description xml:space="preserve">Project template for creating Units of Measurement C# class library (.dll)</Description>
+    <MoreInfo>https://github.com/mangh/unitsofmeasurement</MoreInfo>
+    <License>license.txt</License>
+    <GettingStartedGuide>https://github.com/mangh/unitsofmeasurement/wiki</GettingStartedGuide>
+    <ReleaseNotes>https://github.com/mangh/unitsofmeasurement/blob/master/CHANGELOG.md</ReleaseNotes>
+    <Icon>Icon.png</Icon>
+    <PreviewImage>Preview.PNG</PreviewImage>
+    <Tags>T4; template; unit; measure</Tags>
+  </Metadata>
+  <Installation>
+    <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[15.0,)" />
+    <InstallationTarget Version="[15.0,)" Id="Microsoft.VisualStudio.Pro" />
+  </Installation>
+  <Dependencies>
+    <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.0,)" />
+  </Dependencies>
+  <Assets>
+    <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="File" Path="ProjectTemplates" d:TargetPath="ProjectTemplates\UnitsOfMeasurement.zip" />
+    <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="Parser" Path="|Parser|" AssemblyName="|Parser;AssemblyName|" />
+    <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="TemplateWizard" Path="|TemplateWizard|" AssemblyName="|TemplateWizard;AssemblyName|" />
+  </Assets>
+  <Prerequisites>
+    <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[15.0,)" DisplayName="Visual Studio core editor" />
+  </Prerequisites>
+</PackageManifest>

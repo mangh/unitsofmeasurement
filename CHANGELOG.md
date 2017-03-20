@@ -1,3 +1,59 @@
+### Release 2.0 Build 2017.03.10.1639
+
+###### Going to VS 2017
+
+* VSIX Release 2.0 for VS 2017 available at [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=MarekAniola.UnitsOfMeasurement-18451).
+
+* VSIX Release 2.0 for VS 2010-2015 available at [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=MarekAniola.UnitsofMeasurement) (final release for VS 2010).
+
+###### Unit\<T\> and Scale\<T\> proxies redesigned
+
+* _Unit\<T\>_ and _Scale\<T\>_ proxies have been redesigned to eliminate Reflection mechanism. Now the proxies are all generated from _\_generator.tt_ template together with the corresponding units and scales. In effect, usage of Reflection has been reduced to a minimum: for compile-time units/scales it is not used at all, while for run-time (late) units it is used only to retrieve the proxies from an intermediate DLL, but never used when operating them.
+
+###### IQuantity\<T\> and ILevel\<T\> interfaces redesigned accordingly
+
+* _IQuantity\<T\>_ (_ILevel\<T\>_) instance provides access to the whole _Unit\<T\>_ unit proxy (_Scale\<T\>_ scale proxy) correspondingly (and not to its selected properties only as previously).
+
+###### UnitCatalog\<T\> and ScaleCatalog\<T\> replaced by a single, static Catalog
+
+* Single, static _Catalog_ class (for all unit and scale proxies of any type) replaces previous _Unit-_ and _Scale-Catalog\<T\>_ classes heavily using Reflection. The _Catalog_ is partially generated from _\_generator.tt_ template (to populate it with units specified in a definition text file) and is available as a whole in _Units_ solution folder at compile-time. 
+
+* _Parser_ solution folder has replaced _Catalog_ folder. It contains just a few classes providing parsing functionality previously offered by _UnitCatalog\<T\>_ and _ScaleCatalog\<T\>_ classes. 
+
+###### New conversion functions supporting scales & levels.
+
+* New conversion functions to ease interpreting _quantity_ as a _level_ (or attaching _quantity_ to a _scale_). Their goal is to defer issues resulting from distinguishing _levels_ and _quantities_ to a moment when the distinction is really essential and thus, focus on _quantities_ as a basic processing entities:
+```C#
+    // Fahrenheit scale (for example)
+    public static Fahrenheit From(IQuantity<double> q)
+```
+```C#
+    // Scale<T> proxy
+    public abstract ILevel<T> From(IQuantity<T> quantity);
+```
+###### Case-sensitive unit symbols
+
+* Unit symbols handled as case-sensitive strings only. The mechanism that allowed previously to switch between case-sensitive and case-insensitive interpretation has been removed.
+
+###### SymbolCollection.Default property
+
+* _SymbolCollection.Default_ property introduced to avoid indexer expression _Symbol[0]_ e.g.:
+```C#
+    Meter.Symbol.Default	// instead of Meter.Symbol[0]
+```
+###### Parser changes
+
+* Wedge product: wedge operator "^" can be applied to multiply units (only) apart from the standard star operator "\*". This allows to make a distinction between scalar (\*) and vector (^) products that create different units from the same factors, for example:
+```
+    unit Joule "J" = Newton * Meter;          /*energy*/
+    unit NewtonMeter "N*m" = Newton ^ Meter;  /*torque*/
+```
+* Validating scales: scales (within a single family) must be derived from different units, otherwise they are deemed indistinguishable and rejected.
+
+* Validating unit symbols: unit symbols must be unique. No two units can use the same (case sensitively) symbol.
+
+* Parser diagnostics improved: more meaningfull, less misleading error messages.
+
 ### Release 1.5 Build 2017.01.23.1151
 
 ###### Performance improvements

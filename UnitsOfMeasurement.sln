@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.9
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VisualStudioExtension", "VisualStudioExtension", "{1AE29269-D551-4B68-9660-38422D20A0D2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parser", "VisualStudioExtension\Parser\Parser.csproj", "{99D79ED4-523C-4C42-8A29-7C0975E2A897}"
@@ -14,8 +16,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
 		UnitsOfMeasurement.vsmdi = UnitsOfMeasurement.vsmdi
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VSIX", "VisualStudioExtension\VSIX\VSIX.csproj", "{BD1D0462-EB99-4239-A7C8-0ECA1153E409}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectTemplate", "VisualStudioExtension\ProjectTemplate\ProjectTemplate.csproj", "{9C7633E5-4BFA-49F3-B558-3370B5EC8F82}"
 EndProject
@@ -37,10 +37,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RuntimeUnits", "Demo\Runtim
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestParser", "Demo\TestParser\TestParser.csproj", "{6B52F713-F288-4FB9-A097-7256782A3426}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VSIX", "VisualStudioExtension\VSIX\VSIX.csproj", "{4A29CA98-917B-44C3-8F93-E8BF636628F9}"
+EndProject
 Global
-	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = UnitsOfMeasurement.vsmdi
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms
@@ -60,16 +59,6 @@ Global
 		{99D79ED4-523C-4C42-8A29-7C0975E2A897}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{99D79ED4-523C-4C42-8A29-7C0975E2A897}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{99D79ED4-523C-4C42-8A29-7C0975E2A897}.Release|x86.ActiveCfg = Release|Any CPU
-		{BD1D0462-EB99-4239-A7C8-0ECA1153E409}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BD1D0462-EB99-4239-A7C8-0ECA1153E409}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BD1D0462-EB99-4239-A7C8-0ECA1153E409}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{BD1D0462-EB99-4239-A7C8-0ECA1153E409}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{BD1D0462-EB99-4239-A7C8-0ECA1153E409}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{BD1D0462-EB99-4239-A7C8-0ECA1153E409}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BD1D0462-EB99-4239-A7C8-0ECA1153E409}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BD1D0462-EB99-4239-A7C8-0ECA1153E409}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{BD1D0462-EB99-4239-A7C8-0ECA1153E409}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{BD1D0462-EB99-4239-A7C8-0ECA1153E409}.Release|x86.ActiveCfg = Release|Any CPU
 		{9C7633E5-4BFA-49F3-B558-3370B5EC8F82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9C7633E5-4BFA-49F3-B558-3370B5EC8F82}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C7633E5-4BFA-49F3-B558-3370B5EC8F82}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -160,21 +149,36 @@ Global
 		{6B52F713-F288-4FB9-A097-7256782A3426}.Release|Mixed Platforms.Build.0 = Release|x86
 		{6B52F713-F288-4FB9-A097-7256782A3426}.Release|x86.ActiveCfg = Release|x86
 		{6B52F713-F288-4FB9-A097-7256782A3426}.Release|x86.Build.0 = Release|x86
+		{4A29CA98-917B-44C3-8F93-E8BF636628F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A29CA98-917B-44C3-8F93-E8BF636628F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A29CA98-917B-44C3-8F93-E8BF636628F9}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{4A29CA98-917B-44C3-8F93-E8BF636628F9}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{4A29CA98-917B-44C3-8F93-E8BF636628F9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4A29CA98-917B-44C3-8F93-E8BF636628F9}.Debug|x86.Build.0 = Debug|Any CPU
+		{4A29CA98-917B-44C3-8F93-E8BF636628F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A29CA98-917B-44C3-8F93-E8BF636628F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A29CA98-917B-44C3-8F93-E8BF636628F9}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{4A29CA98-917B-44C3-8F93-E8BF636628F9}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{4A29CA98-917B-44C3-8F93-E8BF636628F9}.Release|x86.ActiveCfg = Release|Any CPU
+		{4A29CA98-917B-44C3-8F93-E8BF636628F9}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{99D79ED4-523C-4C42-8A29-7C0975E2A897} = {1AE29269-D551-4B68-9660-38422D20A0D2}
-		{BD1D0462-EB99-4239-A7C8-0ECA1153E409} = {1AE29269-D551-4B68-9660-38422D20A0D2}
 		{9C7633E5-4BFA-49F3-B558-3370B5EC8F82} = {1AE29269-D551-4B68-9660-38422D20A0D2}
-		{C68BE953-D576-4E2A-98C9-C1662546FF20} = {1AE29269-D551-4B68-9660-38422D20A0D2}
 		{0D583157-013B-4133-9B4E-BF3E5D845F26} = {785C11E8-C667-40C1-A85B-87D42F5AC87B}
 		{DA23D997-D9E4-4254-8C44-8C829F6D3323} = {785C11E8-C667-40C1-A85B-87D42F5AC87B}
 		{4C02E665-C622-4B39-9CA9-636A0D9AE429} = {785C11E8-C667-40C1-A85B-87D42F5AC87B}
 		{9FAD043C-1CEC-4F4C-A689-F31AC7148F92} = {785C11E8-C667-40C1-A85B-87D42F5AC87B}
 		{7D20459F-0E6E-45C4-97B3-752011E050E7} = {785C11E8-C667-40C1-A85B-87D42F5AC87B}
+		{C68BE953-D576-4E2A-98C9-C1662546FF20} = {1AE29269-D551-4B68-9660-38422D20A0D2}
 		{5B57A44E-AFE5-4928-918F-6E499AAE8D27} = {785C11E8-C667-40C1-A85B-87D42F5AC87B}
 		{6B52F713-F288-4FB9-A097-7256782A3426} = {785C11E8-C667-40C1-A85B-87D42F5AC87B}
+		{4A29CA98-917B-44C3-8F93-E8BF636628F9} = {1AE29269-D551-4B68-9660-38422D20A0D2}
+	EndGlobalSection
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = UnitsOfMeasurement.vsmdi
 	EndGlobalSection
 EndGlobal
