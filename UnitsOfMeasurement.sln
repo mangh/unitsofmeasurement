@@ -10,11 +10,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{10A49A0C-B64B-42FF-9F88-3FDD38D80BFB}"
 	ProjectSection(SolutionItems) = preProject
 		LICENSE.txt = LICENSE.txt
-		Local.testsettings = Local.testsettings
 		README.md = README.md
-		TODO.txt = TODO.txt
-		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
-		UnitsOfMeasurement.vsmdi = UnitsOfMeasurement.vsmdi
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectTemplate", "VisualStudioExtension\ProjectTemplate\ProjectTemplate.csproj", "{9C7633E5-4BFA-49F3-B558-3370B5EC8F82}"
@@ -177,6 +173,9 @@ Global
 		{5B57A44E-AFE5-4928-918F-6E499AAE8D27} = {785C11E8-C667-40C1-A85B-87D42F5AC87B}
 		{6B52F713-F288-4FB9-A097-7256782A3426} = {785C11E8-C667-40C1-A85B-87D42F5AC87B}
 		{4A29CA98-917B-44C3-8F93-E8BF636628F9} = {1AE29269-D551-4B68-9660-38422D20A0D2}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {001700DB-128E-40DC-8CE1-831FEE2135BD}
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = UnitsOfMeasurement.vsmdi
