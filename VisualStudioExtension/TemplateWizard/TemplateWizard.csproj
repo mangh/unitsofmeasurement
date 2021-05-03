@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -65,14 +66,9 @@
     <None Include="keyfile.pfx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="BeforeBuild" Inputs="@(Compile)" Outputs="Properties\FileVersion.cs">
-    <PropertyGroup>
-      <Date>$([System.DateTime]::Now.ToString("yyyy.MM.dd.HHmm"))</Date>
-      <AssemblyFileVersionAttribute>[assembly:System.Reflection.AssemblyFileVersion("$(Date)")]</AssemblyFileVersionAttribute>
-    </PropertyGroup>
-    <WriteLinesToFile File="Properties\FileVersion.cs" Lines="$(AssemblyFileVersionAttribute)" Overwrite="true" />
-  </Target>
   <!--
+  <Target Name="BeforeBuild" ...>
+  </Target>
   <Target Name="AfterBuild">
   </Target>
   -->

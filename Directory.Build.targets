@@ -1,0 +1,10 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Target Name="AssemblyFileVersion" BeforeTargets="PrepareForBuild" Inputs="@(Compile);$(MSBuildProjectFile)" Outputs="Properties\FileVersion.cs">
+    <PropertyGroup>
+      <FileVersion>$([System.DateTime]::Now.ToString("yyyy.MM.dd.HHmm"))</FileVersion>
+      <AssemblyFileVersionAttribute>[assembly:System.Reflection.AssemblyFileVersion("$(FileVersion)")]</AssemblyFileVersionAttribute>
+    </PropertyGroup>
+    <WriteLinesToFile File="Properties\FileVersion.cs" Lines="$(AssemblyFileVersionAttribute)" Overwrite="true" />
+    <Message Text="$(MSBuildProjectName) assembly file version: $(FileVersion) ($(DefineConstants))" />
+  </Target>
+</Project>
