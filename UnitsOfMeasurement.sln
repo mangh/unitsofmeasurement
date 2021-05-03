@@ -180,7 +180,4 @@ Global
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {001700DB-128E-40DC-8CE1-831FEE2135BD}
 	EndGlobalSection
-	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = UnitsOfMeasurement.vsmdi
-	EndGlobalSection
 EndGlobal
