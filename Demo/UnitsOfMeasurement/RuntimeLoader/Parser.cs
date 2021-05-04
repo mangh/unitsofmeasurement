@@ -10,9 +10,9 @@
 
 ********************************************************************************/
 using System;
+using System.CodeDom.Compiler;  // CompilerErrorCollection
 using System.Collections.Generic;
 using System.IO;
-using System.CodeDom.Compiler;  // CompilerErrorCollection
 
 namespace Demo.UnitsOfMeasurement
 {
@@ -21,68 +21,54 @@ namespace Demo.UnitsOfMeasurement
         private class Parser
         {
             #region Fields
-            private string m_filePath;
-            private List<Man.UnitsOfMeasurement.UnitType> m_units;
-            private List<Man.UnitsOfMeasurement.ScaleType> m_scales;
+            private string m_sourcePath;
             private CompilerErrorCollection m_errors;
             #endregion
 
             #region Properties
-            public CompilerErrorCollection Errors { get { return m_errors; } }
+            public IEnumerable<string> Errors { get { foreach (CompilerError e in m_errors) yield return e.ToString(); } }
             #endregion
 
             #region Constructor(s)
-            public Parser(List<Man.UnitsOfMeasurement.UnitType> units, List<Man.UnitsOfMeasurement.ScaleType> scales)
+            public Parser()
             {
-                m_units = units;
-                m_scales = scales;
                 m_errors = new CompilerErrorCollection();
             }
             #endregion
 
             #region Methods
-            public bool ParseString(string definitions)
+            public bool ParseString(string lateDefinitions, ICatalog current)
             {
-                m_filePath = String.Empty;
-                StringReader input = new StringReader(definitions);
-                return Parse(input);
+                m_sourcePath = String.Empty;
+                using (StringReader input = new StringReader(lateDefinitions))
+                {
+                    return Parse(input, current);
+                }
             }
 
-            public bool ParseFile(string filePath)
+            public bool ParseFile(string lateDefinitionsPath, ICatalog current)
             {
-                m_filePath = filePath;
-                StreamReader input = null;
-                bool done = false;
-                try
+                m_sourcePath = lateDefinitionsPath;
+                using(StreamReader input = File.OpenText(lateDefinitionsPath))
                 {
-                    input = File.OpenText(filePath);
-                    done = Parse(input);
+                    return Parse(input, current);
                 }
-                catch (Exception e)
-                {
-                    LogError(true, 0, 0, "parser exception", e.Message);
-                }
-                finally
-                {
-                    if (input != null) input.Close();
-                }
-                return done;
             }
 
-            private bool Parse(TextReader input)
+            private bool Parse(TextReader input, ICatalog current)
             {
                 m_errors.Clear();
 
                 var lexer = new Man.UnitsOfMeasurement.Lexer(input, LogError);
-                var parser = new Man.UnitsOfMeasurement.Parser(lexer, m_units, m_scales);
+                var parser = new Man.UnitsOfMeasurement.Parser(lexer, current.Units, current.Scales);
                 parser.Parse();
 
-                return !m_errors.HasErrors;
+                return m_errors.Count <= 0;
             }
 
             private void LogError(bool isError, int line, int column, string token, string message)
             {
-                var error = new CompilerError(m_filePath, line, column, token, message);
+                var error = new CompilerError(m_sourcePath, line, column, token, message);
                 error.IsWarning = !isError;
                 m_errors.Add(error);
             }
