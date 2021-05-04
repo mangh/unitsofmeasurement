@@ -38,6 +38,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestParser", "Demo\TestPars
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VSIX", "VisualStudioExtension\VSIX\VSIX.csproj", "{4A29CA98-917B-44C3-8F93-E8BF636628F9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bullet", "Demo\Bullet\Bullet.csproj", "{409B3BA0-6171-4CCF-82FE-921D37A1D095}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -160,6 +162,18 @@ Global
 		{4A29CA98-917B-44C3-8F93-E8BF636628F9}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{4A29CA98-917B-44C3-8F93-E8BF636628F9}.Release|x86.ActiveCfg = Release|Any CPU
 		{4A29CA98-917B-44C3-8F93-E8BF636628F9}.Release|x86.Build.0 = Release|Any CPU
+		{409B3BA0-6171-4CCF-82FE-921D37A1D095}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{409B3BA0-6171-4CCF-82FE-921D37A1D095}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{409B3BA0-6171-4CCF-82FE-921D37A1D095}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{409B3BA0-6171-4CCF-82FE-921D37A1D095}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{409B3BA0-6171-4CCF-82FE-921D37A1D095}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{409B3BA0-6171-4CCF-82FE-921D37A1D095}.Debug|x86.Build.0 = Debug|Any CPU
+		{409B3BA0-6171-4CCF-82FE-921D37A1D095}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{409B3BA0-6171-4CCF-82FE-921D37A1D095}.Release|Any CPU.Build.0 = Release|Any CPU
+		{409B3BA0-6171-4CCF-82FE-921D37A1D095}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{409B3BA0-6171-4CCF-82FE-921D37A1D095}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{409B3BA0-6171-4CCF-82FE-921D37A1D095}.Release|x86.ActiveCfg = Release|Any CPU
+		{409B3BA0-6171-4CCF-82FE-921D37A1D095}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -176,6 +190,7 @@ Global
 		{5B57A44E-AFE5-4928-918F-6E499AAE8D27} = {785C11E8-C667-40C1-A85B-87D42F5AC87B}
 		{6B52F713-F288-4FB9-A097-7256782A3426} = {785C11E8-C667-40C1-A85B-87D42F5AC87B}
 		{4A29CA98-917B-44C3-8F93-E8BF636628F9} = {1AE29269-D551-4B68-9660-38422D20A0D2}
+		{409B3BA0-6171-4CCF-82FE-921D37A1D095} = {785C11E8-C667-40C1-A85B-87D42F5AC87B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {001700DB-128E-40DC-8CE1-831FEE2135BD}
