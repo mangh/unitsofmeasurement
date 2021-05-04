@@ -234,8 +234,8 @@ namespace Man.UnitsOfMeasurement
 
         public ScaleType GetRelativeScale(ScaleType scale)
         {
-            return m_scales.Find(s => 
-                object.ReferenceEquals(s.Unit.FamilyPrime(), scale.Unit.FamilyPrime()) &&
+            var prime = scale.Unit.Prime ?? scale.Unit;
+            return m_scales.Find(s => ReferenceEquals(s.Unit.Prime ?? s.Unit, prime) &&
                 String.Equals(s.RefPoint, scale.RefPoint, StringComparison.Ordinal)
             );
         }
