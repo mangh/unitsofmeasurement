@@ -17,7 +17,7 @@ namespace ProjectileRange
             tmax = (v * Sin(angle) + Sqrt(v * Sin(angle) * v * Sin(angle) + 2.0 * g * h)) / g;
 
             ymax = h;
-            for (Second t = (Second)1.0; t < tmax; t++)
+            for (Second t = (Second)0.0; t < tmax; t++)
             {
                 Meter y = h + v * Sin(angle) * t - g * t * t / 2.0;
                 if (y > ymax) ymax = y;
