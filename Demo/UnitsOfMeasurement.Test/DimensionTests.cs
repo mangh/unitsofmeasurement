@@ -9,12 +9,10 @@
 
 
 ********************************************************************************/
-
-using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Demo.UnitsOfMeasurement;
+using System;
 
-namespace MeasurementUnitsTest
+namespace Demo.UnitsOfMeasurement
 {
     [TestClass]
     public class DimensionTests

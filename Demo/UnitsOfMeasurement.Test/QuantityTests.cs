@@ -9,14 +9,12 @@
 
 
 ********************************************************************************/
-
-using System;
-using System.Linq;
-using System.Globalization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Demo.UnitsOfMeasurement;
+using System;
+using System.Globalization;
+using System.Linq;
 
-namespace UnitOfMeasureTest
+namespace Demo.UnitsOfMeasurement
 {
     [TestClass]
     public class QuantityTests
@@ -100,7 +98,7 @@ namespace UnitOfMeasureTest
 
                 cycles = (Cycles)grads;
 
-                Assert.AreEqual((Radian)(2.0 * Math.PI), radians, "Cycles-to-Radian conversion failed");
+                Assert.AreEqual((Radian)(2.0 * System.Math.PI), radians, "Cycles-to-Radian conversion failed");
                 Assert.AreEqual((Degree)360.0, degrees, "Radian-to-Degree conversion failed");
                 Assert.AreEqual((Grad)400.0, grads, "Degree-to-Grad conversion failed");
                 Assert.AreEqual((Cycles)1.0, cycles, "Grad-to-Cycles conversion failed");
@@ -152,7 +150,7 @@ namespace UnitOfMeasureTest
                 rpm = (RPM)angularvelocity;
 
                 Assert.AreEqual((Hertz)120.0, frequency, "RPM-to-Hetrz conversion failed");
-                Assert.AreEqual((Radian_Sec)(240.0 * Math.PI), angularvelocity, "Hertz-to-Radian_Sec conversion failed");
+                Assert.AreEqual((Radian_Sec)(240.0 * System.Math.PI), angularvelocity, "Hertz-to-Radian_Sec conversion failed");
                 Assert.AreEqual((RPM)7200.0, rpm, "Radian_Sec-to-RPM conversion failed");
 
                 Second duration = (Second)1.0;

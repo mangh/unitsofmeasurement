@@ -9,11 +9,9 @@
 
 
 ********************************************************************************/
-
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Demo.UnitsOfMeasurement;
 
-namespace UnitOfMeasureTest
+namespace Demo.UnitsOfMeasurement
 {
     [TestClass]
     public class LevelTests

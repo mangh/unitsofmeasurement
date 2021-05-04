@@ -9,13 +9,11 @@
 
 
 ********************************************************************************/
-
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Globalization;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Demo.UnitsOfMeasurement;
 
-namespace UnitsOfMeasurement.Test
+namespace Demo.UnitsOfMeasurement
 {
     [TestClass]
     public class CatalogTest
