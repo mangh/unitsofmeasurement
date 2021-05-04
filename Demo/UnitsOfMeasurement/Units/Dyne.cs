@@ -19,7 +19,7 @@ namespace Demo.UnitsOfMeasurement
         internal readonly double m_value;
         #endregion
 
-        #region Properties
+        #region Properties / IQuantity<double>
         public double Value { get { return m_value; } }
         Unit<double> IQuantity<double>.Unit { get { return Dyne.Proxy; } }
         #endregion
@@ -38,7 +38,10 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Dyne(Newton q) { return new Dyne((Dyne.Factor / Newton.Factor) * q.m_value); }
         public static Dyne From(IQuantity<double> q)
         {
-            if (q.Unit.Family != Dyne.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Dyne\"", q.GetType().Name));
+            if (q.Unit.Family != Dyne.Family)
+            {
+				throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Dyne\"", q.GetType().Name));
+            }
             return new Dyne((Dyne.Factor / q.Unit.Factor) * q.Value);
         }
         #endregion
@@ -74,47 +77,40 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(Dyne.Format, null); }
-        public string ToString(string format) { return ToString(format, null); }
-        public string ToString(IFormatProvider fp) { return ToString(Dyne.Format, fp); }
-        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        public static string String(double q, string format = null, IFormatProvider fp = null)
         {
-            return string.Format(fp, format ?? Dyne.Format, m_value, Dyne.Symbol.Default);
+            return string.Format(fp, format ?? Dyne.Format, q, Dyne.Symbol.Default);
         }
+
+        public override string ToString() { return String(m_value); }
+        public string ToString(string format) { return String(m_value, format); }
+        public string ToString(IFormatProvider fp) { return String(m_value, null, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp) { return String(m_value, format, fp); }
         #endregion
 
-        #region Static fields
-        private static readonly Dimension s_sense = Newton.Sense;
-        private static readonly int s_family = Newton.Family;
-        private static /*mutable*/ double s_factor = 100000d * Newton.Factor;
-        private static /*mutable*/ string s_format = "{0} {1}";
-        private static readonly SymbolCollection s_symbol = new SymbolCollection("dyn");
-        private static readonly Unit<double> s_proxy = new Dyne_Proxy();
-
-        private static readonly Dyne s_one = new Dyne(1d);
-        private static readonly Dyne s_zero = new Dyne(0d);
-        #endregion
-
-        #region Static Properties
-        public static Dimension Sense { get { return s_sense; } }
-        public static int Family { get { return s_family; } }
-        public static double Factor { get { return s_factor; } set { s_factor = value; } }
+        #region Static fields and properties (DO NOT CHANGE!)
+        public static readonly Dimension Sense = Newton.Sense;
+        public const int Family = Newton.Family;
+        public static readonly SymbolCollection Symbol = new SymbolCollection("dyn");
+        public static readonly Unit<double> Proxy = new Dyne_Proxy();
+        public const double Factor = 100000d * Newton.Factor;
         public static string Format { get { return s_format; } set { s_format = value; } }
-        public static SymbolCollection Symbol { get { return s_symbol; } }
-        public static Unit<double> Proxy { get { return s_proxy; } }
+        private static string s_format = "{0} {1}";
+        #endregion
 
-        public static Dyne One { get { return s_one; } }
-        public static Dyne Zero { get { return s_zero; } }
+        #region Predefined quantities
+        public static readonly Dyne One = new Dyne(1d);
+        public static readonly Dyne Zero = new Dyne(0d);
         #endregion
     }
 
     public partial class Dyne_Proxy : Unit<double>
     {
         #region Properties
-        public override int Family { get { return Dyne.Family; } }
         public override Dimension Sense { get { return Dyne.Sense; } }
+        public override int Family { get { return Dyne.Family; } }
+        public override double Factor { get { return Dyne.Factor; } }
         public override SymbolCollection Symbol { get { return Dyne.Symbol; } }
-        public override double Factor { get { return Dyne.Factor; } set { Dyne.Factor = value; } }
         public override string Format { get { return Dyne.Format; } set { Dyne.Format = value; } }
         #endregion
 

@@ -19,7 +19,7 @@ namespace Demo.UnitsOfMeasurement
         internal readonly double m_value;
         #endregion
 
-        #region Properties
+        #region Properties / IQuantity<double>
         public double Value { get { return m_value; } }
         Unit<double> IQuantity<double>.Unit { get { return Joule_Kelvin_Kilogram.Proxy; } }
         #endregion
@@ -35,7 +35,10 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Joule_Kelvin_Kilogram(double q) { return new Joule_Kelvin_Kilogram(q); }
         public static Joule_Kelvin_Kilogram From(IQuantity<double> q)
         {
-            if (q.Unit.Family != Joule_Kelvin_Kilogram.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Joule_Kelvin_Kilogram\"", q.GetType().Name));
+            if (q.Unit.Family != Joule_Kelvin_Kilogram.Family)
+            {
+				throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Joule_Kelvin_Kilogram\"", q.GetType().Name));
+            }
             return new Joule_Kelvin_Kilogram((Joule_Kelvin_Kilogram.Factor / q.Unit.Factor) * q.Value);
         }
         #endregion
@@ -73,47 +76,40 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(Joule_Kelvin_Kilogram.Format, null); }
-        public string ToString(string format) { return ToString(format, null); }
-        public string ToString(IFormatProvider fp) { return ToString(Joule_Kelvin_Kilogram.Format, fp); }
-        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        public static string String(double q, string format = null, IFormatProvider fp = null)
         {
-            return string.Format(fp, format ?? Joule_Kelvin_Kilogram.Format, m_value, Joule_Kelvin_Kilogram.Symbol.Default);
+            return string.Format(fp, format ?? Joule_Kelvin_Kilogram.Format, q, Joule_Kelvin_Kilogram.Symbol.Default);
         }
+
+        public override string ToString() { return String(m_value); }
+        public string ToString(string format) { return String(m_value, format); }
+        public string ToString(IFormatProvider fp) { return String(m_value, null, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp) { return String(m_value, format, fp); }
         #endregion
 
-        #region Static fields
-        private static readonly Dimension s_sense = Joule_Kelvin.Sense / Kilogram.Sense;
-        private static readonly int s_family = 20;
-        private static /*mutable*/ double s_factor = Joule_Kelvin.Factor / Kilogram.Factor;
-        private static /*mutable*/ string s_format = "{0} {1}";
-        private static readonly SymbolCollection s_symbol = new SymbolCollection("J/kg/K");
-        private static readonly Unit<double> s_proxy = new Joule_Kelvin_Kilogram_Proxy();
-
-        private static readonly Joule_Kelvin_Kilogram s_one = new Joule_Kelvin_Kilogram(1d);
-        private static readonly Joule_Kelvin_Kilogram s_zero = new Joule_Kelvin_Kilogram(0d);
-        #endregion
-
-        #region Static Properties
-        public static Dimension Sense { get { return s_sense; } }
-        public static int Family { get { return s_family; } }
-        public static double Factor { get { return s_factor; } set { s_factor = value; } }
+        #region Static fields and properties (DO NOT CHANGE!)
+        public static readonly Dimension Sense = Joule_Kelvin.Sense / Kilogram.Sense;
+        public const int Family = 20;
+        public static readonly SymbolCollection Symbol = new SymbolCollection("J/kg/K");
+        public static readonly Unit<double> Proxy = new Joule_Kelvin_Kilogram_Proxy();
+        public const double Factor = Joule_Kelvin.Factor / Kilogram.Factor;
         public static string Format { get { return s_format; } set { s_format = value; } }
-        public static SymbolCollection Symbol { get { return s_symbol; } }
-        public static Unit<double> Proxy { get { return s_proxy; } }
+        private static string s_format = "{0} {1}";
+        #endregion
 
-        public static Joule_Kelvin_Kilogram One { get { return s_one; } }
-        public static Joule_Kelvin_Kilogram Zero { get { return s_zero; } }
+        #region Predefined quantities
+        public static readonly Joule_Kelvin_Kilogram One = new Joule_Kelvin_Kilogram(1d);
+        public static readonly Joule_Kelvin_Kilogram Zero = new Joule_Kelvin_Kilogram(0d);
         #endregion
     }
 
     public partial class Joule_Kelvin_Kilogram_Proxy : Unit<double>
     {
         #region Properties
-        public override int Family { get { return Joule_Kelvin_Kilogram.Family; } }
         public override Dimension Sense { get { return Joule_Kelvin_Kilogram.Sense; } }
+        public override int Family { get { return Joule_Kelvin_Kilogram.Family; } }
+        public override double Factor { get { return Joule_Kelvin_Kilogram.Factor; } }
         public override SymbolCollection Symbol { get { return Joule_Kelvin_Kilogram.Symbol; } }
-        public override double Factor { get { return Joule_Kelvin_Kilogram.Factor; } set { Joule_Kelvin_Kilogram.Factor = value; } }
         public override string Format { get { return Joule_Kelvin_Kilogram.Format; } set { Joule_Kelvin_Kilogram.Format = value; } }
         #endregion
 

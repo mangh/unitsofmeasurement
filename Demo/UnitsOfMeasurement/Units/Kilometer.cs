@@ -19,7 +19,7 @@ namespace Demo.UnitsOfMeasurement
         internal readonly double m_value;
         #endregion
 
-        #region Properties
+        #region Properties / IQuantity<double>
         public double Value { get { return m_value; } }
         Unit<double> IQuantity<double>.Unit { get { return Kilometer.Proxy; } }
         #endregion
@@ -42,7 +42,10 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Kilometer(Mile q) { return new Kilometer((Kilometer.Factor / Mile.Factor) * q.m_value); }
         public static Kilometer From(IQuantity<double> q)
         {
-            if (q.Unit.Family != Kilometer.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Kilometer\"", q.GetType().Name));
+            if (q.Unit.Family != Kilometer.Family)
+            {
+				throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Kilometer\"", q.GetType().Name));
+            }
             return new Kilometer((Kilometer.Factor / q.Unit.Factor) * q.Value);
         }
         #endregion
@@ -80,47 +83,40 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(Kilometer.Format, null); }
-        public string ToString(string format) { return ToString(format, null); }
-        public string ToString(IFormatProvider fp) { return ToString(Kilometer.Format, fp); }
-        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        public static string String(double q, string format = null, IFormatProvider fp = null)
         {
-            return string.Format(fp, format ?? Kilometer.Format, m_value, Kilometer.Symbol.Default);
+            return string.Format(fp, format ?? Kilometer.Format, q, Kilometer.Symbol.Default);
         }
+
+        public override string ToString() { return String(m_value); }
+        public string ToString(string format) { return String(m_value, format); }
+        public string ToString(IFormatProvider fp) { return String(m_value, null, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp) { return String(m_value, format, fp); }
         #endregion
 
-        #region Static fields
-        private static readonly Dimension s_sense = Meter.Sense;
-        private static readonly int s_family = Meter.Family;
-        private static /*mutable*/ double s_factor = Meter.Factor / 1000d;
-        private static /*mutable*/ string s_format = "{0} {1}";
-        private static readonly SymbolCollection s_symbol = new SymbolCollection("km");
-        private static readonly Unit<double> s_proxy = new Kilometer_Proxy();
-
-        private static readonly Kilometer s_one = new Kilometer(1d);
-        private static readonly Kilometer s_zero = new Kilometer(0d);
-        #endregion
-
-        #region Static Properties
-        public static Dimension Sense { get { return s_sense; } }
-        public static int Family { get { return s_family; } }
-        public static double Factor { get { return s_factor; } set { s_factor = value; } }
+        #region Static fields and properties (DO NOT CHANGE!)
+        public static readonly Dimension Sense = Meter.Sense;
+        public const int Family = Meter.Family;
+        public static readonly SymbolCollection Symbol = new SymbolCollection("km");
+        public static readonly Unit<double> Proxy = new Kilometer_Proxy();
+        public const double Factor = Meter.Factor / 1000d;
         public static string Format { get { return s_format; } set { s_format = value; } }
-        public static SymbolCollection Symbol { get { return s_symbol; } }
-        public static Unit<double> Proxy { get { return s_proxy; } }
+        private static string s_format = "{0} {1}";
+        #endregion
 
-        public static Kilometer One { get { return s_one; } }
-        public static Kilometer Zero { get { return s_zero; } }
+        #region Predefined quantities
+        public static readonly Kilometer One = new Kilometer(1d);
+        public static readonly Kilometer Zero = new Kilometer(0d);
         #endregion
     }
 
     public partial class Kilometer_Proxy : Unit<double>
     {
         #region Properties
-        public override int Family { get { return Kilometer.Family; } }
         public override Dimension Sense { get { return Kilometer.Sense; } }
+        public override int Family { get { return Kilometer.Family; } }
+        public override double Factor { get { return Kilometer.Factor; } }
         public override SymbolCollection Symbol { get { return Kilometer.Symbol; } }
-        public override double Factor { get { return Kilometer.Factor; } set { Kilometer.Factor = value; } }
         public override string Format { get { return Kilometer.Format; } set { Kilometer.Format = value; } }
         #endregion
 

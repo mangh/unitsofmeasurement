@@ -19,7 +19,7 @@ namespace Demo.UnitsOfMeasurement
         internal readonly double m_value;
         #endregion
 
-        #region Properties
+        #region Properties / IQuantity<double>
         public double Value { get { return m_value; } }
         Unit<double> IQuantity<double>.Unit { get { return Meter2_Sec2.Proxy; } }
         #endregion
@@ -35,7 +35,10 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Meter2_Sec2(double q) { return new Meter2_Sec2(q); }
         public static Meter2_Sec2 From(IQuantity<double> q)
         {
-            if (q.Unit.Family != Meter2_Sec2.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Meter2_Sec2\"", q.GetType().Name));
+            if (q.Unit.Family != Meter2_Sec2.Family)
+            {
+				throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Meter2_Sec2\"", q.GetType().Name));
+            }
             return new Meter2_Sec2((Meter2_Sec2.Factor / q.Unit.Factor) * q.Value);
         }
         #endregion
@@ -74,47 +77,40 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(Meter2_Sec2.Format, null); }
-        public string ToString(string format) { return ToString(format, null); }
-        public string ToString(IFormatProvider fp) { return ToString(Meter2_Sec2.Format, fp); }
-        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        public static string String(double q, string format = null, IFormatProvider fp = null)
         {
-            return string.Format(fp, format ?? Meter2_Sec2.Format, m_value, Meter2_Sec2.Symbol.Default);
+            return string.Format(fp, format ?? Meter2_Sec2.Format, q, Meter2_Sec2.Symbol.Default);
         }
+
+        public override string ToString() { return String(m_value); }
+        public string ToString(string format) { return String(m_value, format); }
+        public string ToString(IFormatProvider fp) { return String(m_value, null, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp) { return String(m_value, format, fp); }
         #endregion
 
-        #region Static fields
-        private static readonly Dimension s_sense = Meter_Sec.Sense * Meter_Sec.Sense;
-        private static readonly int s_family = 28;
-        private static /*mutable*/ double s_factor = Meter_Sec.Factor * Meter_Sec.Factor;
-        private static /*mutable*/ string s_format = "{0} {1}";
-        private static readonly SymbolCollection s_symbol = new SymbolCollection("m2/s2");
-        private static readonly Unit<double> s_proxy = new Meter2_Sec2_Proxy();
-
-        private static readonly Meter2_Sec2 s_one = new Meter2_Sec2(1d);
-        private static readonly Meter2_Sec2 s_zero = new Meter2_Sec2(0d);
-        #endregion
-
-        #region Static Properties
-        public static Dimension Sense { get { return s_sense; } }
-        public static int Family { get { return s_family; } }
-        public static double Factor { get { return s_factor; } set { s_factor = value; } }
+        #region Static fields and properties (DO NOT CHANGE!)
+        public static readonly Dimension Sense = Meter_Sec.Sense * Meter_Sec.Sense;
+        public const int Family = 28;
+        public static readonly SymbolCollection Symbol = new SymbolCollection("m2/s2");
+        public static readonly Unit<double> Proxy = new Meter2_Sec2_Proxy();
+        public const double Factor = Meter_Sec.Factor * Meter_Sec.Factor;
         public static string Format { get { return s_format; } set { s_format = value; } }
-        public static SymbolCollection Symbol { get { return s_symbol; } }
-        public static Unit<double> Proxy { get { return s_proxy; } }
+        private static string s_format = "{0} {1}";
+        #endregion
 
-        public static Meter2_Sec2 One { get { return s_one; } }
-        public static Meter2_Sec2 Zero { get { return s_zero; } }
+        #region Predefined quantities
+        public static readonly Meter2_Sec2 One = new Meter2_Sec2(1d);
+        public static readonly Meter2_Sec2 Zero = new Meter2_Sec2(0d);
         #endregion
     }
 
     public partial class Meter2_Sec2_Proxy : Unit<double>
     {
         #region Properties
-        public override int Family { get { return Meter2_Sec2.Family; } }
         public override Dimension Sense { get { return Meter2_Sec2.Sense; } }
+        public override int Family { get { return Meter2_Sec2.Family; } }
+        public override double Factor { get { return Meter2_Sec2.Factor; } }
         public override SymbolCollection Symbol { get { return Meter2_Sec2.Symbol; } }
-        public override double Factor { get { return Meter2_Sec2.Factor; } set { Meter2_Sec2.Factor = value; } }
         public override string Format { get { return Meter2_Sec2.Format; } set { Meter2_Sec2.Format = value; } }
         #endregion
 

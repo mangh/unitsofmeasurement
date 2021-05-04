@@ -19,7 +19,7 @@ namespace Demo.UnitsOfMeasurement
         internal readonly double m_value;
         #endregion
 
-        #region Properties
+        #region Properties / IQuantity<double>
         public double Value { get { return m_value; } }
         Unit<double> IQuantity<double>.Unit { get { return MPH.Proxy; } }
         #endregion
@@ -37,7 +37,10 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator MPH(Meter_Sec q) { return new MPH((MPH.Factor / Meter_Sec.Factor) * q.m_value); }
         public static MPH From(IQuantity<double> q)
         {
-            if (q.Unit.Family != MPH.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"MPH\"", q.GetType().Name));
+            if (q.Unit.Family != MPH.Family)
+            {
+				throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"MPH\"", q.GetType().Name));
+            }
             return new MPH((MPH.Factor / q.Unit.Factor) * q.Value);
         }
         #endregion
@@ -75,47 +78,40 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(MPH.Format, null); }
-        public string ToString(string format) { return ToString(format, null); }
-        public string ToString(IFormatProvider fp) { return ToString(MPH.Format, fp); }
-        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        public static string String(double q, string format = null, IFormatProvider fp = null)
         {
-            return string.Format(fp, format ?? MPH.Format, m_value, MPH.Symbol.Default);
+            return string.Format(fp, format ?? MPH.Format, q, MPH.Symbol.Default);
         }
+
+        public override string ToString() { return String(m_value); }
+        public string ToString(string format) { return String(m_value, format); }
+        public string ToString(IFormatProvider fp) { return String(m_value, null, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp) { return String(m_value, format, fp); }
         #endregion
 
-        #region Static fields
-        private static readonly Dimension s_sense = Mile.Sense / Hour.Sense;
-        private static readonly int s_family = Meter_Sec.Family;
-        private static /*mutable*/ double s_factor = Mile.Factor / Hour.Factor;
-        private static /*mutable*/ string s_format = "{0} {1}";
-        private static readonly SymbolCollection s_symbol = new SymbolCollection("mph", "mi/h");
-        private static readonly Unit<double> s_proxy = new MPH_Proxy();
-
-        private static readonly MPH s_one = new MPH(1d);
-        private static readonly MPH s_zero = new MPH(0d);
-        #endregion
-
-        #region Static Properties
-        public static Dimension Sense { get { return s_sense; } }
-        public static int Family { get { return s_family; } }
-        public static double Factor { get { return s_factor; } set { s_factor = value; } }
+        #region Static fields and properties (DO NOT CHANGE!)
+        public static readonly Dimension Sense = Mile.Sense / Hour.Sense;
+        public const int Family = Meter_Sec.Family;
+        public static readonly SymbolCollection Symbol = new SymbolCollection("mph", "mi/h");
+        public static readonly Unit<double> Proxy = new MPH_Proxy();
+        public const double Factor = Mile.Factor / Hour.Factor;
         public static string Format { get { return s_format; } set { s_format = value; } }
-        public static SymbolCollection Symbol { get { return s_symbol; } }
-        public static Unit<double> Proxy { get { return s_proxy; } }
+        private static string s_format = "{0} {1}";
+        #endregion
 
-        public static MPH One { get { return s_one; } }
-        public static MPH Zero { get { return s_zero; } }
+        #region Predefined quantities
+        public static readonly MPH One = new MPH(1d);
+        public static readonly MPH Zero = new MPH(0d);
         #endregion
     }
 
     public partial class MPH_Proxy : Unit<double>
     {
         #region Properties
-        public override int Family { get { return MPH.Family; } }
         public override Dimension Sense { get { return MPH.Sense; } }
+        public override int Family { get { return MPH.Family; } }
+        public override double Factor { get { return MPH.Factor; } }
         public override SymbolCollection Symbol { get { return MPH.Symbol; } }
-        public override double Factor { get { return MPH.Factor; } set { MPH.Factor = value; } }
         public override string Format { get { return MPH.Format; } set { MPH.Format = value; } }
         #endregion
 

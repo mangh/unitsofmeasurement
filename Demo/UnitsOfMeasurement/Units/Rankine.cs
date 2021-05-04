@@ -20,7 +20,7 @@ namespace Demo.UnitsOfMeasurement
         internal readonly DegRankine m_level;
         #endregion
 
-        #region Properties
+        #region Properties / ILevel<double>
         public DegRankine Level { get { return m_level; } }
         public DegRankine NormalizedLevel { get { return (m_level - Rankine.Offset); } }
 
@@ -49,13 +49,19 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Rankine(Fahrenheit q) { return new Rankine((DegRankine)(q.NormalizedLevel) + Rankine.Offset); }
         public static Rankine From(ILevel<double> q)
         {
-            if (q.Scale.Family != Rankine.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Rankine\".", q.GetType().Name));
+            if (q.Scale.Family != Rankine.Family)
+            {
+				throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Rankine\".", q.GetType().Name));
+            }
             return new Rankine(DegRankine.From(q.NormalizedLevel) + Rankine.Offset);
         }
         public static Rankine From(IQuantity<double> q)
         {
             Scale<double> scale = Catalog.Scale(Rankine.Family, q.Unit);
-            if(scale == null) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Rankine\".", q.GetType().Name));
+            if (scale == null)
+            {
+				throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Rankine\".", q.GetType().Name));
+            }
             return Rankine.From(scale.Create(q.Value));
         }
         #endregion
@@ -87,33 +93,30 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(Rankine.Format, null); }
-        public string ToString(string format) { return ToString(format, null); }
-        public string ToString(IFormatProvider fp) { return ToString(Rankine.Format, fp); }
-        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        public static string String(double level, string format = null, IFormatProvider fp = null)
         {
-            return m_level.ToString(format ?? Rankine.Format, fp);
+            return DegRankine.String(level, format ?? Rankine.Format, fp);
         }
+
+        public override string ToString() { return String(m_level.m_value); }
+        public string ToString(string format) { return String(m_level.m_value, format); }
+        public string ToString(IFormatProvider fp) { return String(m_level.m_value, null, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp) { return String(m_level.m_value, format, fp); }
         #endregion
 
-        #region Static fields
-        private static readonly DegRankine s_offset /* from AbsoluteZero reference level */ = new DegRankine(0d);
-        private static readonly int s_family = Kelvin.Family;
-        private static /*mutable*/ string s_format = "{0} {1}";
-        private static readonly Scale<double> s_proxy = new Rankine_Proxy();
-
-        private static readonly Rankine s_zero = new Rankine(0d);
-        #endregion
-        
-        #region Static properties
-        public static DegRankine Offset { get { return s_offset; } }
-        public static int Family { get { return s_family; } }
+        #region Static fields and properties (DO NOT CHANGE!)
+        public static readonly int Family = Kelvin.Family;
+        public static readonly DegRankine Offset /* from AbsoluteZero */ = new DegRankine(0d);
+        public static readonly Scale<double> Proxy = new Rankine_Proxy();
+        private static string s_format = "{0} {1}";
         public static string Format { get { return s_format; } set { s_format = value; } }
-        public static Scale<double> Proxy { get { return s_proxy; } }
+        #endregion
 
-        public static Rankine Zero { get { return s_zero; } }
+        #region Predefined levels
+        public static readonly Rankine Zero = new Rankine(0d);
         #endregion
     }
+
     public partial class Rankine_Proxy : Scale<double>
     {
         #region Properties

@@ -20,7 +20,7 @@ namespace Demo.UnitsOfMeasurement
         internal readonly DegCelsius m_level;
         #endregion
 
-        #region Properties
+        #region Properties / ILevel<double>
         public DegCelsius Level { get { return m_level; } }
         public DegCelsius NormalizedLevel { get { return (m_level - Celsius.Offset); } }
 
@@ -49,13 +49,19 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Celsius(Rankine q) { return new Celsius((DegCelsius)(q.NormalizedLevel) + Celsius.Offset); }
         public static Celsius From(ILevel<double> q)
         {
-            if (q.Scale.Family != Celsius.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Celsius\".", q.GetType().Name));
+            if (q.Scale.Family != Celsius.Family)
+            {
+				throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Celsius\".", q.GetType().Name));
+            }
             return new Celsius(DegCelsius.From(q.NormalizedLevel) + Celsius.Offset);
         }
         public static Celsius From(IQuantity<double> q)
         {
             Scale<double> scale = Catalog.Scale(Celsius.Family, q.Unit);
-            if(scale == null) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Celsius\".", q.GetType().Name));
+            if (scale == null)
+            {
+				throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Celsius\".", q.GetType().Name));
+            }
             return Celsius.From(scale.Create(q.Value));
         }
         #endregion
@@ -87,33 +93,30 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(Celsius.Format, null); }
-        public string ToString(string format) { return ToString(format, null); }
-        public string ToString(IFormatProvider fp) { return ToString(Celsius.Format, fp); }
-        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        public static string String(double level, string format = null, IFormatProvider fp = null)
         {
-            return m_level.ToString(format ?? Celsius.Format, fp);
+            return DegCelsius.String(level, format ?? Celsius.Format, fp);
         }
+
+        public override string ToString() { return String(m_level.m_value); }
+        public string ToString(string format) { return String(m_level.m_value, format); }
+        public string ToString(IFormatProvider fp) { return String(m_level.m_value, null, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp) { return String(m_level.m_value, format, fp); }
         #endregion
 
-        #region Static fields
-        private static readonly DegCelsius s_offset /* from AbsoluteZero reference level */ = new DegCelsius(-273.15d);
-        private static readonly int s_family = Kelvin.Family;
-        private static /*mutable*/ string s_format = "{0} {1}";
-        private static readonly Scale<double> s_proxy = new Celsius_Proxy();
-
-        private static readonly Celsius s_zero = new Celsius(0d);
-        #endregion
-        
-        #region Static properties
-        public static DegCelsius Offset { get { return s_offset; } }
-        public static int Family { get { return s_family; } }
+        #region Static fields and properties (DO NOT CHANGE!)
+        public static readonly int Family = Kelvin.Family;
+        public static readonly DegCelsius Offset /* from AbsoluteZero */ = new DegCelsius(-273.15d);
+        public static readonly Scale<double> Proxy = new Celsius_Proxy();
+        private static string s_format = "{0} {1}";
         public static string Format { get { return s_format; } set { s_format = value; } }
-        public static Scale<double> Proxy { get { return s_proxy; } }
+        #endregion
 
-        public static Celsius Zero { get { return s_zero; } }
+        #region Predefined levels
+        public static readonly Celsius Zero = new Celsius(0d);
         #endregion
     }
+
     public partial class Celsius_Proxy : Scale<double>
     {
         #region Properties

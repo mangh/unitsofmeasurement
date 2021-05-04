@@ -106,13 +106,13 @@ namespace Demo.UnitsOfMeasurement
             {
                 foreach(Type ifc in t.GetInterfaces())
                 {
-                    if(ifc.FullName.StartsWith(Unit.GenericInterfaceFullName) ||
+                    if (ifc.FullName.StartsWith(Unit.GenericInterfaceFullName) ||
                         ifc.FullName.StartsWith(Scale.GenericInterfaceFullName))
                     {
-                        PropertyInfo proxyInfo = t.GetProperty("Proxy", BindingFlags.Static | BindingFlags.Public);
-                        if(proxyInfo != null)
+                        FieldInfo fieldInfo = t.GetField("Proxy", BindingFlags.Static | BindingFlags.Public);
+                        if (fieldInfo != null)
                         {
-                            return proxyInfo.GetValue(t, null) as Measure;
+                            return fieldInfo.GetValue(t) as Measure;
                         }
                     }
                 }

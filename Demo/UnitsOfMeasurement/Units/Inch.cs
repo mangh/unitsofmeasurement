@@ -19,7 +19,7 @@ namespace Demo.UnitsOfMeasurement
         internal readonly double m_value;
         #endregion
 
-        #region Properties
+        #region Properties / IQuantity<double>
         public double Value { get { return m_value; } }
         Unit<double> IQuantity<double>.Unit { get { return Inch.Proxy; } }
         #endregion
@@ -42,7 +42,10 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Inch(Meter q) { return new Inch((Inch.Factor / Meter.Factor) * q.m_value); }
         public static Inch From(IQuantity<double> q)
         {
-            if (q.Unit.Family != Inch.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Inch\"", q.GetType().Name));
+            if (q.Unit.Family != Inch.Family)
+            {
+				throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Inch\"", q.GetType().Name));
+            }
             return new Inch((Inch.Factor / q.Unit.Factor) * q.Value);
         }
         #endregion
@@ -78,47 +81,40 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(Inch.Format, null); }
-        public string ToString(string format) { return ToString(format, null); }
-        public string ToString(IFormatProvider fp) { return ToString(Inch.Format, fp); }
-        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        public static string String(double q, string format = null, IFormatProvider fp = null)
         {
-            return string.Format(fp, format ?? Inch.Format, m_value, Inch.Symbol.Default);
+            return string.Format(fp, format ?? Inch.Format, q, Inch.Symbol.Default);
         }
+
+        public override string ToString() { return String(m_value); }
+        public string ToString(string format) { return String(m_value, format); }
+        public string ToString(IFormatProvider fp) { return String(m_value, null, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp) { return String(m_value, format, fp); }
         #endregion
 
-        #region Static fields
-        private static readonly Dimension s_sense = Meter.Sense;
-        private static readonly int s_family = Meter.Family;
-        private static /*mutable*/ double s_factor = 100d * Meter.Factor / 2.54d;
-        private static /*mutable*/ string s_format = "{0} {1}";
-        private static readonly SymbolCollection s_symbol = new SymbolCollection("in");
-        private static readonly Unit<double> s_proxy = new Inch_Proxy();
-
-        private static readonly Inch s_one = new Inch(1d);
-        private static readonly Inch s_zero = new Inch(0d);
-        #endregion
-
-        #region Static Properties
-        public static Dimension Sense { get { return s_sense; } }
-        public static int Family { get { return s_family; } }
-        public static double Factor { get { return s_factor; } set { s_factor = value; } }
+        #region Static fields and properties (DO NOT CHANGE!)
+        public static readonly Dimension Sense = Meter.Sense;
+        public const int Family = Meter.Family;
+        public static readonly SymbolCollection Symbol = new SymbolCollection("in");
+        public static readonly Unit<double> Proxy = new Inch_Proxy();
+        public const double Factor = 100d * Meter.Factor / 2.54d;
         public static string Format { get { return s_format; } set { s_format = value; } }
-        public static SymbolCollection Symbol { get { return s_symbol; } }
-        public static Unit<double> Proxy { get { return s_proxy; } }
+        private static string s_format = "{0} {1}";
+        #endregion
 
-        public static Inch One { get { return s_one; } }
-        public static Inch Zero { get { return s_zero; } }
+        #region Predefined quantities
+        public static readonly Inch One = new Inch(1d);
+        public static readonly Inch Zero = new Inch(0d);
         #endregion
     }
 
     public partial class Inch_Proxy : Unit<double>
     {
         #region Properties
-        public override int Family { get { return Inch.Family; } }
         public override Dimension Sense { get { return Inch.Sense; } }
+        public override int Family { get { return Inch.Family; } }
+        public override double Factor { get { return Inch.Factor; } }
         public override SymbolCollection Symbol { get { return Inch.Symbol; } }
-        public override double Factor { get { return Inch.Factor; } set { Inch.Factor = value; } }
         public override string Format { get { return Inch.Format; } set { Inch.Format = value; } }
         #endregion
 

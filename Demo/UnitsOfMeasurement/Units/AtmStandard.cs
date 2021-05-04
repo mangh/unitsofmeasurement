@@ -19,7 +19,7 @@ namespace Demo.UnitsOfMeasurement
         internal readonly double m_value;
         #endregion
 
-        #region Properties
+        #region Properties / IQuantity<double>
         public double Value { get { return m_value; } }
         Unit<double> IQuantity<double>.Unit { get { return AtmStandard.Proxy; } }
         #endregion
@@ -39,7 +39,10 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator AtmStandard(MillimeterHg q) { return new AtmStandard((AtmStandard.Factor / MillimeterHg.Factor) * q.m_value); }
         public static AtmStandard From(IQuantity<double> q)
         {
-            if (q.Unit.Family != AtmStandard.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"AtmStandard\"", q.GetType().Name));
+            if (q.Unit.Family != AtmStandard.Family)
+            {
+				throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"AtmStandard\"", q.GetType().Name));
+            }
             return new AtmStandard((AtmStandard.Factor / q.Unit.Factor) * q.Value);
         }
         #endregion
@@ -75,47 +78,40 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(AtmStandard.Format, null); }
-        public string ToString(string format) { return ToString(format, null); }
-        public string ToString(IFormatProvider fp) { return ToString(AtmStandard.Format, fp); }
-        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        public static string String(double q, string format = null, IFormatProvider fp = null)
         {
-            return string.Format(fp, format ?? AtmStandard.Format, m_value, AtmStandard.Symbol.Default);
+            return string.Format(fp, format ?? AtmStandard.Format, q, AtmStandard.Symbol.Default);
         }
+
+        public override string ToString() { return String(m_value); }
+        public string ToString(string format) { return String(m_value, format); }
+        public string ToString(IFormatProvider fp) { return String(m_value, null, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp) { return String(m_value, format, fp); }
         #endregion
 
-        #region Static fields
-        private static readonly Dimension s_sense = Pascal.Sense;
-        private static readonly int s_family = Pascal.Family;
-        private static /*mutable*/ double s_factor = Pascal.Factor / 101325d;
-        private static /*mutable*/ string s_format = "{0} {1}";
-        private static readonly SymbolCollection s_symbol = new SymbolCollection("atm");
-        private static readonly Unit<double> s_proxy = new AtmStandard_Proxy();
-
-        private static readonly AtmStandard s_one = new AtmStandard(1d);
-        private static readonly AtmStandard s_zero = new AtmStandard(0d);
-        #endregion
-
-        #region Static Properties
-        public static Dimension Sense { get { return s_sense; } }
-        public static int Family { get { return s_family; } }
-        public static double Factor { get { return s_factor; } set { s_factor = value; } }
+        #region Static fields and properties (DO NOT CHANGE!)
+        public static readonly Dimension Sense = Pascal.Sense;
+        public const int Family = Pascal.Family;
+        public static readonly SymbolCollection Symbol = new SymbolCollection("atm");
+        public static readonly Unit<double> Proxy = new AtmStandard_Proxy();
+        public const double Factor = Pascal.Factor / 101325d;
         public static string Format { get { return s_format; } set { s_format = value; } }
-        public static SymbolCollection Symbol { get { return s_symbol; } }
-        public static Unit<double> Proxy { get { return s_proxy; } }
+        private static string s_format = "{0} {1}";
+        #endregion
 
-        public static AtmStandard One { get { return s_one; } }
-        public static AtmStandard Zero { get { return s_zero; } }
+        #region Predefined quantities
+        public static readonly AtmStandard One = new AtmStandard(1d);
+        public static readonly AtmStandard Zero = new AtmStandard(0d);
         #endregion
     }
 
     public partial class AtmStandard_Proxy : Unit<double>
     {
         #region Properties
-        public override int Family { get { return AtmStandard.Family; } }
         public override Dimension Sense { get { return AtmStandard.Sense; } }
+        public override int Family { get { return AtmStandard.Family; } }
+        public override double Factor { get { return AtmStandard.Factor; } }
         public override SymbolCollection Symbol { get { return AtmStandard.Symbol; } }
-        public override double Factor { get { return AtmStandard.Factor; } set { AtmStandard.Factor = value; } }
         public override string Format { get { return AtmStandard.Format; } set { AtmStandard.Format = value; } }
         #endregion
 

@@ -19,7 +19,7 @@ namespace Demo.UnitsOfMeasurement
         internal readonly double m_value;
         #endregion
 
-        #region Properties
+        #region Properties / IQuantity<double>
         public double Value { get { return m_value; } }
         Unit<double> IQuantity<double>.Unit { get { return Kilogram.Proxy; } }
         #endregion
@@ -39,7 +39,10 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Kilogram(Gram q) { return new Kilogram((Kilogram.Factor / Gram.Factor) * q.m_value); }
         public static Kilogram From(IQuantity<double> q)
         {
-            if (q.Unit.Family != Kilogram.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Kilogram\"", q.GetType().Name));
+            if (q.Unit.Family != Kilogram.Family)
+            {
+				throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Kilogram\"", q.GetType().Name));
+            }
             return new Kilogram((Kilogram.Factor / q.Unit.Factor) * q.Value);
         }
         #endregion
@@ -77,47 +80,40 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(Kilogram.Format, null); }
-        public string ToString(string format) { return ToString(format, null); }
-        public string ToString(IFormatProvider fp) { return ToString(Kilogram.Format, fp); }
-        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        public static string String(double q, string format = null, IFormatProvider fp = null)
         {
-            return string.Format(fp, format ?? Kilogram.Format, m_value, Kilogram.Symbol.Default);
+            return string.Format(fp, format ?? Kilogram.Format, q, Kilogram.Symbol.Default);
         }
+
+        public override string ToString() { return String(m_value); }
+        public string ToString(string format) { return String(m_value, format); }
+        public string ToString(IFormatProvider fp) { return String(m_value, null, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp) { return String(m_value, format, fp); }
         #endregion
 
-        #region Static fields
-        private static readonly Dimension s_sense = Dimension.Mass;
-        private static readonly int s_family = 2;
-        private static /*mutable*/ double s_factor = 1d;
-        private static /*mutable*/ string s_format = "{0} {1}";
-        private static readonly SymbolCollection s_symbol = new SymbolCollection("kg");
-        private static readonly Unit<double> s_proxy = new Kilogram_Proxy();
-
-        private static readonly Kilogram s_one = new Kilogram(1d);
-        private static readonly Kilogram s_zero = new Kilogram(0d);
-        #endregion
-
-        #region Static Properties
-        public static Dimension Sense { get { return s_sense; } }
-        public static int Family { get { return s_family; } }
-        public static double Factor { get { return s_factor; } set { s_factor = value; } }
+        #region Static fields and properties (DO NOT CHANGE!)
+        public static readonly Dimension Sense = Dimension.Mass;
+        public const int Family = 2;
+        public static readonly SymbolCollection Symbol = new SymbolCollection("kg");
+        public static readonly Unit<double> Proxy = new Kilogram_Proxy();
+        public const double Factor = 1d;
         public static string Format { get { return s_format; } set { s_format = value; } }
-        public static SymbolCollection Symbol { get { return s_symbol; } }
-        public static Unit<double> Proxy { get { return s_proxy; } }
+        private static string s_format = "{0} {1}";
+        #endregion
 
-        public static Kilogram One { get { return s_one; } }
-        public static Kilogram Zero { get { return s_zero; } }
+        #region Predefined quantities
+        public static readonly Kilogram One = new Kilogram(1d);
+        public static readonly Kilogram Zero = new Kilogram(0d);
         #endregion
     }
 
     public partial class Kilogram_Proxy : Unit<double>
     {
         #region Properties
-        public override int Family { get { return Kilogram.Family; } }
         public override Dimension Sense { get { return Kilogram.Sense; } }
+        public override int Family { get { return Kilogram.Family; } }
+        public override double Factor { get { return Kilogram.Factor; } }
         public override SymbolCollection Symbol { get { return Kilogram.Symbol; } }
-        public override double Factor { get { return Kilogram.Factor; } set { Kilogram.Factor = value; } }
         public override string Format { get { return Kilogram.Format; } set { Kilogram.Format = value; } }
         #endregion
 

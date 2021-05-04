@@ -19,7 +19,7 @@ namespace Demo.UnitsOfMeasurement
         internal readonly double m_value;
         #endregion
 
-        #region Properties
+        #region Properties / IQuantity<double>
         public double Value { get { return m_value; } }
         Unit<double> IQuantity<double>.Unit { get { return Minute.Proxy; } }
         #endregion
@@ -37,7 +37,10 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Minute(Second q) { return new Minute((Minute.Factor / Second.Factor) * q.m_value); }
         public static Minute From(IQuantity<double> q)
         {
-            if (q.Unit.Family != Minute.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Minute\"", q.GetType().Name));
+            if (q.Unit.Family != Minute.Family)
+            {
+				throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Minute\"", q.GetType().Name));
+            }
             return new Minute((Minute.Factor / q.Unit.Factor) * q.Value);
         }
         #endregion
@@ -73,47 +76,40 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(Minute.Format, null); }
-        public string ToString(string format) { return ToString(format, null); }
-        public string ToString(IFormatProvider fp) { return ToString(Minute.Format, fp); }
-        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        public static string String(double q, string format = null, IFormatProvider fp = null)
         {
-            return string.Format(fp, format ?? Minute.Format, m_value, Minute.Symbol.Default);
+            return string.Format(fp, format ?? Minute.Format, q, Minute.Symbol.Default);
         }
+
+        public override string ToString() { return String(m_value); }
+        public string ToString(string format) { return String(m_value, format); }
+        public string ToString(IFormatProvider fp) { return String(m_value, null, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp) { return String(m_value, format, fp); }
         #endregion
 
-        #region Static fields
-        private static readonly Dimension s_sense = Second.Sense;
-        private static readonly int s_family = Second.Family;
-        private static /*mutable*/ double s_factor = Second.Factor / 60d;
-        private static /*mutable*/ string s_format = "{0} {1}";
-        private static readonly SymbolCollection s_symbol = new SymbolCollection("min");
-        private static readonly Unit<double> s_proxy = new Minute_Proxy();
-
-        private static readonly Minute s_one = new Minute(1d);
-        private static readonly Minute s_zero = new Minute(0d);
-        #endregion
-
-        #region Static Properties
-        public static Dimension Sense { get { return s_sense; } }
-        public static int Family { get { return s_family; } }
-        public static double Factor { get { return s_factor; } set { s_factor = value; } }
+        #region Static fields and properties (DO NOT CHANGE!)
+        public static readonly Dimension Sense = Second.Sense;
+        public const int Family = Second.Family;
+        public static readonly SymbolCollection Symbol = new SymbolCollection("min");
+        public static readonly Unit<double> Proxy = new Minute_Proxy();
+        public const double Factor = Second.Factor / 60d;
         public static string Format { get { return s_format; } set { s_format = value; } }
-        public static SymbolCollection Symbol { get { return s_symbol; } }
-        public static Unit<double> Proxy { get { return s_proxy; } }
+        private static string s_format = "{0} {1}";
+        #endregion
 
-        public static Minute One { get { return s_one; } }
-        public static Minute Zero { get { return s_zero; } }
+        #region Predefined quantities
+        public static readonly Minute One = new Minute(1d);
+        public static readonly Minute Zero = new Minute(0d);
         #endregion
     }
 
     public partial class Minute_Proxy : Unit<double>
     {
         #region Properties
-        public override int Family { get { return Minute.Family; } }
         public override Dimension Sense { get { return Minute.Sense; } }
+        public override int Family { get { return Minute.Family; } }
+        public override double Factor { get { return Minute.Factor; } }
         public override SymbolCollection Symbol { get { return Minute.Symbol; } }
-        public override double Factor { get { return Minute.Factor; } set { Minute.Factor = value; } }
         public override string Format { get { return Minute.Format; } set { Minute.Format = value; } }
         #endregion
 

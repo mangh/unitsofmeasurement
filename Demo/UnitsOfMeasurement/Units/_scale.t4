@@ -1,0 +1,169 @@
+﻿<#+
+    void MakeScale(ScaleType s)
+    {
+        string Scale = s.Name;
+        string ScaleProxy = Scale + "_Proxy";
+        string Unit = s.Unit.Name;
+        string Offset = s.Offset.Code;
+        string Family = (s.Prime == null) ? (__family++).ToString() : string.Format("{0}.Family", s.Prime.Name);
+        string Format = s.Format;
+
+        string ValueType = s.Unit.Factor.Value.Type.Name;
+
+        // Compile-time scales can access (internally) m_level fields of other compile-time scales.
+        // Late scales cannot access these fields; they can access them via Level property only.
+        string Level = __late ? "Level" : "m_level";
+
+        string One = s.Unit.Factor.Value.Type.One.CSString();
+        string Zero = s.Unit.Factor.Value.Type.Zero.CSString();
+
+        if (!string.IsNullOrWhiteSpace(s.RefPoint))
+        {
+#>
+    [ScaleReferencePoint("<#= s.RefPoint #>")]
+<#+
+        }
+#>
+    public partial struct <#= Scale #> : ILevel<<#= ValueType #>>, IEquatable<<#= Scale #>>, IComparable<<#= Scale #>>, IFormattable
+    {
+        #region Fields
+        internal readonly <#= Unit #> m_level;
+        #endregion
+
+        #region Properties / ILevel<<#= ValueType #>>
+        public <#= Unit #> Level { get { return m_level; } }
+        public <#= Unit #> NormalizedLevel { get { return (m_level - <#= Scale #>.Offset); } }
+
+        IQuantity<<#= ValueType #>> ILevel<<#= ValueType #>>.Level { get { return Level; } }
+        IQuantity<<#= ValueType #>> ILevel<<#= ValueType #>>.NormalizedLevel { get { return NormalizedLevel; } }
+        Scale<<#= ValueType #>> ILevel<<#= ValueType #>>.Scale { get { return <#= Scale #>.Proxy; } }
+        #endregion
+
+        #region Constructor(s)
+        public <#= Scale #>(<#= Unit #> level)
+        {
+            m_level = level;
+        }
+        public <#= Scale #>(<#= ValueType #> level) :
+            this(new <#= Unit #>(level))
+        {
+        }
+        #endregion
+
+        #region Conversions
+        public static explicit operator <#= Scale #>(<#= ValueType #> q) { return new <#= Scale #>(q); }
+        public static explicit operator <#= Scale #>(<#= Unit #> q) { return new <#= Scale #>(q); }
+
+<#+
+        foreach (MeasureType x in s.Relatives())
+        {
+            string Relative = ((ScaleType)x).Name;
+#>
+        public static explicit operator <#= Scale #>(<#= Relative #> q) { return new <#= Scale #>((<#= Unit #>)(q.NormalizedLevel) + <#= Scale #>.Offset); }
+<#+
+        }
+#>
+        public static <#= Scale #> From(ILevel<<#= ValueType #>> q)
+        {
+            if (q.Scale.Family != <#= Scale #>.Family)
+            {
+				throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"<#= Scale #>\".", q.GetType().Name));
+            }
+            return new <#= Scale #>(<#= Unit #>.From(q.NormalizedLevel) + <#= Scale #>.Offset);
+        }
+        public static <#= Scale #> From(IQuantity<<#= ValueType #>> q)
+        {
+            Scale<<#= ValueType #>> scale = Catalog.Scale(<#= Scale #>.Family, q.Unit);
+            if (scale == null)
+            {
+				throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"<#= Scale #>\".", q.GetType().Name));
+            }
+            return <#= Scale #>.From(scale.Create(q.Value));
+        }
+        #endregion
+
+        #region IObject / IEquatable<<#= Scale #>>
+        public override int GetHashCode() { return m_level.GetHashCode(); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is <#= Scale #>) && Equals((<#= Scale #>)obj); }
+        public bool /* IEquatable<<#= Scale #>> */ Equals(<#= Scale #> other) { return this.m_level == other.<#= Level #>; }
+        #endregion
+
+        #region Comparison / IComparable<<#= Scale #>>
+        public static bool operator ==(<#= Scale #> lhs, <#= Scale #> rhs) { return lhs.<#= Level #> == rhs.<#= Level #>; }
+        public static bool operator !=(<#= Scale #> lhs, <#= Scale #> rhs) { return lhs.<#= Level #> != rhs.<#= Level #>; }
+        public static bool operator <(<#= Scale #> lhs, <#= Scale #> rhs) { return lhs.<#= Level #> < rhs.<#= Level #>; }
+        public static bool operator >(<#= Scale #> lhs, <#= Scale #> rhs) { return lhs.<#= Level #> > rhs.<#= Level #>; }
+        public static bool operator <=(<#= Scale #> lhs, <#= Scale #> rhs) { return lhs.<#= Level #> <= rhs.<#= Level #>; }
+        public static bool operator >=(<#= Scale #> lhs, <#= Scale #> rhs) { return lhs.<#= Level #> >= rhs.<#= Level #>; }
+        public int /* IComparable<<#= Scale #>> */ CompareTo(<#= Scale #> other) { return this.m_level.CompareTo(other.<#= Level #>); }
+        #endregion
+
+        #region Arithmetic
+        public static <#= Scale #> operator +(<#= Scale #> lhs, <#= Unit #> rhs) { return new <#= Scale #>(lhs.<#= Level #> + rhs); }
+        public static <#= Scale #> operator +(<#= Unit #> lhs, <#= Scale #> rhs) { return new <#= Scale #>(lhs + rhs.<#= Level #>); }
+        public static <#= Scale #> operator -(<#= Scale #> lhs, <#= Unit #> rhs) { return new <#= Scale #>(lhs.<#= Level #> - rhs); }
+        public static <#= Unit #> operator -(<#= Scale #> lhs, <#= Scale #> rhs) { return (lhs.<#= Level #> - rhs.<#= Level #>); }
+        public static <#= Scale #> operator -(<#= Scale #> q) { return new <#= Scale #>(-q.<#= Level #>); }
+        public static <#= Scale #> operator ++(<#= Scale #> q) { return q + <#= Unit #>.One; }
+        public static <#= Scale #> operator --(<#= Scale #> q) { return q - <#= Unit #>.One; }
+        #endregion
+
+        #region Formatting
+        public static string String(<#= ValueType #> level, string format = null, IFormatProvider fp = null)
+        {
+            return <#= Unit #>.String(level, format ?? <#= Scale #>.Format, fp);
+        }
+
+        public override string ToString() { return String(m_level.m_value); }
+        public string ToString(string format) { return String(m_level.m_value, format); }
+        public string ToString(IFormatProvider fp) { return String(m_level.m_value, null, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp) { return String(m_level.m_value, format, fp); }
+        #endregion
+
+        #region Static fields and properties (DO NOT CHANGE!)
+        public static readonly int Family = <#= Family #>;
+        public static readonly <#= Unit #> Offset /* from <#= s.RefPointNormalized #> */ = new <#= Unit #>(<#= Offset #>);
+        public static readonly Scale<<#= ValueType #>> Proxy = new <#= ScaleProxy #>();
+        private static string s_format = "<#= Format #>";
+        public static string Format { get { return s_format; } set { s_format = value; } }
+        #endregion
+
+        #region Predefined levels
+        public static readonly <#= Scale #> Zero = new <#= Scale #>(<#= Zero #>);
+        #endregion
+    }
+
+    public partial class <#= ScaleProxy #> : Scale<<#= ValueType #>>
+    {
+        #region Properties
+        public override int Family { get { return <#= Scale #>.Family; } }
+        public override Unit Unit { get { return <#= Unit #>.Proxy; } }
+        public override IQuantity<<#= ValueType #>> Offset { get { return <#= Scale #>.Offset; } }
+        public override string Format { get { return <#= Scale #>.Format; } set { <#= Scale #>.Format = value; } }
+        #endregion
+
+        #region Constructor(s)
+        public <#= ScaleProxy #>() :
+            base(typeof(<#= Scale #>))
+        {
+        }
+        #endregion
+
+        #region Methods
+        public override ILevel<<#= ValueType #>> Create(<#= ValueType #> value)
+        {
+            return new <#= Scale #>(value);
+        }
+        public override ILevel<<#= ValueType #>> From(ILevel<<#= ValueType #>> level)
+        {
+            return <#= Scale #>.From(level);
+        }
+        public override ILevel<<#= ValueType #>> From(IQuantity<<#= ValueType #>> quantity)
+        {
+            return <#= Scale #>.From(quantity);
+        }
+        #endregion
+    }
+<#+
+    }
+#>

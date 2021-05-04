@@ -19,7 +19,7 @@ namespace Demo.UnitsOfMeasurement
         internal readonly double m_value;
         #endregion
 
-        #region Properties
+        #region Properties / IQuantity<double>
         public double Value { get { return m_value; } }
         Unit<double> IQuantity<double>.Unit { get { return Mile.Proxy; } }
         #endregion
@@ -42,7 +42,10 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Mile(Yard q) { return new Mile((Mile.Factor / Yard.Factor) * q.m_value); }
         public static Mile From(IQuantity<double> q)
         {
-            if (q.Unit.Family != Mile.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Mile\"", q.GetType().Name));
+            if (q.Unit.Family != Mile.Family)
+            {
+				throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Mile\"", q.GetType().Name));
+            }
             return new Mile((Mile.Factor / q.Unit.Factor) * q.Value);
         }
         #endregion
@@ -80,47 +83,40 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(Mile.Format, null); }
-        public string ToString(string format) { return ToString(format, null); }
-        public string ToString(IFormatProvider fp) { return ToString(Mile.Format, fp); }
-        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        public static string String(double q, string format = null, IFormatProvider fp = null)
         {
-            return string.Format(fp, format ?? Mile.Format, m_value, Mile.Symbol.Default);
+            return string.Format(fp, format ?? Mile.Format, q, Mile.Symbol.Default);
         }
+
+        public override string ToString() { return String(m_value); }
+        public string ToString(string format) { return String(m_value, format); }
+        public string ToString(IFormatProvider fp) { return String(m_value, null, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp) { return String(m_value, format, fp); }
         #endregion
 
-        #region Static fields
-        private static readonly Dimension s_sense = Yard.Sense;
-        private static readonly int s_family = Meter.Family;
-        private static /*mutable*/ double s_factor = Yard.Factor / 1760d;
-        private static /*mutable*/ string s_format = "{0} {1}";
-        private static readonly SymbolCollection s_symbol = new SymbolCollection("mil");
-        private static readonly Unit<double> s_proxy = new Mile_Proxy();
-
-        private static readonly Mile s_one = new Mile(1d);
-        private static readonly Mile s_zero = new Mile(0d);
-        #endregion
-
-        #region Static Properties
-        public static Dimension Sense { get { return s_sense; } }
-        public static int Family { get { return s_family; } }
-        public static double Factor { get { return s_factor; } set { s_factor = value; } }
+        #region Static fields and properties (DO NOT CHANGE!)
+        public static readonly Dimension Sense = Yard.Sense;
+        public const int Family = Meter.Family;
+        public static readonly SymbolCollection Symbol = new SymbolCollection("mil");
+        public static readonly Unit<double> Proxy = new Mile_Proxy();
+        public const double Factor = Yard.Factor / 1760d;
         public static string Format { get { return s_format; } set { s_format = value; } }
-        public static SymbolCollection Symbol { get { return s_symbol; } }
-        public static Unit<double> Proxy { get { return s_proxy; } }
+        private static string s_format = "{0} {1}";
+        #endregion
 
-        public static Mile One { get { return s_one; } }
-        public static Mile Zero { get { return s_zero; } }
+        #region Predefined quantities
+        public static readonly Mile One = new Mile(1d);
+        public static readonly Mile Zero = new Mile(0d);
         #endregion
     }
 
     public partial class Mile_Proxy : Unit<double>
     {
         #region Properties
-        public override int Family { get { return Mile.Family; } }
         public override Dimension Sense { get { return Mile.Sense; } }
+        public override int Family { get { return Mile.Family; } }
+        public override double Factor { get { return Mile.Factor; } }
         public override SymbolCollection Symbol { get { return Mile.Symbol; } }
-        public override double Factor { get { return Mile.Factor; } set { Mile.Factor = value; } }
         public override string Format { get { return Mile.Format; } set { Mile.Format = value; } }
         #endregion
 

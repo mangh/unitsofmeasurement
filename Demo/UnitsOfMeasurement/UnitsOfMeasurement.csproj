@@ -172,6 +172,7 @@
     <Compile Include="Units\Kilometer_Hour.cs">
       <DependentUpon>_generator.tt</DependentUpon>
     </Compile>
+    <Compile Include="Units\Math.cs" />
     <Compile Include="Units\Meter.cs">
       <DependentUpon>_generator.tt</DependentUpon>
     </Compile>
@@ -300,6 +301,11 @@
       <LastGenOutput>Generator.cs</LastGenOutput>
       <CustomToolNamespace>Demo.UnitsOfMeasurement</CustomToolNamespace>
     </None>
+    <None Include="Units\_dimensional_analysis.include">
+      <DependentUpon>_generator.tt</DependentUpon>
+    </None>
+    <None Include="Units\_scale.t4" />
+    <None Include="Units\_unit.t4" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

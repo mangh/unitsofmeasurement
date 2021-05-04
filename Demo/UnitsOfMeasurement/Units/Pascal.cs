@@ -19,7 +19,7 @@ namespace Demo.UnitsOfMeasurement
         internal readonly double m_value;
         #endregion
 
-        #region Properties
+        #region Properties / IQuantity<double>
         public double Value { get { return m_value; } }
         Unit<double> IQuantity<double>.Unit { get { return Pascal.Proxy; } }
         #endregion
@@ -39,7 +39,10 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Pascal(Bar q) { return new Pascal((Pascal.Factor / Bar.Factor) * q.m_value); }
         public static Pascal From(IQuantity<double> q)
         {
-            if (q.Unit.Family != Pascal.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Pascal\"", q.GetType().Name));
+            if (q.Unit.Family != Pascal.Family)
+            {
+				throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Pascal\"", q.GetType().Name));
+            }
             return new Pascal((Pascal.Factor / q.Unit.Factor) * q.Value);
         }
         #endregion
@@ -77,47 +80,40 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(Pascal.Format, null); }
-        public string ToString(string format) { return ToString(format, null); }
-        public string ToString(IFormatProvider fp) { return ToString(Pascal.Format, fp); }
-        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        public static string String(double q, string format = null, IFormatProvider fp = null)
         {
-            return string.Format(fp, format ?? Pascal.Format, m_value, Pascal.Symbol.Default);
+            return string.Format(fp, format ?? Pascal.Format, q, Pascal.Symbol.Default);
         }
+
+        public override string ToString() { return String(m_value); }
+        public string ToString(string format) { return String(m_value, format); }
+        public string ToString(IFormatProvider fp) { return String(m_value, null, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp) { return String(m_value, format, fp); }
         #endregion
 
-        #region Static fields
-        private static readonly Dimension s_sense = Newton.Sense / SquareMeter.Sense;
-        private static readonly int s_family = 21;
-        private static /*mutable*/ double s_factor = Newton.Factor / SquareMeter.Factor;
-        private static /*mutable*/ string s_format = "{0} {1}";
-        private static readonly SymbolCollection s_symbol = new SymbolCollection("Pa");
-        private static readonly Unit<double> s_proxy = new Pascal_Proxy();
-
-        private static readonly Pascal s_one = new Pascal(1d);
-        private static readonly Pascal s_zero = new Pascal(0d);
-        #endregion
-
-        #region Static Properties
-        public static Dimension Sense { get { return s_sense; } }
-        public static int Family { get { return s_family; } }
-        public static double Factor { get { return s_factor; } set { s_factor = value; } }
+        #region Static fields and properties (DO NOT CHANGE!)
+        public static readonly Dimension Sense = Newton.Sense / SquareMeter.Sense;
+        public const int Family = 21;
+        public static readonly SymbolCollection Symbol = new SymbolCollection("Pa");
+        public static readonly Unit<double> Proxy = new Pascal_Proxy();
+        public const double Factor = Newton.Factor / SquareMeter.Factor;
         public static string Format { get { return s_format; } set { s_format = value; } }
-        public static SymbolCollection Symbol { get { return s_symbol; } }
-        public static Unit<double> Proxy { get { return s_proxy; } }
+        private static string s_format = "{0} {1}";
+        #endregion
 
-        public static Pascal One { get { return s_one; } }
-        public static Pascal Zero { get { return s_zero; } }
+        #region Predefined quantities
+        public static readonly Pascal One = new Pascal(1d);
+        public static readonly Pascal Zero = new Pascal(0d);
         #endregion
     }
 
     public partial class Pascal_Proxy : Unit<double>
     {
         #region Properties
-        public override int Family { get { return Pascal.Family; } }
         public override Dimension Sense { get { return Pascal.Sense; } }
+        public override int Family { get { return Pascal.Family; } }
+        public override double Factor { get { return Pascal.Factor; } }
         public override SymbolCollection Symbol { get { return Pascal.Symbol; } }
-        public override double Factor { get { return Pascal.Factor; } set { Pascal.Factor = value; } }
         public override string Format { get { return Pascal.Format; } set { Pascal.Format = value; } }
         #endregion
 

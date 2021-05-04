@@ -1,4 +1,4 @@
-﻿Units and Scales generated on 2017-03-09 17:44:24
+﻿Units and Scales generated on 03.05.2021 16:34:15
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -218,19 +218,19 @@
     Radian_Sec = Radian / Second
     Second = Radian / Radian_Sec
 
-[1] Degree {"\u00B0", "deg"} : (180d / Math.PI) * Radian.Factor (Radian)
+[1] Degree {"\u00B0", "deg"} : (180d / System.Math.PI) * Radian.Factor (Radian)
 
     (Degree)Radian
     (Degree)Cycles
     (Degree)Grad
 
-[1] Grad {"grad"} : (200d / Math.PI) * Radian.Factor (Radian)
+[1] Grad {"grad"} : (200d / System.Math.PI) * Radian.Factor (Radian)
 
     (Grad)Degree
     (Grad)Radian
     (Grad)Cycles
 
-[1] Cycles {"c"} : Radian.Factor / (2d * Math.PI) (Radian)
+[1] Cycles {"c"} : Radian.Factor / (2d * System.Math.PI) (Radian)
 
     (Cycles)Grad
     (Cycles)Degree
@@ -498,4 +498,5 @@
     (Fahrenheit)Kelvin
 
 // End of report ///////////////////////////////////////////////////////////////
+
 

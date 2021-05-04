@@ -19,7 +19,7 @@ namespace Demo.UnitsOfMeasurement
         internal readonly double m_value;
         #endregion
 
-        #region Properties
+        #region Properties / IQuantity<double>
         public double Value { get { return m_value; } }
         Unit<double> IQuantity<double>.Unit { get { return SquareMeter.Proxy; } }
         #endregion
@@ -36,7 +36,10 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator SquareMeter(SquareFoot q) { return new SquareMeter((SquareMeter.Factor / SquareFoot.Factor) * q.m_value); }
         public static SquareMeter From(IQuantity<double> q)
         {
-            if (q.Unit.Family != SquareMeter.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"SquareMeter\"", q.GetType().Name));
+            if (q.Unit.Family != SquareMeter.Family)
+            {
+				throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"SquareMeter\"", q.GetType().Name));
+            }
             return new SquareMeter((SquareMeter.Factor / q.Unit.Factor) * q.Value);
         }
         #endregion
@@ -75,47 +78,40 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(SquareMeter.Format, null); }
-        public string ToString(string format) { return ToString(format, null); }
-        public string ToString(IFormatProvider fp) { return ToString(SquareMeter.Format, fp); }
-        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        public static string String(double q, string format = null, IFormatProvider fp = null)
         {
-            return string.Format(fp, format ?? SquareMeter.Format, m_value, SquareMeter.Symbol.Default);
+            return string.Format(fp, format ?? SquareMeter.Format, q, SquareMeter.Symbol.Default);
         }
+
+        public override string ToString() { return String(m_value); }
+        public string ToString(string format) { return String(m_value, format); }
+        public string ToString(IFormatProvider fp) { return String(m_value, null, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp) { return String(m_value, format, fp); }
         #endregion
 
-        #region Static fields
-        private static readonly Dimension s_sense = Meter.Sense * Meter.Sense;
-        private static readonly int s_family = 11;
-        private static /*mutable*/ double s_factor = Meter.Factor * Meter.Factor;
-        private static /*mutable*/ string s_format = "{0} {1}";
-        private static readonly SymbolCollection s_symbol = new SymbolCollection("m\u00B2", "m2");
-        private static readonly Unit<double> s_proxy = new SquareMeter_Proxy();
-
-        private static readonly SquareMeter s_one = new SquareMeter(1d);
-        private static readonly SquareMeter s_zero = new SquareMeter(0d);
-        #endregion
-
-        #region Static Properties
-        public static Dimension Sense { get { return s_sense; } }
-        public static int Family { get { return s_family; } }
-        public static double Factor { get { return s_factor; } set { s_factor = value; } }
+        #region Static fields and properties (DO NOT CHANGE!)
+        public static readonly Dimension Sense = Meter.Sense * Meter.Sense;
+        public const int Family = 11;
+        public static readonly SymbolCollection Symbol = new SymbolCollection("m\u00B2", "m2");
+        public static readonly Unit<double> Proxy = new SquareMeter_Proxy();
+        public const double Factor = Meter.Factor * Meter.Factor;
         public static string Format { get { return s_format; } set { s_format = value; } }
-        public static SymbolCollection Symbol { get { return s_symbol; } }
-        public static Unit<double> Proxy { get { return s_proxy; } }
+        private static string s_format = "{0} {1}";
+        #endregion
 
-        public static SquareMeter One { get { return s_one; } }
-        public static SquareMeter Zero { get { return s_zero; } }
+        #region Predefined quantities
+        public static readonly SquareMeter One = new SquareMeter(1d);
+        public static readonly SquareMeter Zero = new SquareMeter(0d);
         #endregion
     }
 
     public partial class SquareMeter_Proxy : Unit<double>
     {
         #region Properties
-        public override int Family { get { return SquareMeter.Family; } }
         public override Dimension Sense { get { return SquareMeter.Sense; } }
+        public override int Family { get { return SquareMeter.Family; } }
+        public override double Factor { get { return SquareMeter.Factor; } }
         public override SymbolCollection Symbol { get { return SquareMeter.Symbol; } }
-        public override double Factor { get { return SquareMeter.Factor; } set { SquareMeter.Factor = value; } }
         public override string Format { get { return SquareMeter.Format; } set { SquareMeter.Format = value; } }
         #endregion
 

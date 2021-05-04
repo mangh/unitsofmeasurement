@@ -19,7 +19,7 @@ namespace Demo.UnitsOfMeasurement
         internal readonly double m_value;
         #endregion
 
-        #region Properties
+        #region Properties / IQuantity<double>
         public double Value { get { return m_value; } }
         Unit<double> IQuantity<double>.Unit { get { return Coulomb.Proxy; } }
         #endregion
@@ -35,7 +35,10 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Coulomb(double q) { return new Coulomb(q); }
         public static Coulomb From(IQuantity<double> q)
         {
-            if (q.Unit.Family != Coulomb.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Coulomb\"", q.GetType().Name));
+            if (q.Unit.Family != Coulomb.Family)
+            {
+				throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Coulomb\"", q.GetType().Name));
+            }
             return new Coulomb((Coulomb.Factor / q.Unit.Factor) * q.Value);
         }
         #endregion
@@ -75,47 +78,40 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(Coulomb.Format, null); }
-        public string ToString(string format) { return ToString(format, null); }
-        public string ToString(IFormatProvider fp) { return ToString(Coulomb.Format, fp); }
-        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        public static string String(double q, string format = null, IFormatProvider fp = null)
         {
-            return string.Format(fp, format ?? Coulomb.Format, m_value, Coulomb.Symbol.Default);
+            return string.Format(fp, format ?? Coulomb.Format, q, Coulomb.Symbol.Default);
         }
+
+        public override string ToString() { return String(m_value); }
+        public string ToString(string format) { return String(m_value, format); }
+        public string ToString(IFormatProvider fp) { return String(m_value, null, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp) { return String(m_value, format, fp); }
         #endregion
 
-        #region Static fields
-        private static readonly Dimension s_sense = Ampere.Sense * Second.Sense;
-        private static readonly int s_family = 22;
-        private static /*mutable*/ double s_factor = Ampere.Factor * Second.Factor;
-        private static /*mutable*/ string s_format = "{0} {1}";
-        private static readonly SymbolCollection s_symbol = new SymbolCollection("C");
-        private static readonly Unit<double> s_proxy = new Coulomb_Proxy();
-
-        private static readonly Coulomb s_one = new Coulomb(1d);
-        private static readonly Coulomb s_zero = new Coulomb(0d);
-        #endregion
-
-        #region Static Properties
-        public static Dimension Sense { get { return s_sense; } }
-        public static int Family { get { return s_family; } }
-        public static double Factor { get { return s_factor; } set { s_factor = value; } }
+        #region Static fields and properties (DO NOT CHANGE!)
+        public static readonly Dimension Sense = Ampere.Sense * Second.Sense;
+        public const int Family = 22;
+        public static readonly SymbolCollection Symbol = new SymbolCollection("C");
+        public static readonly Unit<double> Proxy = new Coulomb_Proxy();
+        public const double Factor = Ampere.Factor * Second.Factor;
         public static string Format { get { return s_format; } set { s_format = value; } }
-        public static SymbolCollection Symbol { get { return s_symbol; } }
-        public static Unit<double> Proxy { get { return s_proxy; } }
+        private static string s_format = "{0} {1}";
+        #endregion
 
-        public static Coulomb One { get { return s_one; } }
-        public static Coulomb Zero { get { return s_zero; } }
+        #region Predefined quantities
+        public static readonly Coulomb One = new Coulomb(1d);
+        public static readonly Coulomb Zero = new Coulomb(0d);
         #endregion
     }
 
     public partial class Coulomb_Proxy : Unit<double>
     {
         #region Properties
-        public override int Family { get { return Coulomb.Family; } }
         public override Dimension Sense { get { return Coulomb.Sense; } }
+        public override int Family { get { return Coulomb.Family; } }
+        public override double Factor { get { return Coulomb.Factor; } }
         public override SymbolCollection Symbol { get { return Coulomb.Symbol; } }
-        public override double Factor { get { return Coulomb.Factor; } set { Coulomb.Factor = value; } }
         public override string Format { get { return Coulomb.Format; } set { Coulomb.Format = value; } }
         #endregion
 

@@ -19,7 +19,7 @@ namespace Demo.UnitsOfMeasurement
         internal readonly double m_value;
         #endregion
 
-        #region Properties
+        #region Properties / IQuantity<double>
         public double Value { get { return m_value; } }
         Unit<double> IQuantity<double>.Unit { get { return Foot.Proxy; } }
         #endregion
@@ -42,7 +42,10 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Foot(Inch q) { return new Foot((Foot.Factor / Inch.Factor) * q.m_value); }
         public static Foot From(IQuantity<double> q)
         {
-            if (q.Unit.Family != Foot.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Foot\"", q.GetType().Name));
+            if (q.Unit.Family != Foot.Family)
+            {
+				throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Foot\"", q.GetType().Name));
+            }
             return new Foot((Foot.Factor / q.Unit.Factor) * q.Value);
         }
         #endregion
@@ -79,47 +82,40 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(Foot.Format, null); }
-        public string ToString(string format) { return ToString(format, null); }
-        public string ToString(IFormatProvider fp) { return ToString(Foot.Format, fp); }
-        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        public static string String(double q, string format = null, IFormatProvider fp = null)
         {
-            return string.Format(fp, format ?? Foot.Format, m_value, Foot.Symbol.Default);
+            return string.Format(fp, format ?? Foot.Format, q, Foot.Symbol.Default);
         }
+
+        public override string ToString() { return String(m_value); }
+        public string ToString(string format) { return String(m_value, format); }
+        public string ToString(IFormatProvider fp) { return String(m_value, null, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp) { return String(m_value, format, fp); }
         #endregion
 
-        #region Static fields
-        private static readonly Dimension s_sense = Inch.Sense;
-        private static readonly int s_family = Meter.Family;
-        private static /*mutable*/ double s_factor = Inch.Factor / 12d;
-        private static /*mutable*/ string s_format = "{0} {1}";
-        private static readonly SymbolCollection s_symbol = new SymbolCollection("ft");
-        private static readonly Unit<double> s_proxy = new Foot_Proxy();
-
-        private static readonly Foot s_one = new Foot(1d);
-        private static readonly Foot s_zero = new Foot(0d);
-        #endregion
-
-        #region Static Properties
-        public static Dimension Sense { get { return s_sense; } }
-        public static int Family { get { return s_family; } }
-        public static double Factor { get { return s_factor; } set { s_factor = value; } }
+        #region Static fields and properties (DO NOT CHANGE!)
+        public static readonly Dimension Sense = Inch.Sense;
+        public const int Family = Meter.Family;
+        public static readonly SymbolCollection Symbol = new SymbolCollection("ft");
+        public static readonly Unit<double> Proxy = new Foot_Proxy();
+        public const double Factor = Inch.Factor / 12d;
         public static string Format { get { return s_format; } set { s_format = value; } }
-        public static SymbolCollection Symbol { get { return s_symbol; } }
-        public static Unit<double> Proxy { get { return s_proxy; } }
+        private static string s_format = "{0} {1}";
+        #endregion
 
-        public static Foot One { get { return s_one; } }
-        public static Foot Zero { get { return s_zero; } }
+        #region Predefined quantities
+        public static readonly Foot One = new Foot(1d);
+        public static readonly Foot Zero = new Foot(0d);
         #endregion
     }
 
     public partial class Foot_Proxy : Unit<double>
     {
         #region Properties
-        public override int Family { get { return Foot.Family; } }
         public override Dimension Sense { get { return Foot.Sense; } }
+        public override int Family { get { return Foot.Family; } }
+        public override double Factor { get { return Foot.Factor; } }
         public override SymbolCollection Symbol { get { return Foot.Symbol; } }
-        public override double Factor { get { return Foot.Factor; } set { Foot.Factor = value; } }
         public override string Format { get { return Foot.Format; } set { Foot.Format = value; } }
         #endregion
 

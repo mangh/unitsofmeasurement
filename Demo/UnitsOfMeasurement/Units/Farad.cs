@@ -19,7 +19,7 @@ namespace Demo.UnitsOfMeasurement
         internal readonly double m_value;
         #endregion
 
-        #region Properties
+        #region Properties / IQuantity<double>
         public double Value { get { return m_value; } }
         Unit<double> IQuantity<double>.Unit { get { return Farad.Proxy; } }
         #endregion
@@ -35,7 +35,10 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Farad(double q) { return new Farad(q); }
         public static Farad From(IQuantity<double> q)
         {
-            if (q.Unit.Family != Farad.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Farad\"", q.GetType().Name));
+            if (q.Unit.Family != Farad.Family)
+            {
+				throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Farad\"", q.GetType().Name));
+            }
             return new Farad((Farad.Factor / q.Unit.Factor) * q.Value);
         }
         #endregion
@@ -75,47 +78,40 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(Farad.Format, null); }
-        public string ToString(string format) { return ToString(format, null); }
-        public string ToString(IFormatProvider fp) { return ToString(Farad.Format, fp); }
-        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        public static string String(double q, string format = null, IFormatProvider fp = null)
         {
-            return string.Format(fp, format ?? Farad.Format, m_value, Farad.Symbol.Default);
+            return string.Format(fp, format ?? Farad.Format, q, Farad.Symbol.Default);
         }
+
+        public override string ToString() { return String(m_value); }
+        public string ToString(string format) { return String(m_value, format); }
+        public string ToString(IFormatProvider fp) { return String(m_value, null, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp) { return String(m_value, format, fp); }
         #endregion
 
-        #region Static fields
-        private static readonly Dimension s_sense = Coulomb.Sense / Volt.Sense;
-        private static readonly int s_family = 26;
-        private static /*mutable*/ double s_factor = Coulomb.Factor / Volt.Factor;
-        private static /*mutable*/ string s_format = "{0} {1}";
-        private static readonly SymbolCollection s_symbol = new SymbolCollection("F");
-        private static readonly Unit<double> s_proxy = new Farad_Proxy();
-
-        private static readonly Farad s_one = new Farad(1d);
-        private static readonly Farad s_zero = new Farad(0d);
-        #endregion
-
-        #region Static Properties
-        public static Dimension Sense { get { return s_sense; } }
-        public static int Family { get { return s_family; } }
-        public static double Factor { get { return s_factor; } set { s_factor = value; } }
+        #region Static fields and properties (DO NOT CHANGE!)
+        public static readonly Dimension Sense = Coulomb.Sense / Volt.Sense;
+        public const int Family = 26;
+        public static readonly SymbolCollection Symbol = new SymbolCollection("F");
+        public static readonly Unit<double> Proxy = new Farad_Proxy();
+        public const double Factor = Coulomb.Factor / Volt.Factor;
         public static string Format { get { return s_format; } set { s_format = value; } }
-        public static SymbolCollection Symbol { get { return s_symbol; } }
-        public static Unit<double> Proxy { get { return s_proxy; } }
+        private static string s_format = "{0} {1}";
+        #endregion
 
-        public static Farad One { get { return s_one; } }
-        public static Farad Zero { get { return s_zero; } }
+        #region Predefined quantities
+        public static readonly Farad One = new Farad(1d);
+        public static readonly Farad Zero = new Farad(0d);
         #endregion
     }
 
     public partial class Farad_Proxy : Unit<double>
     {
         #region Properties
-        public override int Family { get { return Farad.Family; } }
         public override Dimension Sense { get { return Farad.Sense; } }
+        public override int Family { get { return Farad.Family; } }
+        public override double Factor { get { return Farad.Factor; } }
         public override SymbolCollection Symbol { get { return Farad.Symbol; } }
-        public override double Factor { get { return Farad.Factor; } set { Farad.Factor = value; } }
         public override string Format { get { return Farad.Format; } set { Farad.Format = value; } }
         #endregion
 

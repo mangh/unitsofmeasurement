@@ -19,7 +19,7 @@ namespace Demo.UnitsOfMeasurement
         internal readonly double m_value;
         #endregion
 
-        #region Properties
+        #region Properties / IQuantity<double>
         public double Value { get { return m_value; } }
         Unit<double> IQuantity<double>.Unit { get { return Volt.Proxy; } }
         #endregion
@@ -35,7 +35,10 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator Volt(double q) { return new Volt(q); }
         public static Volt From(IQuantity<double> q)
         {
-            if (q.Unit.Family != Volt.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Volt\"", q.GetType().Name));
+            if (q.Unit.Family != Volt.Family)
+            {
+				throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Volt\"", q.GetType().Name));
+            }
             return new Volt((Volt.Factor / q.Unit.Factor) * q.Value);
         }
         #endregion
@@ -79,47 +82,40 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(Volt.Format, null); }
-        public string ToString(string format) { return ToString(format, null); }
-        public string ToString(IFormatProvider fp) { return ToString(Volt.Format, fp); }
-        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        public static string String(double q, string format = null, IFormatProvider fp = null)
         {
-            return string.Format(fp, format ?? Volt.Format, m_value, Volt.Symbol.Default);
+            return string.Format(fp, format ?? Volt.Format, q, Volt.Symbol.Default);
         }
+
+        public override string ToString() { return String(m_value); }
+        public string ToString(string format) { return String(m_value, format); }
+        public string ToString(IFormatProvider fp) { return String(m_value, null, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp) { return String(m_value, format, fp); }
         #endregion
 
-        #region Static fields
-        private static readonly Dimension s_sense = Joule.Sense / Coulomb.Sense;
-        private static readonly int s_family = 23;
-        private static /*mutable*/ double s_factor = Joule.Factor / Coulomb.Factor;
-        private static /*mutable*/ string s_format = "{0} {1}";
-        private static readonly SymbolCollection s_symbol = new SymbolCollection("V");
-        private static readonly Unit<double> s_proxy = new Volt_Proxy();
-
-        private static readonly Volt s_one = new Volt(1d);
-        private static readonly Volt s_zero = new Volt(0d);
-        #endregion
-
-        #region Static Properties
-        public static Dimension Sense { get { return s_sense; } }
-        public static int Family { get { return s_family; } }
-        public static double Factor { get { return s_factor; } set { s_factor = value; } }
+        #region Static fields and properties (DO NOT CHANGE!)
+        public static readonly Dimension Sense = Joule.Sense / Coulomb.Sense;
+        public const int Family = 23;
+        public static readonly SymbolCollection Symbol = new SymbolCollection("V");
+        public static readonly Unit<double> Proxy = new Volt_Proxy();
+        public const double Factor = Joule.Factor / Coulomb.Factor;
         public static string Format { get { return s_format; } set { s_format = value; } }
-        public static SymbolCollection Symbol { get { return s_symbol; } }
-        public static Unit<double> Proxy { get { return s_proxy; } }
+        private static string s_format = "{0} {1}";
+        #endregion
 
-        public static Volt One { get { return s_one; } }
-        public static Volt Zero { get { return s_zero; } }
+        #region Predefined quantities
+        public static readonly Volt One = new Volt(1d);
+        public static readonly Volt Zero = new Volt(0d);
         #endregion
     }
 
     public partial class Volt_Proxy : Unit<double>
     {
         #region Properties
-        public override int Family { get { return Volt.Family; } }
         public override Dimension Sense { get { return Volt.Sense; } }
+        public override int Family { get { return Volt.Family; } }
+        public override double Factor { get { return Volt.Factor; } }
         public override SymbolCollection Symbol { get { return Volt.Symbol; } }
-        public override double Factor { get { return Volt.Factor; } set { Volt.Factor = value; } }
         public override string Format { get { return Volt.Format; } set { Volt.Format = value; } }
         #endregion
 

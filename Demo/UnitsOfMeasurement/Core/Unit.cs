@@ -58,7 +58,16 @@ namespace Demo.UnitsOfMeasurement
         where T : struct
     {
         #region Properties
-        public abstract T Factor { get; set; }
+        public string Alias { get; private set; }
+        // Basically, factors for all units - except monetary - are constant. 
+        // Therefore monetary units have to override both getter and setter accessors.
+        // All other, "normal" units have to override the getter only and leave the setter as-is
+        // i.e. raise exception on attempt to change the factor.
+        public virtual T Factor
+        {
+            get { throw new NotImplementedException(string.Format("{0}.Factor Proxy getter not implemented.", Alias)); }
+            set { throw new InvalidOperationException(string.Format("{0}.Factor is constant and cannot be re-set via its Proxy.", Alias)); }
+        }
         #endregion
 
         #region Constructor(s)
@@ -69,8 +78,9 @@ namespace Demo.UnitsOfMeasurement
         protected Unit(Type unit) :
             base(unit)
         {
-            if(!IsAssignableFrom(unit))
-                throw new ArgumentException(string.Format("\"{0}\" is not a unit type implementing {1} interface.", unit.Name, typeof(IQuantity<T>).Name));
+            Alias = unit.Name;
+            if (!IsAssignableFrom(unit))
+                throw new ArgumentException(string.Format("\"{0}\" is not a unit type implementing {1} interface.", Alias, typeof(IQuantity<T>).Name));
         }
         /// <summary>Verifies whether the type is a unit value type implementing IQuantity&lt;T&gt; interface.</summary>
         /// <param name="t">Type to be verified.</param>

@@ -19,7 +19,7 @@ namespace Demo.UnitsOfMeasurement
         internal readonly decimal m_value;
         #endregion
 
-        #region Properties
+        #region Properties / IQuantity<decimal>
         public decimal Value { get { return m_value; } }
         Unit<decimal> IQuantity<decimal>.Unit { get { return USD.Proxy; } }
         #endregion
@@ -38,7 +38,10 @@ namespace Demo.UnitsOfMeasurement
         public static explicit operator USD(GBP q) { return new USD((USD.Factor / GBP.Factor) * q.m_value); }
         public static USD From(IQuantity<decimal> q)
         {
-            if (q.Unit.Family != USD.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"USD\"", q.GetType().Name));
+            if (q.Unit.Family != USD.Family)
+            {
+				throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"USD\"", q.GetType().Name));
+            }
             return new USD((USD.Factor / q.Unit.Factor) * q.Value);
         }
         #endregion
@@ -74,47 +77,41 @@ namespace Demo.UnitsOfMeasurement
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(USD.Format, null); }
-        public string ToString(string format) { return ToString(format, null); }
-        public string ToString(IFormatProvider fp) { return ToString(USD.Format, fp); }
-        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        public static string String(decimal q, string format = null, IFormatProvider fp = null)
         {
-            return string.Format(fp, format ?? USD.Format, m_value, USD.Symbol.Default);
+            return string.Format(fp, format ?? USD.Format, q, USD.Symbol.Default);
         }
+
+        public override string ToString() { return String(m_value); }
+        public string ToString(string format) { return String(m_value, format); }
+        public string ToString(IFormatProvider fp) { return String(m_value, null, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp) { return String(m_value, format, fp); }
         #endregion
 
-        #region Static fields
-        private static readonly Dimension s_sense = EUR.Sense;
-        private static readonly int s_family = EUR.Family;
-        private static /*mutable*/ decimal s_factor = 1.3433m * EUR.Factor;
-        private static /*mutable*/ string s_format = "{0} {1}";
-        private static readonly SymbolCollection s_symbol = new SymbolCollection("USD");
-        private static readonly Unit<decimal> s_proxy = new USD_Proxy();
-
-        private static readonly USD s_one = new USD(decimal.One);
-        private static readonly USD s_zero = new USD(decimal.Zero);
-        #endregion
-
-        #region Static Properties
-        public static Dimension Sense { get { return s_sense; } }
-        public static int Family { get { return s_family; } }
+        #region Static fields and properties (DO NOT CHANGE!)
+        public static readonly Dimension Sense = EUR.Sense;
+        public const int Family = EUR.Family;
+        public static readonly SymbolCollection Symbol = new SymbolCollection("USD");
+        public static readonly Unit<decimal> Proxy = new USD_Proxy();
         public static decimal Factor { get { return s_factor; } set { s_factor = value; } }
+        private static decimal s_factor = 1.3433m * EUR.Factor;
         public static string Format { get { return s_format; } set { s_format = value; } }
-        public static SymbolCollection Symbol { get { return s_symbol; } }
-        public static Unit<decimal> Proxy { get { return s_proxy; } }
+        private static string s_format = "{0} {1}";
+        #endregion
 
-        public static USD One { get { return s_one; } }
-        public static USD Zero { get { return s_zero; } }
+        #region Predefined quantities
+        public static readonly USD One = new USD(decimal.One);
+        public static readonly USD Zero = new USD(decimal.Zero);
         #endregion
     }
 
     public partial class USD_Proxy : Unit<decimal>
     {
         #region Properties
-        public override int Family { get { return USD.Family; } }
         public override Dimension Sense { get { return USD.Sense; } }
-        public override SymbolCollection Symbol { get { return USD.Symbol; } }
+        public override int Family { get { return USD.Family; } }
         public override decimal Factor { get { return USD.Factor; } set { USD.Factor = value; } }
+        public override SymbolCollection Symbol { get { return USD.Symbol; } }
         public override string Format { get { return USD.Format; } set { USD.Format = value; } }
         #endregion
 
