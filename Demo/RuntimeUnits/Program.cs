@@ -164,76 +164,77 @@ namespace RuntimeUnits
     }
 }
 /* Sample output:
-Units of Measurement for C# applications. Copyright (c) Marek Anioła.
-This program is provided to you under the terms of the license
-as published at https://github.com/mangh/unitsofmeasurement.
-
-Before loading supplementary units:
-==================================
-
-converting "1 nmi" (runtime unit):
-1 nmi: invalid number or unit other than any the following: "m", "cm", "mm", "km", "in", "ft", "yd", "mil".
-
-converting "-80 deg.Re" (runtime scale):
--80 deg.Re: invalid number or unit other than any of the following: {"K", "deg.K"}, {"°C", "deg.C"}, {"°R", "deg.R"}, {"°F", "deg.F"}.
-
-converting "1 km" (compile-time unit):
- 1. [L] Meter {"m"}                       1 km -> 1000 m
- 2. [L] Centimeter {"cm"}                 1 km -> 100000 cm
- 3. [L] Millimeter {"mm"}                 1 km -> 1000000 mm
- 4. [L] Kilometer {"km"}                  1 km -> 1 km
- 5. [L] Inch {"in"}                       1 km -> 39370,0787401575 in
- 6. [L] Foot {"ft"}                       1 km -> 3280,83989501312 ft
- 7. [L] Yard {"yd"}                       1 km -> 1093,61329833771 yd
- 8. [L] Mile {"mil"}                      1 km -> 0,621371192237334 mil
-
-converting "100 deg.C" (compile-time scale):
- 1. [?] Kelvin {"K", "deg.K"}             100 deg.C -> 373,15 K
- 2. [?] Celsius {"°C", "deg.C"}           100 deg.C -> 100 °C
- 3. [?] Rankine {"°R", "deg.R"}           100 deg.C -> 671,67 °R
- 4. [?] Fahrenheit {"°F", "deg.F"}        100 deg.C -> 212 °F
-
-After loading supplementary units:
-=================================
-
-converting "1 nmi" (runtime unit):
- 1. [L] Meter {"m"}                       1 nmi -> 1852 m
- 2. [L] Centimeter {"cm"}                 1 nmi -> 185200 cm
- 3. [L] Millimeter {"mm"}                 1 nmi -> 1852000 mm
- 4. [L] Kilometer {"km"}                  1 nmi -> 1,852 km
- 5. [L] Inch {"in"}                       1 nmi -> 72913,3858267717 in
- 6. [L] Foot {"ft"}                       1 nmi -> 6076,1154855643 ft
- 7. [L] Yard {"yd"}                       1 nmi -> 2025,37182852143 yd
- 8. [L] Mile {"mil"}                      1 nmi -> 1,15077944802354 mil
- 9. [L] Fathom {"ftm"}                    1 nmi -> 1012,68591426072 ftm
-10. [L] Cable {"cb"}                      1 nmi -> 10 cb
-11. [L] NauticalMile {"nmi"}              1 nmi -> 1 nmi
-
-converting "-80 deg.Re" (runtime scale):
- 1. [?] Kelvin {"K", "deg.K"}             -80 deg.Re -> 173,15 K
- 2. [?] Celsius {"°C", "deg.C"}           -80 deg.Re -> -100 °C
- 3. [?] Rankine {"°R", "deg.R"}           -80 deg.Re -> 311,67 °R
- 4. [?] Fahrenheit {"°F", "deg.F"}        -80 deg.Re -> -148 °F
- 5. [?] Reaumur {"°Ré", "°Re", "deg.Re"}  -80 deg.Re -> -80 °Ré
-
-converting "1 km" (compile-time unit):
- 1. [L] Meter {"m"}                       1 km -> 1000 m
- 2. [L] Centimeter {"cm"}                 1 km -> 100000 cm
- 3. [L] Millimeter {"mm"}                 1 km -> 1000000 mm
- 4. [L] Kilometer {"km"}                  1 km -> 1 km
- 5. [L] Inch {"in"}                       1 km -> 39370,0787401575 in
- 6. [L] Foot {"ft"}                       1 km -> 3280,83989501312 ft
- 7. [L] Yard {"yd"}                       1 km -> 1093,61329833771 yd
- 8. [L] Mile {"mil"}                      1 km -> 0,621371192237334 mil
- 9. [L] Fathom {"ftm"}                    1 km -> 546,806649168854 ftm
-10. [L] Cable {"cb"}                      1 km -> 5,39956803455724 cb
-11. [L] NauticalMile {"nmi"}              1 km -> 0,539956803455724 nmi
-
-converting "100 deg.C" (compile-time scale):
- 1. [?] Kelvin {"K", "deg.K"}             100 deg.C -> 373,15 K
- 2. [?] Celsius {"°C", "deg.C"}           100 deg.C -> 100 °C
- 3. [?] Rankine {"°R", "deg.R"}           100 deg.C -> 671,67 °R
- 4. [?] Fahrenheit {"°F", "deg.F"}        100 deg.C -> 212 °F
- 5. [?] Reaumur {"°Ré", "°Re", "deg.Re"}  100 deg.C -> 80 °Ré
-
-*/
+ * 
+ * Units of Measurement for C# applications. Copyright (c) Marek Aniola.
+ * This program is provided to you under the terms of the license
+ * as published at https://github.com/mangh/unitsofmeasurement.
+ * 
+ * Before loading supplementary units:
+ * ==================================
+ * 
+ * converting "1 nmi" (runtime unit):
+ * 1 nmi: invalid number or unit other than any the following: "m", "cm", "mm", "km", "in", "ft", "yd", "mil".
+ * 
+ * converting "-80 deg.Re" (runtime scale):
+ * -80 deg.Re: invalid number or unit other than any of the following: {"K", "deg.K"}, {"°C", "deg.C"}, {"°R", "deg.R"}, {"°F", "deg.F"}.
+ * 
+ * converting "1 km" (compile-time unit):
+ *  1. [L] Meter {"m"}                       1 km -> 1000 m
+ *  2. [L] Centimeter {"cm"}                 1 km -> 100000 cm
+ *  3. [L] Millimeter {"mm"}                 1 km -> 1000000 mm
+ *  4. [L] Kilometer {"km"}                  1 km -> 1 km
+ *  5. [L] Inch {"in"}                       1 km -> 39370,0787401575 in
+ *  6. [L] Foot {"ft"}                       1 km -> 3280,83989501312 ft
+ *  7. [L] Yard {"yd"}                       1 km -> 1093,61329833771 yd
+ *  8. [L] Mile {"mil"}                      1 km -> 0,621371192237334 mil
+ * 
+ * converting "100 deg.C" (compile-time scale):
+ *  1. [?] Kelvin {"K", "deg.K"}             100 deg.C -> 373,15 K
+ *  2. [?] Celsius {"°C", "deg.C"}           100 deg.C -> 100 °C
+ *  3. [?] Rankine {"°R", "deg.R"}           100 deg.C -> 671,67 °R
+ *  4. [?] Fahrenheit {"°F", "deg.F"}        100 deg.C -> 212 °F
+ * 
+ * After loading supplementary units:
+ * =================================
+ * 
+ * converting "1 nmi" (runtime unit):
+ *  1. [L] Meter {"m"}                       1 nmi -> 1852 m
+ *  2. [L] Centimeter {"cm"}                 1 nmi -> 185200 cm
+ *  3. [L] Millimeter {"mm"}                 1 nmi -> 1852000 mm
+ *  4. [L] Kilometer {"km"}                  1 nmi -> 1,852 km
+ *  5. [L] Inch {"in"}                       1 nmi -> 72913,3858267717 in
+ *  6. [L] Foot {"ft"}                       1 nmi -> 6076,1154855643 ft
+ *  7. [L] Yard {"yd"}                       1 nmi -> 2025,37182852143 yd
+ *  8. [L] Mile {"mil"}                      1 nmi -> 1,15077944802354 mil
+ *  9. [L] Fathom {"ftm"}                    1 nmi -> 1012,68591426072 ftm
+ * 10. [L] Cable {"cb"}                      1 nmi -> 10 cb
+ * 11. [L] NauticalMile {"nmi"}              1 nmi -> 1 nmi
+ * 
+ * converting "-80 deg.Re" (runtime scale):
+ *  1. [?] Kelvin {"K", "deg.K"}             -80 deg.Re -> 173,15 K
+ *  2. [?] Celsius {"°C", "deg.C"}           -80 deg.Re -> -100 °C
+ *  3. [?] Rankine {"°R", "deg.R"}           -80 deg.Re -> 311,67 °R
+ *  4. [?] Fahrenheit {"°F", "deg.F"}        -80 deg.Re -> -148 °F
+ *  5. [?] Reaumur {"°Ré", "°Re", "deg.Re"}  -80 deg.Re -> -80 °Ré
+ * 
+ * converting "1 km" (compile-time unit):
+ *  1. [L] Meter {"m"}                       1 km -> 1000 m
+ *  2. [L] Centimeter {"cm"}                 1 km -> 100000 cm
+ *  3. [L] Millimeter {"mm"}                 1 km -> 1000000 mm
+ *  4. [L] Kilometer {"km"}                  1 km -> 1 km
+ *  5. [L] Inch {"in"}                       1 km -> 39370,0787401575 in
+ *  6. [L] Foot {"ft"}                       1 km -> 3280,83989501312 ft
+ *  7. [L] Yard {"yd"}                       1 km -> 1093,61329833771 yd
+ *  8. [L] Mile {"mil"}                      1 km -> 0,621371192237334 mil
+ *  9. [L] Fathom {"ftm"}                    1 km -> 546,806649168854 ftm
+ * 10. [L] Cable {"cb"}                      1 km -> 5,39956803455724 cb
+ * 11. [L] NauticalMile {"nmi"}              1 km -> 0,539956803455724 nmi
+ * 
+ * converting "100 deg.C" (compile-time scale):
+ *  1. [?] Kelvin {"K", "deg.K"}             100 deg.C -> 373,15 K
+ *  2. [?] Celsius {"°C", "deg.C"}           100 deg.C -> 100 °C
+ *  3. [?] Rankine {"°R", "deg.R"}           100 deg.C -> 671,67 °R
+ *  4. [?] Fahrenheit {"°F", "deg.F"}        100 deg.C -> 212 °F
+ *  5. [?] Reaumur {"°Ré", "°Re", "deg.Re"}  100 deg.C -> 80 °Ré
+ * 
+ */
