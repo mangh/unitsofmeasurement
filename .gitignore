@@ -338,3 +338,6 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+
+# UnitsOfMeasurement files not to be saved to Git repository
+VisualStudioExtension/ProjectTemplate/Properties/FileVersion.cs
