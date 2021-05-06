@@ -2,7 +2,7 @@ using System.Reflection;
 
 [assembly: AssemblyCompany("MAN")]
 [assembly: AssemblyProduct("Man.UnitsOfMeasurement")]
-[assembly: AssemblyCopyright("Copyright © Marek Anio³a")]
+[assembly: AssemblyCopyright("Copyright © Marek Aniola")]
 [assembly: AssemblyTrademark("MAN")]
 
 #if DEBUG
@@ -10,6 +10,6 @@ using System.Reflection;
 #else
 [assembly: AssemblyConfiguration("Release")]
 #endif
- 
-[assembly: AssemblyVersion("2.0.0.0")]
-[assembly: AssemblyInformationalVersion("2.0.0.0")]
+
+[assembly: AssemblyVersion("2.1.0.0")]
+[assembly: AssemblyInformationalVersion("2.1.0.0")]
