@@ -1,4 +1,4 @@
-﻿Units and Scales generated on 2017-03-12 11:27:57
+﻿Units and Scales generated on 21.01.2021 15:59:14
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -47,7 +47,7 @@
 
     (Radian)Degree
 
-[1] Degree {"\u00B0", "deg"} : (180d / Math.PI) * Radian.Factor (Radian)
+[1] Degree {"\u00B0", "deg"} : (180d / System.Math.PI) * Radian.Factor (Radian)
 
     (Degree)Radian
 
@@ -105,4 +105,5 @@
     (Fahrenheit)Kelvin
 
 // End of report ///////////////////////////////////////////////////////////////
+
 

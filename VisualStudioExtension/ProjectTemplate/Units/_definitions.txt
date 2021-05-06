@@ -138,17 +138,17 @@ unit<decimal> PLN "PLN" = 4.1437 * EUR;	// Polish Zloty
 //      NOTE: explicit format "{0}{1}" used in places
 //      to remove space separating {value} and {symbol}
 //
-//      NOTE: arithmetic expressions can use string literals e.g. "Math.PI".
+//      NOTE: arithmetic expressions can use string literals e.g. "System.Math.PI".
 //      Parser blindly accepts the literals as numerical (unknown) values
 //      leaving their evaluation and syntax check to C# compiler.
 //
 unit Radian "rad" = <>;
-unit Degree "\u00B0" "deg" : "{0}{1}" = (180 / "Math.PI") * Radian;
+unit Degree "\u00B0" "deg" : "{0}{1}" = (180 / "System.Math.PI") * Radian;
 // unit ArcMinute "'" : "{0}{1}" = 60 * Degree;
 // unit ArcSecond "\"" : "{0}{1}" = 60 * ArcMinute;
-// unit Grad "grad" = (200 / "Math.PI") * Radian;
+// unit Grad "grad" = (200 / "System.Math.PI") * Radian;
 
-// unit Cycles "c" = Radian / (2 * "Math.PI");
+// unit Cycles "c" = Radian / (2 * "System.Math.PI");
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -156,19 +156,19 @@ unit Degree "\u00B0" "deg" : "{0}{1}" = (180 / "Math.PI") * Radian;
 //
 
 // unit Steradian "sr" = <>;
-// unit SquareDegree "deg\u00B2" "deg2" = ((180 / "Math.PI") * (180 / "Math.PI")) * Steradian;
+// unit SquareDegree "deg\u00B2" "deg2" = ((180 / "System.Math.PI") * (180 / "System.Math.PI")) * Steradian;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
 //      Frequency
 //
-//      NOTE: due to the use of literal ("Math.PI") in Radian_Sec
+//      NOTE: due to the use of literal ("System.Math.PI") in Radian_Sec
 //      definition below, parser cannot check whether the specified
 //      formulas are consistent i.e. whether the formulas:
 //
 //              Radian / Second
 //      and
-//              (2 * "Math.PI") * Hertz
+//              (2 * "System.Math.PI") * Hertz
 //
 //      produce the same conversion factor and dimension. The same concerns
 //      any other multi-formula definitions with literals (Degree_Sec, RPM etc).
@@ -179,9 +179,9 @@ unit Degree "\u00B0" "deg" : "{0}{1}" = (180 / "Math.PI") * Radian;
 // unit MegaHertz "MHz" = KiloHertz / 1000;
 // unit GigaHertz "GHz" = MegaHertz / 1000;
 
-// unit Radian_Sec "rad/s" = Radian / Second | (2 * "Math.PI") * Hertz;
-// unit Degree_Sec "\u00B0/s" "degree/s" = Degree / Second | (180 / "Math.PI") * Radian_Sec;
-// unit RPM "rpm" = Cycles / Minute | (30 / "Math.PI") * Radian_Sec;
+// unit Radian_Sec "rad/s" = Radian / Second | (2 * "System.Math.PI") * Hertz;
+// unit Degree_Sec "\u00B0/s" "degree/s" = Degree / Second | (180 / "System.Math.PI") * Radian_Sec;
+// unit RPM "rpm" = Cycles / Minute | (30 / "System.Math.PI") * Radian_Sec;
 
 ////////////////////////////////////////////////////////////////////////////////
 //

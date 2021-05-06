@@ -19,7 +19,7 @@ namespace $safeprojectname$
         internal readonly decimal m_value;
         #endregion
 
-        #region Properties
+        #region Properties / IQuantity<decimal>
         public decimal Value { get { return m_value; } }
         Unit<decimal> IQuantity<decimal>.Unit { get { return PLN.Proxy; } }
         #endregion
@@ -36,7 +36,10 @@ namespace $safeprojectname$
         public static explicit operator PLN(EUR q) { return new PLN((PLN.Factor / EUR.Factor) * q.m_value); }
         public static PLN From(IQuantity<decimal> q)
         {
-            if (q.Unit.Family != PLN.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"PLN\"", q.GetType().Name));
+            if (q.Unit.Family != PLN.Family)
+            {
+				throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"PLN\"", q.GetType().Name));
+            }
             return new PLN((PLN.Factor / q.Unit.Factor) * q.Value);
         }
         #endregion
@@ -72,47 +75,41 @@ namespace $safeprojectname$
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(PLN.Format, null); }
-        public string ToString(string format) { return ToString(format, null); }
-        public string ToString(IFormatProvider fp) { return ToString(PLN.Format, fp); }
-        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        public static string String(decimal q, string format = null, IFormatProvider fp = null)
         {
-            return string.Format(fp, format ?? PLN.Format, m_value, PLN.Symbol.Default);
+            return string.Format(fp, format ?? PLN.Format, q, PLN.Symbol.Default);
         }
+
+        public override string ToString() { return String(m_value); }
+        public string ToString(string format) { return String(m_value, format); }
+        public string ToString(IFormatProvider fp) { return String(m_value, null, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp) { return String(m_value, format, fp); }
         #endregion
 
-        #region Static fields
-        private static readonly Dimension s_sense = EUR.Sense;
-        private static readonly int s_family = EUR.Family;
-        private static /*mutable*/ decimal s_factor = 4.1437m * EUR.Factor;
-        private static /*mutable*/ string s_format = "{0} {1}";
-        private static readonly SymbolCollection s_symbol = new SymbolCollection("PLN");
-        private static readonly Unit<decimal> s_proxy = new PLN_Proxy();
-
-        private static readonly PLN s_one = new PLN(decimal.One);
-        private static readonly PLN s_zero = new PLN(decimal.Zero);
-        #endregion
-
-        #region Static Properties
-        public static Dimension Sense { get { return s_sense; } }
-        public static int Family { get { return s_family; } }
+        #region Static fields and properties (DO NOT CHANGE!)
+        public static readonly Dimension Sense = EUR.Sense;
+        public const int Family = EUR.Family;
+        public static readonly SymbolCollection Symbol = new SymbolCollection("PLN");
+        public static readonly Unit<decimal> Proxy = new PLN_Proxy();
         public static decimal Factor { get { return s_factor; } set { s_factor = value; } }
+        private static decimal s_factor = 4.1437m * EUR.Factor;
         public static string Format { get { return s_format; } set { s_format = value; } }
-        public static SymbolCollection Symbol { get { return s_symbol; } }
-        public static Unit<decimal> Proxy { get { return s_proxy; } }
+        private static string s_format = "{0} {1}";
+        #endregion
 
-        public static PLN One { get { return s_one; } }
-        public static PLN Zero { get { return s_zero; } }
+        #region Predefined quantities
+        public static readonly PLN One = new PLN(decimal.One);
+        public static readonly PLN Zero = new PLN(decimal.Zero);
         #endregion
     }
 
     public partial class PLN_Proxy : Unit<decimal>
     {
         #region Properties
-        public override int Family { get { return PLN.Family; } }
         public override Dimension Sense { get { return PLN.Sense; } }
-        public override SymbolCollection Symbol { get { return PLN.Symbol; } }
+        public override int Family { get { return PLN.Family; } }
         public override decimal Factor { get { return PLN.Factor; } set { PLN.Factor = value; } }
+        public override SymbolCollection Symbol { get { return PLN.Symbol; } }
         public override string Format { get { return PLN.Format; } set { PLN.Format = value; } }
         #endregion
 

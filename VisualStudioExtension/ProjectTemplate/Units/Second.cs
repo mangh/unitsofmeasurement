@@ -19,7 +19,7 @@ namespace $safeprojectname$
         internal readonly double m_value;
         #endregion
 
-        #region Properties
+        #region Properties / IQuantity<double>
         public double Value { get { return m_value; } }
         Unit<double> IQuantity<double>.Unit { get { return Second.Proxy; } }
         #endregion
@@ -35,7 +35,10 @@ namespace $safeprojectname$
         public static explicit operator Second(double q) { return new Second(q); }
         public static Second From(IQuantity<double> q)
         {
-            if (q.Unit.Family != Second.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Second\"", q.GetType().Name));
+            if (q.Unit.Family != Second.Family)
+            {
+				throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Second\"", q.GetType().Name));
+            }
             return new Second((Second.Factor / q.Unit.Factor) * q.Value);
         }
         #endregion
@@ -71,47 +74,40 @@ namespace $safeprojectname$
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(Second.Format, null); }
-        public string ToString(string format) { return ToString(format, null); }
-        public string ToString(IFormatProvider fp) { return ToString(Second.Format, fp); }
-        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        public static string String(double q, string format = null, IFormatProvider fp = null)
         {
-            return string.Format(fp, format ?? Second.Format, m_value, Second.Symbol.Default);
+            return string.Format(fp, format ?? Second.Format, q, Second.Symbol.Default);
         }
+
+        public override string ToString() { return String(m_value); }
+        public string ToString(string format) { return String(m_value, format); }
+        public string ToString(IFormatProvider fp) { return String(m_value, null, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp) { return String(m_value, format, fp); }
         #endregion
 
-        #region Static fields
-        private static readonly Dimension s_sense = Dimension.Time;
-        private static readonly int s_family = 1;
-        private static /*mutable*/ double s_factor = 1d;
-        private static /*mutable*/ string s_format = "{0} {1}";
-        private static readonly SymbolCollection s_symbol = new SymbolCollection("s");
-        private static readonly Unit<double> s_proxy = new Second_Proxy();
-
-        private static readonly Second s_one = new Second(1d);
-        private static readonly Second s_zero = new Second(0d);
-        #endregion
-
-        #region Static Properties
-        public static Dimension Sense { get { return s_sense; } }
-        public static int Family { get { return s_family; } }
-        public static double Factor { get { return s_factor; } set { s_factor = value; } }
+        #region Static fields and properties (DO NOT CHANGE!)
+        public static readonly Dimension Sense = Dimension.Time;
+        public const int Family = 1;
+        public static readonly SymbolCollection Symbol = new SymbolCollection("s");
+        public static readonly Unit<double> Proxy = new Second_Proxy();
+        public const double Factor = 1d;
         public static string Format { get { return s_format; } set { s_format = value; } }
-        public static SymbolCollection Symbol { get { return s_symbol; } }
-        public static Unit<double> Proxy { get { return s_proxy; } }
+        private static string s_format = "{0} {1}";
+        #endregion
 
-        public static Second One { get { return s_one; } }
-        public static Second Zero { get { return s_zero; } }
+        #region Predefined quantities
+        public static readonly Second One = new Second(1d);
+        public static readonly Second Zero = new Second(0d);
         #endregion
     }
 
     public partial class Second_Proxy : Unit<double>
     {
         #region Properties
-        public override int Family { get { return Second.Family; } }
         public override Dimension Sense { get { return Second.Sense; } }
+        public override int Family { get { return Second.Family; } }
+        public override double Factor { get { return Second.Factor; } }
         public override SymbolCollection Symbol { get { return Second.Symbol; } }
-        public override double Factor { get { return Second.Factor; } set { Second.Factor = value; } }
         public override string Format { get { return Second.Format; } set { Second.Format = value; } }
         #endregion
 

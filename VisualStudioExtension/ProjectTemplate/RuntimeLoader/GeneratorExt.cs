@@ -18,27 +18,29 @@ namespace $safeprojectname$
     public partial class Generator
     {
         #region Fields
+        private bool __late;    // late measures cannot access m_value/m_level fields of compile-time units
         private int __family;
-        private List<UnitType> __units;
         private int __unitstartindex;
-        private List<ScaleType> __scales;
         private int __scalestartindex;
+        private List<UnitType> __units;
+        private List<ScaleType> __scales;
         private string __projectNamespace;
         #endregion
 
         #region Constructor(s)
-        public Generator(int familystart, List<UnitType> units, int unitstartindex, List<ScaleType> scales, int scalestartindex)
+        public Generator(RuntimeLoader.ICatalog catalog, int unitStartIndex, int scaleStartIndex, int familyStartId)
         {
-            __family = familystart;
-            __units = units;
-            __unitstartindex = unitstartindex;
-            __scales = scales;
-            __scalestartindex = scalestartindex;
+            __late = true;
+            __family = familyStartId;
+            __units = catalog.Units;
+            __unitstartindex = unitStartIndex;
+            __scales = catalog.Scales;
+            __scalestartindex = scaleStartIndex;
             __projectNamespace = this.GetType().Namespace;
         }
         public Generator()
         {
-            throw new NotImplementedException(String.Format("{0}: parameterless constructor is inappropriate for generating run-time units", "UnitsOfMeasurement1.Generator"));
+            throw new NotImplementedException(String.Format("{0}(): parameterless constructor is inappropriate for generating run-time units.", this.GetType().FullName));
         }
         #endregion
     }

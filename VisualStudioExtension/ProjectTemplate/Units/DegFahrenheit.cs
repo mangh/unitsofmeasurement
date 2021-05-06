@@ -19,7 +19,7 @@ namespace $safeprojectname$
         internal readonly double m_value;
         #endregion
 
-        #region Properties
+        #region Properties / IQuantity<double>
         public double Value { get { return m_value; } }
         Unit<double> IQuantity<double>.Unit { get { return DegFahrenheit.Proxy; } }
         #endregion
@@ -37,7 +37,10 @@ namespace $safeprojectname$
         public static explicit operator DegFahrenheit(DegKelvin q) { return new DegFahrenheit((DegFahrenheit.Factor / DegKelvin.Factor) * q.m_value); }
         public static DegFahrenheit From(IQuantity<double> q)
         {
-            if (q.Unit.Family != DegFahrenheit.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"DegFahrenheit\"", q.GetType().Name));
+            if (q.Unit.Family != DegFahrenheit.Family)
+            {
+				throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"DegFahrenheit\"", q.GetType().Name));
+            }
             return new DegFahrenheit((DegFahrenheit.Factor / q.Unit.Factor) * q.Value);
         }
         #endregion
@@ -73,47 +76,40 @@ namespace $safeprojectname$
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(DegFahrenheit.Format, null); }
-        public string ToString(string format) { return ToString(format, null); }
-        public string ToString(IFormatProvider fp) { return ToString(DegFahrenheit.Format, fp); }
-        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        public static string String(double q, string format = null, IFormatProvider fp = null)
         {
-            return string.Format(fp, format ?? DegFahrenheit.Format, m_value, DegFahrenheit.Symbol.Default);
+            return string.Format(fp, format ?? DegFahrenheit.Format, q, DegFahrenheit.Symbol.Default);
         }
+
+        public override string ToString() { return String(m_value); }
+        public string ToString(string format) { return String(m_value, format); }
+        public string ToString(IFormatProvider fp) { return String(m_value, null, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp) { return String(m_value, format, fp); }
         #endregion
 
-        #region Static fields
-        private static readonly Dimension s_sense = DegKelvin.Sense;
-        private static readonly int s_family = DegKelvin.Family;
-        private static /*mutable*/ double s_factor = (9d / 5d) * DegKelvin.Factor;
-        private static /*mutable*/ string s_format = "{0} {1}";
-        private static readonly SymbolCollection s_symbol = new SymbolCollection("\u00B0F", "deg.F");
-        private static readonly Unit<double> s_proxy = new DegFahrenheit_Proxy();
-
-        private static readonly DegFahrenheit s_one = new DegFahrenheit(1d);
-        private static readonly DegFahrenheit s_zero = new DegFahrenheit(0d);
-        #endregion
-
-        #region Static Properties
-        public static Dimension Sense { get { return s_sense; } }
-        public static int Family { get { return s_family; } }
-        public static double Factor { get { return s_factor; } set { s_factor = value; } }
+        #region Static fields and properties (DO NOT CHANGE!)
+        public static readonly Dimension Sense = DegKelvin.Sense;
+        public const int Family = DegKelvin.Family;
+        public static readonly SymbolCollection Symbol = new SymbolCollection("\u00B0F", "deg.F");
+        public static readonly Unit<double> Proxy = new DegFahrenheit_Proxy();
+        public const double Factor = (9d / 5d) * DegKelvin.Factor;
         public static string Format { get { return s_format; } set { s_format = value; } }
-        public static SymbolCollection Symbol { get { return s_symbol; } }
-        public static Unit<double> Proxy { get { return s_proxy; } }
+        private static string s_format = "{0} {1}";
+        #endregion
 
-        public static DegFahrenheit One { get { return s_one; } }
-        public static DegFahrenheit Zero { get { return s_zero; } }
+        #region Predefined quantities
+        public static readonly DegFahrenheit One = new DegFahrenheit(1d);
+        public static readonly DegFahrenheit Zero = new DegFahrenheit(0d);
         #endregion
     }
 
     public partial class DegFahrenheit_Proxy : Unit<double>
     {
         #region Properties
-        public override int Family { get { return DegFahrenheit.Family; } }
         public override Dimension Sense { get { return DegFahrenheit.Sense; } }
+        public override int Family { get { return DegFahrenheit.Family; } }
+        public override double Factor { get { return DegFahrenheit.Factor; } }
         public override SymbolCollection Symbol { get { return DegFahrenheit.Symbol; } }
-        public override double Factor { get { return DegFahrenheit.Factor; } set { DegFahrenheit.Factor = value; } }
         public override string Format { get { return DegFahrenheit.Format; } set { DegFahrenheit.Format = value; } }
         #endregion
 

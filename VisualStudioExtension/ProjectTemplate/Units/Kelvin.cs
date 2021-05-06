@@ -20,7 +20,7 @@ namespace $safeprojectname$
         internal readonly DegKelvin m_level;
         #endregion
 
-        #region Properties
+        #region Properties / ILevel<double>
         public DegKelvin Level { get { return m_level; } }
         public DegKelvin NormalizedLevel { get { return (m_level - Kelvin.Offset); } }
 
@@ -48,13 +48,19 @@ namespace $safeprojectname$
         public static explicit operator Kelvin(Celsius q) { return new Kelvin((DegKelvin)(q.NormalizedLevel) + Kelvin.Offset); }
         public static Kelvin From(ILevel<double> q)
         {
-            if (q.Scale.Family != Kelvin.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Kelvin\".", q.GetType().Name));
+            if (q.Scale.Family != Kelvin.Family)
+            {
+				throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Kelvin\".", q.GetType().Name));
+            }
             return new Kelvin(DegKelvin.From(q.NormalizedLevel) + Kelvin.Offset);
         }
         public static Kelvin From(IQuantity<double> q)
         {
             Scale<double> scale = Catalog.Scale(Kelvin.Family, q.Unit);
-            if(scale == null) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Kelvin\".", q.GetType().Name));
+            if (scale == null)
+            {
+				throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Kelvin\".", q.GetType().Name));
+            }
             return Kelvin.From(scale.Create(q.Value));
         }
         #endregion
@@ -86,33 +92,30 @@ namespace $safeprojectname$
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(Kelvin.Format, null); }
-        public string ToString(string format) { return ToString(format, null); }
-        public string ToString(IFormatProvider fp) { return ToString(Kelvin.Format, fp); }
-        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        public static string String(double level, string format = null, IFormatProvider fp = null)
         {
-            return m_level.ToString(format ?? Kelvin.Format, fp);
+            return DegKelvin.String(level, format ?? Kelvin.Format, fp);
         }
+
+        public override string ToString() { return String(m_level.m_value); }
+        public string ToString(string format) { return String(m_level.m_value, format); }
+        public string ToString(IFormatProvider fp) { return String(m_level.m_value, null, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp) { return String(m_level.m_value, format, fp); }
         #endregion
 
-        #region Static fields
-        private static readonly DegKelvin s_offset /* from AbsoluteZero reference level */ = new DegKelvin(0d);
-        private static readonly int s_family = 11;
-        private static /*mutable*/ string s_format = "{0} {1}";
-        private static readonly Scale<double> s_proxy = new Kelvin_Proxy();
-
-        private static readonly Kelvin s_zero = new Kelvin(0d);
-        #endregion
-        
-        #region Static properties
-        public static DegKelvin Offset { get { return s_offset; } }
-        public static int Family { get { return s_family; } }
+        #region Static fields and properties (DO NOT CHANGE!)
+        public static readonly int Family = 11;
+        public static readonly DegKelvin Offset /* from AbsoluteZero */ = new DegKelvin(0d);
+        public static readonly Scale<double> Proxy = new Kelvin_Proxy();
+        private static string s_format = "{0} {1}";
         public static string Format { get { return s_format; } set { s_format = value; } }
-        public static Scale<double> Proxy { get { return s_proxy; } }
+        #endregion
 
-        public static Kelvin Zero { get { return s_zero; } }
+        #region Predefined levels
+        public static readonly Kelvin Zero = new Kelvin(0d);
         #endregion
     }
+
     public partial class Kelvin_Proxy : Scale<double>
     {
         #region Properties

@@ -19,7 +19,7 @@ namespace $safeprojectname$
         internal readonly decimal m_value;
         #endregion
 
-        #region Properties
+        #region Properties / IQuantity<decimal>
         public decimal Value { get { return m_value; } }
         Unit<decimal> IQuantity<decimal>.Unit { get { return EUR.Proxy; } }
         #endregion
@@ -36,7 +36,10 @@ namespace $safeprojectname$
         public static explicit operator EUR(PLN q) { return new EUR((EUR.Factor / PLN.Factor) * q.m_value); }
         public static EUR From(IQuantity<decimal> q)
         {
-            if (q.Unit.Family != EUR.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"EUR\"", q.GetType().Name));
+            if (q.Unit.Family != EUR.Family)
+            {
+				throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"EUR\"", q.GetType().Name));
+            }
             return new EUR((EUR.Factor / q.Unit.Factor) * q.Value);
         }
         #endregion
@@ -72,47 +75,41 @@ namespace $safeprojectname$
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(EUR.Format, null); }
-        public string ToString(string format) { return ToString(format, null); }
-        public string ToString(IFormatProvider fp) { return ToString(EUR.Format, fp); }
-        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        public static string String(decimal q, string format = null, IFormatProvider fp = null)
         {
-            return string.Format(fp, format ?? EUR.Format, m_value, EUR.Symbol.Default);
+            return string.Format(fp, format ?? EUR.Format, q, EUR.Symbol.Default);
         }
+
+        public override string ToString() { return String(m_value); }
+        public string ToString(string format) { return String(m_value, format); }
+        public string ToString(IFormatProvider fp) { return String(m_value, null, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp) { return String(m_value, format, fp); }
         #endregion
 
-        #region Static fields
-        private static readonly Dimension s_sense = Dimension.Other;
-        private static readonly int s_family = 4;
-        private static /*mutable*/ decimal s_factor = decimal.One;
-        private static /*mutable*/ string s_format = "{0} {1}";
-        private static readonly SymbolCollection s_symbol = new SymbolCollection("EUR");
-        private static readonly Unit<decimal> s_proxy = new EUR_Proxy();
-
-        private static readonly EUR s_one = new EUR(decimal.One);
-        private static readonly EUR s_zero = new EUR(decimal.Zero);
-        #endregion
-
-        #region Static Properties
-        public static Dimension Sense { get { return s_sense; } }
-        public static int Family { get { return s_family; } }
+        #region Static fields and properties (DO NOT CHANGE!)
+        public static readonly Dimension Sense = Dimension.Other;
+        public const int Family = 4;
+        public static readonly SymbolCollection Symbol = new SymbolCollection("EUR");
+        public static readonly Unit<decimal> Proxy = new EUR_Proxy();
         public static decimal Factor { get { return s_factor; } set { s_factor = value; } }
+        private static decimal s_factor = decimal.One;
         public static string Format { get { return s_format; } set { s_format = value; } }
-        public static SymbolCollection Symbol { get { return s_symbol; } }
-        public static Unit<decimal> Proxy { get { return s_proxy; } }
+        private static string s_format = "{0} {1}";
+        #endregion
 
-        public static EUR One { get { return s_one; } }
-        public static EUR Zero { get { return s_zero; } }
+        #region Predefined quantities
+        public static readonly EUR One = new EUR(decimal.One);
+        public static readonly EUR Zero = new EUR(decimal.Zero);
         #endregion
     }
 
     public partial class EUR_Proxy : Unit<decimal>
     {
         #region Properties
-        public override int Family { get { return EUR.Family; } }
         public override Dimension Sense { get { return EUR.Sense; } }
-        public override SymbolCollection Symbol { get { return EUR.Symbol; } }
+        public override int Family { get { return EUR.Family; } }
         public override decimal Factor { get { return EUR.Factor; } set { EUR.Factor = value; } }
+        public override SymbolCollection Symbol { get { return EUR.Symbol; } }
         public override string Format { get { return EUR.Format; } set { EUR.Format = value; } }
         #endregion
 

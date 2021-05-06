@@ -1,0 +1,191 @@
+﻿<#+
+    void MakeUnit(UnitType u)
+    {
+        string Unit = u.Name;
+        string UnitProxy = Unit + "_Proxy";
+        string Sense = u.Sense.Code;
+        string Family = (u.Prime == null) ? (__family++).ToString() : string.Format("{0}.Family", u.Prime.Name);
+        string Format = u.Format;
+        string Tags = string.Format("\"{0}\"", string.Join("\", \"", u.Tags));
+
+        string ValueType = u.Factor.Value.Type.Name;
+
+        // Compile-time units can access (internally) m_value fields of other compile-time units.
+        // Late units cannot access these fields; they can access them via Value property only.
+        string Value = __late ? "Value" : "m_value";
+        
+        string Factor = u.Factor.Code;
+        string One = u.Factor.Value.Type.One.CSString();
+        string Zero = u.Factor.Value.Type.Zero.CSString();
+
+        bool isMonetary = (u.Sense.Value[Man.UnitsOfMeasurement.Magnitude.Money] != 0);
+#>
+    public partial struct <#= Unit #> : IQuantity<<#= ValueType #>>, IEquatable<<#= Unit #>>, IComparable<<#= Unit #>>, IFormattable
+    {
+        #region Fields
+        internal readonly <#= ValueType #> m_value;
+        #endregion
+
+        #region Properties / IQuantity<<#= ValueType #>>
+        public <#= ValueType #> Value { get { return m_value; } }
+        Unit<<#= ValueType #>> IQuantity<<#= ValueType #>>.Unit { get { return <#= Unit #>.Proxy; } }
+        #endregion
+
+        #region Constructor(s)
+        public <#= Unit #>(<#= ValueType #> value)
+        {
+            m_value = value;
+        }
+        #endregion
+
+        #region Conversions
+        public static explicit operator <#= Unit #>(<#= ValueType #> q) { return new <#= Unit #>(q); }
+<#+
+        foreach (MeasureType s in u.Relatives())
+        {
+            string Relative = ((UnitType)s).Name;
+#>
+        public static explicit operator <#= Unit #>(<#= Relative #> q) { return new <#= Unit #>((<#= Unit #>.Factor / <#= Relative #>.Factor) * q.<#= Value #>); }
+<#+
+        }
+#>
+        public static <#= Unit #> From(IQuantity<<#= ValueType #>> q)
+        {
+            if (q.Unit.Family != <#= Unit #>.Family)
+            {
+				throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"<#= Unit #>\"", q.GetType().Name));
+            }
+            return new <#= Unit #>((<#= Unit #>.Factor / q.Unit.Factor) * q.Value);
+        }
+        #endregion
+
+        #region IObject / IEquatable<<#= Unit #>>
+        public override int GetHashCode() { return m_value.GetHashCode(); }
+        public override bool /* IObject */ Equals(object obj) { return (obj is <#= Unit #>) && Equals((<#= Unit #>)obj); }
+        public bool /* IEquatable<<#= Unit #>> */ Equals(<#= Unit #> other) { return this.m_value == other.<#= Value #>; }
+        #endregion
+
+        #region Comparison / IComparable<<#= Unit #>>
+        public static bool operator ==(<#= Unit #> lhs, <#= Unit #> rhs) { return lhs.<#= Value #> == rhs.<#= Value #>; }
+        public static bool operator !=(<#= Unit #> lhs, <#= Unit #> rhs) { return lhs.<#= Value #> != rhs.<#= Value #>; }
+        public static bool operator <(<#= Unit #> lhs, <#= Unit #> rhs) { return lhs.<#= Value #> < rhs.<#= Value #>; }
+        public static bool operator >(<#= Unit #> lhs, <#= Unit #> rhs) { return lhs.<#= Value #> > rhs.<#= Value #>; }
+        public static bool operator <=(<#= Unit #> lhs, <#= Unit #> rhs) { return lhs.<#= Value #> <= rhs.<#= Value #>; }
+        public static bool operator >=(<#= Unit #> lhs, <#= Unit #> rhs) { return lhs.<#= Value #> >= rhs.<#= Value #>; }
+        public int /* IComparable<<#= Unit #>> */ CompareTo(<#= Unit #> other) { return this.m_value.CompareTo(other.<#= Value #>); }
+        #endregion
+
+        #region Arithmetic
+        // Inner:
+        public static <#= Unit #> operator +(<#= Unit #> lhs, <#= Unit #> rhs) { return new <#= Unit #>(lhs.<#= Value #> + rhs.<#= Value #>); }
+        public static <#= Unit #> operator -(<#= Unit #> lhs, <#= Unit #> rhs) { return new <#= Unit #>(lhs.<#= Value #> - rhs.<#= Value #>); }
+        public static <#= Unit #> operator ++(<#= Unit #> q) { return new <#= Unit #>(q.<#= Value #> + <#= One #>); }
+        public static <#= Unit #> operator --(<#= Unit #> q) { return new <#= Unit #>(q.<#= Value #> - <#= One #>); }
+        public static <#= Unit #> operator -(<#= Unit #> q) { return new <#= Unit #>(-q.<#= Value #>); }
+        public static <#= Unit #> operator *(<#= ValueType #> lhs, <#= Unit #> rhs) { return new <#= Unit #>(lhs * rhs.<#= Value #>); }
+        public static <#= Unit #> operator *(<#= Unit #> lhs, <#= ValueType #> rhs) { return new <#= Unit #>(lhs.<#= Value #> * rhs); }
+        public static <#= Unit #> operator /(<#= Unit #> lhs, <#= ValueType #> rhs) { return new <#= Unit #>(lhs.<#= Value #> / rhs); }
+        public static <#= ValueType #> operator /(<#= Unit #> lhs, <#= Unit #> rhs) { return lhs.<#= Value #> / rhs.<#= Value #>; }
+        // Outer:
+<#+
+        foreach (BinaryOperation o in u.OuterOperations)
+        {
+            string lhsValue = (o.Lhs.IsPredefined) ? "lhs" : "lhs." + Value;
+            string rhsValue = (o.Rhs.IsPredefined) ? "rhs" : "rhs." + Value;
+            string action = (o.Operation == "^") ? "*" : o.Operation;
+            string retValue = (o.Result.IsPredefined) ? 
+                string.Format("{0} {1} {2}", lhsValue, action, rhsValue) :
+                string.Format("new {0}({1} {2} {3})", o.Result.Name, lhsValue, action, rhsValue);
+#>
+        public static <#= o.Result.Name #> operator <#= o.Operation #>(<#= o.Lhs.Name #> lhs, <#= o.Rhs.Name #> rhs) { return <#= retValue #>; }
+<#+
+        }
+#>
+        #endregion
+
+        #region Formatting
+        public static string String(<#= ValueType #> q, string format = null, IFormatProvider fp = null)
+        {
+            return string.Format(fp, format ?? <#= Unit #>.Format, q, <#= Unit #>.Symbol.Default);
+        }
+
+        public override string ToString() { return String(m_value); }
+        public string ToString(string format) { return String(m_value, format); }
+        public string ToString(IFormatProvider fp) { return String(m_value, null, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp) { return String(m_value, format, fp); }
+        #endregion
+
+        #region Static fields and properties (DO NOT CHANGE!)
+        public static readonly Dimension Sense = <#= Sense #>;
+        public const int Family = <#= Family #>;
+        public static readonly SymbolCollection Symbol = new SymbolCollection(<#= Tags #>);
+        public static readonly Unit<<#= ValueType #>> Proxy = new <#= UnitProxy #>();
+<#+
+        if (isMonetary)
+        {
+#>
+        public static <#= ValueType #> Factor { get { return s_factor; } set { s_factor = value; } }
+        private static <#= ValueType #> s_factor = <#= Factor #>;
+<#+
+        }
+        else
+        {
+#>
+        public const <#= ValueType #> Factor = <#= Factor #>;
+<#+
+        }
+#>
+        public static string Format { get { return s_format; } set { s_format = value; } }
+        private static string s_format = "<#= Format #>";
+        #endregion
+
+        #region Predefined quantities
+        public static readonly <#= Unit #> One = new <#= Unit #>(<#= One #>);
+        public static readonly <#= Unit #> Zero = new <#= Unit #>(<#= Zero #>);
+        #endregion
+    }
+
+    public partial class <#= UnitProxy #> : Unit<<#= ValueType #>>
+    {
+        #region Properties
+        public override Dimension Sense { get { return <#= Unit #>.Sense; } }
+        public override int Family { get { return <#= Unit #>.Family; } }
+<#+
+        if (isMonetary)
+        {
+#>
+        public override <#= ValueType #> Factor { get { return <#= Unit #>.Factor; } set { <#= Unit #>.Factor = value; } }
+<#+
+        }
+        else
+        {
+#>
+        public override <#= ValueType #> Factor { get { return <#= Unit #>.Factor; } }
+<#+
+        }
+#>
+        public override SymbolCollection Symbol { get { return <#= Unit #>.Symbol; } }
+        public override string Format { get { return <#= Unit #>.Format; } set { <#= Unit #>.Format = value; } }
+        #endregion
+
+        #region Constructor(s)
+        public <#= UnitProxy #>() :
+            base(typeof(<#= Unit #>))
+        {
+        }
+        #endregion
+
+        #region Methods
+        public override IQuantity<<#= ValueType #>> Create(<#= ValueType #> value)
+        {
+            return new <#= Unit #>(value);
+        }
+        public override IQuantity<<#= ValueType #>> From(IQuantity<<#= ValueType #>> quantity)
+        {
+            return <#= Unit #>.From(quantity);
+        }
+        #endregion
+    }
+<#+
+    }
+#>

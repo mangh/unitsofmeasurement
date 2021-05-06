@@ -20,7 +20,7 @@ namespace $safeprojectname$
         internal readonly DegFahrenheit m_level;
         #endregion
 
-        #region Properties
+        #region Properties / ILevel<double>
         public DegFahrenheit Level { get { return m_level; } }
         public DegFahrenheit NormalizedLevel { get { return (m_level - Fahrenheit.Offset); } }
 
@@ -48,13 +48,19 @@ namespace $safeprojectname$
         public static explicit operator Fahrenheit(Kelvin q) { return new Fahrenheit((DegFahrenheit)(q.NormalizedLevel) + Fahrenheit.Offset); }
         public static Fahrenheit From(ILevel<double> q)
         {
-            if (q.Scale.Family != Fahrenheit.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Fahrenheit\".", q.GetType().Name));
+            if (q.Scale.Family != Fahrenheit.Family)
+            {
+				throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Fahrenheit\".", q.GetType().Name));
+            }
             return new Fahrenheit(DegFahrenheit.From(q.NormalizedLevel) + Fahrenheit.Offset);
         }
         public static Fahrenheit From(IQuantity<double> q)
         {
             Scale<double> scale = Catalog.Scale(Fahrenheit.Family, q.Unit);
-            if(scale == null) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Fahrenheit\".", q.GetType().Name));
+            if (scale == null)
+            {
+				throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Fahrenheit\".", q.GetType().Name));
+            }
             return Fahrenheit.From(scale.Create(q.Value));
         }
         #endregion
@@ -86,33 +92,30 @@ namespace $safeprojectname$
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(Fahrenheit.Format, null); }
-        public string ToString(string format) { return ToString(format, null); }
-        public string ToString(IFormatProvider fp) { return ToString(Fahrenheit.Format, fp); }
-        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        public static string String(double level, string format = null, IFormatProvider fp = null)
         {
-            return m_level.ToString(format ?? Fahrenheit.Format, fp);
+            return DegFahrenheit.String(level, format ?? Fahrenheit.Format, fp);
         }
+
+        public override string ToString() { return String(m_level.m_value); }
+        public string ToString(string format) { return String(m_level.m_value, format); }
+        public string ToString(IFormatProvider fp) { return String(m_level.m_value, null, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp) { return String(m_level.m_value, format, fp); }
         #endregion
 
-        #region Static fields
-        private static readonly DegFahrenheit s_offset /* from AbsoluteZero reference level */ = new DegFahrenheit(-273.15d * (9d / 5d) + 32d);
-        private static readonly int s_family = Kelvin.Family;
-        private static /*mutable*/ string s_format = "{0} {1}";
-        private static readonly Scale<double> s_proxy = new Fahrenheit_Proxy();
-
-        private static readonly Fahrenheit s_zero = new Fahrenheit(0d);
-        #endregion
-        
-        #region Static properties
-        public static DegFahrenheit Offset { get { return s_offset; } }
-        public static int Family { get { return s_family; } }
+        #region Static fields and properties (DO NOT CHANGE!)
+        public static readonly int Family = Kelvin.Family;
+        public static readonly DegFahrenheit Offset /* from AbsoluteZero */ = new DegFahrenheit(-273.15d * (9d / 5d) + 32d);
+        public static readonly Scale<double> Proxy = new Fahrenheit_Proxy();
+        private static string s_format = "{0} {1}";
         public static string Format { get { return s_format; } set { s_format = value; } }
-        public static Scale<double> Proxy { get { return s_proxy; } }
+        #endregion
 
-        public static Fahrenheit Zero { get { return s_zero; } }
+        #region Predefined levels
+        public static readonly Fahrenheit Zero = new Fahrenheit(0d);
         #endregion
     }
+
     public partial class Fahrenheit_Proxy : Scale<double>
     {
         #region Properties

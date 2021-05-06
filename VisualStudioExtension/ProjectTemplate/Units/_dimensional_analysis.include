@@ -1,0 +1,24 @@
+#if DIMENSIONAL_ANALYSIS
+    using $safeprojectname$;
+    using static $safeprojectname$.Math;
+#else
+    using Meter = System.Double;
+    using Second = System.Double;
+    using Kilogram = System.Double;
+    using DegKelvin = System.Double;
+    using DegCelsius = System.Double;
+    using DegFahrenheit = System.Double;
+    using EUR = System.Decimal;
+    using PLN = System.Decimal;
+    using Radian = System.Double;
+    using Degree = System.Double;
+    using Meter_Sec = System.Double;
+    using Meter_Sec2 = System.Double;
+    using Newton = System.Double;
+    using Joule = System.Double;
+    using NewtonMeter = System.Double;
+    using Kelvin = System.Double;
+    using Celsius = System.Double;
+    using Fahrenheit = System.Double;
+    using static System.Math;
+#endif

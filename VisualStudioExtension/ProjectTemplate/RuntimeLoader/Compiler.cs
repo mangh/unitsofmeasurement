@@ -11,6 +11,7 @@
 ********************************************************************************/
 using System;
 using System.CodeDom.Compiler;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace $safeprojectname$
@@ -20,22 +21,22 @@ namespace $safeprojectname$
         private class Compiler
         {
             #region Fields
-            private CompilerResults m_results;
+            private CompilerResults m_result;
             #endregion
 
             #region Properties
-            public CompilerResults Results { get { return m_results; } }
+            public IEnumerable<string> Errors { get { if (m_result == null) yield break; else foreach (var e in m_result.Errors) yield return e.ToString(); } }
             #endregion
 
             #region Constructor(s)
             public Compiler()
             {
-                m_results = null;
+                m_result = null;
             }
             #endregion
 
             #region Methods
-            public bool CompileFromSource(string source, string[] referencedAssemblies, string targetAssemblyPath)
+            public Assembly CompileFromSource(string source, string[] referencedAssemblies, string targetAssemblyPath)
             {
                 CompilerParameters parameters = new CompilerParameters(referencedAssemblies);
                 if(String.IsNullOrWhiteSpace(targetAssemblyPath))
@@ -50,12 +51,18 @@ namespace $safeprojectname$
                     parameters.OutputAssembly = targetAssemblyPath;
                 }
 
+                m_result = null;
+
                 // Compile the source code
-                using(var m_provider = new Microsoft.CSharp.CSharpCodeProvider())
+                using (var m_provider = new Microsoft.CSharp.CSharpCodeProvider())
                 {
-                    m_results = m_provider.CompileAssemblyFromSource(parameters, source);
-                    return !m_results.Errors.HasErrors;
+                    m_result = m_provider.CompileAssemblyFromSource(parameters, source);
+                    if (!m_result.Errors.HasErrors)
+                    {
+                        return m_result.CompiledAssembly;
+                    }
                 }
+                return null;
             }
             #endregion
         }

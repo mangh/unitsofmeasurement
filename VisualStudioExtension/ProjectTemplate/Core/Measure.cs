@@ -29,7 +29,6 @@ namespace $safeprojectname$
         #endregion
 
         #region Properties
-
         public RuntimeTypeHandle Handle { get { return m_handle; } }
         public Type Type { get { return Type.GetTypeFromHandle(m_handle); } }
         public abstract int Family { get; }
@@ -39,7 +38,7 @@ namespace $safeprojectname$
         /// <summary>
         /// Measure (unit|scale) type proxy constructor
         /// </summary>
-        /// <param name="t">measure (unit|scale) type</param>
+        /// <param name="t">Unit or scale type to be represented by this proxy.</param>
         protected Measure(Type t)
         {
             m_handle = t.TypeHandle;
@@ -54,7 +53,7 @@ namespace $safeprojectname$
 
         #region Methods
         /// <summary>
-        /// Get static property of the measure (unit|scale)
+        /// Examine proxy whether it is a subclass of Unit&lt;T&gt; or Scale&lt;T&gt;.
         /// </summary>
         /// <param name="T">Type code for a type parameter T used in Unit&lt;T&gt; or Scale&lt;T&gt; definition.</param>
         /// <returns>
@@ -97,23 +96,22 @@ namespace $safeprojectname$
 
         #region Statics
         /// <summary>
-        /// Converts an instance of a measure (unit|scale) to the unit of measurement of this measure.
+        /// Retrieves a proxy type from an input type (presumably unit or scale implementing IQuantity&lt;T&gt; or ILevel&lt;T&gt; interface).
         /// </summary>
         /// <param name="t">Input type to retrieve proxy from.</param>
         /// <returns>Proxy type (Unit&lt;T&gt; or Scale&lt;T&gt;) for a unit or scale input type; null for any other types.</returns>
         public static Measure TryRetrieveFrom(Type t)
         {
-            if(t.IsValueType)
+            if (t.IsValueType)
             {
                 foreach(Type ifc in t.GetInterfaces())
                 {
-                    if(ifc.FullName.StartsWith(Unit.GenericInterfaceFullName) ||
-                        ifc.FullName.StartsWith(Scale.GenericInterfaceFullName))
+                    if (ifc.FullName.StartsWith(Unit.GenericInterfaceFullName) || ifc.FullName.StartsWith(Scale.GenericInterfaceFullName))
                     {
-                        PropertyInfo proxyInfo = t.GetProperty("Proxy", BindingFlags.Static | BindingFlags.Public);
-                        if(proxyInfo != null)
+                        FieldInfo fieldInfo = t.GetField("Proxy", BindingFlags.Static | BindingFlags.Public);
+                        if (fieldInfo != null)
                         {
-                            return proxyInfo.GetValue(t, null) as Measure;
+                            return fieldInfo.GetValue(t) as Measure;
                         }
                     }
                 }

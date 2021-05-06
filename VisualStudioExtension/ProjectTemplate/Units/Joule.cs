@@ -19,7 +19,7 @@ namespace $safeprojectname$
         internal readonly double m_value;
         #endregion
 
-        #region Properties
+        #region Properties / IQuantity<double>
         public double Value { get { return m_value; } }
         Unit<double> IQuantity<double>.Unit { get { return Joule.Proxy; } }
         #endregion
@@ -35,7 +35,10 @@ namespace $safeprojectname$
         public static explicit operator Joule(double q) { return new Joule(q); }
         public static Joule From(IQuantity<double> q)
         {
-            if (q.Unit.Family != Joule.Family) throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Joule\"", q.GetType().Name));
+            if (q.Unit.Family != Joule.Family)
+            {
+				throw new InvalidOperationException(string.Format("Cannot convert \"{0}\" to \"Joule\"", q.GetType().Name));
+            }
             return new Joule((Joule.Factor / q.Unit.Factor) * q.Value);
         }
         #endregion
@@ -73,47 +76,40 @@ namespace $safeprojectname$
         #endregion
 
         #region Formatting
-        public override string ToString() { return ToString(Joule.Format, null); }
-        public string ToString(string format) { return ToString(format, null); }
-        public string ToString(IFormatProvider fp) { return ToString(Joule.Format, fp); }
-        public string /* IFormattable */ ToString(string format, IFormatProvider fp)
+        public static string String(double q, string format = null, IFormatProvider fp = null)
         {
-            return string.Format(fp, format ?? Joule.Format, m_value, Joule.Symbol.Default);
+            return string.Format(fp, format ?? Joule.Format, q, Joule.Symbol.Default);
         }
+
+        public override string ToString() { return String(m_value); }
+        public string ToString(string format) { return String(m_value, format); }
+        public string ToString(IFormatProvider fp) { return String(m_value, null, fp); }
+        public string /* IFormattable */ ToString(string format, IFormatProvider fp) { return String(m_value, format, fp); }
         #endregion
 
-        #region Static fields
-        private static readonly Dimension s_sense = Newton.Sense * Meter.Sense;
-        private static readonly int s_family = 9;
-        private static /*mutable*/ double s_factor = Newton.Factor * Meter.Factor;
-        private static /*mutable*/ string s_format = "{0} {1}";
-        private static readonly SymbolCollection s_symbol = new SymbolCollection("J");
-        private static readonly Unit<double> s_proxy = new Joule_Proxy();
-
-        private static readonly Joule s_one = new Joule(1d);
-        private static readonly Joule s_zero = new Joule(0d);
-        #endregion
-
-        #region Static Properties
-        public static Dimension Sense { get { return s_sense; } }
-        public static int Family { get { return s_family; } }
-        public static double Factor { get { return s_factor; } set { s_factor = value; } }
+        #region Static fields and properties (DO NOT CHANGE!)
+        public static readonly Dimension Sense = Newton.Sense * Meter.Sense;
+        public const int Family = 9;
+        public static readonly SymbolCollection Symbol = new SymbolCollection("J");
+        public static readonly Unit<double> Proxy = new Joule_Proxy();
+        public const double Factor = Newton.Factor * Meter.Factor;
         public static string Format { get { return s_format; } set { s_format = value; } }
-        public static SymbolCollection Symbol { get { return s_symbol; } }
-        public static Unit<double> Proxy { get { return s_proxy; } }
+        private static string s_format = "{0} {1}";
+        #endregion
 
-        public static Joule One { get { return s_one; } }
-        public static Joule Zero { get { return s_zero; } }
+        #region Predefined quantities
+        public static readonly Joule One = new Joule(1d);
+        public static readonly Joule Zero = new Joule(0d);
         #endregion
     }
 
     public partial class Joule_Proxy : Unit<double>
     {
         #region Properties
-        public override int Family { get { return Joule.Family; } }
         public override Dimension Sense { get { return Joule.Sense; } }
+        public override int Family { get { return Joule.Family; } }
+        public override double Factor { get { return Joule.Factor; } }
         public override SymbolCollection Symbol { get { return Joule.Symbol; } }
-        public override double Factor { get { return Joule.Factor; } set { Joule.Factor = value; } }
         public override string Format { get { return Joule.Format; } set { Joule.Format = value; } }
         #endregion
 

@@ -63,7 +63,7 @@ namespace $safeprojectname$
             {
                 m_units.Add(measure as Unit);
             }
-            else if(measure is Scale)
+            else if (measure is Scale)
             {
                 m_scales.Add(measure as Scale);
             }
@@ -84,10 +84,10 @@ namespace $safeprojectname$
         }
         public static void AppendFromAssembly(System.Reflection.Assembly assembly)
         {
-            foreach(Type t in assembly.GetExportedTypes())
+            foreach (Type t in assembly.GetExportedTypes())
             {
                 Measure proxy = Measure.TryRetrieveFrom(t);
-                if(proxy != null)
+                if (proxy != null)
                 {
                     Add(proxy);
                 }

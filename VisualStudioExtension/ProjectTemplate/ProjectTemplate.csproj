@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{9C7633E5-4BFA-49F3-B558-3370B5EC8F82}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ProjectTemplate</RootNamespace>
     <AssemblyName>ProjectTemplate</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -99,6 +99,7 @@
     <Compile Include="Units\Kilogram.cs">
       <DependentUpon>_generator.tt</DependentUpon>
     </Compile>
+    <Compile Include="Units\Math.cs" />
     <Compile Include="Units\Meter.cs">
       <DependentUpon>_generator.tt</DependentUpon>
     </Compile>
@@ -125,10 +126,16 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="RuntimeLoader\Generator.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>Generator.cs</LastGenOutput>
+      <CustomToolNamespace>$safeprojectname$</CustomToolNamespace>
+    </Content>
     <Content Include="Units\_definitions.txt" />
     <Content Include="Units\_generator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>_generator.txt</LastGenOutput>
+      <CustomToolNamespace>$safeprojectname$</CustomToolNamespace>
     </Content>
     <Content Include="Units\_generator.txt">
       <AutoGen>True</AutoGen>
@@ -137,21 +144,14 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Include="RuntimeLoader\Generator.tt">
-      <Generator>TextTemplatingFilePreprocessor</Generator>
-      <LastGenOutput>Generator.cs</LastGenOutput>
-      <CustomToolNamespace>$safeprojectname$</CustomToolNamespace>
+    <None Include="Units\_dimensional_analysis.include">
+      <DependentUpon>_generator.tt</DependentUpon>
     </None>
+    <None Include="Units\_scale.t4" />
+    <None Include="Units\_unit.t4" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

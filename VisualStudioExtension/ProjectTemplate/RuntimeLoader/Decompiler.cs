@@ -12,13 +12,22 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 
 namespace $safeprojectname$
 {
     public partial class RuntimeLoader
     {
-        private class Decompiler
+        /// <summary>
+        /// Unit and scale definitions restored from entities registered in the Catalog at compile time.
+        /// </summary>
+        public interface ICatalog
+        {
+            List<Man.UnitsOfMeasurement.UnitType> Units { get; }
+            List<Man.UnitsOfMeasurement.ScaleType> Scales { get; }
+            int MaxFamilyFound { get; }
+        }
+
+        private class Decompiler : ICatalog
         {
             #region Fields
             private List<Man.UnitsOfMeasurement.UnitType> m_units;
@@ -27,14 +36,16 @@ namespace $safeprojectname$
             #endregion
 
             #region Properties
+            public List<Man.UnitsOfMeasurement.UnitType> Units => m_units;
+            public List<Man.UnitsOfMeasurement.ScaleType> Scales => m_scales;
             public int MaxFamilyFound { get { return m_families.Count <= 0 ? -1 : m_families.Max(kv => kv.Key); } }
             #endregion
 
             #region Constructor(s)
-            public Decompiler(List<Man.UnitsOfMeasurement.UnitType> units, List<Man.UnitsOfMeasurement.ScaleType> scales)
+            public Decompiler()
             {
-                m_units = units;
-                m_scales = scales;
+                m_units = new List<Man.UnitsOfMeasurement.UnitType>();
+                m_scales = new List<Man.UnitsOfMeasurement.ScaleType>();
                 m_families = new Dictionary<int, Man.UnitsOfMeasurement.MeasureType>(16);
             }
             #endregion
@@ -101,6 +112,7 @@ namespace $safeprojectname$
                 else
                     m_families.Add(family, measureType);
             }
+
             private Man.UnitsOfMeasurement.Dimension TranslateDimension(Dimension sense)
             {
                 return new Man.UnitsOfMeasurement.Dimension(

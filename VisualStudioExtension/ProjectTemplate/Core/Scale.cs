@@ -15,7 +15,7 @@ using System.Collections.Generic;
 namespace $safeprojectname$
 {
     /// <summary>
-    /// Scale constants
+    /// Scale base proxy type giving access to properties common to all scale types (regardless of their value type).
     /// </summary>
     public abstract class Scale : Measure
     {
@@ -62,7 +62,7 @@ namespace $safeprojectname$
 
         #region Constructor(s)
         /// <summary>
-        /// Construct scale type proxy from a value type implementing ILevel&lt;T&gt;
+        /// Creates scale proxy from a scale type.
         /// </summary>
         /// <param name="scale">Scale value type implementing ILevel&lt;T&gt;.</param>
         /// <exception cref="System.ArgumentException">Thrown when scale argument is not a value type implementing ILevel&lt;T&gt;.</exception>
@@ -73,7 +73,7 @@ namespace $safeprojectname$
                 throw new ArgumentException(string.Format("\"{0}\" is not a scale type implementing {1} interface.", scale.Name, typeof(ILevel<T>).Name));
         }
         /// <summary>
-        /// Construct scale type proxy from ILevel&lt;T&gt; scale instance object
+        /// Verifies whether the type is a scale value type implementing ILevel&lt;T&gt;.
         /// </summary>
         /// <param name="t">Type to be verified.</param>
         /// <returns>"true" for valid scale type, otherwise "false".</returns>
@@ -85,21 +85,21 @@ namespace $safeprojectname$
 
         #region Methods
         /// <summary>
-        /// Create scale instance object (level)
+        /// Creates level (scale instance object).
         /// </summary>
         /// <param name="value">Value to be assigned to the level.</param>
         /// <returns>Level of the given value.</returns>
         public abstract ILevel<T> Create(T value);
 
         /// <summary>
-        /// Convert ILevel&lt;T&gt; level to the unit of measurement and offset of this scale type
+        /// Converts level to the scale represented by this proxy.
         /// </summary>
         /// <param name="level">Level to be converted from.</param>
         /// <returns>Converted level.</returns>
         public abstract ILevel<T> From(ILevel<T> level);
 
         /// <summary>
-        /// Verify whether the type is a scale type
+        /// Converts (attaches) quantity to the scale represented by this proxy.
         /// </summary>
         /// <param name="quantity">Quantity to be converted (attached).</param>
         /// <returns>Level attached to the scale.</returns>
