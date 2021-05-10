@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" ?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="Man.UnitsOfMeasurement.VSIX.63c76507-0581-410c-a1af-71555d386758" Version="2.1" Language="en-US" Publisher="MAN" />
+        <Identity Id="Man.UnitsOfMeasurement.VSIX.63c76507-0581-410c-a1af-71555d386758" Version="2.1" Language="en-US" Publisher="Marek Aniola" />
         <DisplayName>UnitsOfMeasurement</DisplayName>
         <Description xml:space="preserve">Project template for creating Units of Measurement C# class library (.dll)</Description>
         <MoreInfo>https://github.com/mangh/unitsofmeasurement</MoreInfo>
