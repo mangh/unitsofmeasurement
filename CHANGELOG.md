@@ -2,7 +2,7 @@
 
 ###### Going to VS 2019
 
-* VSIX Release 2.1 developed with (and for) VS 2019; installer available at [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=MarekAniola.UnitsOfMeasurement-18451).
+* VSIX Release 2.1 developed with (and for) VS 2019; installer available at [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=MarekAniola.UnitsOfMeasurement-20210510).
 
 ###### Bugs removed
 
@@ -44,7 +44,7 @@
 
 * _Unit/Math.cs_ (static file, independent of generators): could provide basic math expressions on measured quantities (e.g. `Sin(Radian)`, `Cos(Radian)` etc.). Initially empty (provides nothing): it is up to you to decide its content.
 
-###### Modified Demo apps
+###### Modified demo apps
 
 * [_Demo/Bullet_](https://github.com/mangh/unitsofmeasurement/tree/master/Demo/Bullet): new sample application that is doing (basically) the same as [_Demo/ProjectileRange_](https://github.com/mangh/unitsofmeasurement/tree/master/Demo/ProjectileRange) but is more accurate on time measurement and thus provides more reliable benchmarks.
 * [_Demo/Benchmark_](https://github.com/mangh/unitsofmeasurement/tree/master/Demo/Benchmark): now it employs [BenchmerkDotNet](https://benchmarkdotnet.org/) framework to get more accurate and reliable results.
