@@ -1,3 +1,55 @@
+### Release 2.1 Build 2021.05.06.1151
+
+###### Going to VS 2019
+
+* VSIX Release 2.1 developed with (and for) VS 2019; installer available at [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=MarekAniola.UnitsOfMeasurement-18451).
+
+###### Bugs removed
+
+* Fixed a bug in _Man.UnitsOfMeasurement.Parser_ that could make it hang in an infinite loop trying to unravel certain (not necessarily weird) relationships between units.
+
+###### Modified templates: _Units/\_generator.tt_ and _RuntimeLoader/Generator.tt_
+
+* unit and scale templates moved to external files (_\_unit.t4_ and _\_scale.t4_ correspondingly) to be used in generators as T4 include files.
+
+* newer C# syntax used in templates (though not the latest one that requires _Roslyn_ compiler). _RuntimeLoader_ still uses the old _csc_ compiler that does not accept the latest syntax (that is possible to employ _Roslyn_ in _RuntimeLoader_ but the number and size of NuGet packages required for this is overwhelming and makes me skeptical about this approach).
+
+* static _properties_ have been replaced by _constants_ or static readonly _fields_:
+```C#
+    public static readonly Dimension Sense = ...;
+    public const int Family = ...;
+    public static readonly SymbolCollection Symbol = ...;
+    public static readonly Unit<double> Proxy = ...;
+    public const double Factor = ...;
+
+    // except Factor for monetary units (only):
+    public static decimal Factor { get; set; }
+
+    // and Format that remains gettable/settable property for all units:
+    public static string Format { get; set; }
+```
+
+* new method to format value types (_float_, _double_, _decimal_) into a string with a unit tag prepended/appended:
+```C#
+    // for units:
+    static string String(<valuetype> q, string format, IFormatProvider fp)
+    // and scales:
+    static string String(<valuetype> q, string format, IFormatProvider fp)
+
+    // For example:
+    //    Meter.String(123.45) -> "123.45 m"
+    //    Fahrenheit.String(123.45) -> "123.45 deg.F"
+```
+* _Unit/\_dimensional_analysis.include_: C# file created (while generating units/scales) to facilitate a transition from calculations based on measured quantities to (faster) calculations on plain numbers. The transition is intended to be performed within the same source code (possibly) supplemented with conditional statements. Alas, C# does not support include-files functionality! Shit happens! So, if you decide to make use of the generated file you have to include it "by hand". Take a look at [BulletMeasured.cs](https://github.com/mangh/unitsofmeasurement/blob/master/Demo/Bullet/BulletMeasured.cs) sample to see how the transition can be made.
+
+* _Unit/Math.cs_ (static file, independent of generators): could provide basic math expressions on measured quantities (e.g. `Sin(Radian)`, `Cos(Radian)` etc.). Initially empty (provides nothing): it is up to you to decide its content.
+
+###### Modified Demo apps
+
+* [_Demo/Bullet_](https://github.com/mangh/unitsofmeasurement/tree/master/Demo/Bullet): new sample application that is doing (basically) the same as [_Demo/ProjectileRange_](https://github.com/mangh/unitsofmeasurement/tree/master/Demo/ProjectileRange) but is more accurate on time measurement and thus provides more reliable benchmarks.
+* [_Demo/Benchmark_](https://github.com/mangh/unitsofmeasurement/tree/master/Demo/Benchmark): now it employs [BenchmerkDotNet](https://benchmarkdotnet.org/) framework to get more accurate and reliable results.
+
+
 ### Release 2.0 Build 2017.03.10.1639
 
 ###### Going to VS 2017
