@@ -8,7 +8,8 @@
 * Conversions of _quantities_ to/from other (but compatible) unit types.
 
 Go to [Wiki](https://github.com/mangh/unitsofmeasurement/wiki) pages for more information.
-<p style="font-weight: bold; color: brown; border: 1px solid brown; margin: auto; padding: 20px;">NOTE: There is a <i>dotnet</i> release for <i>.NET Core / Standard</i> available in the <a href="https://github.com/mangh/Metrology">Metrology</a> repository!</p>
+
+> __NOTE__: There is a _dotnet_ release for _.NET Core / Standard_ available in the _[Metrology](https://github.com/mangh/Metrology)_ repository!
 
 ### How to use it?
 Assuming you have already installed *UnitsOfMeasurement.VSIX* component (see [Releases](https://github.com/mangh/unitsofmeasurement/releases) page for download and installation instructions), follow this general process to create a library:
