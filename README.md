@@ -9,7 +9,11 @@
 
 Go to [Wiki](https://github.com/mangh/unitsofmeasurement/wiki) pages for more information.
 
-> __NOTE__: There is a _dotnet_ release for _.NET Core / Standard_ available in the _[Metrology](https://github.com/mangh/Metrology)_ repository!
+---
+
+&#128073; There is a _dotnet_ release for _.NET Core / Standard_ available in the ___[Metrology](https://github.com/mangh/Metrology)___ repository! &#128072;
+
+---
 
 ### How to use it?
 Assuming you have already installed *UnitsOfMeasurement.VSIX* component (see [Releases](https://github.com/mangh/unitsofmeasurement/releases) page for download and installation instructions), follow this general process to create a library:
